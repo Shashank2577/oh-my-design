@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
 /* Global styles - Tailwind utilities applied via className */
 
 html {
@@ -17,6 +16,3 @@ body {
   margin: 0;
   padding: 0;
 }
-=======
-/* Global styles will be per-page */
->>>>>>> origin/botanical-landing-page-13460698621585428494
