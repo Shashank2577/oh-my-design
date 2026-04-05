@@ -25,7 +25,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'material', name: 'Material', category: 'Modern', vibe: 'Google Material Design', bestFor: 'Android apps, Modern dashboards', accentColor: '#6200EE', built: false },
   { slug: 'maximalism', name: 'Maximalism', category: 'Creative', vibe: 'Bold, expressive, abundant', bestFor: 'Creative agencies, Art platforms', accentColor: '#FF0080', built: false },
   { slug: 'minimal-dark', name: 'Minimal Dark', category: 'Minimal', vibe: 'Minimal dark theme', bestFor: 'Developer tools, Code editors', accentColor: '#64FFDA', built: false },
-  { slug: 'modern-dark', name: 'Modern Dark', category: 'Modern', vibe: 'Contemporary dark UI with depth', bestFor: 'SaaS products, Developer tools', accentColor: '#7C3AED', built: false },
+  { slug: 'modern-dark', name: 'Modern Dark', category: 'Modern', vibe: 'Contemporary dark UI with depth', bestFor: 'SaaS products, Developer tools', accentColor: '#5E6AD2', built: true },
   { slug: 'monochrome', name: 'Monochrome', category: 'Minimal', vibe: 'Black and white, high contrast', bestFor: 'Photography, Portfolios', accentColor: '#000000', built: false },
   { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FFE500', built: false },
   { slug: 'neumorphism', name: 'Neumorphism', category: 'Modern', vibe: 'Soft UI, skeuomorphic', bestFor: 'Mobile apps, Smart home', accentColor: '#6C63FF', built: false },
