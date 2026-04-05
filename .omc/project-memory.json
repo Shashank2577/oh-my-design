@@ -136,8 +136,44 @@
   "hotPaths": [
     {
       "path": "app/globals.css",
+      "accessCount": 7,
+      "lastAccessed": 1775409161089,
+      "type": "file"
+    },
+    {
+      "path": ".jules-plan.json",
+      "accessCount": 2,
+      "lastAccessed": 1775405851727,
+      "type": "file"
+    },
+    {
+      "path": "next.config.ts",
+      "accessCount": 2,
+      "lastAccessed": 1775408668614,
+      "type": "file"
+    },
+    {
+      "path": "app/styles/claymorphism/page.tsx",
       "accessCount": 1,
-      "lastAccessed": 1775404889013,
+      "lastAccessed": 1775405338637,
+      "type": "file"
+    },
+    {
+      "path": ".jules-state.json",
+      "accessCount": 1,
+      "lastAccessed": 1775405694219,
+      "type": "file"
+    },
+    {
+      "path": "tailwind.config.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775407530541,
+      "type": "file"
+    },
+    {
+      "path": "postcss.config.mjs",
+      "accessCount": 1,
+      "lastAccessed": 1775407561354,
       "type": "file"
     }
   ],

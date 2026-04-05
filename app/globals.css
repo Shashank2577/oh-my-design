@@ -1,1 +1,18 @@
-/* Global styles will be per-page */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles - Tailwind utilities applied via className */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: white;
+  color: #1e293b;
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+}
