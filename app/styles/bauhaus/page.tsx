@@ -46,7 +46,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
       className={className}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.3, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.3, delay, ease: 'easeOut' as const }}
     >
       {children}
     </motion.div>
@@ -243,7 +243,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: 'easeOut' as const }}
           >
             <div className="inline-block bg-[#121212] text-white px-4 py-2 font-bold uppercase tracking-widest text-sm mb-8">
               {PRODUCT_NAME} V1.0
@@ -253,7 +253,7 @@ function Hero() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' as const }}
             className="text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase mb-8"
           >
             {TAGLINE}
@@ -262,7 +262,7 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' as const }}
             className="text-lg md:text-xl font-medium leading-relaxed mb-12 max-w-md"
           >
             {DESCRIPTION}
@@ -271,7 +271,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' as const }}
             className="flex flex-col sm:flex-row gap-4"
           >
             <Button variant="primary">
@@ -290,7 +290,7 @@ function Hero() {
           className="relative w-full max-w-md aspect-square"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' as const }}
         >
           {/* Large Circle */}
           <motion.div
@@ -487,7 +487,7 @@ function Pricing() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-5% 0px' }}
-              transition={{ duration: 0.3, ease: 'easeOut', delay: i * 0.1 }}
+              transition={{ duration: 0.3, ease: 'easeOut' as const, delay: i * 0.1 }}
               className={`border-4 border-black bg-white p-8 ${tier.highlighted ? 'md:-mt-4 md:mb-4 shadow-[12px_12px_0px_0px_black]' : 'shadow-[8px_8px_0px_0px_black]'}`}
               whileHover={{ y: -8 }}
             >
@@ -591,7 +591,7 @@ function FAQ() {
                   <span className="font-black text-xl md:text-2xl uppercase tracking-tighter pr-8">{item.q}</span>
                   <motion.div
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    transition={{ duration: 0.3, ease: 'easeOut' as const }}
                     className={`flex-shrink-0 w-10 h-10 border-4 ${openIndex === i ? 'border-white bg-[#F0C020]' : 'border-black bg-[#1040C0]'} flex items-center justify-center`}
                   >
                     <ChevronDown className={`w-6 h-6 ${openIndex === i ? 'text-black' : 'text-white'}`} strokeWidth={3} />
@@ -600,7 +600,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: 'easeOut' as const }}
                   style={{ overflow: 'hidden' }}
                 >
                   <div className={`p-6 md:p-8 pt-0 font-medium text-lg border-t-4 ${openIndex === i ? 'bg-[#FFF9C4] border-black text-black' : 'border-transparent'}`}>

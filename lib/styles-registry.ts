@@ -41,4 +41,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: false },
   { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: false },
   { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: false },
+  { slug: 'claude', name: 'Claude', category: 'Modern', vibe: 'Humanist Literary, warm, serif-driven', bestFor: 'Content platforms, AI interfaces', accentColor: '#c96442', built: true },
+  { slug: 'clay', name: 'Clay', category: 'Modern', vibe: 'Tactile, elevated, physical interfaces', bestFor: 'Creative agencies, portfolios', accentColor: '#000000', built: true },
+  { slug: 'clickhouse', name: 'ClickHouse', category: 'Tech', vibe: 'High-performance, sharp, database', bestFor: 'Developer tools, SaaS', accentColor: '#FFCC01', built: true },
+  { slug: 'cohere', name: 'Cohere', category: 'Tech', vibe: 'Organic AI, sand-toned, accessible', bestFor: 'AI platforms, B2B', accentColor: '#39594D', built: true },
+  { slug: 'coinbase', name: 'Coinbase', category: 'Professional', vibe: 'Clear, trusted, crypto-financial', bestFor: 'Fintech, exchanges', accentColor: '#0052FF', built: true },
 ]

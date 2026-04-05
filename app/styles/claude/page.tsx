@@ -11,7 +11,7 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 // Replace fonts with those specified in the design system:
-import { Playfair_Display, Source_Sans_3 } from 'next/font/google'
+import { Inter, Source_Serif_4, Saira } from 'next/font/google'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
   BookOpen, Layout, Palette, Code2, BarChart, Lock
@@ -20,15 +20,15 @@ import {
 // ─────────────────────────────────────────────
 // FONTS — replace with style-specific fonts
 // ─────────────────────────────────────────────
-const headingFont = Playfair_Display({
+const bodyFont = Inter({
   subsets: ['latin'],
-  variable: '--font-heading',
+  variable: '--font-body',
   display: 'swap',
 })
 
-const bodyFont = Source_Sans_3({
+const displayFont = Source_Serif_4({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-display',
   display: 'swap',
 })
 
@@ -36,15 +36,14 @@ const bodyFont = Source_Sans_3({
 // DESIGN TOKENS — replace ALL values per style
 // ─────────────────────────────────────────────
 const tokens = {
-  background: '#F9F8F4',
-  backgroundAlt: '#F2F0EB',
-  foreground: '#2D3A31',
-  muted: '#DCCFC2',
-  mutedForeground: '#2D3A31',
-  border: '#E6E2DA',
-  accent: '#8C9A84',
-  accentForeground: '#FFFFFF',
-  interactive: '#C27B66',
+  background: '#f5f4ed', // Parchment
+  backgroundAlt: '#faf9f5', // Ivory
+  foreground: '#141413', // Near Black
+  muted: '#e8e6dc', // Warm Sand / Border Warm
+  mutedForeground: '#5e5d59', // Olive Gray
+  border: '#f0eee6', // Border Cream
+  accent: '#c96442', // Terracotta Brand
+  accentForeground: '#faf9f5', // Ivory
 }
 
 // ─────────────────────────────────────────────
@@ -60,7 +59,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: 'easeInOut' }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -89,15 +88,15 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeInOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
 }
 
 // ─────────────────────────────────────────────
 // DATA — replace with style-appropriate content
 // ─────────────────────────────────────────────
-const PRODUCT_NAME = 'ProductName'
-const TAGLINE = 'The product tagline goes here'
-const DESCRIPTION = 'A compelling description of what this product does and why it matters.'
+const PRODUCT_NAME = 'Claude'
+const TAGLINE = 'Meet Claude'
+const DESCRIPTION = 'Claude is a next generation AI assistant built for work and trained to be safe, accurate, and secure.'
 
 const NAV_LINKS = ['Features', 'Pricing', 'Testimonials', 'FAQ']
 
@@ -191,7 +190,7 @@ function Navbar() {
       style={{ borderColor: tokens.border, backgroundColor: tokens.background }}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <span className="font-bold text-lg font-heading" style={{ color: tokens.foreground }}>
+        <span className="font-serif font-medium text-xl" style={{ color: tokens.foreground }}>
           {PRODUCT_NAME}
         </span>
         <div className="hidden md:flex items-center gap-8">
@@ -207,12 +206,12 @@ function Navbar() {
           ))}
         </div>
         <motion.button
-          whileHover={{ backgroundColor: tokens.interactive }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="px-5 h-10 rounded-full text-sm font-medium uppercase tracking-widest transition-colors duration-300"
-          style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
+          className="px-5 h-10 rounded-[12px] text-sm font-medium"
+          style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
         >
-          Get started
+          Try Claude
         </motion.button>
       </div>
     </nav>
@@ -242,7 +241,7 @@ function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl md:text-8xl font-bold leading-tight mb-6 font-heading"
+            className="text-[40px] md:text-[64px] font-serif font-medium leading-[1.10] mb-6 tracking-tight"
             style={{ color: tokens.foreground }}
           >
             {TAGLINE}
@@ -251,7 +250,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
+            className="text-[20px] mb-10 max-w-2xl leading-[1.60]"
             style={{ color: tokens.mutedForeground }}
           >
             {DESCRIPTION}
@@ -263,20 +262,20 @@ function Hero() {
             className="flex flex-col sm:flex-row gap-4"
           >
             <motion.button
-              whileHover={{ backgroundColor: tokens.interactive }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="h-14 px-8 rounded-full font-medium flex items-center gap-2 uppercase tracking-widest text-sm transition-colors duration-300"
-              style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
+              className="h-[48px] px-6 rounded-[12px] font-medium flex items-center justify-center gap-2"
+              style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
             >
-              Start for free <ArrowRight className="h-4 w-4" />
+              Talk to Claude <ArrowRight className="h-4 w-4" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="h-14 px-8 rounded-full font-medium border uppercase tracking-widest text-sm transition-colors duration-300"
-              style={{ borderColor: tokens.accent, color: tokens.accent }}
+              className="h-[48px] px-6 rounded-[12px] font-medium flex items-center justify-center"
+              style={{ backgroundColor: tokens.backgroundAlt, color: tokens.foreground, boxShadow: '0 0 0 1px #e8e6dc' }}
             >
-              View demo
+              Learn about Claude
             </motion.button>
           </motion.div>
         </motion.div>
@@ -284,11 +283,9 @@ function Hero() {
         {/* Hero Visual — replace with style-specific imagery */}
         <FadeUp delay={0.4}>
           <div
-            className="mt-16 w-full h-72 md:h-96 rounded-[200px_200px_0_0] overflow-hidden relative"
-            style={{ background: `linear-gradient(135deg, ${tokens.accent}40, ${tokens.accent}10)`, border: `1px solid ${tokens.border}` }}
-          >
-             <div className="absolute inset-0 bg-black/5" />
-          </div>
+            className="mt-16 w-full h-72 md:h-[500px] rounded-[32px] overflow-hidden"
+            style={{ background: `linear-gradient(135deg, ${tokens.muted}, ${tokens.background})`, border: `1px solid ${tokens.border}`, boxShadow: 'rgba(0,0,0,0.05) 0px 4px 24px' }}
+          />
         </FadeUp>
       </div>
     </section>
@@ -321,28 +318,26 @@ function Features() {
         <FadeUp>
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>Features</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 font-heading" style={{ color: tokens.foreground }}>
-              Everything you need
+            <h2 className="text-[32px] md:text-[52px] font-serif font-medium mb-4 leading-[1.10]" style={{ color: tokens.foreground }}>
+              Built for performance
             </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: tokens.mutedForeground }}>
-              Powerful features designed for teams that care about quality.
+            <p className="text-[20px] max-w-2xl mx-auto leading-[1.60]" style={{ color: tokens.mutedForeground }}>
+              Claude is trained to be helpful, honest, and harmless. It's designed to be a reliable partner for your most complex tasks.
             </p>
           </div>
         </FadeUp>
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {FEATURES.map((feature, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {FEATURES.map(feature => (
               <motion.div
                 key={feature.title}
                 variants={staggerItem}
-                whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                className={`p-8 rounded-3xl border ${i % 2 === 1 ? 'md:translate-y-12' : ''}`}
-                style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}
+                className="p-8 rounded-[12px] bg-[#faf9f5]"
+                style={{ boxShadow: '0 0 0 1px #f0eee6' }}
               >
-                <feature.icon className="h-6 w-6 mb-4" style={{ color: tokens.accent }} strokeWidth={1.5} />
-                <h3 className="font-semibold text-lg mb-2" style={{ color: tokens.foreground }}>{feature.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>{feature.description}</p>
+                <feature.icon className="h-6 w-6 mb-4" style={{ color: '#87867f' }} strokeWidth={1.5} />
+                <h3 className="font-serif font-medium text-[25px] mb-2 leading-[1.20]" style={{ color: tokens.foreground }}>{feature.title}</h3>
+                <p className="text-[16px] leading-[1.60]" style={{ color: tokens.mutedForeground }}>{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -354,23 +349,19 @@ function Features() {
 
 function ProductDetail() {
   return (
-    <section className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
+    <section className="py-32 border-y" style={{ borderColor: '#30302e', backgroundColor: '#141413' }}>
       <div className="max-w-4xl mx-auto px-6">
         <FadeUp>
           <div className="text-center">
-            <p className="text-sm uppercase tracking-widest mb-4" style={{ color: tokens.accent }}>About</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 font-heading" style={{ color: tokens.foreground }}>
-              Built for the way you work
+            <h2 className="text-[36px] md:text-[52px] font-serif font-medium mb-8 leading-[1.10] tracking-tight" style={{ color: '#faf9f5' }}>
+              Intelligence that works for you
             </h2>
             <div className="space-y-6 text-left">
-              <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+              <p className="text-[20px] leading-[1.60]" style={{ color: '#b0aea5' }}>
+                Claude represents a major advance in AI capabilities. It can process vast amounts of information, generate complex code, and analyze detailed documents with remarkable speed and accuracy.
               </p>
-              <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
-              </p>
-              <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              <p className="text-[20px] leading-[1.60]" style={{ color: '#b0aea5' }}>
+                But intelligence isn't just about raw power. It's about being a dependable partner. Claude is designed with constitutional AI principles to be safe, honest, and reliable for your most important workflows.
               </p>
             </div>
           </div>
@@ -387,55 +378,38 @@ function Pricing() {
         <FadeUp>
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>Pricing</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 font-heading" style={{ color: tokens.foreground }}>Simple, transparent pricing</h2>
-            <p className="text-lg" style={{ color: tokens.mutedForeground }}>No surprises. Cancel anytime.</p>
+            <h2 className="text-[32px] md:text-[52px] font-serif font-medium mb-4 leading-[1.10]" style={{ color: tokens.foreground }}>The Claude family</h2>
+            <p className="text-[20px] leading-[1.60]" style={{ color: tokens.mutedForeground }}>A model for every use case.</p>
           </div>
         </FadeUp>
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {PRICING.map(tier => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-b" style={{ borderColor: tokens.border }}>
+            {PRICING.map((tier, idx) => (
               <motion.div
                 key={tier.name}
                 variants={staggerItem}
-                whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                className="p-8 rounded-3xl border relative"
-                style={{
-                  borderColor: tier.highlighted ? tokens.accent : tokens.border,
-                  backgroundColor: tier.highlighted ? `${tokens.accent}08` : tokens.backgroundAlt,
-                  boxShadow: tier.highlighted ? `0 0 0 2px ${tokens.accent}` : 'none',
-                }}
+                className={`p-10 relative ${idx !== PRICING.length - 1 ? 'border-b md:border-b-0 md:border-r' : ''}`}
+                style={{ borderColor: tokens.border }}
               >
-                {tier.highlighted && (
-                  <span
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-medium rounded-full"
-                    style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
-                  >
-                    Most popular
-                  </span>
-                )}
-                <h3 className="font-bold text-xl mb-1 font-heading" style={{ color: tokens.foreground }}>{tier.name}</h3>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-bold" style={{ color: tokens.foreground }}>{tier.price}</span>
+                <h3 className="font-serif font-medium text-[25px] mb-2 leading-[1.20]" style={{ color: tokens.foreground }}>{tier.name}</h3>
+                <p className="text-[16px] leading-[1.60] mb-8" style={{ color: tokens.mutedForeground }}>{tier.description}</p>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-[20px] font-medium" style={{ color: tokens.foreground }}>{tier.price}</span>
                   <span className="text-sm" style={{ color: tokens.mutedForeground }}>/ {tier.period}</span>
                 </div>
-                <p className="text-sm mb-6" style={{ color: tokens.mutedForeground }}>{tier.description}</p>
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-4 mb-10">
                   {tier.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm">
-                      <Check className="h-4 w-4 flex-shrink-0" style={{ color: tokens.accent }} />
+                    <li key={f} className="flex items-start gap-3 text-[16px] leading-[1.60]">
+                      <Check className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: '#87867f' }} />
                       <span style={{ color: tokens.foreground }}>{f}</span>
                     </li>
                   ))}
                 </ul>
                 <motion.button
-                  whileHover={{ backgroundColor: tier.highlighted ? tokens.interactive : tokens.accent, color: tokens.accentForeground }}
+                  whileHover={{ backgroundColor: '#e8e6dc' }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 rounded-full font-medium text-sm border uppercase tracking-widest transition-colors duration-300"
-                  style={tier.highlighted
-                    ? { backgroundColor: tokens.foreground, color: tokens.accentForeground, borderColor: tokens.foreground }
-                    : { backgroundColor: 'transparent', color: tokens.accent, borderColor: tokens.accent }
-                  }
+                  className="w-full h-[40px] rounded-[8px] font-medium text-[15px] transition-colors"
+                  style={{ backgroundColor: 'transparent', color: '#141413', boxShadow: '0 0 0 1px #d1cfc5' }}
                 >
                   {tier.cta}
                 </motion.button>
@@ -455,29 +429,22 @@ function Testimonials() {
         <FadeUp>
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>Testimonials</p>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading" style={{ color: tokens.foreground }}>Loved by teams worldwide</h2>
+            <h2 className="text-[32px] md:text-[52px] font-serif font-medium" style={{ color: tokens.foreground }}>Trusted by forward-thinking companies</h2>
           </div>
         </FadeUp>
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {TESTIMONIALS.map((t, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {TESTIMONIALS.map(t => (
               <motion.div
                 key={t.name}
                 variants={staggerItem}
-                className={`p-8 rounded-3xl border ${i % 2 === 1 ? 'md:translate-y-12' : ''}`}
-                whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                style={{ borderColor: tokens.border, backgroundColor: tokens.background }}
+                className="p-10 rounded-[12px] bg-[#faf9f5]"
+                style={{ boxShadow: '0 0 0 1px #f0eee6' }}
               >
-                <div className="flex mb-4">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" style={{ color: tokens.accent }} />
-                  ))}
-                </div>
-                <p className="text-sm leading-relaxed mb-6" style={{ color: tokens.foreground }}>"{t.text}"</p>
+                <p className="text-[20px] leading-[1.60] mb-8 font-serif" style={{ color: tokens.foreground }}>"{t.text}"</p>
                 <div>
-                  <p className="font-semibold text-sm" style={{ color: tokens.foreground }}>{t.name}</p>
-                  <p className="text-xs" style={{ color: tokens.mutedForeground }}>{t.role} · {t.company}</p>
+                  <p className="font-medium text-[16px]" style={{ color: tokens.foreground }}>{t.name}</p>
+                  <p className="text-[14px]" style={{ color: '#87867f' }}>{t.role}, {t.company}</p>
                 </div>
               </motion.div>
             ))}
@@ -497,39 +464,37 @@ function FAQ() {
         <FadeUp>
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>FAQ</p>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading" style={{ color: tokens.foreground }}>Common questions</h2>
+            <h2 className="text-[32px] md:text-[52px] font-serif font-medium" style={{ color: tokens.foreground }}>Frequently asked questions</h2>
           </div>
         </FadeUp>
-        <div className="space-y-4">
+        <div className="space-y-0 border-t" style={{ borderColor: tokens.border }}>
           {FAQ_ITEMS.map((item, i) => (
-            <FadeUp key={i} delay={i * 0.05}>
-              <div className="border rounded-3xl overflow-hidden" style={{ borderColor: tokens.border }}>
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  aria-expanded={openIndex === i}
-                  className="w-full flex items-center justify-between p-6 text-left"
-                  style={{ backgroundColor: tokens.backgroundAlt }}
+            <div key={i} className="border-b" style={{ borderColor: tokens.border }}>
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                aria-expanded={openIndex === i}
+                className="w-full flex items-center justify-between py-6 text-left"
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <span className="font-medium text-[18px]" style={{ color: tokens.foreground }}>{item.q}</span>
+                <motion.span
+                  animate={{ rotate: openIndex === i ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <span className="font-medium" style={{ color: tokens.foreground }}>{item.q}</span>
-                  <motion.span
-                    animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <ChevronDown className="h-4 w-4 flex-shrink-0" style={{ color: tokens.mutedForeground }} />
-                  </motion.span>
-                </button>
-                <motion.div
-                  initial={false}
-                  animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' as const }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                    {item.a}
-                  </p>
-                </motion.div>
-              </div>
-            </FadeUp>
+                  <ChevronDown className="h-5 w-5 flex-shrink-0" style={{ color: '#87867f' }} />
+                </motion.span>
+              </button>
+              <motion.div
+                initial={false}
+                animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' as const }}
+                style={{ overflow: 'hidden' }}
+              >
+                <p className="pb-8 text-[16px] leading-[1.60]" style={{ color: tokens.mutedForeground }}>
+                  {item.a}
+                </p>
+              </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -551,39 +516,33 @@ function Newsletter() {
     <section className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
       <div className="max-w-2xl mx-auto px-6 text-center">
         <FadeUp>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 font-heading" style={{ color: tokens.foreground }}>Stay in the loop</h2>
-          <p className="text-lg mb-8" style={{ color: tokens.mutedForeground }}>
-            Get updates on new features and releases. No spam, ever.
+          <h2 className="text-[32px] md:text-[52px] font-serif font-medium mb-4 leading-[1.10]" style={{ color: tokens.foreground }}>Stay updated</h2>
+          <p className="text-[20px] mb-10 leading-[1.60]" style={{ color: tokens.mutedForeground }}>
+            Get the latest news about Claude and Anthropic.
           </p>
           {status === 'success' ? (
-            <p className="font-medium" style={{ color: tokens.accent }}>✓ You're on the list!</p>
+            <p className="font-medium text-[16px]" style={{ color: tokens.accent }}>✓ You're subscribed to our newsletter.</p>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <input
                 id="newsletter-email"
                 type="email"
                 required
                 autoComplete="email"
-                placeholder="your@email.com"
+                placeholder="Email address"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="flex-1 h-12 px-6 rounded-full border text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300"
-                style={{
-                  borderColor: tokens.border,
-                  backgroundColor: tokens.background,
-                  color: tokens.foreground,
-                  '--tw-ring-color': tokens.accent,
-                  '--tw-ring-offset-color': tokens.backgroundAlt
-                } as React.CSSProperties}
+                className="flex-1 h-[48px] px-4 rounded-[12px] text-[16px]"
+                style={{ boxShadow: '0 0 0 1px #e8e6dc', backgroundColor: tokens.backgroundAlt, color: tokens.foreground }}
               />
               <motion.button
                 type="submit"
                 disabled={status === 'loading'}
-                whileHover={{ backgroundColor: tokens.interactive }}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60 uppercase tracking-widest transition-colors duration-300"
-                style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
+                className="h-[48px] px-6 rounded-[12px] font-medium text-[16px] disabled:opacity-60"
+                style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
               >
                 {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
               </motion.button>
@@ -606,20 +565,20 @@ function Footer() {
   return (
     <footer className="py-16" style={{ backgroundColor: tokens.background, borderTop: `1px solid ${tokens.border}` }}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-16">
           <div className="col-span-2 md:col-span-1">
-            <p className="font-bold text-lg mb-3" style={{ color: tokens.foreground }}>{PRODUCT_NAME}</p>
-            <p className="text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
-              Building the future, one feature at a time.
+            <p className="font-serif font-medium text-[20px] mb-3" style={{ color: tokens.foreground }}>{PRODUCT_NAME}</p>
+            <p className="text-[14px] leading-[1.60]" style={{ color: tokens.mutedForeground }}>
+              AI research and products that put safety at the frontier.
             </p>
           </div>
           {Object.entries(links).map(([group, items]) => (
             <div key={group}>
-              <p className="font-semibold text-sm mb-4" style={{ color: tokens.foreground }}>{group}</p>
-              <ul className="space-y-2">
+              <p className="font-medium text-[14px] mb-6" style={{ color: tokens.foreground }}>{group}</p>
+              <ul className="space-y-4">
                 {items.map(item => (
                   <li key={item}>
-                    <a href="#" className="text-sm hover:opacity-80 transition-opacity" style={{ color: tokens.mutedForeground }}>
+                    <a href="#" className="text-[14px] hover:text-[#141413] transition-colors" style={{ color: tokens.mutedForeground }}>
                       {item}
                     </a>
                   </li>
@@ -629,13 +588,13 @@ function Footer() {
           ))}
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t gap-4" style={{ borderColor: tokens.border }}>
-          <p className="text-sm" style={{ color: tokens.mutedForeground }}>
-            © 2026 {PRODUCT_NAME}. All rights reserved.
+          <p className="text-[14px]" style={{ color: tokens.mutedForeground }}>
+            © 2025 Anthropic PBC
           </p>
           <a
             href="/"
-            className="text-xs px-3 py-1 rounded-full border"
-            style={{ borderColor: tokens.border, color: tokens.mutedForeground }}
+            className="text-[14px] px-4 py-2 rounded-[8px]"
+            style={{ boxShadow: '0 0 0 1px #e8e6dc', color: tokens.mutedForeground }}
           >
             ← All styles
           </a>
@@ -650,15 +609,7 @@ function Footer() {
 // ─────────────────────────────────────────────
 export default function StylePage() {
   return (
-    <div className={`${bodyFont.variable} ${headingFont.variable} font-sans relative`} style={{ backgroundColor: tokens.background }}>
-      {/* Mandatory paper grain texture */}
-      <div
-        className="pointer-events-none fixed inset-0 z-50 opacity-[0.015]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-        }}
-      />
+    <div className={`${bodyFont.variable} ${displayFont.variable} font-sans`} style={{ backgroundColor: tokens.background }}>
       <Navbar />
       <main>
         <Hero />

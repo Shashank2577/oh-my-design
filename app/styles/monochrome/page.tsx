@@ -552,7 +552,7 @@ function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      transition={{ duration: 0.3, ease: 'easeOut' as const }}
                       style={{ overflow: 'hidden' }}
                     >
                       <p className={`px-4 pb-8 text-xl leading-relaxed max-w-3xl ${bodyFont.className}`} style={{ color: tokens.mutedForeground }}>

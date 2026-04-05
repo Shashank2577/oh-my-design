@@ -90,7 +90,7 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
 }
 
 // ─────────────────────────────────────────────
@@ -621,7 +621,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: 'easeOut' as const }}
                   style={{ overflow: 'hidden' }}
                 >
                   <div className="px-6 pb-6 pt-2">

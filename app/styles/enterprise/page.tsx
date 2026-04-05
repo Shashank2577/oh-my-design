@@ -54,7 +54,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.3, delay, ease: 'easeOut' }} // Enterprise uses 300ms ease-out
+      transition={{ duration: 0.3, delay, ease: 'easeOut' as const }} // Enterprise uses 300ms ease-out
     >
       {children}
     </motion.div>
@@ -601,7 +601,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: 'easeOut' as const }}
                   style={{ overflow: 'hidden' }}
                 >
                   <div className="px-6 pb-6 pt-2 border-t mt-2" style={{ borderColor: tokens.border }}>

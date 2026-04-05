@@ -132,7 +132,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
       className={className}
       initial={shouldReduce ? false : { opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.4, delay, ease: 'easeOut' as const }}
     >
       {children}
     </motion.div>
@@ -480,7 +480,7 @@ function FAQ() {
               <motion.div
                 initial={false}
                 animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
+                transition={{ duration: 0.2, ease: 'easeOut' as const }}
                 style={{ overflow: 'hidden' }}
               >
                 <p className="pb-8 font-medium text-lg uppercase leading-tight px-4 -mx-4" style={{ color: tokens.mutedForeground }}>
