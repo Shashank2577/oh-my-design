@@ -1,0 +1,132 @@
+{
+  "repo": "Shashank2577/oh-my-design",
+  "branch": "main",
+  "created_at": "2026-04-06T10:00:00Z",
+  "total_tasks": 16,
+  "batches": [
+    {
+      "batch": 1,
+      "name": "Original Styles - Batch 1",
+      "rationale": "Implement the remaining original design styles from the designprompts_dev_all_styles.md document.",
+      "tasks": [
+        {
+          "id": "t1",
+          "title": "Originals Set 1: academia, bold-typography, industrial, material",
+          "prompt": "Implement these 4 original design styles: academia, bold-typography, industrial, material. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
+          "depends_on": []
+        },
+        {
+          "id": "t2",
+          "title": "Originals Set 2: minimal-dark, neo-brutalism, neumorphism, newsprint",
+          "prompt": "Implement these 4 original design styles: minimal-dark, neo-brutalism, neumorphism, newsprint. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
+          "depends_on": []
+        },
+        {
+          "id": "t3",
+          "title": "Originals Set 3: organic, playful-geometric, professional, retro",
+          "prompt": "Implement these 4 original design styles: organic, playful-geometric, professional, retro. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
+          "depends_on": []
+        },
+        {
+          "id": "t4",
+          "title": "Originals Set 4: humanist-literary, saas, sketch, swiss",
+          "prompt": "Implement these 4 original design styles: humanist-literary, saas, sketch, swiss. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
+          "depends_on": []
+        },
+        {
+          "id": "t5",
+          "title": "Originals Set 5: terminal-cli, vaporwave, web3",
+          "prompt": "Implement these 3 original design styles: terminal-cli, vaporwave, web3. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
+          "depends_on": []
+        }
+      ]
+    },
+    {
+      "batch": 2,
+      "name": "Version 2 - External Brands Set 1",
+      "rationale": "Implement the first set of 25 external brands from the awesome-design-md repo.",
+      "tasks": [
+        {
+          "id": "t6",
+          "title": "V2 Brands Set 1: airbnb, airtable, apple, bmw, cal",
+          "prompt": "Implement these 5 external styles: airbnb, airtable, apple, bmw, cal. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
+        },
+        {
+          "id": "t7",
+          "title": "V2 Brands Set 2: claude, clay, clickhouse, cohere, coinbase",
+          "prompt": "Implement these 5 external styles: claude, clay, clickhouse, cohere, coinbase. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
+        },
+        {
+          "id": "t8",
+          "title": "V2 Brands Set 3: composio, cursor, elevenlabs, expo, figma",
+          "prompt": "Implement these 5 external styles: composio, cursor, elevenlabs, expo, figma. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
+        },
+        {
+          "id": "t9",
+          "title": "V2 Brands Set 4: framer, hashicorp, ibm, intercom, kraken",
+          "prompt": "Implement these 5 external styles: framer, hashicorp, ibm, intercom, kraken. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
+        },
+        {
+          "id": "t10",
+          "title": "V2 Brands Set 5: linear.app, lovable, minimax, mintlify, miro",
+          "prompt": "Implement these 5 external styles: linear.app, lovable, minimax, mintlify, miro. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
+        }
+      ]
+    },
+    {
+      "batch": 3,
+      "name": "Version 2 - External Brands Set 2",
+      "rationale": "Implement the second set of 25 external brands from the awesome-design-md repo.",
+      "tasks": [
+        {
+          "id": "t11",
+          "title": "V2 Brands Set 6: mistral.ai, mongodb, notion, nvidia, ollama",
+          "prompt": "Implement these 5 external styles: mistral.ai, mongodb, notion, nvidia, ollama. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
+        },
+        {
+          "id": "t12",
+          "title": "V2 Brands Set 7: opencode.ai, pinterest, posthog, raycast, replicate",
+          "prompt": "Implement these 5 external styles: opencode.ai, pinterest, posthog, raycast, replicate. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
+        },
+        {
+          "id": "t13",
+          "title": "V2 Brands Set 8: resend, revolut, runwayml, sanity, sentry",
+          "prompt": "Implement these 5 external styles: resend, revolut, runwayml, sanity, sentry. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
+        },
+        {
+          "id": "t14",
+          "title": "V2 Brands Set 9: spacex, spotify, stripe, supabase, superhuman",
+          "prompt": "Implement these 5 external styles: spacex, spotify, stripe, supabase, superhuman. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
+        },
+        {
+          "id": "t15",
+          "title": "V2 Brands Set 10: together.ai, uber, vercel, voltagent, warp",
+          "prompt": "Implement these 5 external styles: together.ai, uber, vercel, voltagent, warp. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
+        }
+      ]
+    },
+    {
+      "batch": 4,
+      "name": "Version 2 - Remaining",
+      "rationale": "Implement the final set of external brands.",
+      "tasks": [
+        {
+          "id": "t16",
+          "title": "V2 Brands Set 11: webflow, wise, x.ai, zapier",
+          "prompt": "Implement these 4 external styles: webflow, wise, x.ai, zapier. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
+          "depends_on": ["t11", "t12", "t13", "t14", "t15"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+# Oh My Design - Design Tracker
+
+## Current Implementation Status
+
+| Style | Batch | Status | Date |
+|-------|-------|--------|------|
+| Academia | Batch 1 | PLANNED | - |
+| Art Deco | Original | IMPLEMENTED | - |
+| Bauhaus | Original | IMPLEMENTED | - |
+| Bold Typography | Batch 1 | PLANNED | - |
+| Botanical | Original | IMPLEMENTED | - |
+| Claymorphism | Original | IMPLEMENTED | - |
+| Cyberpunk | Original | IMPLEMENTED | - |
+| Enterprise | Original | IMPLEMENTED | - |
+| Flat Design | Original | IMPLEMENTED | - |
+| Fluent 2 | Original | IMPLEMENTED | - |
+| Industrial | Batch 1 | PLANNED | - |
+| Kinetic | Original | IMPLEMENTED | - |
+| Luxury | Original | IMPLEMENTED | - |
+| Material | Batch 1 | PLANNED | - |
+| Maximalism | Original | IMPLEMENTED | - |
+| Minimal Dark | Batch 1 | PLANNED | - |
+| Modern Dark | Original | IMPLEMENTED | - |
+| Monochrome | Original | IMPLEMENTED | - |
+| Neo-brutalism | Batch 1 | PLANNED | - |
+| Neumorphism | Batch 1 | PLANNED | - |
+| Newsprint | Batch 1 | PLANNED | - |
+| Organic | Batch 1 | PLANNED | - |
+| Playful Geometric | Batch 1 | PLANNED | - |
+| Professional | Batch 1 | PLANNED | - |
+| Retro | Batch 1 | PLANNED | - |
+| Humanist Literary | Batch 1 | PLANNED | - |
+| SaaS | Batch 1 | PLANNED | - |
+| Sketch | Batch 1 | PLANNED | - |
+| Swiss | Batch 1 | PLANNED | - |
+| Terminal CLI | Batch 1 | PLANNED | - |
+| Vaporwave | Batch 1 | PLANNED | - |
+| Web3 | Batch 1 | PLANNED | - |
+
+## Batch 2 (Version 2 - External Designs)
+
+| Style | Source | Status | Date |
+|-------|--------|--------|------|
+| airbnb | VoltAgent/V2 | PLANNED | - |
+| airtable | VoltAgent/V2 | PLANNED | - |
+| apple | VoltAgent/V2 | PLANNED | - |
+| bmw | VoltAgent/V2 | PLANNED | - |
+| cal | VoltAgent/V2 | PLANNED | - |
+| claude | VoltAgent/V2 | PLANNED | - |
+| clay | VoltAgent/V2 | PLANNED | - |
+| clickhouse | VoltAgent/V2 | PLANNED | - |
+| cohere | VoltAgent/V2 | PLANNED | - |
+| coinbase | VoltAgent/V2 | PLANNED | - |
+| composio | VoltAgent/V2 | PLANNED | - |
+| cursor | VoltAgent/V2 | PLANNED | - |
+| elevenlabs | VoltAgent/V2 | PLANNED | - |
+| expo | VoltAgent/V2 | PLANNED | - |
+| figma | VoltAgent/V2 | PLANNED | - |
+| framer | VoltAgent/V2 | PLANNED | - |
+| hashicorp | VoltAgent/V2 | PLANNED | - |
+| ibm | VoltAgent/V2 | PLANNED | - |
+| intercom | VoltAgent/V2 | PLANNED | - |
+| kraken | VoltAgent/V2 | PLANNED | - |
+| linear.app | VoltAgent/V2 | PLANNED | - |
+| lovable | VoltAgent/V2 | PLANNED | - |
+| minimax | VoltAgent/V2 | PLANNED | - |
+| mintlify | VoltAgent/V2 | PLANNED | - |
+| miro | VoltAgent/V2 | PLANNED | - |
+| mistral.ai | VoltAgent/V2 | PLANNED | - |
+| mongodb | VoltAgent/V2 | PLANNED | - |
+| notion | VoltAgent/V2 | PLANNED | - |
+| nvidia | VoltAgent/V2 | PLANNED | - |
+| ollama | VoltAgent/V2 | PLANNED | - |
+| opencode.ai | VoltAgent/V2 | PLANNED | - |
+| pinterest | VoltAgent/V2 | PLANNED | - |
+| posthog | VoltAgent/V2 | PLANNED | - |
+| raycast | VoltAgent/V2 | PLANNED | - |
+| replicate | VoltAgent/V2 | PLANNED | - |
+| resend | VoltAgent/V2 | IMPLEMENTED | - |
+| revolut | VoltAgent/V2 | IMPLEMENTED | - |
+| runwayml | VoltAgent/V2 | IMPLEMENTED | - |
+| sanity | VoltAgent/V2 | IMPLEMENTED | - |
+| sentry | VoltAgent/V2 | IMPLEMENTED | - |
+| spacex | VoltAgent/V2 | PLANNED | - |
+| spotify | VoltAgent/V2 | PLANNED | - |
+| stripe | VoltAgent/V2 | PLANNED | - |
+| supabase | VoltAgent/V2 | PLANNED | - |
+| superhuman | VoltAgent/V2 | PLANNED | - |
+| together.ai | VoltAgent/V2 | PLANNED | - |
+| uber | VoltAgent/V2 | PLANNED | - |
+| vercel | VoltAgent/V2 | PLANNED | - |
+| voltagent | VoltAgent/V2 | PLANNED | - |
+| warp | VoltAgent/V2 | PLANNED | - |
+| webflow | VoltAgent/V2 | PLANNED | - |
+| wise | VoltAgent/V2 | PLANNED | - |
+| x.ai | VoltAgent/V2 | PLANNED | - |
+| zapier | VoltAgent/V2 | PLANNED | - |

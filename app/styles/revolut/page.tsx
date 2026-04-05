@@ -11,7 +11,7 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 // Replace fonts with those specified in the design system:
-import { Playfair_Display, Source_Sans_3 } from 'next/font/google'
+import { Inter, Space_Grotesk } from 'next/font/google'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
   BookOpen, Layout, Palette, Code2, BarChart, Lock
@@ -20,15 +20,16 @@ import {
 // ─────────────────────────────────────────────
 // FONTS — replace with style-specific fonts
 // ─────────────────────────────────────────────
-const headingFont = Playfair_Display({
+const bodyFont = Inter({
   subsets: ['latin'],
-  variable: '--font-heading',
+  variable: '--font-body',
   display: 'swap',
 })
 
-const bodyFont = Source_Sans_3({
+// We'll use Space Grotesk as a geometric grotesque substitute for Aeonik Pro
+const displayFont = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-display',
   display: 'swap',
 })
 
@@ -36,15 +37,17 @@ const bodyFont = Source_Sans_3({
 // DESIGN TOKENS — replace ALL values per style
 // ─────────────────────────────────────────────
 const tokens = {
-  background: '#F9F8F4',
-  backgroundAlt: '#F2F0EB',
-  foreground: '#2D3A31',
-  muted: '#DCCFC2',
-  mutedForeground: '#2D3A31',
-  border: '#E6E2DA',
-  accent: '#8C9A84',
-  accentForeground: '#FFFFFF',
-  interactive: '#C27B66',
+  background: '#ffffff', // Pure white
+  backgroundAlt: '#f4f4f4', // Light Surface
+  foreground: '#191c1f', // Revolut Dark
+  muted: '#f4f4f4',
+  mutedForeground: '#505a63', // Mid Slate
+  border: '#c9c9cd', // Gray Tone 20
+  accent: '#191c1f', // Primary Dark
+  accentForeground: '#ffffff',
+  brandBlue: '#494fdf',
+  danger: '#e23b4a',
+  success: '#00a87e',
 }
 
 // ─────────────────────────────────────────────
@@ -60,7 +63,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: 'easeInOut' }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -89,15 +92,15 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeInOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
 // ─────────────────────────────────────────────
 // DATA — replace with style-appropriate content
 // ─────────────────────────────────────────────
-const PRODUCT_NAME = 'ProductName'
-const TAGLINE = 'The product tagline goes here'
-const DESCRIPTION = 'A compelling description of what this product does and why it matters.'
+const PRODUCT_NAME = 'Revolut'
+const TAGLINE = 'One app, all things money'
+const DESCRIPTION = 'From easy money management, to travel perks and investments. Open your account in a flash.'
 
 const NAV_LINKS = ['Features', 'Pricing', 'Testimonials', 'FAQ']
 
@@ -187,11 +190,10 @@ const FAQ_ITEMS = [
 function Navbar() {
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 border-b"
-      style={{ borderColor: tokens.border, backgroundColor: tokens.background }}
+      className="fixed top-0 left-0 right-0 z-50 bg-white"
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <span className="font-bold text-lg font-heading" style={{ color: tokens.foreground }}>
+      <div className="max-w-[1280px] mx-auto px-6 h-20 flex items-center justify-between">
+        <span className={`font-medium text-[20px] ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>
           {PRODUCT_NAME}
         </span>
         <div className="hidden md:flex items-center gap-8">
@@ -199,21 +201,29 @@ function Navbar() {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
-              className="text-sm transition-colors hover:opacity-80"
-              style={{ color: tokens.mutedForeground }}
+              className={`text-[16px] font-semibold transition-opacity hover:opacity-70 ${bodyFont.variable} font-body tracking-[0.16px]`}
+              style={{ color: tokens.foreground }}
             >
               {link}
             </a>
           ))}
         </div>
-        <motion.button
-          whileHover={{ backgroundColor: tokens.interactive }}
-          whileTap={{ scale: 0.98 }}
-          className="px-5 h-10 rounded-full text-sm font-medium uppercase tracking-widest transition-colors duration-300"
-          style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
-        >
-          Get started
-        </motion.button>
+        <div className="flex gap-4">
+          <motion.button
+            whileHover={{ opacity: 0.85 }}
+            className={`hidden md:block px-[32px] h-[48px] rounded-full text-[16px] font-medium ${displayFont.variable} font-display`}
+            style={{ backgroundColor: tokens.backgroundAlt, color: tokens.foreground }}
+          >
+            Log in
+          </motion.button>
+          <motion.button
+            whileHover={{ opacity: 0.85 }}
+            className={`px-[32px] h-[48px] rounded-full text-[16px] font-medium ${displayFont.variable} font-display`}
+            style={{ backgroundColor: tokens.foreground, color: tokens.background }}
+          >
+            Sign up
+          </motion.button>
+        </div>
       </div>
     </nav>
   )
@@ -221,28 +231,19 @@ function Navbar() {
 
 function Hero() {
   return (
-    <section className="min-h-dvh flex items-center pt-16" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-6xl mx-auto px-6 py-24 w-full">
+    <section className="min-h-dvh flex items-center justify-center pt-20" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-[1280px] mx-auto px-6 py-24 w-full flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ staggerChildren: 0.15, delayChildren: 0.1 }}
-          className="max-w-3xl"
+          className="max-w-4xl flex flex-col items-center"
         >
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-sm uppercase tracking-widest mb-4"
-            style={{ color: tokens.accent }}
-          >
-            Introducing {PRODUCT_NAME}
-          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl md:text-8xl font-bold leading-tight mb-6 font-heading"
+            className={`text-[64px] md:text-[80px] lg:text-[136px] font-medium leading-[1.00] tracking-[-2.72px] mb-8 ${displayFont.variable} font-display`}
             style={{ color: tokens.foreground }}
           >
             {TAGLINE}
@@ -251,7 +252,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
+            className={`text-[18px] md:text-[24px] mb-12 max-w-2xl leading-[1.5] ${bodyFont.variable} font-body tracking-[0.16px]`}
             style={{ color: tokens.mutedForeground }}
           >
             {DESCRIPTION}
@@ -263,33 +264,14 @@ function Hero() {
             className="flex flex-col sm:flex-row gap-4"
           >
             <motion.button
-              whileHover={{ backgroundColor: tokens.interactive }}
-              whileTap={{ scale: 0.98 }}
-              className="h-14 px-8 rounded-full font-medium flex items-center gap-2 uppercase tracking-widest text-sm transition-colors duration-300"
-              style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
+              whileHover={{ opacity: 0.85 }}
+              className={`h-[48px] px-[32px] rounded-full font-medium text-[16px] ${displayFont.variable} font-display`}
+              style={{ backgroundColor: tokens.foreground, color: tokens.background }}
             >
-              Start for free <ArrowRight className="h-4 w-4" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="h-14 px-8 rounded-full font-medium border uppercase tracking-widest text-sm transition-colors duration-300"
-              style={{ borderColor: tokens.accent, color: tokens.accent }}
-            >
-              View demo
+              Get a free account
             </motion.button>
           </motion.div>
         </motion.div>
-
-        {/* Hero Visual — replace with style-specific imagery */}
-        <FadeUp delay={0.4}>
-          <div
-            className="mt-16 w-full h-72 md:h-96 rounded-[200px_200px_0_0] overflow-hidden relative"
-            style={{ background: `linear-gradient(135deg, ${tokens.accent}40, ${tokens.accent}10)`, border: `1px solid ${tokens.border}` }}
-          >
-             <div className="absolute inset-0 bg-black/5" />
-          </div>
-        </FadeUp>
       </div>
     </section>
   )
@@ -297,14 +279,14 @@ function Hero() {
 
 function Stats() {
   return (
-    <section className="border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
-      <div className="max-w-6xl mx-auto px-6 py-12">
+    <section className="" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-[1280px] mx-auto px-6 py-20">
         <StaggerContainer>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {STATS.map(stat => (
               <motion.div key={stat.label} variants={staggerItem} className="text-center">
-                <p className="text-4xl font-bold mb-1" style={{ color: tokens.foreground }}>{stat.value}</p>
-                <p className="text-sm" style={{ color: tokens.mutedForeground }}>{stat.label}</p>
+                <p className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] mb-2 ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>{stat.value}</p>
+                <p className={`text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -317,32 +299,28 @@ function Stats() {
 function Features() {
   return (
     <section id="features" className="py-24" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-[1280px] mx-auto px-6">
         <FadeUp>
           <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>Features</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 font-heading" style={{ color: tokens.foreground }}>
-              Everything you need
+            <h2 className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] mb-6 ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>
+              Do more with your money
             </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: tokens.mutedForeground }}>
-              Powerful features designed for teams that care about quality.
-            </p>
           </div>
         </FadeUp>
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {FEATURES.map((feature, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {FEATURES.map(feature => (
               <motion.div
                 key={feature.title}
                 variants={staggerItem}
-                whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                className={`p-8 rounded-3xl border ${i % 2 === 1 ? 'md:translate-y-12' : ''}`}
-                style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}
+                className="p-8 rounded-[20px]"
+                style={{ backgroundColor: tokens.backgroundAlt }}
               >
-                <feature.icon className="h-6 w-6 mb-4" style={{ color: tokens.accent }} strokeWidth={1.5} />
-                <h3 className="font-semibold text-lg mb-2" style={{ color: tokens.foreground }}>{feature.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>{feature.description}</p>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-6 bg-white">
+                  <feature.icon className="h-6 w-6" style={{ color: tokens.brandBlue }} strokeWidth={2} />
+                </div>
+                <h3 className={`font-medium text-[24px] leading-[1.33] mb-3 ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>{feature.title}</h3>
+                <p className={`text-[16px] leading-[1.5] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -354,24 +332,35 @@ function Features() {
 
 function ProductDetail() {
   return (
-    <section className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
-      <div className="max-w-4xl mx-auto px-6">
+    <section className="py-24" style={{ backgroundColor: tokens.foreground }}>
+      <div className="max-w-[1280px] mx-auto px-6">
         <FadeUp>
-          <div className="text-center">
-            <p className="text-sm uppercase tracking-widest mb-4" style={{ color: tokens.accent }}>About</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 font-heading" style={{ color: tokens.foreground }}>
-              Built for the way you work
-            </h2>
-            <div className="space-y-6 text-left">
-              <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-              </p>
-              <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
-              </p>
-              <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-              </p>
+          <div className="flex flex-col md:flex-row items-center gap-16">
+            <div className="flex-1 space-y-8">
+              <h2 className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] ${displayFont.variable} font-display`} style={{ color: tokens.background }}>
+                Security that's built-in
+              </h2>
+              <div className="space-y-6">
+                <p className={`text-[18px] leading-[1.56] tracking-[-0.09px] ${bodyFont.variable} font-body`} style={{ color: '#8d969e' }}>
+                  Our award-winning security systems are designed to keep your money safe. We monitor your account 24/7 to spot fraudulent activity.
+                </p>
+                <ul className="space-y-4">
+                  {['End-to-end security', 'Instant card freezing', 'Disposable virtual cards'].map(item => (
+                    <li key={item} className={`flex items-center gap-3 text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.background }}>
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: tokens.success }}>
+                        <Check className="h-4 w-4 text-white" strokeWidth={3} />
+                      </div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="flex-1 w-full">
+              <div className="w-full aspect-[4/3] rounded-[20px] bg-[#191c1f] flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#494fdf] to-[#e61e49] opacity-20"></div>
+                <Shield className="w-32 h-32 text-white relative z-10" strokeWidth={1} />
+              </div>
             </div>
           </div>
         </FadeUp>
@@ -383,12 +372,11 @@ function ProductDetail() {
 function Pricing() {
   return (
     <section id="pricing" className="py-24" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-[1280px] mx-auto px-6">
         <FadeUp>
           <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>Pricing</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 font-heading" style={{ color: tokens.foreground }}>Simple, transparent pricing</h2>
-            <p className="text-lg" style={{ color: tokens.mutedForeground }}>No surprises. Cancel anytime.</p>
+            <h2 className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] mb-4 ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>Plans for everyone</h2>
+            <p className={`text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>Choose the plan that suits you best.</p>
           </div>
         </FadeUp>
         <StaggerContainer>
@@ -397,44 +385,39 @@ function Pricing() {
               <motion.div
                 key={tier.name}
                 variants={staggerItem}
-                whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                className="p-8 rounded-3xl border relative"
+                className="p-8 rounded-[20px] relative flex flex-col"
                 style={{
-                  borderColor: tier.highlighted ? tokens.accent : tokens.border,
-                  backgroundColor: tier.highlighted ? `${tokens.accent}08` : tokens.backgroundAlt,
-                  boxShadow: tier.highlighted ? `0 0 0 2px ${tokens.accent}` : 'none',
+                  backgroundColor: tier.highlighted ? '#191c1f' : tokens.backgroundAlt,
                 }}
               >
                 {tier.highlighted && (
                   <span
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-xs font-medium rounded-full"
-                    style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
+                    className={`absolute top-6 right-6 px-[12px] py-[6px] text-[14px] font-medium rounded-full ${displayFont.variable} font-display`}
+                    style={{ backgroundColor: tokens.brandBlue, color: '#ffffff' }}
                   >
-                    Most popular
+                    Popular
                   </span>
                 )}
-                <h3 className="font-bold text-xl mb-1 font-heading" style={{ color: tokens.foreground }}>{tier.name}</h3>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-bold" style={{ color: tokens.foreground }}>{tier.price}</span>
-                  <span className="text-sm" style={{ color: tokens.mutedForeground }}>/ {tier.period}</span>
+                <h3 className={`font-medium text-[32px] leading-[1.19] tracking-[-0.32px] mb-4 ${displayFont.variable} font-display`} style={{ color: tier.highlighted ? '#ffffff' : tokens.foreground }}>{tier.name}</h3>
+                <div className="flex items-baseline gap-1 mb-6">
+                  <span className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] ${displayFont.variable} font-display`} style={{ color: tier.highlighted ? '#ffffff' : tokens.foreground }}>{tier.price}</span>
+                  <span className={`text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tier.highlighted ? '#8d969e' : tokens.mutedForeground }}>/ {tier.period}</span>
                 </div>
-                <p className="text-sm mb-6" style={{ color: tokens.mutedForeground }}>{tier.description}</p>
-                <ul className="space-y-3 mb-8">
+                <p className={`text-[16px] mb-8 tracking-[0.24px] leading-[1.5] ${bodyFont.variable} font-body`} style={{ color: tier.highlighted ? '#8d969e' : tokens.mutedForeground }}>{tier.description}</p>
+                <ul className="space-y-4 mb-10 flex-1">
                   {tier.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm">
-                      <Check className="h-4 w-4 flex-shrink-0" style={{ color: tokens.accent }} />
-                      <span style={{ color: tokens.foreground }}>{f}</span>
+                    <li key={f} className={`flex items-center gap-3 text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`}>
+                      <Check className="h-5 w-5 flex-shrink-0" style={{ color: tier.highlighted ? '#ffffff' : tokens.foreground }} />
+                      <span style={{ color: tier.highlighted ? '#ffffff' : tokens.foreground }}>{f}</span>
                     </li>
                   ))}
                 </ul>
                 <motion.button
-                  whileHover={{ backgroundColor: tier.highlighted ? tokens.interactive : tokens.accent, color: tokens.accentForeground }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 rounded-full font-medium text-sm border uppercase tracking-widest transition-colors duration-300"
+                  whileHover={{ opacity: 0.85 }}
+                  className={`w-full h-[48px] rounded-full font-medium text-[16px] border-[2px] ${displayFont.variable} font-display`}
                   style={tier.highlighted
-                    ? { backgroundColor: tokens.foreground, color: tokens.accentForeground, borderColor: tokens.foreground }
-                    : { backgroundColor: 'transparent', color: tokens.accent, borderColor: tokens.accent }
+                    ? { backgroundColor: '#ffffff', color: '#191c1f', borderColor: '#ffffff' }
+                    : { backgroundColor: 'transparent', color: tokens.foreground, borderColor: tokens.foreground }
                   }
                 >
                   {tier.cta}
@@ -450,34 +433,31 @@ function Pricing() {
 
 function Testimonials() {
   return (
-    <section id="testimonials" className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="testimonials" className="py-24" style={{ backgroundColor: tokens.backgroundAlt }}>
+      <div className="max-w-[1280px] mx-auto px-6">
         <FadeUp>
           <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>Testimonials</p>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading" style={{ color: tokens.foreground }}>Loved by teams worldwide</h2>
+            <h2 className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>What our customers say</h2>
           </div>
         </FadeUp>
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {TESTIMONIALS.map((t, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map(t => (
               <motion.div
                 key={t.name}
                 variants={staggerItem}
-                className={`p-8 rounded-3xl border ${i % 2 === 1 ? 'md:translate-y-12' : ''}`}
-                whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                style={{ borderColor: tokens.border, backgroundColor: tokens.background }}
+                className="p-8 rounded-[20px]"
+                style={{ backgroundColor: tokens.background }}
               >
-                <div className="flex mb-4">
+                <div className="flex mb-6">
                   {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-current" style={{ color: tokens.accent }} />
+                    <Star key={i} className="h-5 w-5 fill-current" style={{ color: tokens.foreground }} />
                   ))}
                 </div>
-                <p className="text-sm leading-relaxed mb-6" style={{ color: tokens.foreground }}>"{t.text}"</p>
+                <p className={`text-[18px] leading-[1.56] tracking-[-0.09px] mb-8 ${bodyFont.variable} font-body`} style={{ color: tokens.foreground }}>"{t.text}"</p>
                 <div>
-                  <p className="font-semibold text-sm" style={{ color: tokens.foreground }}>{t.name}</p>
-                  <p className="text-xs" style={{ color: tokens.mutedForeground }}>{t.role} · {t.company}</p>
+                  <p className={`font-semibold text-[16px] tracking-[0.16px] ${bodyFont.variable} font-body`} style={{ color: tokens.foreground }}>{t.name}</p>
+                  <p className={`text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>{t.role} · {t.company}</p>
                 </div>
               </motion.div>
             ))}
@@ -493,29 +473,27 @@ function FAQ() {
 
   return (
     <section id="faq" className="py-24" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-[800px] mx-auto px-6">
         <FadeUp>
           <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest mb-3" style={{ color: tokens.accent }}>FAQ</p>
-            <h2 className="text-4xl md:text-5xl font-bold font-heading" style={{ color: tokens.foreground }}>Common questions</h2>
+            <h2 className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>Got questions?</h2>
           </div>
         </FadeUp>
         <div className="space-y-4">
           {FAQ_ITEMS.map((item, i) => (
             <FadeUp key={i} delay={i * 0.05}>
-              <div className="border rounded-3xl overflow-hidden" style={{ borderColor: tokens.border }}>
+              <div className="rounded-[20px] overflow-hidden" style={{ backgroundColor: tokens.backgroundAlt }}>
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   aria-expanded={openIndex === i}
                   className="w-full flex items-center justify-between p-6 text-left"
-                  style={{ backgroundColor: tokens.backgroundAlt }}
                 >
-                  <span className="font-medium" style={{ color: tokens.foreground }}>{item.q}</span>
+                  <span className={`font-medium text-[20px] leading-[1.4] ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>{item.q}</span>
                   <motion.span
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ChevronDown className="h-4 w-4 flex-shrink-0" style={{ color: tokens.mutedForeground }} />
+                    <ChevronDown className="h-6 w-6 flex-shrink-0" style={{ color: tokens.foreground }} />
                   </motion.span>
                 </button>
                 <motion.div
@@ -524,7 +502,7 @@ function FAQ() {
                   transition={{ duration: 0.3, ease: 'easeOut' }}
                   style={{ overflow: 'hidden' }}
                 >
-                  <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
+                  <p className={`px-6 pb-6 text-[16px] leading-[1.5] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>
                     {item.a}
                   </p>
                 </motion.div>
@@ -548,44 +526,46 @@ function Newsletter() {
   }
 
   return (
-    <section className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
-      <div className="max-w-2xl mx-auto px-6 text-center">
+    <section className="py-24" style={{ backgroundColor: tokens.backgroundAlt }}>
+      <div className="max-w-[1280px] mx-auto px-6 text-center">
         <FadeUp>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 font-heading" style={{ color: tokens.foreground }}>Stay in the loop</h2>
-          <p className="text-lg mb-8" style={{ color: tokens.mutedForeground }}>
-            Get updates on new features and releases. No spam, ever.
+          <h2 className={`text-[40px] md:text-[48px] font-medium leading-[1.21] tracking-[-0.48px] mb-4 ${displayFont.variable} font-display`} style={{ color: tokens.foreground }}>Stay updated</h2>
+          <p className={`text-[18px] leading-[1.56] tracking-[-0.09px] mb-10 max-w-2xl mx-auto ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>
+            Get the latest news and updates directly to your inbox.
           </p>
           {status === 'success' ? (
-            <p className="font-medium" style={{ color: tokens.accent }}>✓ You're on the list!</p>
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: tokens.success }}>
+                <Check className="w-5 h-5 text-white" />
+              </div>
+              <p className={`font-semibold text-[18px] ${bodyFont.variable} font-body`} style={{ color: tokens.foreground }}>You're all set!</p>
+            </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
               <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <input
                 id="newsletter-email"
                 type="email"
                 required
                 autoComplete="email"
-                placeholder="your@email.com"
+                placeholder="Enter your email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="flex-1 h-12 px-6 rounded-full border text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300"
+                className={`flex-1 h-[56px] px-6 rounded-full text-[16px] focus:outline-none focus:ring-2 ${bodyFont.variable} font-body`}
                 style={{
-                  borderColor: tokens.border,
                   backgroundColor: tokens.background,
                   color: tokens.foreground,
-                  '--tw-ring-color': tokens.accent,
-                  '--tw-ring-offset-color': tokens.backgroundAlt
-                } as React.CSSProperties}
+                  boxShadow: `0 0 0 0.125rem transparent`
+                }}
               />
               <motion.button
                 type="submit"
                 disabled={status === 'loading'}
-                whileHover={{ backgroundColor: tokens.interactive }}
-                whileTap={{ scale: 0.98 }}
-                className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60 uppercase tracking-widest transition-colors duration-300"
-                style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
+                whileHover={{ opacity: 0.85 }}
+                className={`h-[56px] px-[32px] rounded-full font-medium text-[16px] disabled:opacity-60 ${displayFont.variable} font-display`}
+                style={{ backgroundColor: tokens.foreground, color: tokens.background }}
               >
-                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                {status === 'loading' ? 'Sending...' : 'Subscribe'}
               </motion.button>
             </form>
           )}
@@ -604,22 +584,22 @@ function Footer() {
   }
 
   return (
-    <footer className="py-16" style={{ backgroundColor: tokens.background, borderTop: `1px solid ${tokens.border}` }}>
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+    <footer className="py-20" style={{ backgroundColor: tokens.foreground }}>
+      <div className="max-w-[1280px] mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-12 mb-16">
           <div className="col-span-2 md:col-span-1">
-            <p className="font-bold text-lg mb-3" style={{ color: tokens.foreground }}>{PRODUCT_NAME}</p>
-            <p className="text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
-              Building the future, one feature at a time.
+            <p className={`font-medium text-[24px] mb-4 ${displayFont.variable} font-display`} style={{ color: tokens.background }}>{PRODUCT_NAME}</p>
+            <p className={`text-[16px] leading-[1.5] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: '#8d969e' }}>
+              Building the future of finance, one feature at a time.
             </p>
           </div>
           {Object.entries(links).map(([group, items]) => (
             <div key={group}>
-              <p className="font-semibold text-sm mb-4" style={{ color: tokens.foreground }}>{group}</p>
-              <ul className="space-y-2">
+              <p className={`font-medium text-[16px] mb-6 tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: tokens.background }}>{group}</p>
+              <ul className="space-y-4">
                 {items.map(item => (
                   <li key={item}>
-                    <a href="#" className="text-sm hover:opacity-80 transition-opacity" style={{ color: tokens.mutedForeground }}>
+                    <a href="#" className={`text-[16px] tracking-[0.24px] hover:text-white transition-colors ${bodyFont.variable} font-body`} style={{ color: '#8d969e' }}>
                       {item}
                     </a>
                   </li>
@@ -628,14 +608,14 @@ function Footer() {
             </div>
           ))}
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t gap-4" style={{ borderColor: tokens.border }}>
-          <p className="text-sm" style={{ color: tokens.mutedForeground }}>
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t gap-6" style={{ borderColor: '#505a63' }}>
+          <p className={`text-[16px] tracking-[0.24px] ${bodyFont.variable} font-body`} style={{ color: '#8d969e' }}>
             © 2026 {PRODUCT_NAME}. All rights reserved.
           </p>
           <a
             href="/"
-            className="text-xs px-3 py-1 rounded-full border"
-            style={{ borderColor: tokens.border, color: tokens.mutedForeground }}
+            className={`text-[14px] px-[16px] py-[8px] rounded-full border transition-colors ${bodyFont.variable} font-body`}
+            style={{ borderColor: '#505a63', color: '#8d969e' }}
           >
             ← All styles
           </a>
@@ -650,15 +630,7 @@ function Footer() {
 // ─────────────────────────────────────────────
 export default function StylePage() {
   return (
-    <div className={`${bodyFont.variable} ${headingFont.variable} font-sans relative`} style={{ backgroundColor: tokens.background }}>
-      {/* Mandatory paper grain texture */}
-      <div
-        className="pointer-events-none fixed inset-0 z-50 opacity-[0.015]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-        }}
-      />
+    <div className={`${bodyFont.variable} font-sans`} style={{ backgroundColor: tokens.background }}>
       <Navbar />
       <main>
         <Hero />

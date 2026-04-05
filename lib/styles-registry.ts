@@ -41,4 +41,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: false },
   { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: false },
   { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: false },
+  { slug: 'resend', name: 'Resend', category: 'Tech', vibe: 'Dark, cinematic, theater-like', bestFor: 'Developer tools, SaaS', accentColor: '#ff801f', built: true },
+  { slug: 'revolut', name: 'Revolut', category: 'Modern', vibe: 'Fintech confidence, billboard-scale', bestFor: 'Fintech, Banking, Apps', accentColor: '#191c1f', built: true },
+  { slug: 'runwayml', name: 'RunwayML', category: 'Modern', vibe: 'Cinematic, editorial, visual-first', bestFor: 'AI tools, Creative platforms', accentColor: '#ffffff', built: true },
+  { slug: 'sanity', name: 'Sanity', category: 'Professional', vibe: 'Developer-focused, precise, dark', bestFor: 'Developer tools, CMS', accentColor: '#f36458', built: true },
+  { slug: 'sentry', name: 'Sentry', category: 'Tech', vibe: 'Dark IDE, developer-focused, tactical', bestFor: 'Developer tools, Monitoring', accentColor: '#c2ef4e', built: true },
 ]
