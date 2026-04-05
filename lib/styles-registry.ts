@@ -9,15 +9,15 @@ export interface StyleMeta {
 }
 
 export const STYLES: StyleMeta[] = [
-  { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: false },
+  { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: true },
   { slug: 'art-deco', name: 'Art Deco', category: 'Elegant', vibe: 'Luxurious 1920s glamour', bestFor: 'Luxury brands, Hotels', accentColor: '#D4AF37', built: true },
   { slug: 'bauhaus', name: 'Bauhaus', category: 'Minimal', vibe: 'Functionalist, geometric minimalism', bestFor: 'Design tools, Architecture sites', accentColor: '#E63329', built: true },
   { slug: 'bold-typography', name: 'Bold Typography', category: 'Creative', vibe: 'Type-driven design', bestFor: 'Content platforms, Editorial sites', accentColor: '#000000', built: false },
-  { slug: 'botanical', name: 'Botanical', category: 'Organic', vibe: 'Nature-inspired, organic', bestFor: 'Health & wellness, Eco brands', accentColor: '#4A7C59', built: false },
+  { slug: 'botanical', name: 'Botanical', category: 'Organic', vibe: 'Nature-inspired, organic', bestFor: 'Health & wellness, Eco brands', accentColor: '#4A7C59', built: true },
   { slug: 'claymorphism', name: 'Claymorphism', category: 'Modern', vibe: 'Soft, clay-like 3D elements', bestFor: 'Creative agencies, Kids apps', accentColor: '#FF6B6B', built: true },
   { slug: 'cyberpunk', name: 'Cyberpunk', category: 'Futuristic', vibe: 'Futuristic, neon, high-tech', bestFor: 'Gaming, Tech products', accentColor: '#00FFFF', built: true },
   { slug: 'enterprise', name: 'Enterprise', category: 'Professional', vibe: 'Professional, corporate, scalable', bestFor: 'B2B SaaS, Corporate sites', accentColor: '#0052CC', built: true },
-  { slug: 'flat-design', name: 'Flat Design', category: 'Minimal', vibe: 'Clean, minimal, 2D', bestFor: 'Mobile apps, Dashboards', accentColor: '#3498DB', built: false },
+  { slug: 'flat-design', name: 'Flat Design', category: 'Minimal', vibe: 'Clean, minimal, 2D', bestFor: 'Mobile apps, Dashboards', accentColor: '#3498DB', built: true },
   { slug: 'fluent-2', name: 'Fluent 2', category: 'Modern', vibe: 'Microsoft Fluent 2 Design System', bestFor: 'Enterprise apps, Windows apps', accentColor: '#0078D4', built: true },
   { slug: 'industrial', name: 'Industrial', category: 'Raw', vibe: 'Raw, mechanical, utilitarian', bestFor: 'Manufacturing, Construction', accentColor: '#FF6B00', built: false },
   { slug: 'kinetic', name: 'Kinetic', category: 'Dynamic', vibe: 'Dynamic, motion-focused', bestFor: 'Creative portfolios, Event sites', accentColor: '#FF3D00', built: true },
@@ -25,7 +25,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'material', name: 'Material', category: 'Modern', vibe: 'Google Material Design', bestFor: 'Android apps, Modern dashboards', accentColor: '#6200EE', built: false },
   { slug: 'maximalism', name: 'Maximalism', category: 'Creative', vibe: 'Bold, expressive, abundant', bestFor: 'Creative agencies, Art platforms', accentColor: '#FF0080', built: true },
   { slug: 'minimal-dark', name: 'Minimal Dark', category: 'Minimal', vibe: 'Minimal dark theme', bestFor: 'Developer tools, Code editors', accentColor: '#64FFDA', built: false },
-  { slug: 'modern-dark', name: 'Modern Dark', category: 'Modern', vibe: 'Contemporary dark UI with depth', bestFor: 'SaaS products, Developer tools', accentColor: '#7C3AED', built: false },
+  { slug: 'modern-dark', name: 'Modern Dark', category: 'Modern', vibe: 'Contemporary dark UI with depth', bestFor: 'SaaS products, Developer tools', accentColor: '#7C3AED', built: true },
   { slug: 'monochrome', name: 'Monochrome', category: 'Minimal', vibe: 'Black and white, high contrast', bestFor: 'Photography, Portfolios', accentColor: '#000000', built: true },
   { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FFE500', built: false },
   { slug: 'neumorphism', name: 'Neumorphism', category: 'Modern', vibe: 'Soft UI, skeuomorphic', bestFor: 'Mobile apps, Smart home', accentColor: '#6C63FF', built: false },
