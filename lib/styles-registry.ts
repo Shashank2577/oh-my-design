@@ -19,7 +19,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'enterprise', name: 'Enterprise', category: 'Professional', vibe: 'Professional, corporate, scalable', bestFor: 'B2B SaaS, Corporate sites', accentColor: '#0052CC', built: false },
   { slug: 'flat-design', name: 'Flat Design', category: 'Minimal', vibe: 'Clean, minimal, 2D', bestFor: 'Mobile apps, Dashboards', accentColor: '#3498DB', built: false },
   { slug: 'fluent-2', name: 'Fluent 2', category: 'Modern', vibe: 'Microsoft Fluent 2 Design System', bestFor: 'Enterprise apps, Windows apps', accentColor: '#0078D4', built: false },
-  { slug: 'industrial', name: 'Industrial', category: 'Raw', vibe: 'Raw, mechanical, utilitarian', bestFor: 'Manufacturing, Construction', accentColor: '#FF6B00', built: false },
+  { slug: 'industrial', name: 'Industrial', category: 'Raw', vibe: 'Raw, mechanical, utilitarian', bestFor: 'Manufacturing, Construction', accentColor: '#FF6B00', built: true },
   { slug: 'kinetic', name: 'Kinetic', category: 'Dynamic', vibe: 'Dynamic, motion-focused', bestFor: 'Creative portfolios, Event sites', accentColor: '#FF3D00', built: false },
   { slug: 'luxury', name: 'Luxury', category: 'Elegant', vibe: 'Premium, elegant, sophisticated', bestFor: 'Luxury brands, High-end retail', accentColor: '#C0A060', built: false },
   { slug: 'material', name: 'Material', category: 'Modern', vibe: 'Google Material Design', bestFor: 'Android apps, Modern dashboards', accentColor: '#6200EE', built: false },
