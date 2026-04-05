@@ -41,4 +41,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: false },
   { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: false },
   { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: false },
+  { slug: 'together.ai', name: 'Together AI', category: 'Tech', vibe: 'Pastel-gradient dreamscape built for enterprise AI infrastructure', bestFor: 'AI platforms, enterprise infrastructure', accentColor: '#ef2cc1', built: true },
+  { slug: 'uber', name: 'Uber', category: 'Professional', vibe: 'High-contrast starkness, brutalist typography', bestFor: 'Transportation, utility apps', accentColor: '#000000', built: true },
+  { slug: 'vercel', name: 'Vercel', category: 'Tech', vibe: 'Monochrome precision, stark minimalism', bestFor: 'Developer tools, SaaS', accentColor: '#000000', built: true },
+  { slug: 'voltagent', name: 'VoltAgent', category: 'Tech', vibe: 'Agentic automation, high-tech interface', bestFor: 'AI agents, developer tools', accentColor: '#10B981', built: true },
+  { slug: 'warp', name: 'Warp', category: 'Tech', vibe: 'Developer-focused, high performance terminal', bestFor: 'Developer tools, CLI', accentColor: '#01F7F7', built: true },
 ]
