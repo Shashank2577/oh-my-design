@@ -25,6 +25,7 @@
 *.pem
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 .omc/
 .jules-plan.json
 .jules-state.json
@@ -32,6 +33,8 @@
 >>>>>>> origin/feat/add-maximalism-style-page-693079652787345767
 =======
 >>>>>>> origin/feat/claymorphism-landing-page-2831171048065339227
+=======
+>>>>>>> origin/feat/fluent-2-style-page-9555066153407103773
 
 # debug
 npm-debug.log*
