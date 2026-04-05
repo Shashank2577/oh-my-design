@@ -41,4 +41,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: false },
   { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: false },
   { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: false },
+  { slug: 'composio', name: 'Composio', category: 'Tech', vibe: 'Developer-focused dark mode', bestFor: 'Dev tools, Infrastructure', accentColor: '#0007cd', built: true },
+  { slug: 'cursor', name: 'Cursor', category: 'Tech', vibe: 'Warm minimal code editor', bestFor: 'AI tools, Dev tools', accentColor: '#f54e00', built: true },
+  { slug: 'elevenlabs', name: 'ElevenLabs', category: 'Tech', vibe: 'Ethereal, voice AI', bestFor: 'AI products, Audio', accentColor: '#f5f2ef', built: true },
+  { slug: 'expo', name: 'Expo', category: 'Tech', vibe: 'Luminous developer platform', bestFor: 'Developer platforms', accentColor: '#0d74ce', built: true },
+  { slug: 'figma', name: 'Figma', category: 'Creative', vibe: 'Typographic sophistication', bestFor: 'Design tools, Creativity', accentColor: '#000000', built: true },
 ]
