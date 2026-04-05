@@ -23,9 +23,12 @@
 # misc
 .DS_Store
 *.pem
+<<<<<<< HEAD
 .omc/
 .jules-plan.json
 .jules-state.json
+=======
+>>>>>>> origin/feat/add-maximalism-style-page-693079652787345767
 
 # debug
 npm-debug.log*
