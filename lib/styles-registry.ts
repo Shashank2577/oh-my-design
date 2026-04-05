@@ -38,7 +38,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'saas', name: 'SaaS', category: 'Modern', vibe: 'Modern SaaS aesthetic', bestFor: 'SaaS products, Startups', accentColor: '#4F46E5', built: false },
   { slug: 'sketch', name: 'Sketch', category: 'Creative', vibe: 'Hand-drawn, artistic', bestFor: 'Creative portfolios, Artistic brands', accentColor: '#2D3748', built: false },
   { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF0000', built: false },
-  { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: false },
-  { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: false },
-  { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: false },
+  { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: true },
+  { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: true },
+  { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: true },
 ]
