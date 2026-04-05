@@ -1,7 +1,14 @@
 {
   "tool_name": "Bash",
+<<<<<<< HEAD
   "tool_input_preview": "{\"command\":\"\\n# Check if missing metadata is because they use 'use client'\\necho \\\"=== Metadata vs Client Component Pattern ===\\\"\\nfor file in app/styles/{bauhaus,claymorphism,cyberpunk,luxury,maximal...",
   "error": "Exit code 1\n=== Metadata vs Client Component Pattern ===\n(eval):7: = not found",
   "timestamp": "2026-04-05T16:09:16.459Z",
   "retry_count": 1
+=======
+  "tool_input_preview": "{\"command\":\"git add scripts/jules-orchestrator.sh && git commit -m \\\"Remove hardcoded API key from orchestrator — use JULES_API_KEY env var\\\" && git push\",\"description\":\"Fix secret scanning violation ...",
+  "error": "Exit code 1\n[main 43c0605] Remove hardcoded API key from orchestrator — use JULES_API_KEY env var\n 1 file changed, 3 insertions(+), 2 deletions(-)\nremote: error: GH013: Repository rule violations found for refs/heads/main.        \nremote: \nremote: - GITHUB PUSH PROTECTION        \nremote:   —————————————————————————————————————————        \nremote:     Resolve the following violations before pushing again        \nremote: \nremote:     - Push cannot contain secrets        \nremote: \nremote:          ...",
+  "timestamp": "2026-04-05T11:47:03.704Z",
+  "retry_count": 2
+>>>>>>> origin/botanical-landing-page-13460698621585428494
 }

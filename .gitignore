@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+.omc/
+.jules-plan.json
+.jules-state.json
 
 # debug
 npm-debug.log*
