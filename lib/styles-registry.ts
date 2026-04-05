@@ -10,7 +10,7 @@ export interface StyleMeta {
 
 export const STYLES: StyleMeta[] = [
   { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: false },
-  { slug: 'art-deco', name: 'Art Deco', category: 'Elegant', vibe: 'Luxurious 1920s glamour', bestFor: 'Luxury brands, Hotels', accentColor: '#D4AF37', built: false },
+  { slug: 'art-deco', name: 'Art Deco', category: 'Elegant', vibe: 'Luxurious 1920s glamour', bestFor: 'Luxury brands, Hotels', accentColor: '#D4AF37', built: true },
   { slug: 'bauhaus', name: 'Bauhaus', category: 'Minimal', vibe: 'Functionalist, geometric minimalism', bestFor: 'Design tools, Architecture sites', accentColor: '#E63329', built: false },
   { slug: 'bold-typography', name: 'Bold Typography', category: 'Creative', vibe: 'Type-driven design', bestFor: 'Content platforms, Editorial sites', accentColor: '#000000', built: false },
   { slug: 'botanical', name: 'Botanical', category: 'Organic', vibe: 'Nature-inspired, organic', bestFor: 'Health & wellness, Eco brands', accentColor: '#4A7C59', built: false },
