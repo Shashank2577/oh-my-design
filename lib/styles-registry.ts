@@ -26,7 +26,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'maximalism', name: 'Maximalism', category: 'Creative', vibe: 'Bold, expressive, abundant', bestFor: 'Creative agencies, Art platforms', accentColor: '#FF0080', built: true },
   { slug: 'minimal-dark', name: 'Minimal Dark', category: 'Minimal', vibe: 'Minimal dark theme', bestFor: 'Developer tools, Code editors', accentColor: '#64FFDA', built: false },
   { slug: 'modern-dark', name: 'Modern Dark', category: 'Modern', vibe: 'Contemporary dark UI with depth', bestFor: 'SaaS products, Developer tools', accentColor: '#7C3AED', built: false },
-  { slug: 'monochrome', name: 'Monochrome', category: 'Minimal', vibe: 'Black and white, high contrast', bestFor: 'Photography, Portfolios', accentColor: '#000000', built: false },
+  { slug: 'monochrome', name: 'Monochrome', category: 'Minimal', vibe: 'Black and white, high contrast', bestFor: 'Photography, Portfolios', accentColor: '#000000', built: true },
   { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FFE500', built: false },
   { slug: 'neumorphism', name: 'Neumorphism', category: 'Modern', vibe: 'Soft UI, skeuomorphic', bestFor: 'Mobile apps, Smart home', accentColor: '#6C63FF', built: false },
   { slug: 'newsprint', name: 'Newsprint', category: 'Editorial', vibe: 'Newspaper-inspired', bestFor: 'News sites, Magazines', accentColor: '#1A1A1A', built: false },
