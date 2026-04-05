@@ -2,13 +2,15 @@
   "repo": "Shashank2577/oh-my-design",
   "branch": "main",
   "created_at": "2026-04-05T00:00:00Z",
-  "total_tasks": 11,
-  "note": "Batch 1 must complete before Batch 2+3. Batches 2 and 3 can run in parallel with each other after Batch 1 merges.",
+  "total_tasks": 33,
+  "concurrent_limit": 15,
+  "note": "Respects 15 concurrent request limit: Batch 1 (1) → Batch 2 (10) → Batch 3 (15) → Batch 4 (7)",
   "batches": [
     {
       "batch": 1,
       "name": "Next.js Project Scaffold",
       "rationale": "Everything depends on this. Must be merged to main before any style pages are created.",
+      "concurrent_slots": 1,
       "tasks": [
         {
           "id": "t1",
@@ -20,74 +22,216 @@
     },
     {
       "batch": 2,
-      "name": "Style Pages — Wave 1 (styles 1-5)",
-      "rationale": "All 5 are independent pages. Run in parallel after Batch 1 merges.",
+      "name": "First 10 styles (concurrent: 10/15)",
+      "rationale": "All 10 are independent pages. Run in parallel after Batch 1 merges. Uses 10 of 15 slots.",
+      "concurrent_slots": 10,
       "tasks": [
         {
           "id": "t2",
-          "title": "Build Academia landing page (/styles/academia)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 1. Academia' in designprompts_dev_all_styles.md.\n\nCreate app/styles/academia/page.tsx — a full, production-grade landing page implementing the Academia/Classical design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts: Cormorant_Garamond (heading), Crimson_Pro (body), Cinzel (display/labels) via next/font/google\n- Design tokens from the spec: background #1C1714, foreground #E8DFD4, accent #C9A962, etc.\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- Mandatory signature elements: arch-top images (border-radius: 40% 40% 0 0 / 20% 20% 0 0), sepia-to-color transitions, Roman numeral section labels (Volume I, II, III...), drop caps on first paragraphs, corner flourishes on cards, ornate dividers with glyphs, wax seal badges on featured items, brass interactive elements, engraved text shadows, paper texture + vignette overlays\n- Framer Motion scroll-triggered entrances with dignified timing (500-700ms, ease-out)\n- All content themed as scholarly/academic (use academic language, reference knowledge/scholarship)\n- Fully responsive, mobile-first\n- Touch targets minimum 44px\n- useReducedMotion() respected\n\nThis page must look like a real premium website, not a template. Make deliberate creative choices.",
+          "title": "Academia",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 1. Academia' in designprompts_dev_all_styles.md.\n\nCreate app/styles/academia/page.tsx — a full, production-grade landing page implementing the Academia/Classical design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts: Cormorant_Garamond (heading), Crimson_Pro (body), Cinzel (display/labels) via next/font/google\n- Design tokens from the spec: background #1C1714, foreground #E8DFD4, accent #C9A962, etc.\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- Mandatory signature elements: arch-top images, sepia-to-color transitions, Roman numeral labels, drop caps, corner flourishes, ornate dividers, wax seals, brass elements, engraved text, texture overlays\n- Framer Motion scroll-triggered entrances with dignified timing (500-700ms, ease-out)\n- Fully responsive, mobile-first, 44px min touch targets\n- useReducedMotion() respected\n\nAfter creating, run: npm run build to verify.",
           "depends_on": ["t1"]
         },
         {
           "id": "t3",
-          "title": "Build Art Deco landing page (/styles/art-deco)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 2. Art Deco' in designprompts_dev_all_styles.md.\n\nCreate app/styles/art-deco/page.tsx — a full, production-grade landing page implementing the Art Deco design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified in the Art Deco design system (check the spec)\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements for Art Deco as defined in the spec (geometric patterns, gold/black palette, sunburst motifs, stepped shapes, etc.)\n- Framer Motion animations matching Art Deco personality (luxurious, cinematic, slow)\n- Content themed for luxury/premium brand (hotel, high-end service, etc.)\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected\n\nThis page must look like a real premium Art Deco website. Make deliberate, non-generic design choices.",
+          "title": "Art Deco",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 2. Art Deco' in designprompts_dev_all_styles.md.\n\nCreate app/styles/art-deco/page.tsx — a full, production-grade landing page implementing the Art Deco design system exactly as specified.\n\nAll 10 sections, all signature elements, fonts/tokens from the spec, luxurious 800-1200ms animations, fully responsive, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
           "id": "t4",
-          "title": "Build Bauhaus landing page (/styles/bauhaus)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 3. Bauhaus' in designprompts_dev_all_styles.md.\n\nCreate app/styles/bauhaus/page.tsx — a full, production-grade landing page implementing the Bauhaus design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified in the Bauhaus design system\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements for Bauhaus (geometric shapes, primary colors only, grid-based layout, form-follows-function, no decoration for decoration's sake)\n- Framer Motion animations: mechanical, precise, 300ms, linear easing\n- Content themed for design/architecture tools\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected\n\nThis page must embody Bauhaus principles: beauty through function, geometric clarity, primary color boldness.",
+          "title": "Bauhaus",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 3. Bauhaus' in designprompts_dev_all_styles.md.\n\nCreate app/styles/bauhaus/page.tsx — all 10 sections, geometric primary colors, form-follows-function, mechanical 300ms animations, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
           "id": "t5",
-          "title": "Build Bold Typography landing page (/styles/bold-typography)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 4. Bold Typography' in designprompts_dev_all_styles.md.\n\nCreate app/styles/bold-typography/page.tsx — a full, production-grade landing page implementing the Bold Typography design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified in the Bold Typography design system (likely massive display fonts)\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements (type as primary visual element, oversized headlines, tight tracking, dramatic type contrasts)\n- Framer Motion: type-reveal animations, staggered letter/word reveals if appropriate\n- Content themed for editorial/publishing/media\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected\n\nLet the typography do the design work. No generic card layouts — make type the hero.",
+          "title": "Bold Typography",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 4. Bold Typography' in designprompts_dev_all_styles.md.\n\nCreate app/styles/bold-typography/page.tsx — all 10 sections, type-driven design, oversized headlines, tight tracking, dramatic contrasts, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
           "id": "t6",
-          "title": "Build Botanical landing page (/styles/botanical)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 5. Botanical' in designprompts_dev_all_styles.md.\n\nCreate app/styles/botanical/page.tsx — a full, production-grade landing page implementing the Botanical design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified in the Botanical design system\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements for Botanical (organic shapes, leaf/plant motifs via SVG, earthy greens, flowing curves, no sharp corners)\n- Framer Motion: organic, flowing animations (600-900ms, ease-in-out), gentle floating effects\n- Content themed for wellness/eco/natural products\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected\n\nEvery element should feel alive, natural, and organic.",
+          "title": "Botanical",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 5. Botanical' in designprompts_dev_all_styles.md.\n\nCreate app/styles/botanical/page.tsx — all 10 sections, organic shapes, leaf motifs, earthy greens, flowing curves, 600-900ms ease-in-out animations, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t7",
+          "title": "Claymorphism",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 6. Claymorphism' in designprompts_dev_all_styles.md.\n\nCreate app/styles/claymorphism/page.tsx — all 10 sections, puffy 3D clay elements, pastels, rounded blobs, spring bounce 400ms animations, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t8",
+          "title": "Cyberpunk",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 7. Cyberpunk' in designprompts_dev_all_styles.md.\n\nCreate app/styles/cyberpunk/page.tsx — all 10 sections, neon glows, cyan/magenta accents, glitch effects, dark bg, fast 100-200ms snappy animations, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t9",
+          "title": "Enterprise",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 8. Enterprise' in designprompts_dev_all_styles.md.\n\nCreate app/styles/enterprise/page.tsx — all 10 sections, corporate blue, trust badges, clean grid, data viz hints, professional testimonials with logos, subtle 300ms animations, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t10",
+          "title": "Flat Design",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 9. Flat Design' in designprompts_dev_all_styles.md.\n\nCreate app/styles/flat-design/page.tsx — all 10 sections, zero shadows, flat 2D icons, bright solids, geometric shapes, no gradients, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t11",
+          "title": "Fluent 2",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 10. Fluent 2' in designprompts_dev_all_styles.md.\n\nCreate app/styles/fluent-2/page.tsx — all 10 sections, acrylic/mica materials, backdrop-filter blur, layered depth, Microsoft blue, Fluent 2 design language, spring physics animations, npm run build passes.",
           "depends_on": ["t1"]
         }
       ]
     },
     {
       "batch": 3,
-      "name": "Style Pages — Wave 2 (styles 6-10)",
-      "rationale": "All 5 are independent. Run in parallel, same time as Batch 2 after Batch 1 merges.",
+      "name": "Next 15 styles (concurrent: 15/15)",
+      "rationale": "All 15 are independent. Run in parallel after Batch 2 merges. Hits 15 concurrent limit.",
+      "concurrent_slots": 15,
       "tasks": [
         {
-          "id": "t7",
-          "title": "Build Claymorphism landing page (/styles/claymorphism)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 6. Claymorphism' in designprompts_dev_all_styles.md.\n\nCreate app/styles/claymorphism/page.tsx — a full, production-grade landing page implementing the Claymorphism design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified in the design system\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements (puffy 3D-looking elements via box-shadow layering, bright pastel colors, rounded blobs, clay-like depth)\n- Framer Motion: bouncy spring animations, 400ms, scale feedback on interactions\n- Content themed for creative/playful apps\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected",
+          "id": "t12",
+          "title": "Industrial",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 11. Industrial' in designprompts_dev_all_styles.md.\n\nCreate app/styles/industrial/page.tsx — all 10 sections, raw mechanical utilitarian design, all signature elements, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
-          "id": "t8",
-          "title": "Build Cyberpunk landing page (/styles/cyberpunk)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 7. Cyberpunk' in designprompts_dev_all_styles.md.\n\nCreate app/styles/cyberpunk/page.tsx — a full, production-grade landing page implementing the Cyberpunk design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified (likely monospace/display fonts)\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements (neon glows via CSS box-shadow, dark backgrounds, cyan/magenta/yellow accents, glitch effects via CSS, grid overlays, scanline texture)\n- Framer Motion: fast snappy animations (100-200ms), glitch-style transforms, neon flicker effects\n- Content themed for gaming/tech/virtual events\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected",
+          "id": "t13",
+          "title": "Kinetic",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 12. Kinetic' in designprompts_dev_all_styles.md.\n\nCreate app/styles/kinetic/page.tsx — all 10 sections, dynamic motion-focused design, energetic animations, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
-          "id": "t9",
-          "title": "Build Enterprise landing page (/styles/enterprise)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 8. Enterprise' in designprompts_dev_all_styles.md.\n\nCreate app/styles/enterprise/page.tsx — a full, production-grade landing page implementing the Enterprise design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified (professional sans-serif)\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements (trust badges, security icons, corporate blue palette, clean grid, data visualization hints, professional testimonials with logos)\n- Framer Motion: subtle, professional, 300ms ease-out — nothing flashy\n- Content themed for B2B SaaS / enterprise software\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected",
+          "id": "t14",
+          "title": "Luxury",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 13. Luxury' in designprompts_dev_all_styles.md.\n\nCreate app/styles/luxury/page.tsx — all 10 sections, premium elegant sophisticated, slow cinematic animations, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
-          "id": "t10",
-          "title": "Build Flat Design landing page (/styles/flat-design)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 9. Flat Design' in designprompts_dev_all_styles.md.\n\nCreate app/styles/flat-design/page.tsx — a full, production-grade landing page implementing the Flat Design system exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified\n- All design tokens from the spec\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements (zero shadows, flat 2D icons, bright solid colors, clean geometric shapes, no gradients except as explicit design choice)\n- Framer Motion: clean, precise, color transitions, no depth animations\n- Content themed for mobile apps/dashboards\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected",
+          "id": "t15",
+          "title": "Material",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 14. Material' in designprompts_dev_all_styles.md.\n\nCreate app/styles/material/page.tsx — all 10 sections, Google Material Design, elevation system, ripple effects, npm run build passes.",
           "depends_on": ["t1"]
         },
         {
-          "id": "t11",
-          "title": "Build Fluent 2 landing page (/styles/fluent-2)",
-          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 10. Fluent 2' in designprompts_dev_all_styles.md.\n\nCreate app/styles/fluent-2/page.tsx — a full, production-grade landing page implementing the Microsoft Fluent 2 Design System exactly as specified.\n\nRequirements:\n- 'use client' at top\n- Fonts as specified (Segoe UI or equivalent)\n- All design tokens from the spec (Microsoft blue palette, Fluent depth system)\n- All 10 sections: Navbar, Hero, Stats, Features, ProductDetail, Pricing, Testimonials, FAQ, Newsletter, Footer\n- All mandatory signature elements (Fluent 2 acrylic/mica materials via backdrop-filter blur, layered depth, smooth reveal animations, Microsoft design language)\n- Framer Motion: smooth, connected, 300ms, spring physics for interactive elements\n- Content themed for Windows/Microsoft ecosystem apps\n- Fully responsive, mobile-first, touch targets 44px min\n- useReducedMotion() respected",
+          "id": "t16",
+          "title": "Maximalism",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 15. Maximalism' in designprompts_dev_all_styles.md.\n\nCreate app/styles/maximalism/page.tsx — all 10 sections, bold expressive abundant, no restraint, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t17",
+          "title": "Minimal Dark",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 16. Minimal Dark' in designprompts_dev_all_styles.md.\n\nCreate app/styles/minimal-dark/page.tsx — all 10 sections, minimal dark theme, developer tool aesthetic, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t18",
+          "title": "Modern Dark",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 17. Modern Dark' in designprompts_dev_all_styles.md.\n\nCreate app/styles/modern-dark/page.tsx — all 10 sections, contemporary dark UI with depth, SaaS aesthetic, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t19",
+          "title": "Monochrome",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 18. Monochrome' in designprompts_dev_all_styles.md.\n\nCreate app/styles/monochrome/page.tsx — all 10 sections, black and white high contrast, photography portfolio aesthetic, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t20",
+          "title": "Neo-brutalism",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 19. Neo-brutalism' in designprompts_dev_all_styles.md.\n\nCreate app/styles/neo-brutalism/page.tsx — all 10 sections, bold raw colorful brutalism, sharp edges, no apologies, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t21",
+          "title": "Neumorphism",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 20. Neumorphism' in designprompts_dev_all_styles.md.\n\nCreate app/styles/neumorphism/page.tsx — all 10 sections, soft UI skeuomorphic, subtle inset/outset shadows, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t22",
+          "title": "Newsprint",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 21. Newsprint' in designprompts_dev_all_styles.md.\n\nCreate app/styles/newsprint/page.tsx — all 10 sections, newspaper-inspired grid, columns, bold headlines, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t23",
+          "title": "Organic",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 22. Organic' in designprompts_dev_all_styles.md.\n\nCreate app/styles/organic/page.tsx — all 10 sections, natural flowing forms, wavy shapes, holistic brand, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t24",
+          "title": "Playful Geometric",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 23. Playful Geometric' in designprompts_dev_all_styles.md.\n\nCreate app/styles/playful-geometric/page.tsx — all 10 sections, fun geometric shapes, bright colors, playful animations, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t25",
+          "title": "Professional",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 24. Professional' in designprompts_dev_all_styles.md.\n\nCreate app/styles/professional/page.tsx — all 10 sections, clean business-focused, corporate, B2B aesthetic, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t26",
+          "title": "Retro",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 25. Retro' in designprompts_dev_all_styles.md.\n\nCreate app/styles/retro/page.tsx — all 10 sections, vintage nostalgic, 80s/90s color palette, retro brand aesthetic, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t27",
+          "title": "Humanist Literary",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 26. Humanist Literary' in designprompts_dev_all_styles.md.\n\nCreate app/styles/humanist-literary/page.tsx — all 10 sections, quiet intelligence organic warmth, content platform aesthetic, conversational AI tone, npm run build passes.",
+          "depends_on": ["t1"]
+        }
+      ]
+    },
+    {
+      "batch": 4,
+      "name": "Final 7 styles (concurrent: 7/15)",
+      "rationale": "Last 7 styles. Run in parallel after Batch 3 merges.",
+      "concurrent_slots": 7,
+      "tasks": [
+        {
+          "id": "t28",
+          "title": "SaaS",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 27. SaaS' in designprompts_dev_all_styles.md.\n\nCreate app/styles/saas/page.tsx — all 10 sections, modern SaaS aesthetic, smooth animations, startup feel, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t29",
+          "title": "Sketch",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 28. Sketch' in designprompts_dev_all_styles.md.\n\nCreate app/styles/sketch/page.tsx — all 10 sections, hand-drawn artistic, imperfect lines, sketch aesthetic, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t30",
+          "title": "Swiss",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 29. Swiss' in designprompts_dev_all_styles.md.\n\nCreate app/styles/swiss/page.tsx — all 10 sections, International Typographic Style, grid-based precision, minimal, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t31",
+          "title": "Terminal CLI",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 30. Terminal CLI' in designprompts_dev_all_styles.md.\n\nCreate app/styles/terminal-cli/page.tsx — all 10 sections, command-line interface aesthetic, monospace fonts, retro terminal colors, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t32",
+          "title": "Vaporwave",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 31. Vaporwave' in designprompts_dev_all_styles.md.\n\nCreate app/styles/vaporwave/page.tsx — all 10 sections, 80s/90s nostalgic, pastel colors, dreamy slow animations, npm run build passes.",
+          "depends_on": ["t1"]
+        },
+        {
+          "id": "t33",
+          "title": "Web3",
+          "prompt": "Read AGENTS.md, docs/architecture.md, docs/ui-ux-guidelines.md, docs/animation-guide.md, and docs/page-template.tsx. Then read section '## 32. Web3' in designprompts_dev_all_styles.md.\n\nCreate app/styles/web3/page.tsx — all 10 sections, decentralized crypto-inspired, gradient effects, blockchain aesthetic, npm run build passes.",
           "depends_on": ["t1"]
         }
       ]
