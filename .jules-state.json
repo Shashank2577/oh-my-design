@@ -1,0 +1,17 @@
+{
+  "plan_file": ".jules-plan.json",
+  "repo": "Shashank2577/oh-my-design",
+  "started_at": "2026-04-05T00:00:00Z",
+  "current_batch": 1,
+  "sessions": [
+    {
+      "task_id": "t1",
+      "title": "Initialize Next.js 15 project with Tailwind, Framer Motion, gallery home page",
+      "session_id": "sessions/9769493502878721174",
+      "state": "PLANNING",
+      "pr_url": null
+    }
+  ],
+  "next_batch_task_ids": ["t2", "t3", "t4", "t5", "t6", "t7", "t8", "t9", "t10", "t11"],
+  "notes": "Batches 2+3 (t2-t11) can be dispatched simultaneously once t1 is COMPLETED and merged."
+}
