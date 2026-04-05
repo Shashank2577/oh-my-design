@@ -39,6 +39,13 @@ export const STYLES: StyleMeta[] = [
   { slug: 'sketch', name: 'Sketch', category: 'Creative', vibe: 'Hand-drawn, artistic', bestFor: 'Creative portfolios, Artistic brands', accentColor: '#2D3748', built: false },
   { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF0000', built: false },
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: false },
-  { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: "80s/90s aesthetic, nostalgic", bestFor: 'Creative projects, Music platforms', accentColor: '#FF71CE', built: false },
+  { slug: 'vaporwave', name: 'Vaporwave', category: 'Creative', vibe: '80s glitch, nostalgic', bestFor: 'Art projects, Music platforms', accentColor: '#FF71CE', built: false },
   { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: false },
-]
+  // --- V3 Animation Heavy Styles ---
+  { slug: 'velocity-scoreboard', name: 'Velocity Scoreboard', category: 'Tech', vibe: 'High-intensity sports analytics', bestFor: 'Live match dashboards', accentColor: '#CCFF00', built: true },
+  { slug: 'neural-note', name: 'NeuralNote', category: 'Tech', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true },
+  { slug: 'tail-wag', name: 'TailWag', category: 'Organic', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true },
+  { slug: 'fragline', name: 'FragLine', category: 'Tech', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true },
+  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Creative', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true },
+  ]
+
