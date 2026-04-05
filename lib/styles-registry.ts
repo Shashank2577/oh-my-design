@@ -41,10 +41,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'sketch', name: 'Sketch', category: 'Creative', vibe: 'Hand-drawn, artistic', bestFor: 'Creative portfolios, Artistic brands', accentColor: '#2D3748', built: true, version: 'V1' },
   { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF0000', built: true, version: 'V1' },
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: true, version: 'V1' },
-  { slug: 'vaporwave', name: 'Vaporwave', category: 'Creative', vibe: '80s glitch, nostalgic', bestFor: 'Art projects, Music platforms', accentColor: '#FF71CE', built: true, version: 'V1' },
+  { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: '80s/90s aesthetic, nostalgic', bestFor: 'Art projects, Music platforms', accentColor: '#FF71CE', built: true, version: 'V1' },
   { slug: 'web3', name: 'Web3', category: 'Tech', vibe: 'Decentralized, crypto-inspired', bestFor: 'Crypto platforms, NFT marketplaces', accentColor: '#9945FF', built: true, version: 'V1' },
 
-  // --- V2 Brand Styles (Jules Merged) ---
+  // --- V2 Brand Styles ---
   { slug: 'together.ai', name: 'Together AI', category: 'Tech', vibe: 'Pastel-gradient dreamscape built for enterprise AI infrastructure', bestFor: 'AI platforms, enterprise infrastructure', accentColor: '#ef2cc1', built: true, version: 'V2' },
   { slug: 'uber', name: 'Uber', category: 'Professional', vibe: 'High-contrast starkness, brutalist typography', bestFor: 'Transportation, utility apps', accentColor: '#000000', built: true, version: 'V2' },
   { slug: 'vercel', name: 'Vercel', category: 'Tech', vibe: 'Monochrome precision, stark minimalism', bestFor: 'Developer tools, SaaS', accentColor: '#000000', built: true, version: 'V2' },
@@ -66,7 +66,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'expo', name: 'Expo', category: 'Modern', vibe: 'Mobile-first developer clarity', bestFor: 'App development, SaaS', accentColor: '#4630EB', built: true, version: 'V2' },
   { slug: 'figma', name: 'Figma', category: 'Creative', vibe: 'Tool-focused, precise and collaborative', bestFor: 'Design tools, creative software', accentColor: '#F24E1E', built: true, version: 'V2' },
 
-  // --- V3 Animation Heavy Styles (Implemented by Me) ---
+  // --- V3 Animation Heavy Styles ---
   { slug: 'velocity-scoreboard', name: 'Velocity Scoreboard', category: 'Sports', vibe: 'High-intensity sports analytics', bestFor: 'Live match dashboards', accentColor: '#CCFF00', built: true, version: 'V3' },
   { slug: 'neural-note', name: 'NeuralNote', category: 'AI', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
