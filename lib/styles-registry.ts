@@ -104,6 +104,12 @@ export const STYLES: StyleMeta[] = [
   { slug: 'pet-shop-hero', name: 'PetShopHero', category: 'Pets', vibe: 'Retail Reward, shiny, satisfying', bestFor: 'Pet e-commerce', accentColor: '#FFD700', built: true, version: 'V3' },
   { slug: 'zoo-zoom', name: 'ZooZoom', category: 'Pets', vibe: 'The Panoramic Portal, immersive scale', bestFor: 'Virtual zoo, panoramas', accentColor: '#8BC34A', built: true, version: 'V3' },
 
+  // --- V3 Batch 10 Pet Styles ---
+  { slug: 'pet-insurance', name: 'PetInsurance', category: 'Pets', vibe: 'The Digital Vault', bestFor: 'Pet insurance providers', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'puppy-primer', name: 'PuppyPrimer', category: 'Pets', vibe: 'Playful Momentum', bestFor: 'Puppy training', accentColor: '#FF6B6B', built: true, version: 'V3' },
+  { slug: 'cat-nip', name: 'CatNip', category: 'Pets', vibe: 'The Laser Chase', bestFor: 'Cat toys and interactivity', accentColor: '#FF007A', built: true, version: 'V3' },
+  { slug: 'stable-smart', name: 'StableSmart', category: 'Pets', vibe: 'Equestrian Elegance', bestFor: 'Horse care tracking', accentColor: '#2D5A27', built: true, version: 'V3' },
+
   // --- V3 Batch 12 Styles ---
   { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
   { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
