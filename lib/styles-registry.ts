@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'vetflow', name: 'VetFlow', category: 'Pets', vibe: 'Professional, calming, and transparent', bestFor: 'Veterinary clinics, Pet healthcare', accentColor: '#0EA5E9', built: true, version: 'V3' },
+  { slug: 'pawsitive-tech', name: 'Pawsitive Tech', category: 'Pets', vibe: 'High-tech, outdoor-ready, and energetic', bestFor: 'Pet trackers, GPS collars', accentColor: '#84CC16', built: true, version: 'V3' },
+  { slug: 'kibblecloud', name: 'KibbleCloud', category: 'Pets', vibe: 'Fresh, appetizing, and effortless', bestFor: 'Pet food subscriptions', accentColor: '#EA580C', built: true, version: 'V3' },
+  { slug: 'whiskerwatch', name: 'WhiskerWatch', category: 'Pets', vibe: 'Intimate, observant, and sophisticated', bestFor: 'Cat sitting, Pet cameras', accentColor: '#FDE047', built: true, version: 'V3' },
 ]
