@@ -75,7 +75,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'neural-note', name: 'NeuralNote', category: 'AI', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
-  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Creative', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
   { slug: 'brand-story', name: 'BrandStory', category: 'Marketing', vibe: 'Cinematic brand legacy', bestFor: 'Premium storytelling', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'ad-metric', name: 'AdMetric', category: 'Tech', vibe: 'High-frequency ad-tech dashboard', bestFor: 'Marketing analytics', accentColor: '#00FF41', built: true, version: 'V3' },
   { slug: 'folio-flux', name: 'FolioFlux', category: 'Creative', vibe: 'Adaptive morphing portfolio', bestFor: 'Creative agencies', accentColor: '#FF3E00', built: true, version: 'V3' },
@@ -97,6 +97,12 @@ export const STYLES: StyleMeta[] = [
   { slug: 'code-flow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
   { slug: 'prompt-palace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Generative creative intelligence', bestFor: 'AI art & music tools', accentColor: '#7000FF', built: true, version: 'V3' },
+
+  // --- V3 Batch 11 Pet Styles ---
+  { slug: 'pet-memorial', name: 'PetMemorial', category: 'Pets', vibe: 'The Eternal Garden, peaceful, respectful', bestFor: 'Tributes, memorials', accentColor: '#FAD02C', built: true, version: 'V3' },
+  { slug: 'adopt-flow', name: 'AdoptFlow', category: 'Pets', vibe: 'The Journey Home, progression, anticipation', bestFor: 'Pet adoption workflow', accentColor: '#6C5CE7', built: true, version: 'V3' },
+  { slug: 'pet-shop-hero', name: 'PetShopHero', category: 'Pets', vibe: 'Retail Reward, shiny, satisfying', bestFor: 'Pet e-commerce', accentColor: '#FFD700', built: true, version: 'V3' },
+  { slug: 'zoo-zoom', name: 'ZooZoom', category: 'Pets', vibe: 'The Panoramic Portal, immersive scale', bestFor: 'Virtual zoo, panoramas', accentColor: '#8BC34A', built: true, version: 'V3' },
 
   // --- V3 Batch 12 Styles ---
   { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
