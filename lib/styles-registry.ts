@@ -110,6 +110,12 @@ export const STYLES: StyleMeta[] = [
   { slug: 'cat-nip', name: 'CatNip', category: 'Pets', vibe: 'The Laser Chase', bestFor: 'Cat toys and interactivity', accentColor: '#FF007A', built: true, version: 'V3' },
   { slug: 'stable-smart', name: 'StableSmart', category: 'Pets', vibe: 'Equestrian Elegance', bestFor: 'Horse care tracking', accentColor: '#2D5A27', built: true, version: 'V3' },
 
+  // --- V3 Batch 9 Pet Styles ---
+  { slug: 'breedbase', name: 'BreedBase', category: 'Pets', vibe: 'Archive Gold / Vellum', bestFor: 'Pet directory, breed history', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'petzen', name: 'PetZen', category: 'Pets', vibe: 'Aura Glow / Calm / Zen', bestFor: 'Pet wellness, meditation', accentColor: '#A78BFA', built: true, version: 'V3' },
+  { slug: 'snoutsnack', name: 'SnoutSnack', category: 'Pets', vibe: 'Organic / Earthy / Warm', bestFor: 'Pet nutrition, treats', accentColor: '#D97706', built: true, version: 'V3' },
+  { slug: 'vetbot', name: 'VetBot', category: 'Pets', vibe: 'Clinical / Precise / AI', bestFor: 'Pet healthcare, AI diagnosis', accentColor: '#0077B6', built: true, version: 'V3' },
+
   // --- V3 Batch 12 Styles ---
   { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
   { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
