@@ -93,4 +93,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'code-flow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
   { slug: 'prompt-palace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Generative creative intelligence', bestFor: 'AI art & music tools', accentColor: '#7000FF', built: true, version: 'V3' },
-]
+
+  // --- V3 Batch 12 Styles ---
+  { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
+  { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'Immersive, high-density, performant', bestFor: 'Dev Tools', accentColor: '#58A6FF', built: true, version: 'V3' },
+  { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Majestic, weight-driven, experimental', bestFor: 'Prompt Engineering', accentColor: '#000000', built: true, version: 'V3' },
+];
