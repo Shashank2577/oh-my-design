@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'pet-insurance', name: 'PetInsurance', category: 'Pets', vibe: 'The Digital Vault', bestFor: 'Pet insurance providers', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'puppy-primer', name: 'PuppyPrimer', category: 'Pets', vibe: 'Playful Momentum', bestFor: 'Puppy training', accentColor: '#FF6B6B', built: true, version: 'V3' },
+  { slug: 'cat-nip', name: 'CatNip', category: 'Pets', vibe: 'The Laser Chase', bestFor: 'Cat toys and interactivity', accentColor: '#FF007A', built: true, version: 'V3' },
+  { slug: 'stable-smart', name: 'StableSmart', category: 'Pets', vibe: 'Equestrian Elegance', bestFor: 'Horse care tracking', accentColor: '#2D5A27', built: true, version: 'V3' },
 ]
