@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'trophy-room', name: 'Trophy Room', category: 'Sports', vibe: 'Glorious spatial museum', bestFor: 'Achievements and milestones', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'gridiron-flow', name: 'Gridiron Flow', category: 'Sports', vibe: 'Tactical high-impact football', bestFor: 'Sports coaching and analytics', accentColor: '#8B4513', built: true, version: 'V3' },
+  { slug: 'pitchvision', name: 'PitchVision', category: 'Sports', vibe: 'Fluid clinical soccer analytics', bestFor: 'Match analysis and data', accentColor: '#00FF85', built: true, version: 'V3' },
+  { slug: 'e-league-pro', name: 'E-League Pro', category: 'Sports', vibe: 'Hyper-reactive broadcast HUD', bestFor: 'Live streaming overlays', accentColor: '#9146FF', built: true, version: 'V3' },
 ]
