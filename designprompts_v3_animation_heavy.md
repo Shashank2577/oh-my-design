@@ -2468,194 +2468,183 @@ This batch focuses on **AI & Engineering Tools**, moving from high-level MLOps t
 
 # V3 Design Systems: Batch 8 (Styles 71-80)
 
-## 3. AI & Engineering Tools (Continued)
+## 3. Marketing, Ad-Tech & Creatives
 
-### 71. LangLink (NLP)
-**Design Philosophy & Vibe**: Linguistic fluidity and semantic intelligence. LangLink visualizes the "distance" between ideas in a high-dimensional word-vector space. The vibe is "The Mind of the Machine"—clean, intellectual, and deeply connected. It moves away from static text into dynamic semantic clusters that rearrange based on context.
+### 71. BrandStory (Brand Storytelling)
+**Design Philosophy & Vibe**: Narrative-driven, immersive, and emotionally resonant. BrandStory treats a brand's identity as a living chronicle. It uses horizontal scrolling and parallax layers to guide users through a chronological or thematic journey. The vibe is "Cinematic Documentary"—rich textures, large-scale typography, and slow, deliberate reveals.
 
 **Design Token System**:
-- **Background**: `#0A0A0F` (Midnight Ink)
-- **Surface**: `#151520` (Parchment Dark)
-- **Accent 1**: `#7B61FF` (Synapse Purple)
-- **Accent 2**: `#00E0FF` (Cypher Cyan)
-- **Border**: `rgba(123, 97, 255, 0.2)`
-- **Text High**: `#F0F0FF`
-- **Text Low**: `#666680`
+- **Background**: `#0F0E0C` (Dark Sepia)
+- **Surface**: `#1A1815` (Aged Paper)
+- **Accent 1**: `#D4AF37` (Antique Gold)
+- **Accent 2**: `#FFFFFF` (Pure Clarity)
+- **Border**: `rgba(212, 175, 55, 0.15)`
+- **Text High**: `#F5F5F0`
 
 **Typography System**:
-- **Primary Font**: **IBM Plex Sans** (Headings - 500 weight, slightly open tracking)
-- **Secondary Font**: **IBM Plex Mono** (Data/Tokens - 400 weight)
-- **Scale**: Hero (84px), H1 (56px), H2 (32px), Body (16px)
+- **Primary Font**: **Fraunces** (Headings - Variable Serif, high contrast)
+- **Secondary Font**: **Inter** (Body - Clean, 300 weight)
+- **Scale**: Hero (120px), H1 (80px), H2 (40px), Body (18px)
 
 **Motion Architecture (Physics)**:
-- **Vector Rearrange**: `type: "spring", stiffness: 150, damping: 25, mass: 0.8`. Elements feel weightless as they drift to new semantic positions.
-- **Word Entrance**: `opacity: [0, 1], y: [20, 0]`, with a staggered delay of `0.05s` per word.
-- **Context Reveal**: `scale: [0.95, 1], filter: "blur(5px) -> blur(0px)"`.
+- **Parallax Drift**: `y: scrollY * 0.2` for background elements; `y: scrollY * -0.1` for foreground details.
+- **Narrative Reveal**: `opacity: [0, 1], y: [50, 0]`, with a duration of `1.2s` and a "soft" ease.
+- **Image Zoom**: `scale: [1, 1.1]` on scroll progress using `useScroll` and `useTransform`.
 
 **Niche-Specific Section Requirements**:
-- **Semantic Tree**: An interactive SVG visualization where words are nodes. Hovering over a node draws "relationship lines" to related concepts using `pathLength` animations. Clicking a node "re-roots" the tree, morphing the entire structure.
+- **Chronological Timeline**: A horizontal scrolling section where the background color transitions through the brand's history (e.g., sepia for the past, vibrant for the present). Each era is a "Chapter" with its own layoutId-transitioning hero image.
 
 **Component Styling**:
-- **Buttons**: Glow-border buttons where the border color "flows" toward the cursor.
-- **Cards**: "Glass-Ink" cards with a subtle blue tint and high-blur backdrop.
-- **Inputs**: A "Neural Search" bar that shows real-time word-vector suggestions floating below as you type.
+- **Buttons**: Minimalist underlined links that expand into a solid gold block on hover.
+- **Cards**: "Artifact" style—asymmetric layouts with deep shadows and soft-focus edges.
+- **Inputs**: Transparent fields with a gold "signature" line that draws itself on focus.
 
 **Signature Elements**:
-1. **The "Context Ripple"**: Interactions trigger a soft, purple glow that radiates from the point of contact, highlighting adjacent semantic nodes.
-2. **Grammar-Ghosting**: As text is being processed, "ghost" versions of alternative synonyms fade in and out briefly.
-3. **Sentiment Wave**: A footer background that undulates like a sine wave, changing color from Accent 1 (Neutral) to Accent 2 (Positive/Negative) based on the current page content's sentiment.
+1. **The Fade-to-Black Transition**: Section transitions utilize a cinematic "dip to black" or "soft-focus" fade to maintain the narrative mood.
+2. **Interactive Annotation**: Hovering over images reveals handwritten-style notes (using a script font) that explain the "story" behind the visual.
 
 ---
 
-### 72. RoboRoute (Robotics)
-**Design Philosophy & Vibe**: Mechanical precision and autonomous logic. RoboRoute is the interface for pathfinding and spatial awareness. The vibe is "Factory of the Future"—industrial, high-contrast, and focused on the efficiency of movement. It emphasizes "avoidance" and "optimization" through sharp, calculated animations and magnetic repulsion physics.
+### 72. AdMetric (Ad-Tech Dashboard)
+**Design Philosophy & Vibe**: Precision, velocity, and clarity. AdMetric is designed for the high-frequency world of digital advertising. It focuses on the "moment of impact"—clicks, conversions, and real-time bids. The vibe is "The Command Deck"—dark, technical, with high-contrast data visualizations and "ping" animations for live events.
 
 **Design Token System**:
-- **Background**: `#111111` (Deep Matte)
-- **Surface**: `#1E1E1E` (Cast Iron)
-- **Accent 1**: `#FF9900` (Warning Orange)
-- **Accent 2**: `#444444` (Machined Steel)
-- **Border**: `#333333`
+- **Background**: `#050505` (Pure Black)
+- **Surface**: `#121212` (Onyx)
+- **Accent 1**: `#00FF41` (Matrix Green - Positive)
+- **Accent 2**: `#FF073A` (Neon Red - Alert)
+- **Metric**: `#00D1FF` (Info Blue)
+- **Border**: `#1F1F1F`
+
+**Typography System**:
+- **Primary Font**: **Space Grotesk** (Headings - Geometric, modern)
+- **Secondary Font**: **JetBrains Mono** (Data/Logs - Monospaced for alignment)
+- **Scale**: Hero (72px), H1 (48px), Data (24px), Body (14px)
+
+**Motion Architecture (Physics)**:
+- **Data Ping**: `scale: [1, 1.2, 1], filter: ["brightness(1)", "brightness(2)", "brightness(1)"]` for live updates.
+- **Fast-Roll Numbers**: Numbers increment with a "slot-machine" roll effect when data updates.
+- **Layout Shift**: `stiffness: 400, damping: 30` (Snappy, professional).
+
+**Niche-Specific Section Requirements**:
+- **Real-time Bid Stream**: A vertical feed of incoming bid requests. Successful bids "glow" green and slide into a "Won" column using `layoutId`, while lost bids fade and "drift" off-screen.
+
+**Component Styling**:
+- **Buttons**: Tactical "Toggle" buttons with a persistent LED-style status light in the corner.
+- **Cards**: High-density data grids with "Heatmap" background fills based on performance metrics.
+- **Inputs**: Command-line style entry for filtering, with a blinking cursor and auto-complete "ghost" text.
+
+**Signature Elements**:
+1. **The Performance Pulse**: A global background ripple (very low opacity) that triggers whenever a conversion target is met.
+2. **Visual ROI Radar**: A circular radar chart that "sweeps" every 5 seconds, highlighting top-performing campaigns as glowing blips.
+
+---
+
+### 73. FolioFlux (Creative Portfolio)
+**Design Philosophy & Vibe**: Dynamic, adaptive, and unapologetically creative. FolioFlux is a living portfolio that "reacts" to the work it's showing. The interface morphs its color palette and typography based on the project currently in view. The vibe is "The Infinite Gallery"—a seamless, high-velocity journey through a creative's career.
+
+**Design Token System**:
+- **Background**: `#FFFFFF` (Variable - changes per project)
+- **Surface**: `#F8F8F8`
+- **Accent 1**: `#000000` (Variable)
+- **Accent 2**: `#707070`
+- **Border**: `1px solid rgba(0,0,0,0.1)`
+- **Text High**: `#000000`
+
+**Typography System**:
+- **Primary Font**: **Bricolage Grotesque** (Headings - Eccentric, variable)
+- **Secondary Font**: **Satoshi** (Body - Modern, clean)
+- **Scale**: Hero (110px), H1 (72px), H2 (36px), Body (18px)
+
+**Motion Architecture (Physics)**:
+- **Color Morph**: `transition: { duration: 0.8, ease: "easeInOut" }` for `backgroundColor` and `color`.
+- **Project Slide**: `x: [-100, 0], opacity: [0, 1]`, with a motion blur filter during the transition.
+- **Cursor Follower**: A large, semi-transparent circle that "inverts" the color of the text it hovers over.
+
+**Niche-Specific Section Requirements**:
+- **Morphing Case Study**: A single-page layout where sections don't scroll; they "transition" in place. Background colors and fonts shift as the user moves from "Discovery" to "Execution" to "Final Result."
+
+**Component Styling**:
+- **Buttons**: Giant, screen-spanning text that "shrinks" and becomes a sticky button when hovered.
+- **Cards**: "Border-less" imagery that uses `layoutId` to expand into a full-screen video player.
+- **Inputs**: Hand-drawn style fields that "wobble" (using `animate`) when the user interacts.
+
+**Signature Elements**:
+1. **The Theme-Shift**: The entire site's CSS variables (colors, fonts) are updated in real-time as the user scrolls through different project categories.
+2. **Liquid Image Reveal**: Images appear to "pour" into their containers using a liquid-displacement SVG filter.
+
+---
+
+### 74. MarketMagnet (Growth Marketing)
+**Design Philosophy & Vibe**: Persuasive, magnetic, and results-driven. MarketMagnet is designed to "pull" the user toward the conversion. It uses magnetic physics—where the cursor is "attracted" to call-to-action buttons—and high-contrast visuals to drive focus. The vibe is "Hyper-Conversion"—bold, confident, and utilizing every pixel to build trust.
+
+**Design Token System**:
+- **Background**: `#FFFFFF`
+- **Surface**: `#F3F4F6`
+- **Accent 1**: `#6366F1` (Magnet Indigo)
+- **Accent 2**: `#F43F5E` (Conversion Rose)
+- **Border**: `#E5E7EB`
+- **Text High**: `#111827`
+
+**Typography System**:
+- **Primary Font**: **Lexend** (Headings - Designed for high-readability and trust)
+- **Secondary Font**: **Inter** (Body - Reliable)
+- **Scale**: Hero (88px), H1 (60px), H2 (30px), Body (16px)
+
+**Motion Architecture (Physics)**:
+- **Magnetic Pull**: `x: mouseX * 0.1, y: mouseY * 0.1` on CTA buttons when the cursor is within a 100px radius.
+- **Success Pop**: `scale: [1, 1.2, 1]`, `stiffness: 700, damping: 10`.
+- **Urgency Ticker**: A fast-scrolling banner of "Social Proof" (e.g., "500 people signed up today") with a slight flicker animation.
+
+**Niche-Specific Section Requirements**:
+- **Interactive ROI Calculator**: A tool where users drag sliders to see their potential growth. The "Profit" number doesn't just change; it "explodes" in size and glows green when it crosses a certain threshold.
+
+**Component Styling**:
+- **Buttons**: High-gloss, 3D-effect buttons that "click down" significantly.
+- **Cards**: "Feature" cards with a localized "magnet" effect where the icon tilts toward the mouse.
+- **Inputs**: Auto-focus on the first field with a "glow" that pulses until the user starts typing.
+
+**Signature Elements**:
+1. **The "Conversion Trail"**: A thin, glowing line (Accent 2) that connects the user's cursor to the primary CTA at all times.
+2. **Social Proof Pop-ups**: Small, non-intrusive notifications that "slide-in" from the corner and "bounce" once before settling.
+
+---
+
+### 75. PixelPulse (Creative Agency)
+**Design Philosophy & Vibe**: Rhythmic, pixel-perfect, and digitally crafted. PixelPulse celebrates the "pixel" as the atom of design. It uses a high-density grid and "pixel-reforming" animations. The vibe is "Digital Artisans"—clean, sharp, and utilizing "light" as a material. It’s for agencies that pride themselves on technical excellence and visual polish.
+
+**Design Token System**:
+- **Background**: `#080808` (Obsidian)
+- **Surface**: `#121212` (Panel)
+- **Accent 1**: `#00FFCC` (Neon Mint)
+- **Accent 2**: `#7000FF` (Deep Cyber)
+- **Border**: `rgba(0, 255, 204, 0.1)`
 - **Text High**: `#FFFFFF`
-- **Text Low**: `#888888`
 
 **Typography System**:
-- **Primary Font**: **Michroma** (Headings - Wide, geometric)
-- **Secondary Font**: **Inter** (UI/Body - 400 weight)
-- **Scale**: Hero (72px), H1 (48px), H2 (24px), Body (14px)
+- **Primary Font**: **Uncut Sans** (Headings - Modern, geometric)
+- **Secondary Font**: **JetBrains Mono** (Technical Details - Monospaced)
+- **Scale**: Hero (96px), H1 (64px), H2 (32px), Body (15px)
 
 **Motion Architecture (Physics)**:
-- **Pathfinding Lines**: `type: "spring", stiffness: 400, damping: 30, mass: 1.2`. Lines "hunt" for the destination with a feeling of physical momentum.
-- **Obstacle Avoidance**: `type: "spring", stiffness: 500, damping: 15` (Magnetic repulsion).
-- **Tool-tip Snap**: Snaps to elements with zero-latency spring physics.
+- **Pixel Reform**: Elements load as a scattered cloud of pixels that "snap" together into their final form.
+- **Grid Light-Sweep**: A horizontal/vertical "laser" line that sweeps the grid every 5 seconds, lighting up borders.
+- **Snappy Hover**: `scale: 1.05, filter: "brightness(1.2)"`, `stiffness: 400, damping: 20`.
 
 **Niche-Specific Section Requirements**:
-- **3D Robot Simulation**: A Three.js canvas integrated into the layout. Users can place "obstacles" (3D cubes) and watch a robotic agent navigate the grid in real-time, with path lines drawn using `framer-motion`'s `useScroll` for manual scrub-through.
+- **Interactive Grid Portfolio**: A grid where every cell is a "pixel." Hovering over a cell "activates" a cluster of pixels around it, revealing a project thumbnail. Clicking "explodes" the grid into the project details.
 
 **Component Styling**:
-- **Buttons**: Heavy, "toggle-switch" look with a physical orange "on" state glow.
-- **Cards**: Beveled corners, displaying "Coordinate Data" in a small monospaced font at the edges.
-- **Inputs**: Dial-style inputs for numerical values, with a mechanical "clicking" sound on adjustment.
+- **Buttons**: 1px borders with "corner brackets" that expand on hover.
+- **Cards**: Bezel-less with a subtle "scanning" animation that moves across the surface.
+- **Inputs**: Terminal-style entries with a blinking underscore cursor.
 
 **Signature Elements**:
-1. **Laser-Scan Header**: A horizontal orange line that "scans" down the page on load, revealing content behind it as it passes.
-2. **The "Collision Warning"**: When the cursor gets too close to a "restricted" UI element, the border of that element flashes Accent 1.
-3. **Telemetry Ticker**: A continuous, high-speed vertical ticker of "system logs" that slows down on hover.
+1. **The 1px Grid**: A persistent, low-opacity 10px grid that acts as the "foundation" of the entire UI.
+2. **Scan-line Progress**: Progress bars that look like a digital scanner moving across a surface.
+3. **RGB Split Transition**: Page transitions involve a 100ms "chromatic aberration" effect where the UI splits into its red, green, and blue components.
 
 ---
-
-### 73. ArchAxe (System Architecture)
-**Design Philosophy & Vibe**: Structural integrity and modular power. ArchAxe is about the architecture of complex systems. The vibe is "Blueprint for Power"—heavy, industrial, and unshakeable. It uses "weight" as a design principle; large components should feel harder to move and have more "impact" when they interact with the grid.
-
-**Design Token System**:
-- **Background**: `#0D0E10` (Foundation Gray)
-- **Surface**: `#1A1C1E` (Structural Plate)
-- **Accent 1**: `#E2E2E2` (Raw Aluminum)
-- **Accent 2**: `#FF3E00` (Heat Red)
-- **Border**: `rgba(226, 226, 226, 0.1)`
-- **Text High**: `#FFFFFF`
-- **Text Low**: `#6C757D`
-
-**Typography System**:
-- **Primary Font**: **Space Grotesk** (Headings - 700 weight, tight line-height)
-- **Secondary Font**: **Sora** (UI/Body)
-- **Scale**: Hero (90px), H1 (64px), H2 (32px), Body (18px)
-
-**Motion Architecture (Physics)**:
-- **Component Drop**: `type: "spring", stiffness: 600, damping: 40, mass: 2`. Large nodes "thud" onto the canvas, causing a slight screen-shake.
-- **Modular Snap**: `stiffness: 800, damping: 50` (Instant lock).
-- **Connection Flow**: `animate: { strokeDashoffset: [0, -20] }, transition: { repeat: Infinity, ease: "linear", duration: 1 }`.
-
-**Niche-Specific Section Requirements**:
-- **Architecture Diagrammer**: A full-screen canvas where users drag-and-drop "Server", "Database", and "Load Balancer" icons. Lines automatically "re-route" around other components with a mechanical sliding animation when the layout is changed.
-
-**Component Styling**:
-- **Buttons**: Large, blocky buttons with a "pressed" state that moves them 4px down in Z-space.
-- **Cards**: Heavy borders (2px solid), using "Architectural Notes" (hand-drawn style annotations) on hover.
-- **Inputs**: Grid-aligned text fields that only accept "logical" input formats.
-
-**Signature Elements**:
-1. **Blueprint Overlay**: A low-opacity blueprint grid (cyan/white lines) that becomes more visible as you zoom into the diagram.
-2. **The "Structural Stress" Visual**: Components that are "overloaded" in a simulation turn Accent 2 and vibrate.
-3. **Impact Ripples**: When a component is added, a subtle wave travels through the background grid.
-
----
-
-### 74. StackScale (SaaS Scalability)
-**Design Philosophy & Vibe**: Exponential growth and compounding value. StackScale focuses on the "verticality" of business expansion. The vibe is "Skyline"—clean, optimistic, and soaring. It uses "stacking" animations to represent layers of value and "growth" physics where elements expand upward as the user interacts.
-
-**Design Token System**:
-- **Background**: `#FFFFFF` (Cloud White)
-- **Surface**: `#F0F4F8` (Elevate Blue)
-- **Accent 1**: `#0066FF` (Growth Blue)
-- **Accent 2**: `#00C853` (Success Green)
-- **Border**: `#E2E8F0`
-- **Text High**: `#1A202C`
-- **Text Low**: `#718096`
-
-**Typography System**:
-- **Primary Font**: **Outfit** (Headings - 600 weight, geometric)
-- **Secondary Font**: **Inter** (Body)
-- **Scale**: Hero (80px), H1 (52px), H2 (28px), Body (16px)
-
-**Motion Architecture (Physics)**:
-- **Bar Growth**: `type: "spring", stiffness: 200, damping: 20, mass: 1`. Bars grow smoothly from the bottom up.
-- **Layer Stacking**: `initial: { y: 100, opacity: 0 }, animate: { y: 0, opacity: 1 }`, with a stagger of `0.1s` per layer.
-- **Hover Scale**: `whileHover: { scale: 1.02, y: -5 }`.
-
-**Niche-Specific Section Requirements**:
-- **Scaling Cost Calculator**: A 3D bar chart where columns represent different SaaS tiers. As the "User Count" slider moves, the bars grow in height and change from Blue to Green, with a "floating profit" indicator that follows the top of the bar.
-
-**Component Styling**:
-- **Buttons**: Pill-shaped, with a "growth" arrow that slides out of the button on hover.
-- **Cards**: Soft shadows, "lifting" off the page on hover with a 3D parallax effect on the internal content.
-- **Inputs**: Clean, borderless inputs with an "expansion" animation on focus that widens the field.
-
-**Signature Elements**:
-1. **The "Skyline" Scroll**: As you scroll down the page, background shapes rise up from the bottom like a developing city skyline.
-2. **Compounding Counter**: Numbers (like ROI or User Count) don't just flip; they "accumulate" with a fast-scrolling blur effect.
-3. **Ascension Path**: A thin, glowing blue line that traces the user's journey down the page.
-
----
-
-### 75. ToolTiny (Micro-tools)
-**Design Philosophy & Vibe**: Hyper-efficiency and modular density. ToolTiny is about doing a lot in a small space. The vibe is "Utility Belt"—compact, multi-functional, and extremely snappy. It uses "drawer" and "accordion" physics to hide complexity until it's needed, keeping the interface minimal but powerful.
-
-**Design Token System**:
-- **Background**: `#121212` (Toolbox Black)
-- **Surface**: `#222222` (Carbon Fiber)
-- **Accent 1**: `#BB86FC` (Vibrant Violet)
-- **Accent 2**: `#03DAC6` (Teal)
-- **Border**: `rgba(255, 255, 255, 0.05)`
-- **Text High**: `#E0E0E0`
-- **Text Low**: `#757575`
-
-**Typography System**:
-- **Primary Font**: **DM Sans** (All Text - High legibility at small sizes)
-- **Secondary Font**: **JetBrains Mono** (For values/units)
-- **Scale**: Hero (48px), H1 (32px), H2 (20px), Body (13px)
-
-**Motion Architecture (Physics)**:
-- **Drawer Expansion**: `type: "spring", stiffness: 500, damping: 35, mass: 0.5`. Snappy and responsive.
-- **Micro-Pop**: `scale: [0, 1.1, 1]`, `duration: 0.2s` for icons and buttons.
-- **Accordion Slide**: `transition: { ease: "circOut", duration: 0.3 }`.
-
-**Niche-Specific Section Requirements**:
-- **All-in-One Utility Hub**: A grid of "Micro-Apps" (e.g., Unit Converter, JSON Formatter, Color Picker). Each app is a 200x200 square that expands into a full-width "workspace" on click using `layoutId`.
-
-**Component Styling**:
-- **Buttons**: Square, with a "recessed" look when clicked. No labels, just high-contrast icons.
-- **Cards**: Dense, using "Tabs" at the top to switch between tool modes.
-- **Inputs**: Inline editing with no borders; text turns Accent 2 when focused.
-
-**Signature Elements**:
-1. **Micro-Interaction Feedback**: Every button has a unique, tiny animation (e.g., a gear turning, a light blinking, a line drawing).
-2. **The "Magnet" Tray**: Tools can be "dragged" to a sidebar where they "snap" and minimize into a persistent tray.
-3. **Density Toggle**: A UI setting that shrinks all spacing and fonts for "Expert Mode."
-
----
-
-## 4. Marketing & Creatives
 
 ### 76. AdBurst (Campaign Builder)
 **Design Philosophy & Vibe**: Explosive reach and high-energy impact. AdBurst visualizes the "launch" of a campaign as a creative big bang. The vibe is "Viral Momentum"—fragmented, colorful, and intense. It uses "shatter" and "explosion" physics to reveal data, suggesting that a single idea can break out into a million directions.
