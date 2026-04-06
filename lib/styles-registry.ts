@@ -157,4 +157,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'gridiron-flow', name: 'Gridiron Flow', category: 'Sports', vibe: 'Tactical high-impact football', bestFor: 'Sports coaching and analytics', accentColor: '#8B4513', built: true, version: 'V3' },
   { slug: 'pitchvision', name: 'PitchVision', category: 'Sports', vibe: 'Fluid clinical soccer analytics', bestFor: 'Match analysis and data', accentColor: '#00FF85', built: true, version: 'V3' },
   { slug: 'e-league-pro', name: 'E-League Pro', category: 'Sports', vibe: 'Hyper-reactive broadcast HUD', bestFor: 'Live streaming overlays', accentColor: '#9146FF', built: true, version: 'V3' },
+
+  // --- V3 Batch 4 Sports Styles ---
+  { slug: 'golfers-edge', name: 'Golfer\'s Edge', category: 'Sports', vibe: 'Serene, precise, and luxurious', bestFor: 'Golf clubs, premium sports', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'esports-hub', name: 'Esports Hub', category: 'Sports', vibe: 'Informational, dense, and live', bestFor: 'Gaming news, tournaments', accentColor: '#00FF41', built: true, version: 'V3' },
+  { slug: 'fitgoal', name: 'FitGoal', category: 'Sports', vibe: 'Energetic, fluid, and biological', bestFor: 'Training apps, fitness', accentColor: '#38BDF8', built: true, version: 'V3' },
+  { slug: 'scoutpro', name: 'ScoutPro', category: 'Sports', vibe: 'Analytical, discovery-focused', bestFor: 'Talent scouting, analytics', accentColor: '#00FFC2', built: true, version: 'V3' },
 ];
