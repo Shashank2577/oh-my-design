@@ -77,6 +77,12 @@ export const STYLES: StyleMeta[] = [
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
 
+  // --- V3 Batch 7 Pet Styles ---
+  { slug: 'barkboxer', name: 'BarkBoxer', category: 'Pets', vibe: 'The Joy of Unboxing', bestFor: 'Subscription Box', accentColor: '#FF6B00', built: true, version: 'V3' },
+  { slug: 'petpals', name: 'PetPals', category: 'Pets', vibe: 'A Community of Tails', bestFor: 'Social Networking', accentColor: '#FBBF24', built: true, version: 'V3' },
+  { slug: 'groomglide', name: 'GroomGlide', category: 'Pets', vibe: 'Satisfyingly Clean', bestFor: 'Grooming Salon', accentColor: '#22D3EE', built: true, version: 'V3' },
+  { slug: 'fishtank', name: 'FishTank', category: 'Tech', vibe: 'Submerged Intelligence', bestFor: 'Aquarium Tech', accentColor: '#94D2BD', built: true, version: 'V3' },
+
   // --- V3 Batch 8 Pet Styles ---
   { slug: 'featherflow', name: 'FeatherFlow', category: 'Pets', vibe: 'Light as air, delicate and rhythmic', bestFor: 'Bird care, Aviaries', accentColor: '#38BDF8', built: true, version: 'V3' },
   { slug: 'reptileroom', name: 'ReptileRoom', category: 'Pets', vibe: 'Primal, precise, cold-blooded tech', bestFor: 'Exotic pet care, Terrariums', accentColor: '#84CC16', built: true, version: 'V3' },
