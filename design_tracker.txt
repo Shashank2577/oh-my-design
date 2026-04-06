@@ -76,6 +76,11 @@
 | folio-flux | Creative | IMPLEMENTED | 2026-04-06 |
 | market-magnet | Marketing | IMPLEMENTED | 2026-04-06 |
 | pixel-pulse | Creative | IMPLEMENTED | 2026-04-06 |
+| ad-burst | Marketing | IMPLEMENTED | 2026-04-06 |
+| canvas-flow | Tech | IMPLEMENTED | 2026-04-06 |
+| brand-bond | Marketing | IMPLEMENTED | 2026-04-06 |
+| trend-tracker | Tech | IMPLEMENTED | 2026-04-06 |
+| pitch-perfect | Marketing | IMPLEMENTED | 2026-04-06 |
 | arena-pulse | Sports | PLANNED | - |
 | mvp-spotlight | Sports | PLANNED | - |
 | league-ladder | Sports | PLANNED | - |

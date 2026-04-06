@@ -77,4 +77,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'folio-flux', name: 'FolioFlux', category: 'Creative', vibe: 'Adaptive morphing portfolio', bestFor: 'Creative agencies', accentColor: '#FF3E00', built: true, version: 'V3' },
   { slug: 'market-magnet', name: 'MarketMagnet', category: 'Marketing', vibe: 'Behavioral growth engine', bestFor: 'Conversion optimization', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'pixel-pulse', name: 'PixelPulse', category: 'Creative', vibe: 'Rhythmic pixel-perfect studio', bestFor: 'Digital artisans', accentColor: '#00FFCC', built: true, version: 'V3' },
+  { slug: 'ad-burst', name: 'AdBurst', category: 'Marketing', vibe: 'Explosive viral momentum', bestFor: 'High-impact campaigns', accentColor: '#F9004D', built: true, version: 'V3' },
+  { slug: 'canvas-flow', name: 'CanvasFlow', category: 'Tech', vibe: 'Infinite spatial design workspace', bestFor: 'Design tools, Collaboration', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'brand-bond', name: 'BrandBond', category: 'Marketing', vibe: 'Emotional resonant branding', bestFor: 'Customer loyalty, Identity', accentColor: '#F43F5E', built: true, version: 'V3' },
+  { slug: 'trend-tracker', name: 'TrendTracker', category: 'Tech', vibe: 'Living data pulse detection', bestFor: 'Market intelligence, Live data', accentColor: '#00FF66', built: true, version: 'V3' },
+  { slug: 'pitch-perfect', name: 'PitchPerfect', category: 'Marketing', vibe: 'Theatrical cinematic sales decks', bestFor: 'High-stakes presentations', accentColor: '#FFFFFF', built: true, version: 'V3' },
 ]
