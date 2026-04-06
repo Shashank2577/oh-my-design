@@ -72,4 +72,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
-]
+
+  // --- V3 Batch 12 Styles ---
+  { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
+  { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'Immersive, high-density, performant', bestFor: 'Dev Tools', accentColor: '#58A6FF', built: true, version: 'V3' },
+  { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Majestic, weight-driven, experimental', bestFor: 'Prompt Engineering', accentColor: '#000000', built: true, version: 'V3' },
+];
