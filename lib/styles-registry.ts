@@ -103,4 +103,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'Immersive, high-density, performant', bestFor: 'Dev Tools', accentColor: '#58A6FF', built: true, version: 'V3' },
   { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Majestic, weight-driven, experimental', bestFor: 'Prompt Engineering', accentColor: '#000000', built: true, version: 'V3' },
+
+  // --- V3 AI Landing Pages (Batch 13) ---
+  { slug: 'vector-vault', name: 'VectorVault', category: 'AI', vibe: 'Geometric, spatial, and vast', bestFor: 'Vector databases, MLOps', accentColor: '#38BDF8', built: true, version: 'V3' },
+  { slug: 'deep-draw', name: 'DeepDraw', category: 'AI', vibe: 'Creative, progressive, and painterly', bestFor: 'AI Art generation, Image editing', accentColor: '#F472B6', built: true, version: 'V3' },
+  { slug: 'agent-orchestra', name: 'AgentOrchestra', category: 'AI', vibe: 'Orchestrated, complex, and systematic', bestFor: 'Multi-agent frameworks, Task delegation', accentColor: '#60A5FA', built: true, version: 'V3' },
 ];
