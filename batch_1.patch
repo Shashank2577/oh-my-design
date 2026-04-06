@@ -1,0 +1,1601 @@
+diff --git a/app/styles/drillmaster/page.tsx b/app/styles/drillmaster/page.tsx
+new file mode 100644
+index 0000000..703b351
+--- /dev/null
++++ b/app/styles/drillmaster/page.tsx
+@@ -0,0 +1,415 @@
++'use client'
++
++import { motion, useReducedMotion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
++import { useRef, useState, useEffect } from 'react'
++import { Public_Sans, Indie_Flower } from 'next/font/google'
++import {
++  PenTool, ChevronDown, ArrowRight, Check, Target, Users, Layout, Zap, Award, BookOpen
++} from 'lucide-react'
++
++const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-public-sans' })
++const indieFlower = Indie_Flower({ weight: '400', subsets: ['latin'], variable: '--font-indie-flower' })
++
++const tokens = {
++  background: '#0D2A1F',
++  surface: 'rgba(13, 42, 31, 0.8)',
++  lines: 'rgba(255, 255, 255, 0.8)',
++  accent: '#FACC15',
++  foreground: '#FFFFFF',
++  mutedForeground: 'rgba(255, 255, 255, 0.6)',
++  border: 'rgba(255, 255, 255, 0.2)'
++}
++
++const PRODUCT_NAME = 'DrillMaster'
++const TAGLINE = 'The Playbook, Evolved.'
++const DESCRIPTION = 'Tactical precision meets fluid strategy. Turn complex plays into visual stories with our interactive coaching canvas.'
++
++function ChalkPath({ d, delay = 0, style }: { d: string; delay?: number, style?: React.CSSProperties }) {
++  const ref = useRef(null)
++  const isInView = useInView(ref, { once: true, margin: '-10% 0px' })
++  return (
++    <motion.path
++      ref={ref}
++      d={d}
++      stroke={tokens.lines}
++      strokeWidth={2}
++      fill="none"
++      initial={{ pathLength: 0, opacity: 0.5 }}
++      animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
++      transition={{ duration: 2, ease: "linear", delay }}
++      style={{ strokeDasharray: '5,5', ...style }}
++    />
++  )
++}
++
++function MagneticNode({ children, className, style }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) {
++  return (
++    <motion.div
++      drag
++      dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
++      whileHover={{ scale: 1.1 }}
++      whileTap={{ scale: 0.95 }}
++      transition={{ type: 'spring', stiffness: 800, damping: 40 }}
++      className={`cursor-grab active:cursor-grabbing ${className}`}
++      style={style}
++    >
++      {children}
++    </motion.div>
++  )
++}
++
++export default function DrillMasterPage() {
++  const shouldReduce = useReducedMotion()
++  const { scrollYProgress } = useScroll()
++
++  return (
++    <div className={`${publicSans.variable} ${indieFlower.variable} font-sans min-h-screen text-white relative overflow-hidden`} style={{ backgroundColor: tokens.background }}>
++      {/* Texture Overlay */}
++      <div className="pointer-events-none fixed inset-0 opacity-[0.03] mix-blend-overlay z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
++
++      <Navbar />
++      <main className="relative z-10">
++        <Hero />
++        <Stats />
++        <Features />
++        <TacticalCanvasSection />
++        <Pricing />
++        <Testimonials />
++        <FAQ />
++        <Newsletter />
++      </main>
++      <Footer />
++    </div>
++  )
++}
++
++function Navbar() {
++  return (
++    <motion.nav
++      initial={{ y: -100 }}
++      animate={{ y: 0 }}
++      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
++      className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md"
++      style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}
++    >
++      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
++        <div className="flex items-center gap-2">
++          <PenTool className="w-5 h-5" style={{ color: tokens.accent }} />
++          <span className="font-bold text-xl uppercase tracking-widest">{PRODUCT_NAME}</span>
++        </div>
++        <div className="hidden md:flex items-center gap-8">
++          {['Features', 'Pricing', 'Testimonials'].map(link => (
++            <a key={link} href={`#${link.toLowerCase()}`} className="text-sm tracking-wide hover:text-accent transition-colors" style={{ color: tokens.lines }}>
++              {link}
++            </a>
++          ))}
++        </div>
++        <motion.button
++          whileHover={{ scale: 1.05 }}
++          whileTap={{ scale: 0.95 }}
++          className="px-5 h-10 rounded text-sm font-bold uppercase tracking-wider text-black"
++          style={{ backgroundColor: tokens.accent }}
++        >
++          Draft Play
++        </motion.button>
++      </div>
++    </motion.nav>
++  )
++}
++
++function Hero() {
++  return (
++    <section className="min-h-screen flex items-center pt-24 pb-16 relative">
++      {/* Background Chalk Lines */}
++      <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
++        <ChalkPath d="M 100,100 C 300,200 400,100 800,400" />
++        <ChalkPath d="M 200,600 C 500,500 600,800 1000,200" delay={0.5} />
++      </svg>
++
++      <div className="max-w-6xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
++        <motion.div
++          initial={{ opacity: 0, x: -50 }}
++          animate={{ opacity: 1, x: 0 }}
++          transition={{ duration: 0.8, staggerChildren: 0.2 }}
++        >
++          <motion.p className="font-handwritten text-2xl mb-4" style={{ color: tokens.accent, fontFamily: 'var(--font-indie-flower)' }}>
++            Design the winning strategy.
++          </motion.p>
++          <motion.h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
++            {TAGLINE}
++          </motion.h1>
++          <motion.p className="text-lg mb-8 max-w-lg" style={{ color: tokens.mutedForeground }}>
++            {DESCRIPTION}
++          </motion.p>
++          <div className="flex flex-wrap gap-4">
++            <motion.button
++              whileHover={{ scale: 1.05 }}
++              whileTap={{ scale: 0.95 }}
++              className="h-14 px-8 font-bold uppercase tracking-widest text-black flex items-center gap-2"
++              style={{ backgroundColor: tokens.accent }}
++            >
++              Start Drawing <ArrowRight className="w-5 h-5" />
++            </motion.button>
++          </div>
++        </motion.div>
++
++        {/* Hero Interactive Board */}
++        <motion.div
++          initial={{ opacity: 0, scale: 0.9 }}
++          animate={{ opacity: 1, scale: 1 }}
++          transition={{ duration: 1, type: 'spring' }}
++          className="relative aspect-[4/3] rounded-xl border-2 flex items-center justify-center overflow-hidden"
++          style={{ borderColor: tokens.border, backgroundColor: 'rgba(0,0,0,0.2)' }}
++        >
++          <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
++             {/* Pitch lines */}
++             <path d="M 50,50 L 50,350 L 450,350 L 450,50 Z" stroke={tokens.lines} fill="none" strokeWidth={2} opacity={0.3} />
++             <path d="M 250,50 L 250,350" stroke={tokens.lines} fill="none" strokeWidth={2} opacity={0.3} />
++             <circle cx="250" cy="200" r="50" stroke={tokens.lines} fill="none" strokeWidth={2} opacity={0.3} />
++             
++             {/* Animated Play */}
++             <ChalkPath d="M 100,300 C 150,200 200,100 300,100" delay={1} style={{ stroke: tokens.accent, strokeDasharray: 'none', strokeWidth: 4 }} />
++             <ChalkPath d="M 300,100 L 400,150" delay={2.5} style={{ stroke: tokens.lines, strokeDasharray: 'none', strokeWidth: 3 }} />
++          </svg>
++          
++          <MagneticNode className="absolute left-[80px] top-[280px] w-8 h-8 rounded-full border-2 bg-black flex items-center justify-center font-bold text-xs" style={{ borderColor: tokens.accent }}>
++            X
++          </MagneticNode>
++          <MagneticNode className="absolute left-[280px] top-[80px] w-8 h-8 rounded-full border-2 bg-black flex items-center justify-center font-bold text-xs" style={{ borderColor: tokens.lines }}>
++            O
++          </MagneticNode>
++           <MagneticNode className="absolute left-[380px] top-[130px] w-8 h-8 rounded-full border-2 bg-black flex items-center justify-center font-bold text-xs" style={{ borderColor: tokens.lines }}>
++            O
++          </MagneticNode>
++        </motion.div>
++      </div>
++    </section>
++  )
++}
++
++function Stats() {
++  const stats = [
++    { v: '10K+', l: 'Coaches' },
++    { v: '1M+', l: 'Plays Drawn' },
++    { v: '50+', l: 'Sports' },
++    { v: '99%', l: 'Win Rate' }
++  ]
++  return (
++    <section className="py-12 border-y" style={{ borderColor: tokens.border, backgroundColor: 'rgba(0,0,0,0.1)' }}>
++      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
++        {stats.map((s, i) => (
++          <motion.div
++            key={i}
++            initial={{ opacity: 0, y: 20 }}
++            whileInView={{ opacity: 1, y: 0 }}
++            viewport={{ once: true }}
++            transition={{ delay: i * 0.1 }}
++            className="text-center"
++          >
++            <div className="text-4xl md:text-5xl font-black mb-2" style={{ color: tokens.accent }}>{s.v}</div>
++            <div className="text-sm font-handwritten tracking-widest uppercase" style={{ color: tokens.lines, fontFamily: 'var(--font-indie-flower)' }}>{s.l}</div>
++          </motion.div>
++        ))}
++      </div>
++    </section>
++  )
++}
++
++function Features() {
++  const features = [
++    { icon: Target, title: 'Tactical Canvas', desc: 'Interactive SVG board with snap-to-grid mechanics.' },
++    { icon: Layout, title: 'Play Animator', desc: 'Scrubbable timeline for multi-phase strategy viewing.' },
++    { icon: Zap, title: 'Vision Cone', desc: 'Animated SVG paths representing player field-of-view.' }
++  ]
++  return (
++    <section id="features" className="py-24">
++      <div className="max-w-6xl mx-auto px-6">
++        <motion.div
++          initial={{ opacity: 0 }}
++          whileInView={{ opacity: 1 }}
++          viewport={{ once: true }}
++          className="mb-16 text-center"
++        >
++          <h2 className="text-4xl font-black uppercase mb-4">Precision Tools</h2>
++          <p className="font-handwritten text-xl" style={{ color: tokens.accent, fontFamily: 'var(--font-indie-flower)' }}>Everything you need to formulate the perfect plan.</p>
++        </motion.div>
++        <div className="grid md:grid-cols-3 gap-8">
++          {features.map((f, i) => (
++            <motion.div
++              key={i}
++              initial={{ opacity: 0, y: 30 }}
++              whileInView={{ opacity: 1, y: 0 }}
++              viewport={{ once: true }}
++              transition={{ delay: i * 0.15 }}
++              whileHover={{ y: -10 }}
++              className="p-8 border-2 rounded-xl relative overflow-hidden group"
++              style={{ borderColor: tokens.border, backgroundColor: 'rgba(0,0,0,0.2)' }}
++            >
++              <f.icon className="w-10 h-10 mb-6" style={{ color: tokens.accent }} />
++              <h3 className="text-2xl font-bold uppercase mb-4">{f.title}</h3>
++              <p style={{ color: tokens.mutedForeground }}>{f.desc}</p>
++              
++              {/* Hover Chalk dust effect */}
++              <motion.div
++                 className="absolute inset-0 bg-white opacity-0 group-hover:opacity-5 transition-opacity duration-300"
++                 style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }}
++              />
++            </motion.div>
++          ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function TacticalCanvasSection() {
++  return (
++    <section className="py-24 border-y overflow-hidden" style={{ borderColor: tokens.border }}>
++      <div className="max-w-6xl mx-auto px-6">
++         <div className="flex flex-col md:flex-row gap-12 items-center">
++            <div className="flex-1">
++               <h2 className="text-4xl font-black uppercase mb-6">Magnetic Paths</h2>
++               <p className="text-lg mb-6" style={{ color: tokens.mutedForeground }}>
++                 Lines automatically bend around defender icons. Draw plays in real-time as you scroll.
++               </p>
++               <p className="font-handwritten text-2xl" style={{ color: tokens.accent, fontFamily: 'var(--font-indie-flower)' }}>
++                  Watch the play unfold...
++               </p>
++            </div>
++            <div className="flex-1 relative aspect-square border-2 rounded-full overflow-hidden flex justify-center items-center" style={{ borderColor: tokens.accent, backgroundColor: 'rgba(0,0,0,0.3)' }}>
++               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
++                  <ChalkPath d="M 20,80 Q 50,20 80,80" delay={0} style={{ stroke: tokens.lines, strokeWidth: 1 }} />
++                  <circle cx="50" cy="50" r="5" fill="none" stroke={tokens.accent} strokeWidth="1" />
++               </svg>
++            </div>
++         </div>
++      </div>
++    </section>
++  )
++}
++
++function Pricing() {
++  return (
++    <section id="pricing" className="py-24">
++      <div className="max-w-4xl mx-auto px-6 text-center">
++        <h2 className="text-4xl font-black uppercase mb-16">Recruitment Cost</h2>
++        <div className="grid md:grid-cols-2 gap-8">
++           <motion.div
++             whileHover={{ scale: 1.02 }}
++             className="p-8 border-2 rounded-xl text-left"
++             style={{ borderColor: tokens.border }}
++           >
++              <h3 className="text-2xl font-bold uppercase mb-2">Amateur</h3>
++              <div className="text-4xl font-black mb-6">$0<span className="text-lg text-gray-400">/mo</span></div>
++              <ul className="space-y-4 mb-8">
++                 {['Basic canvas', '10 saved plays', 'Community access'].map((f, i) => (
++                    <li key={i} className="flex gap-2 items-center"><Check className="w-4 h-4 text-white" /> <span className="font-handwritten" style={{ fontFamily: 'var(--font-indie-flower)'}}>{f}</span></li>
++                 ))}
++              </ul>
++              <button className="w-full py-4 font-bold uppercase border-2 hover:bg-white hover:text-black transition-colors" style={{ borderColor: tokens.lines }}>Draft</button>
++           </motion.div>
++           
++           <motion.div
++             whileHover={{ scale: 1.02 }}
++             className="p-8 border-2 rounded-xl text-left relative overflow-hidden"
++             style={{ borderColor: tokens.accent, backgroundColor: 'rgba(250, 204, 21, 0.05)' }}
++           >
++              <div className="absolute top-4 right-4 text-xs font-bold bg-yellow-400 text-black px-2 py-1 uppercase rounded">Pro</div>
++              <h3 className="text-2xl font-bold uppercase mb-2" style={{ color: tokens.accent }}>Professional</h3>
++              <div className="text-4xl font-black mb-6">$29<span className="text-lg text-gray-400">/mo</span></div>
++              <ul className="space-y-4 mb-8">
++                 {['Unlimited plays', 'Play animator', 'Team collaboration', 'Export to PDF/Video'].map((f, i) => (
++                    <li key={i} className="flex gap-2 items-center"><Check className="w-4 h-4" style={{ color: tokens.accent }}/> <span className="font-handwritten" style={{ fontFamily: 'var(--font-indie-flower)'}}>{f}</span></li>
++                 ))}
++              </ul>
++              <button className="w-full py-4 font-bold uppercase text-black" style={{ backgroundColor: tokens.accent }}>Sign Pro Contract</button>
++           </motion.div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Testimonials() {
++  return (
++    <section id="testimonials" className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: 'rgba(0,0,0,0.2)' }}>
++      <div className="max-w-6xl mx-auto px-6">
++        <h2 className="text-4xl font-black uppercase text-center mb-16">Hall of Fame</h2>
++        <div className="grid md:grid-cols-3 gap-6">
++           {[1, 2, 3].map((i) => (
++              <motion.div
++                 key={i}
++                 initial={{ opacity: 0, scale: 0.9 }}
++                 whileInView={{ opacity: 1, scale: 1 }}
++                 viewport={{ once: true }}
++                 className="p-6 border-2 rounded-xl"
++                 style={{ borderColor: tokens.border }}
++              >
++                 <div className="flex mb-4">
++                    {[...Array(5)].map((_, j) => <Award key={j} className="w-5 h-5" style={{ color: tokens.accent }} />)}
++                 </div>
++                 <p className="font-handwritten text-lg mb-6 leading-relaxed" style={{ fontFamily: 'var(--font-indie-flower)'}}>
++                   "DrillMaster completely changed how I communicate with my team. The visual clarity is unmatched."
++                 </p>
++                 <div className="font-bold uppercase tracking-widest text-sm">— Coach Taylor</div>
++              </motion.div>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function FAQ() {
++  const faqs = [
++    { q: "Can I use it on a tablet during games?", a: "Yes, our touch interface is optimized for courtside adjustments." },
++    { q: "Are custom field layouts supported?", a: "Absolutely. Choose from 50+ presets or draw your own boundaries." },
++    { q: "How do I share plays with players?", a: "Export as animated GIFs, videos, or send a secure link." }
++  ]
++  return (
++    <section className="py-24">
++      <div className="max-w-3xl mx-auto px-6">
++        <h2 className="text-4xl font-black uppercase text-center mb-16">Chalk Talk (FAQ)</h2>
++        <div className="space-y-4">
++           {faqs.map((faq, i) => (
++              <details key={i} className="group border-2 rounded p-6 cursor-pointer" style={{ borderColor: tokens.border }}>
++                 <summary className="font-bold text-xl uppercase flex justify-between items-center list-none">
++                    {faq.q}
++                    <ChevronDown className="w-6 h-6 transition-transform group-open:rotate-180" style={{ color: tokens.accent }} />
++                 </summary>
++                 <p className="mt-4 font-handwritten text-lg" style={{ color: tokens.mutedForeground, fontFamily: 'var(--font-indie-flower)' }}>{faq.a}</p>
++              </details>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Newsletter() {
++  return (
++    <section className="py-24 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.accent }}>
++      <div className="max-w-2xl mx-auto px-6 text-center text-black">
++        <h2 className="text-4xl font-black uppercase mb-4">Join the Roster</h2>
++        <p className="font-handwritten text-2xl mb-8 font-bold" style={{ fontFamily: 'var(--font-indie-flower)' }}>Get weekly drills and tactical breakdowns.</p>
++        <form className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto" onSubmit={e => e.preventDefault()}>
++           <input type="email" placeholder="coach@team.com" className="flex-1 px-4 py-3 rounded border-2 border-black bg-transparent placeholder-black/50 font-bold outline-none focus:bg-white" />
++           <button className="px-8 py-3 rounded bg-black text-white font-black uppercase tracking-widest">Subscribe</button>
++        </form>
++      </div>
++    </section>
++  )
++}
++
++function Footer() {
++  return (
++    <footer className="py-12 text-center" style={{ backgroundColor: 'black' }}>
++      <div className="flex items-center justify-center gap-2 mb-6">
++         <PenTool className="w-6 h-6" style={{ color: tokens.accent }} />
++         <span className="font-black text-2xl uppercase tracking-widest">{PRODUCT_NAME}</span>
++      </div>
++      <p className="font-handwritten mb-8" style={{ color: tokens.mutedForeground, fontFamily: 'var(--font-indie-flower)' }}>Tactics drawn to perfection.</p>
++      <p className="text-xs font-bold uppercase tracking-widest" style={{ color: tokens.lines }}>© 2026 {PRODUCT_NAME}. All rights reserved.</p>
++    </footer>
++  )
++}
+diff --git a/app/styles/fancave/page.tsx b/app/styles/fancave/page.tsx
+new file mode 100644
+index 0000000..eaaa6cf
+--- /dev/null
++++ b/app/styles/fancave/page.tsx
+@@ -0,0 +1,395 @@
++'use client'
++
++import { motion, useReducedMotion, useInView, useScroll, useTransform } from 'framer-motion'
++import { useRef, useState, useEffect } from 'react'
++import { Cinzel, Montserrat } from 'next/font/google'
++import {
++  Diamond, Box, Shield, Star, Crown, Layers, Zap, Hexagon, Maximize
++} from 'lucide-react'
++
++const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel' })
++const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '600'], variable: '--font-montserrat' })
++
++const tokens = {
++  background: '#0F0F1A',
++  surface: '#1A1A2E',
++  accent: '#D4AF37', // Gold Leaf
++  textHigh: '#FFFFFF',
++  textLow: '#A0A0B0',
++}
++
++const PRODUCT_NAME = 'FanCave'
++const TAGLINE = 'Curate The Rare.'
++const DESCRIPTION = 'A digital sanctuary for your most prized collectibles. Experience tangible ownership in the digital realm with museum-grade 3D display technology.'
++
++function CardViewer({ children }: { children: React.ReactNode }) {
++  const [rotateX, setRotateX] = useState(0)
++  const [rotateY, setRotateY] = useState(0)
++
++  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
++    const rect = e.currentTarget.getBoundingClientRect()
++    const x = e.clientX - rect.left
++    const y = e.clientY - rect.top
++    const centerX = rect.width / 2
++    const centerY = rect.height / 2
++    
++    // Max rotation of 15 degrees
++    const rotateXValue = ((y - centerY) / centerY) * -15
++    const rotateYValue = ((x - centerX) / centerX) * 15
++
++    setRotateX(rotateXValue)
++    setRotateY(rotateYValue)
++  }
++
++  const handleMouseLeave = () => {
++    setRotateX(0)
++    setRotateY(0)
++  }
++
++  return (
++    <div 
++      className="perspective-1000 w-full h-full flex items-center justify-center"
++      onMouseMove={handleMouseMove}
++      onMouseLeave={handleMouseLeave}
++    >
++      <motion.div
++        animate={{ rotateX, rotateY }}
++        transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 2 }}
++        className="w-full h-full relative preserve-3d"
++      >
++        {children}
++      </motion.div>
++    </div>
++  )
++}
++
++export default function FanCavePage() {
++  const { scrollY } = useScroll()
++  const bgY = useTransform(scrollY, [0, 1000], [0, 200])
++  
++  return (
++    <div className={`${cinzel.variable} ${montserrat.variable} font-sans min-h-screen text-white overflow-hidden`} 
++         style={{ background: `radial-gradient(circle at 50% 0%, #2A2A4A 0%, ${tokens.background} 70%)` }}>
++      
++      {/* Ambient Dust Particles (simplified via CSS background pattern for performance) */}
++      <div className="fixed inset-0 pointer-events-none opacity-20 mix-blend-screen" 
++           style={{ backgroundImage: 'radial-gradient(circle, #D4AF37 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
++      </div>
++
++      <Navbar />
++      <main className="relative z-10">
++        <Hero />
++        <Stats />
++        <Features />
++        <VaultSection />
++        <Pricing />
++        <Testimonials />
++        <FAQ />
++        <Newsletter />
++      </main>
++      <Footer />
++    </div>
++  )
++}
++
++function Navbar() {
++  return (
++    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/10">
++      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
++        <div className="flex items-center gap-3">
++          <Diamond className="w-6 h-6" style={{ color: tokens.accent }} />
++          <span className="font-serif text-2xl tracking-widest">{PRODUCT_NAME}</span>
++        </div>
++        <div className="hidden md:flex items-center gap-8">
++          {['Vault', 'Market', 'Prestige'].map(link => (
++            <a key={link} href={`#`} className="text-sm tracking-[0.2em] uppercase hover:text-[#D4AF37] transition-colors" style={{ color: tokens.textLow }}>
++              {link}
++            </a>
++          ))}
++        </div>
++        <button className="px-6 py-2 border text-sm tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37]"
++                style={{ borderColor: tokens.accent, color: tokens.accent }}>
++          Connect Wallet
++        </button>
++      </div>
++    </nav>
++  )
++}
++
++function Hero() {
++  return (
++    <section className="min-h-screen flex items-center pt-20">
++      <div className="max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center">
++        <motion.div
++          initial={{ opacity: 0, y: 30 }}
++          animate={{ opacity: 1, y: 0 }}
++          transition={{ duration: 1, ease: "easeOut" }}
++        >
++          <div className="flex items-center gap-4 mb-6">
++            <div className="h-[1px] w-12" style={{ backgroundColor: tokens.accent }} />
++            <p className="text-xs tracking-[0.3em] uppercase" style={{ color: tokens.accent }}>Premium Artifacts</p>
++          </div>
++          <h1 className="font-serif text-6xl md:text-8xl leading-tight mb-8 drop-shadow-2xl">
++            {TAGLINE}
++          </h1>
++          <p className="text-lg font-light tracking-wide max-w-lg mb-10 leading-relaxed" style={{ color: tokens.textLow }}>
++            {DESCRIPTION}
++          </p>
++          <button className="px-10 py-4 font-serif text-lg tracking-widest text-black relative group overflow-hidden"
++                  style={{ backgroundColor: tokens.accent }}>
++            <span className="relative z-10">Enter The Vault</span>
++            <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
++          </button>
++        </motion.div>
++
++        <div className="h-[600px] w-full py-12">
++          <CardViewer>
++             <div className="w-full max-w-[380px] aspect-[2/3] mx-auto rounded-xl relative overflow-hidden shadow-2xl border"
++                  style={{ borderColor: 'rgba(212, 175, 55, 0.4)', background: 'linear-gradient(145deg, #1A1A2E, #0F0F1A)', boxShadow: '0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.2)' }}>
++                {/* Glint effect */}
++                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
++                
++                <div className="absolute inset-4 border border-white/10 rounded-lg p-6 flex flex-col justify-between">
++                   <div className="flex justify-between items-start">
++                      <Crown className="w-8 h-8" style={{ color: tokens.accent }} />
++                      <div className="text-right">
++                         <div className="text-xs tracking-[0.2em]" style={{ color: tokens.textLow }}>EDITION</div>
++                         <div className="font-serif text-xl" style={{ color: tokens.accent }}>1/1</div>
++                      </div>
++                   </div>
++                   
++                   <div className="text-center">
++                     {/* Holographic placeholder */}
++                     <motion.div 
++                       animate={{ y: [-5, 5, -5] }}
++                       transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
++                       className="w-32 h-32 mx-auto rounded-full mix-blend-screen opacity-80"
++                       style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)', filter: 'blur(10px)' }}
++                     />
++                   </div>
++
++                   <div>
++                      <div className="text-xs tracking-widest mb-1" style={{ color: tokens.textLow }}>ARTIFACT NO. 042</div>
++                      <h3 className="font-serif text-2xl">The Golden Standard</h3>
++                   </div>
++                </div>
++             </div>
++          </CardViewer>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Stats() {
++  return (
++    <section className="py-20 border-y border-white/5 bg-black/20">
++      <div className="max-w-6xl mx-auto px-6 flex justify-around flex-wrap gap-8">
++        {[
++          { v: '$12M+', l: 'Volume Traded' },
++          { v: '8,402', l: 'Artifacts Secured' },
++          { v: '0.01%', l: 'Authentication Error' }
++        ].map((s, i) => (
++          <div key={i} className="text-center">
++            <div className="font-serif text-4xl mb-3 drop-shadow-md" style={{ color: tokens.accent }}>{s.v}</div>
++            <div className="text-xs tracking-[0.2em] uppercase font-light" style={{ color: tokens.textLow }}>{s.l}</div>
++          </div>
++        ))}
++      </div>
++    </section>
++  )
++}
++
++function Features() {
++  const features = [
++    { icon: Box, title: '3D Card Viewer', desc: 'Full 360-degree rotation with realistic lighting shaders.' },
++    { icon: Shield, title: 'Holographic Vault', desc: 'Military-grade security with scanning laser transitions.' },
++    { icon: Zap, title: 'Rarity Meter', desc: 'Liquid-fill gauges that glow based on item scarcity.' }
++  ]
++  return (
++    <section className="py-32">
++      <div className="max-w-6xl mx-auto px-6">
++        <div className="text-center mb-24">
++          <h2 className="font-serif text-4xl md:text-5xl mb-6">Museum-Grade Display</h2>
++          <p className="font-light tracking-wide max-w-2xl mx-auto" style={{ color: tokens.textLow }}>
++            We treat digital items with the reverence of physical artifacts, emphasizing texture, lighting, and rarity.
++          </p>
++        </div>
++        
++        <div className="grid md:grid-cols-3 gap-8">
++          {features.map((f, i) => (
++            <motion.div 
++              key={i}
++              whileHover={{ y: -10, backgroundColor: 'rgba(212, 175, 55, 0.05)' }}
++              transition={{ duration: 0.3 }}
++              className="p-10 border rounded-sm"
++              style={{ borderColor: 'rgba(255,255,255,0.05)', backgroundColor: tokens.surface }}
++            >
++              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-8 bg-black/50 border border-white/10">
++                <f.icon className="w-6 h-6" style={{ color: tokens.accent }} />
++              </div>
++              <h3 className="font-serif text-xl mb-4">{f.title}</h3>
++              <p className="font-light text-sm leading-relaxed" style={{ color: tokens.textLow }}>{f.desc}</p>
++            </motion.div>
++          ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function VaultSection() {
++  return (
++    <section className="py-32 bg-black relative overflow-hidden">
++      {/* Laser Scanning line */}
++      <motion.div 
++        animate={{ top: ['0%', '100%', '0%'] }}
++        transition={{ duration: 8, ease: "linear", repeat: Infinity }}
++        className="absolute left-0 right-0 h-[2px] z-20 pointer-events-none"
++        style={{ background: 'linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent)', boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)' }}
++      />
++
++      <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
++        <div className="flex-1">
++          <h2 className="font-serif text-4xl md:text-5xl mb-6">The Holographic Vault</h2>
++          <p className="font-light tracking-wide text-lg mb-8" style={{ color: tokens.textLow }}>
++            Secure your rarest pieces behind our proprietary cryptographic grid. Every interaction is verified. Every artifact is eternally preserved.
++          </p>
++          <div className="flex items-center gap-4">
++             <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
++                <motion.div 
++                   className="h-full rounded-full" 
++                   style={{ backgroundColor: tokens.accent }}
++                   initial={{ width: 0 }}
++                   whileInView={{ width: '99.9%' }}
++                   transition={{ duration: 2, ease: "easeOut" }}
++                   viewport={{ once: true }}
++                />
++             </div>
++             <span className="text-sm font-bold tracking-widest" style={{ color: tokens.accent }}>99.9% UPTIME</span>
++          </div>
++        </div>
++        
++        <div className="flex-1">
++           {/* Abstract Vault Visualization */}
++           <div className="aspect-square border border-white/10 rounded-full relative flex items-center justify-center p-8" style={{ background: 'radial-gradient(circle, #1A1A2E 0%, transparent 70%)' }}>
++              <div className="w-full h-full border border-white/5 rounded-full flex items-center justify-center animate-spin-slow" style={{ animationDuration: '20s' }}>
++                 <div className="w-2/3 h-2/3 border border-[#D4AF37]/30 rounded-full flex items-center justify-center animate-spin-slow" style={{ animationDirection: 'reverse', animationDuration: '15s' }}>
++                    <Hexagon className="w-16 h-16" style={{ color: tokens.accent }} />
++                 </div>
++              </div>
++           </div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Pricing() {
++  return (
++    <section className="py-32">
++      <div className="max-w-4xl mx-auto px-6">
++        <div className="text-center mb-20">
++          <h2 className="font-serif text-4xl mb-4">Membership Tiers</h2>
++          <div className="w-16 h-[1px] mx-auto" style={{ backgroundColor: tokens.accent }} />
++        </div>
++        
++        <div className="grid md:grid-cols-2 gap-8">
++           <div className="p-10 border border-white/10 bg-[#1A1A2E]/50 backdrop-blur-sm relative">
++              <h3 className="font-serif text-2xl mb-2">Collector</h3>
++              <div className="text-4xl font-light mb-8">Free</div>
++              <ul className="space-y-4 mb-10 text-sm tracking-wide font-light" style={{ color: tokens.textLow }}>
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/30" /> Store up to 50 artifacts</li>
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/30" /> Standard 3D viewer</li>
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/30" /> Community access</li>
++              </ul>
++              <button className="w-full py-4 border border-white/20 text-xs tracking-widest uppercase hover:bg-white/5 transition-colors">Join Free</button>
++           </div>
++
++           <div className="p-10 border relative overflow-hidden" style={{ borderColor: tokens.accent, backgroundColor: '#1A1A2E' }}>
++              <div className="absolute top-0 right-0 bg-[#D4AF37] text-black text-xs font-bold tracking-widest px-4 py-1 uppercase">Curator</div>
++              <h3 className="font-serif text-2xl mb-2 text-[#D4AF37]">Curator</h3>
++              <div className="text-4xl font-light mb-8">2.5<span className="text-lg"> ETH</span><span className="text-xs text-white/50 block tracking-widest uppercase mt-1">Lifetime Pass</span></div>
++              <ul className="space-y-4 mb-10 text-sm tracking-wide font-light text-white/80">
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-[#D4AF37]" /> Unlimited vault storage</li>
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-[#D4AF37]" /> High-res glint shaders</li>
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-[#D4AF37]" /> Early access to mints</li>
++                 <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-[#D4AF37]" /> Physical framing service</li>
++              </ul>
++              <button className="w-full py-4 text-black text-xs tracking-widest uppercase" style={{ backgroundColor: tokens.accent }}>Mint Pass</button>
++           </div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Testimonials() {
++  return (
++    <section className="py-24 border-y border-white/5 relative bg-[#0F0F1A]/80 backdrop-blur-lg">
++      <div className="max-w-6xl mx-auto px-6">
++        <h2 className="font-serif text-3xl text-center mb-16 opacity-80">Revered by Collectors</h2>
++        <div className="grid md:grid-cols-3 gap-12 text-center">
++           {[1, 2, 3].map((i) => (
++              <div key={i} className="flex flex-col items-center">
++                 <div className="w-12 h-12 rounded-full border border-[#D4AF37]/50 mb-6 flex items-center justify-center bg-black/50">
++                    <Star className="w-4 h-4 text-[#D4AF37] fill-current" />
++                 </div>
++                 <p className="font-serif text-lg leading-relaxed mb-6">"The tactile feel of the 3D viewer makes digital ownership finally click. It's beautiful."</p>
++                 <div className="text-xs tracking-[0.2em] uppercase font-light" style={{ color: tokens.accent }}>0xALEX...9A2F</div>
++              </div>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function FAQ() {
++  return (
++    <section className="py-32">
++      <div className="max-w-3xl mx-auto px-6">
++        <h2 className="font-serif text-4xl text-center mb-16">Inquiries</h2>
++        <div className="space-y-2">
++           {[
++             { q: "Which blockchains are supported?", a: "Currently Ethereum and Polygon. Solana integration is in beta." },
++             { q: "How does the physical framing work?", a: "Curator pass holders receive one free museum-quality physical print with embedded NFC verification per year." }
++           ].map((faq, i) => (
++              <details key={i} className="group border-b border-white/10 p-6 cursor-pointer">
++                 <summary className="font-serif text-xl list-none flex justify-between items-center">
++                    {faq.q}
++                    <span className="text-[#D4AF37] group-open:rotate-45 transition-transform duration-300">+</span>
++                 </summary>
++                 <p className="mt-6 font-light tracking-wide text-sm leading-relaxed" style={{ color: tokens.textLow }}>{faq.a}</p>
++              </details>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Newsletter() {
++  return (
++    <section className="py-32 text-center">
++      <div className="max-w-xl mx-auto px-6">
++        <Diamond className="w-8 h-8 mx-auto mb-8" style={{ color: tokens.accent }} />
++        <h2 className="font-serif text-3xl mb-4">Join the Inner Circle</h2>
++        <p className="font-light tracking-wide text-sm mb-10" style={{ color: tokens.textLow }}>Receive private invitations to curated drops and auctions.</p>
++        <div className="flex border-b border-white/30 focus-within:border-[#D4AF37] transition-colors pb-2">
++           <input type="email" placeholder="Your email address" className="flex-1 bg-transparent outline-none font-serif text-lg placeholder-white/30" />
++           <button className="text-xs tracking-[0.2em] uppercase hover:text-[#D4AF37] transition-colors">Subscribe</button>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Footer() {
++  return (
++    <footer className="py-12 border-t border-white/5 text-center bg-black">
++      <span className="font-serif text-xl tracking-widest mb-4 block opacity-80">{PRODUCT_NAME}</span>
++      <p className="text-xs tracking-[0.3em] uppercase opacity-40">© 2026. Rare & Immutable.</p>
++    </footer>
++  )
++}
+diff --git a/app/styles/matchday-sync/page.tsx b/app/styles/matchday-sync/page.tsx
+new file mode 100644
+index 0000000..dda5238
+--- /dev/null
++++ b/app/styles/matchday-sync/page.tsx
+@@ -0,0 +1,387 @@
++'use client'
++
++import { motion, useReducedMotion, useInView } from 'framer-motion'
++import { useRef, useState, useEffect } from 'react'
++import { Archivo_Black, Inter } from 'next/font/google'
++import {
++  Activity, ArrowUpRight, PlayCircle, Zap, Globe, Trophy, CircleDot, RefreshCw
++} from 'lucide-react'
++
++const archivoBlack = Archivo_Black({ weight: '400', subsets: ['latin'], variable: '--font-archivo' })
++const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
++
++const tokens = {
++  background: '#FFFFFF',
++  primary: '#EE242C', // Urgent Red
++  secondary: '#2D2D2D', // Stadium Grey
++  notification: '#3B82F6', // Info Blue
++  textHigh: '#111111',
++  textLow: '#666666'
++}
++
++const PRODUCT_NAME = 'MatchDay Sync'
++const TAGLINE = 'Live. Loud. Now.'
++const DESCRIPTION = 'Real-time updates, crowd sentiment, and momentum tracking. Feel the pulse of the stadium from anywhere in the world.'
++
++// Reusable physics configs
++const bouncePhysics = { type: 'spring' as const, stiffness: 700, damping: 10 }
++const joltPhysics = { type: 'spring' as const, stiffness: 400, damping: 25 }
++
++export default function MatchDaySyncPage() {
++  const [pulseScale, setPulseScale] = useState(1)
++
++  // Live Pulse Effect
++  useEffect(() => {
++    const interval = setInterval(() => {
++      setPulseScale(1.05)
++      setTimeout(() => setPulseScale(1), 150)
++    }, 2000)
++    return () => clearInterval(interval)
++  }, [])
++
++  return (
++    <div className={`${archivoBlack.variable} ${inter.variable} font-sans min-h-screen text-[#111111]`} style={{ backgroundColor: tokens.background }}>
++      <Navbar />
++      
++      {/* Live Ticker */}
++      <div className="fixed top-16 left-0 right-0 h-10 border-b border-gray-200 bg-white z-40 overflow-hidden flex items-center">
++         <motion.div 
++           className="flex whitespace-nowrap items-center font-bold text-sm"
++           animate={{ x: ["0%", "-50%"] }}
++           transition={{ duration: 20, ease: "linear", repeat: Infinity }}
++         >
++           {[...Array(6)].map((_, i) => (
++             <div key={i} className="flex items-center gap-4 px-8 border-r border-gray-200">
++               <span className="text-red-500 animate-pulse">● LIVE</span>
++               <span>MCI 2 - 1 ARS (74&apos;)</span>
++               <span>De Bruyne Goal</span>
++               <span className="text-blue-500">VAR Check Complete</span>
++             </div>
++           ))}
++         </motion.div>
++      </div>
++
++      <main className="pt-26 relative z-10">
++        <Hero pulseScale={pulseScale} />
++        <Stats />
++        <Features />
++        <MomentumSection />
++        <Pricing />
++        <Testimonials />
++        <FAQ />
++        <Newsletter />
++      </main>
++      <Footer />
++    </div>
++  )
++}
++
++function Navbar() {
++  return (
++    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 h-16">
++      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
++        <div className="flex items-center gap-2">
++          <CircleDot className="w-6 h-6 text-red-500 animate-pulse" />
++          <span className="font-heading text-2xl tracking-tight uppercase" style={{ fontFamily: 'var(--font-archivo)' }}>SYNC</span>
++        </div>
++        <div className="hidden md:flex items-center gap-6 font-bold text-sm">
++          {['Matches', 'Momentum', 'Hype'].map(link => (
++            <a key={link} href={`#`} className="hover:text-red-500 transition-colors uppercase">
++              {link}
++            </a>
++          ))}
++        </div>
++        <motion.button
++          whileHover={{ scale: 1.05 }}
++          whileTap={{ scale: 0.95 }}
++          className="px-6 py-2 bg-black text-white font-bold uppercase text-sm rounded-sm"
++        >
++          Go Live
++        </motion.button>
++      </div>
++    </nav>
++  )
++}
++
++function Hero({ pulseScale }: { pulseScale: number }) {
++  return (
++    <section className="min-h-[90vh] flex flex-col justify-center items-center pt-20 pb-12">
++      <div className="max-w-5xl mx-auto px-6 text-center w-full">
++        
++        <motion.div
++           initial={{ y: -50, opacity: 0 }}
++           animate={{ y: 0, opacity: 1 }}
++           transition={bouncePhysics}
++           className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-full font-bold text-sm mb-8 uppercase tracking-wide"
++        >
++           <Activity className="w-4 h-4" /> Live Match Detected
++        </motion.div>
++
++        <motion.h1 
++          className="text-7xl md:text-[9rem] font-heading uppercase leading-[0.85] mb-6 tracking-tighter"
++          style={{ fontFamily: 'var(--font-archivo)' }}
++          initial={{ scale: 0.8, opacity: 0 }}
++          animate={{ scale: 1, opacity: 1 }}
++          transition={bouncePhysics}
++        >
++          {TAGLINE}
++        </motion.h1>
++        
++        <p className="text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-10" style={{ color: tokens.textLow }}>
++          {DESCRIPTION}
++        </p>
++
++        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
++          <motion.button
++            whileHover={{ scale: 1.05 }}
++            whileTap={{ scale: 0.95 }}
++            className="h-16 px-10 bg-red-600 text-white font-heading text-xl uppercase tracking-wide flex items-center justify-center gap-3"
++            style={{ fontFamily: 'var(--font-archivo)' }}
++          >
++            <PlayCircle className="w-6 h-6" /> Join Sync
++          </motion.button>
++        </div>
++
++        {/* Live Scoreboard Hero Graphic */}
++        <motion.div 
++           animate={{ scale: pulseScale }}
++           transition={{ duration: 0.1 }}
++           className="w-full max-w-3xl mx-auto bg-[#2D2D2D] text-white rounded-xl p-8 shadow-2xl relative overflow-hidden"
++        >
++           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-blue-500" />
++           <div className="flex justify-between items-center">
++              <div className="text-center flex-1">
++                 <div className="text-5xl font-heading mb-2">MCI</div>
++                 <div className="text-sm font-bold text-gray-400">HOME</div>
++              </div>
++              <div className="text-6xl md:text-8xl font-heading px-8 bg-black/30 rounded-lg">
++                 2 - 1
++              </div>
++              <div className="text-center flex-1">
++                 <div className="text-5xl font-heading mb-2">ARS</div>
++                 <div className="text-sm font-bold text-gray-400">AWAY</div>
++              </div>
++           </div>
++           
++           <div className="mt-8 bg-black/50 h-3 rounded-full overflow-hidden flex">
++              <div className="bg-red-500 h-full" style={{ width: '65%' }} />
++              <div className="bg-blue-500 h-full" style={{ width: '35%' }} />
++           </div>
++           <div className="text-center mt-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
++              Live Momentum
++           </div>
++        </motion.div>
++
++      </div>
++    </section>
++  )
++}
++
++function Stats() {
++  return (
++    <section className="py-12 border-y border-gray-200 bg-gray-50">
++      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
++        {[
++           { v: '< 50ms', l: 'Data Latency' },
++           { v: '2.4M', l: 'Concurrent Fans' },
++           { v: '10k+', l: 'Events/Sec' },
++           { v: '100%', l: 'Hype' }
++        ].map((s, i) => (
++           <motion.div 
++             key={i}
++             initial={{ y: 20, opacity: 0 }}
++             whileInView={{ y: 0, opacity: 1 }}
++             viewport={{ once: true }}
++             transition={{ delay: i * 0.1, ...bouncePhysics }}
++             className="text-center"
++           >
++              <div className="text-4xl md:text-5xl font-heading text-red-600 mb-2" style={{ fontFamily: 'var(--font-archivo)' }}>{s.v}</div>
++              <div className="font-bold text-sm uppercase text-gray-500">{s.l}</div>
++           </motion.div>
++        ))}
++      </div>
++    </section>
++  )
++}
++
++function Features() {
++  const features = [
++    { icon: Activity, title: 'Hype-Meter', desc: 'Real-time gauge driven by social sentiment and crowd noise.' },
++    { icon: ArrowUpRight, title: 'Momentum Slider', desc: 'Dual-color bar representing which team is dominating.' },
++    { icon: RefreshCw, title: 'Pull-to-Refresh', desc: 'Elastic interactions that bounce data right into your UI.' }
++  ]
++  return (
++    <section className="py-24">
++      <div className="max-w-6xl mx-auto px-6">
++        <h2 className="text-5xl md:text-7xl font-heading uppercase mb-16 text-center" style={{ fontFamily: 'var(--font-archivo)' }}>
++          Don&apos;t Blink.
++        </h2>
++        <div className="grid md:grid-cols-3 gap-8">
++          {features.map((f, i) => (
++            <motion.div
++              key={i}
++              whileHover={{ scale: 1.05, y: -10 }}
++              transition={bouncePhysics}
++              className="p-8 bg-gray-100 rounded-xl border-2 border-transparent hover:border-black cursor-pointer"
++            >
++               <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm">
++                  <f.icon className="w-6 h-6 text-red-600" />
++               </div>
++               <h3 className="text-2xl font-heading uppercase mb-4" style={{ fontFamily: 'var(--font-archivo)' }}>{f.title}</h3>
++               <p className="font-medium text-gray-600 leading-relaxed">{f.desc}</p>
++            </motion.div>
++          ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function MomentumSection() {
++  return (
++    <section className="py-32 bg-black text-white relative overflow-hidden">
++      {/* Background Pulse Rings */}
++      <motion.div 
++         animate={{ scale: [1, 2, 3], opacity: [0.5, 0, 0] }}
++         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
++         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border-4 border-red-500 rounded-full"
++      />
++      
++      <div className="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
++         <div className="flex-1">
++            <h2 className="text-5xl md:text-7xl font-heading uppercase mb-6" style={{ fontFamily: 'var(--font-archivo)' }}>Feel The Shift</h2>
++            <p className="text-xl text-gray-400 font-medium mb-8">
++               Our Momentum Engine analyzes thousands of data points per second. When the game changes, your screen reacts instantly.
++            </p>
++            <button className="px-8 py-4 bg-white text-black font-heading uppercase text-xl hover:bg-red-500 hover:text-white transition-colors">
++               View Demo
++            </button>
++         </div>
++         <div className="flex-1 w-full bg-[#1A1A1A] p-8 rounded-xl border border-gray-800">
++            <div className="text-center font-bold text-gray-500 mb-4 uppercase text-sm tracking-widest">Live Dominance</div>
++            
++            {/* Animated Momentum Bar */}
++            <div className="relative h-20 bg-gray-900 rounded-lg overflow-hidden flex items-center p-2 gap-2">
++               <motion.div 
++                 animate={{ width: ['40%', '70%', '45%'] }}
++                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
++                 className="h-full bg-red-600 rounded-md relative flex items-center justify-end px-4"
++               >
++                 <ArrowUpRight className="text-white w-8 h-8" />
++               </motion.div>
++               <motion.div 
++                 animate={{ width: ['60%', '30%', '55%'] }}
++                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
++                 className="h-full bg-blue-600 rounded-md relative flex items-center px-4"
++               >
++                 <ArrowUpRight className="text-white w-8 h-8 rotate-180" />
++               </motion.div>
++            </div>
++         </div>
++      </div>
++    </section>
++  )
++}
++
++function Pricing() {
++  return (
++    <section className="py-32 bg-gray-50">
++      <div className="max-w-4xl mx-auto px-6">
++        <h2 className="text-5xl md:text-7xl font-heading uppercase text-center mb-16" style={{ fontFamily: 'var(--font-archivo)' }}>Season Pass</h2>
++        
++        <div className="grid md:grid-cols-2 gap-8">
++           <div className="bg-white p-10 border border-gray-200 rounded-xl shadow-sm">
++              <h3 className="text-3xl font-heading uppercase mb-2" style={{ fontFamily: 'var(--font-archivo)' }}>Fan</h3>
++              <div className="text-5xl font-black mb-6">$0<span className="text-xl text-gray-400">/mo</span></div>
++              <ul className="space-y-4 mb-8 font-medium">
++                 <li>Basic Live Scores</li>
++                 <li>Standard Latency (2s)</li>
++                 <li>Ads Enabled</li>
++              </ul>
++              <button className="w-full py-4 border-2 border-black font-bold uppercase hover:bg-black hover:text-white transition-colors">Start Free</button>
++           </div>
++           
++           <div className="bg-black text-white p-10 rounded-xl shadow-2xl relative transform md:-translate-y-4">
++              <div className="absolute -top-4 right-8 bg-red-600 text-white font-bold uppercase px-4 py-1 text-sm rounded-sm transform rotate-3">Ultra</div>
++              <h3 className="text-3xl font-heading uppercase mb-2 text-red-500" style={{ fontFamily: 'var(--font-archivo)' }}>Hooligan</h3>
++              <div className="text-5xl font-black mb-6">$15<span className="text-xl text-gray-400">/mo</span></div>
++              <ul className="space-y-4 mb-8 font-medium text-gray-300">
++                 <li>Momentum Engine Access</li>
++                 <li>Zero Latency ({"<50ms"})</li>
++                 <li>Ad-Free Experience</li>
++                 <li>Haptic Feedback App</li>
++              </ul>
++              <button className="w-full py-4 bg-red-600 font-bold uppercase text-xl hover:bg-white hover:text-black transition-colors">Upgrade Now</button>
++           </div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Testimonials() {
++  return (
++    <section className="py-24 border-y border-gray-200">
++      <div className="max-w-6xl mx-auto px-6 overflow-hidden">
++        <motion.div 
++           animate={{ x: ["0%", "-50%"] }}
++           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
++           className="flex gap-8 w-max"
++        >
++           {[1, 2, 3, 4].map((i) => (
++             <div key={i} className="w-[400px] p-8 bg-gray-100 rounded-xl border border-gray-200">
++                <div className="flex text-yellow-400 mb-4">★★★★★</div>
++                <p className="text-lg font-medium mb-6">"The momentum slider literally predicted the comeback before it happened on TV. Unbelievable tech."</p>
++                <div className="font-bold uppercase text-sm">@SoccerFan99</div>
++             </div>
++           ))}
++        </motion.div>
++      </div>
++    </section>
++  )
++}
++
++function FAQ() {
++  return (
++    <section className="py-32 bg-white">
++      <div className="max-w-3xl mx-auto px-6 text-center">
++        <h2 className="text-5xl font-heading uppercase mb-12" style={{ fontFamily: 'var(--font-archivo)' }}>Rules of Play</h2>
++        <div className="space-y-6 text-left">
++           {[
++             { q: "Is it faster than my TV broadcast?", a: "Yes. TV broadcasts have a 5-10 second delay. We get data direct from the stadium sensors." },
++             { q: "What sports are supported?", a: "Soccer, Basketball, American Football, and Cricket. More coming soon." }
++           ].map((faq, i) => (
++             <div key={i} className="p-6 bg-gray-50 rounded-xl border border-gray-200">
++                <h3 className="font-heading text-xl uppercase mb-2">{faq.q}</h3>
++                <p className="font-medium text-gray-600">{faq.a}</p>
++             </div>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Newsletter() {
++  return (
++    <section className="py-32 bg-red-600 text-white text-center">
++      <div className="max-w-2xl mx-auto px-6">
++        <h2 className="text-6xl font-heading uppercase mb-6" style={{ fontFamily: 'var(--font-archivo)' }}>Get The Call</h2>
++        <p className="text-xl font-medium mb-10">Sign up for beta access to our new Haptic Engine.</p>
++        <div className="flex gap-2 max-w-md mx-auto">
++           <input type="email" placeholder="ENTER EMAIL" className="flex-1 px-4 py-4 font-bold uppercase text-black outline-none border-4 border-transparent focus:border-black" />
++           <button className="px-8 bg-black text-white font-heading text-xl uppercase hover:bg-white hover:text-black transition-colors">Go</button>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Footer() {
++  return (
++    <footer className="py-12 text-center bg-black text-white">
++      <div className="font-heading text-3xl uppercase tracking-tighter mb-4" style={{ fontFamily: 'var(--font-archivo)' }}>{PRODUCT_NAME}</div>
++      <p className="text-sm font-bold uppercase text-gray-500">© 2026. Data over everything.</p>
++    </footer>
++  )
++}
+diff --git a/app/styles/progear/page.tsx b/app/styles/progear/page.tsx
+new file mode 100644
+index 0000000..0d6e700
+--- /dev/null
++++ b/app/styles/progear/page.tsx
+@@ -0,0 +1,366 @@
++'use client'
++
++import { motion, useReducedMotion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
++import { useRef, useState } from 'react'
++import { Roboto_Mono, Michroma } from 'next/font/google'
++import {
++  Cpu, Mouse, Keyboard, Crosshair, ThermometerSun, Layers, Search, Zap
++} from 'lucide-react'
++
++const robotoMono = Roboto_Mono({ subsets: ['latin'], variable: '--font-roboto-mono' })
++const michroma = Michroma({ weight: '400', subsets: ['latin'], variable: '--font-michroma' })
++
++const tokens = {
++  background: '#121212', // Carbon
++  surface: '#1A1A1A',
++  accent: '#39FF14', // Neon Green / PCB
++  material: '#333333', // Brushed Aluminum
++  border: 'rgba(255, 255, 255, 0.1)',
++  textHigh: '#FFFFFF',
++  textLow: '#888888'
++}
++
++const PRODUCT_NAME = 'ProGear'
++const TAGLINE = 'ENGINEERED FOR DOMINANCE'
++const DESCRIPTION = 'Unleash your potential with hardware built for the top 1%. Precision optics, mechanical perfection, and zero-latency wireless technology.'
++
++// Reusable technical styles
++const techBorder = {
++  border: `1px solid ${tokens.border}`,
++  background: 'linear-gradient(180deg, rgba(26,26,26,0.8) 0%, rgba(18,18,18,0.9) 100%)',
++  boxShadow: `inset 0 1px 0 rgba(255,255,255,0.05)`
++}
++
++export default function ProGearPage() {
++  return (
++    <div className={`${robotoMono.variable} ${michroma.variable} font-sans min-h-screen text-white bg-[#121212] overflow-hidden`}>
++      {/* Blueprint Grid Background */}
++      <div className="fixed inset-0 pointer-events-none opacity-5 z-0" 
++           style={{ backgroundImage: 'linear-gradient(#39FF14 1px, transparent 1px), linear-gradient(90deg, #39FF14 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
++      
++      <Navbar />
++      <main className="relative z-10">
++        <Hero />
++        <SpecsBar />
++        <ExplodedViewSection />
++        <ThermalMapSection />
++        <Pricing />
++        <Testimonials />
++        <FAQ />
++        <Newsletter />
++      </main>
++      <Footer />
++    </div>
++  )
++}
++
++function Navbar() {
++  return (
++    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#121212]/90 backdrop-blur-md border-b border-white/10">
++      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
++        <div className="flex items-center gap-2">
++          <Cpu className="w-6 h-6" style={{ color: tokens.accent }} />
++          <span className="font-heading text-xl tracking-widest uppercase" style={{ fontFamily: 'var(--font-michroma)' }}>{PRODUCT_NAME}</span>
++        </div>
++        <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase text-gray-400">
++          {['Hardware', 'Specs', 'Telemetry'].map(link => (
++            <a key={link} href={`#`} className="hover:text-[#39FF14] transition-colors relative group">
++              {link}
++              <span className="absolute -bottom-6 left-0 w-full h-[2px] bg-[#39FF14] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
++            </a>
++          ))}
++        </div>
++        <button className="px-6 py-2 text-xs font-bold tracking-widest uppercase border border-white/20 hover:border-[#39FF14] hover:text-[#39FF14] transition-colors">
++          Initialize
++        </button>
++      </div>
++    </nav>
++  )
++}
++
++function Hero() {
++  return (
++    <section className="min-h-screen flex items-center pt-20 relative">
++      {/* Ambient Rotation Background */}
++      <motion.div 
++        animate={{ rotateY: 360 }}
++        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
++        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full pointer-events-none"
++        style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
++      >
++         <div className="w-full h-full border border-[#39FF14]/10 rounded-full rotate-x-60" />
++      </motion.div>
++
++      <div className="max-w-7xl mx-auto px-6 w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
++        <motion.div
++          initial={{ opacity: 0, x: -50 }}
++          animate={{ opacity: 1, x: 0 }}
++          transition={{ duration: 0.8 }}
++        >
++          <div className="flex items-center gap-3 mb-6">
++             <div className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse" />
++             <span className="text-xs tracking-widest text-[#39FF14] uppercase font-bold">System Online</span>
++          </div>
++          <h1 className="font-heading text-5xl md:text-7xl leading-tight mb-6 uppercase" style={{ fontFamily: 'var(--font-michroma)' }}>
++            {TAGLINE}
++          </h1>
++          <p className="text-sm tracking-wide text-gray-400 max-w-md mb-10 leading-relaxed font-mono">
++            {DESCRIPTION}
++          </p>
++          <div className="flex gap-4">
++            <button className="px-8 py-4 bg-[#39FF14] text-black text-xs font-bold uppercase tracking-widest skew-x-[-10deg] hover:bg-white transition-colors">
++               <span className="skew-x-[10deg] block">Deploy Now</span>
++            </button>
++            <button className="px-8 py-4 border border-white/20 text-xs font-bold uppercase tracking-widest skew-x-[-10deg] hover:border-[#39FF14] transition-colors">
++               <span className="skew-x-[10deg] block">View Schematics</span>
++            </button>
++          </div>
++        </motion.div>
++
++        {/* 3D Hardware Representation (Abstract) */}
++        <div className="h-[500px] w-full flex justify-center items-center relative perspective-1000">
++           <motion.div 
++              animate={{ rotateY: [0, 15, -15, 0], rotateX: [0, 5, -5, 0] }}
++              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
++              className="w-64 h-80 relative preserve-3d"
++           >
++              {/* Outer Shell */}
++              <div className="absolute inset-0 border border-white/20 bg-gradient-to-b from-[#333] to-[#111] rounded-3xl shadow-2xl overflow-hidden">
++                 {/* Internal PCB visual */}
++                 <div className="absolute inset-4 border border-[#39FF14]/30 rounded-2xl bg-[#111] grid grid-cols-4 grid-rows-6 gap-1 p-2">
++                    {[...Array(24)].map((_, i) => (
++                       <div key={i} className="bg-white/5 rounded-sm" />
++                    ))}
++                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-black border border-[#39FF14] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(57,255,20,0.5)]">
++                       <Zap className="w-6 h-6 text-[#39FF14]" />
++                    </div>
++                 </div>
++              </div>
++           </motion.div>
++           
++           {/* UI Zoom Reticle */}
++           <motion.div 
++             className="absolute top-1/4 right-1/4 w-16 h-16 border-2 border-[#39FF14] rounded-full flex items-center justify-center"
++             animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
++             transition={{ duration: 2, repeat: Infinity }}
++           >
++             <Crosshair className="w-8 h-8 text-[#39FF14]" />
++           </motion.div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function SpecsBar() {
++  return (
++    <section className="py-6 border-y border-white/10 bg-[#0A0A0A] overflow-hidden">
++      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-xs font-mono tracking-widest text-gray-500 uppercase">
++        <div className="flex items-center gap-2"><span className="text-white">POLLING:</span> 8000HZ</div>
++        <div className="flex items-center gap-2"><span className="text-white">SWITCHES:</span> OPTICAL V3</div>
++        <div className="flex items-center gap-2"><span className="text-white">WEIGHT:</span> 49G</div>
++        <div className="flex items-center gap-2"><span className="text-white">SENSOR:</span> FOCUS PRO</div>
++      </div>
++    </section>
++  )
++}
++
++function ExplodedViewSection() {
++  const { scrollYProgress } = useScroll()
++  const y1 = useTransform(scrollYProgress, [0, 1], [0, -100])
++  const y2 = useTransform(scrollYProgress, [0, 1], [0, 0])
++  const y3 = useTransform(scrollYProgress, [0, 1], [0, 100])
++
++  return (
++    <section className="py-32 relative">
++      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
++        
++        {/* Exploded View Animation */}
++        <div className="h-[600px] w-full relative flex flex-col justify-center items-center gap-4 perspective-1000">
++           <motion.div style={{ y: y1 }} className="w-48 h-32 border border-white/20 bg-[#222] rounded-t-3xl shadow-lg relative flex items-center justify-center">
++              <span className="text-[10px] font-mono text-gray-500 absolute top-2 left-2">TOP_SHELL_ALU</span>
++              <Mouse className="w-8 h-8 text-white/30" />
++           </motion.div>
++           
++           <motion.div style={{ y: y2 }} className="w-48 h-12 border border-[#39FF14] bg-black shadow-[0_0_20px_rgba(57,255,20,0.2)] relative flex items-center justify-center">
++              <span className="text-[10px] font-mono text-[#39FF14] absolute top-1 left-2">PCB_OPTICAL_ARRAY</span>
++              <div className="flex gap-2">
++                 <div className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse" />
++                 <div className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse delay-75" />
++              </div>
++           </motion.div>
++           
++           <motion.div style={{ y: y3 }} className="w-48 h-24 border border-white/20 bg-[#111] rounded-b-3xl shadow-lg relative flex items-center justify-center">
++              <span className="text-[10px] font-mono text-gray-500 absolute bottom-2 left-2">BASE_PTFE</span>
++              <div className="w-16 h-8 border border-white/10 rounded-full" />
++           </motion.div>
++        </div>
++
++        <div>
++          <h2 className="font-heading text-4xl mb-6 uppercase" style={{ fontFamily: 'var(--font-michroma)' }}>Deconstructed Perfection</h2>
++          <p className="text-sm font-mono text-gray-400 mb-8 leading-relaxed">
++            Every component engineered to shave milliseconds off your reaction time. Scroll to analyze the internal architecture.
++          </p>
++          <div className="space-y-4">
++             {['Aerospace-grade Aluminum Shell', 'Zero-debounce Optical Switches', 'Frictionless PTFE Skates'].map((item, i) => (
++                <div key={i} className="flex items-center gap-4 p-4 border border-white/5 bg-white/5 hover:border-[#39FF14]/50 transition-colors">
++                   <div className="text-[#39FF14] font-mono text-xs">0{i+1}</div>
++                   <div className="text-sm uppercase tracking-wide">{item}</div>
++                </div>
++             ))}
++          </div>
++        </div>
++
++      </div>
++    </section>
++  )
++}
++
++function ThermalMapSection() {
++  return (
++    <section className="py-32 bg-black border-y border-white/10 relative overflow-hidden">
++      <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
++        <h2 className="font-heading text-4xl mb-4 uppercase" style={{ fontFamily: 'var(--font-michroma)' }}>Thermal Efficiency</h2>
++        <p className="font-mono text-sm text-gray-500 mb-16 uppercase tracking-widest">Hover to scan heat dissipation</p>
++        
++        <div className="max-w-2xl mx-auto aspect-[16/9] border border-white/20 bg-[#111] rounded-lg relative overflow-hidden group cursor-crosshair">
++           {/* Base Image Placeholder */}
++           <div className="absolute inset-0 flex items-center justify-center">
++              <Cpu className="w-32 h-32 text-white/10" />
++           </div>
++           
++           {/* Thermal Overlay on Hover */}
++           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-green-500 to-red-600 opacity-0 group-hover:opacity-60 transition-opacity duration-500 mix-blend-overlay" />
++           
++           {/* Scanning Line */}
++           <motion.div 
++             className="absolute top-0 bottom-0 left-0 w-1 bg-[#39FF14] shadow-[0_0_10px_#39FF14] opacity-0 group-hover:opacity-100"
++             animate={{ x: ["0%", "800%", "0%"] }}
++             transition={{ duration: 4, ease: "linear", repeat: Infinity }}
++           />
++           
++           <div className="absolute bottom-4 right-4 text-xs font-mono text-[#39FF14] opacity-0 group-hover:opacity-100 transition-opacity">
++              PEAK TEMP: 32.4°C
++           </div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Pricing() {
++  return (
++    <section className="py-32">
++      <div className="max-w-5xl mx-auto px-6">
++        <div className="text-center mb-16">
++           <h2 className="font-heading text-4xl uppercase mb-2" style={{ fontFamily: 'var(--font-michroma)' }}>Loadouts</h2>
++        </div>
++        
++        <div className="grid md:grid-cols-2 gap-8">
++           <div className="p-8" style={techBorder}>
++              <div className="text-xs font-mono text-gray-500 mb-2">BASE_MODEL</div>
++              <h3 className="font-heading text-2xl uppercase mb-6" style={{ fontFamily: 'var(--font-michroma)' }}>ProGear Standard</h3>
++              <div className="text-4xl font-mono mb-8">$129</div>
++              <ul className="space-y-4 mb-8 font-mono text-sm text-gray-400">
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-white" /> 1000Hz Polling</li>
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-white" /> Mechanical Switches</li>
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-white" /> Standard Skates</li>
++              </ul>
++              <button className="w-full py-4 border border-white/20 font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-colors">Select</button>
++           </div>
++           
++           <div className="p-8 relative" style={{ ...techBorder, borderColor: tokens.accent }}>
++              <div className="absolute top-0 left-0 w-full h-[1px] bg-[#39FF14] shadow-[0_0_10px_#39FF14]" />
++              <div className="text-xs font-mono text-[#39FF14] mb-2">FLAGSHIP_MODEL</div>
++              <h3 className="font-heading text-2xl uppercase mb-6 text-[#39FF14]" style={{ fontFamily: 'var(--font-michroma)' }}>ProGear Elite</h3>
++              <div className="text-4xl font-mono mb-8">$249</div>
++              <ul className="space-y-4 mb-8 font-mono text-sm text-gray-300">
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-[#39FF14]" /> 8000Hz Wireless Polling</li>
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-[#39FF14]" /> Optical Switches V3</li>
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-[#39FF14]" /> Glass Skates Included</li>
++                 <li className="flex items-center gap-2"><div className="w-1 h-1 bg-[#39FF14]" /> Carbon Fiber Shell</li>
++              </ul>
++              <button className="w-full py-4 bg-[#39FF14] text-black font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors">Select Elite</button>
++           </div>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Testimonials() {
++  return (
++    <section className="py-24 border-y border-white/10 bg-[#080808]">
++      <div className="max-w-6xl mx-auto px-6">
++        <h2 className="font-mono text-sm text-center text-[#39FF14] mb-12 uppercase tracking-widest">{">"} {">"} Verified Telemetry</h2>
++        <div className="grid md:grid-cols-3 gap-6">
++           {[
++             { n: 's1mple', g: 'CS2', t: '"The 8K polling makes tracking feel supernatural. Zero latency."' },
++             { n: 'TenZ', g: 'Valorant', t: '"Lightest shape I\'ve ever used without sacrificing structural integrity."' },
++             { n: 'Faker', g: 'LoL', t: '"Switches actuate instantly. Crucial for high APM micro-management."' }
++           ].map((t, i) => (
++             <div key={i} className="p-6 bg-black border border-white/5 relative group">
++                {/* Macro focus text effect */}
++                <p className="font-mono text-sm text-gray-400 mb-6 leading-relaxed group-hover:scale-105 group-hover:text-white transition-all origin-left">
++                  {t.t}
++                </p>
++                <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto">
++                   <div className="font-heading text-sm uppercase" style={{ fontFamily: 'var(--font-michroma)' }}>{t.n}</div>
++                   <div className="text-xs font-mono bg-white/10 px-2 py-1">{t.g}</div>
++                </div>
++             </div>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function FAQ() {
++  return (
++    <section className="py-32">
++      <div className="max-w-3xl mx-auto px-6">
++        <h2 className="font-heading text-4xl text-center mb-16 uppercase" style={{ fontFamily: 'var(--font-michroma)' }}>System Queries</h2>
++        <div className="space-y-4 font-mono text-sm">
++           {[
++             { q: "Battery life on 8K polling?", a: "> 24 hours of continuous competitive use. Rapid charge 0-100% in 30 mins." },
++             { q: "Is software required?", a: "> Plug and play. On-board memory stores 5 profiles. Software optional for macros." }
++           ].map((faq, i) => (
++             <div key={i} className="p-6 border border-white/10 bg-[#111]">
++                <h3 className="text-[#39FF14] mb-2">{faq.q}</h3>
++                <p className="text-gray-500">{faq.a}</p>
++             </div>
++           ))}
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Newsletter() {
++  return (
++    <section className="py-24 border-y border-[#39FF14]/30 bg-black relative overflow-hidden">
++       {/* Blueprint Mode toggle visual */}
++       <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#39FF14 1px, transparent 1px), linear-gradient(90deg, #39FF14 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
++       
++      <div className="max-w-xl mx-auto px-6 text-center relative z-10">
++        <h2 className="font-heading text-2xl uppercase mb-4" style={{ fontFamily: 'var(--font-michroma)' }}>Awaiting Input</h2>
++        <p className="font-mono text-sm text-gray-400 mb-8">Register for early access to prototype hardware drops.</p>
++        <div className="flex border border-white/20 p-1 bg-[#111]">
++           <span className="p-3 text-[#39FF14] font-mono">{">"}</span>
++           <input type="email" placeholder="ENTER_EMAIL_ADDR" className="flex-1 bg-transparent outline-none font-mono text-sm text-white placeholder-gray-600" />
++           <button className="px-6 bg-white/10 hover:bg-[#39FF14] hover:text-black font-bold font-mono text-xs transition-colors">EXECUTE</button>
++        </div>
++      </div>
++    </section>
++  )
++}
++
++function Footer() {
++  return (
++    <footer className="py-8 bg-black text-center border-t border-white/5">
++      <div className="font-heading text-xl uppercase tracking-widest mb-2" style={{ fontFamily: 'var(--font-michroma)' }}>{PRODUCT_NAME}</div>
++      <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">SYS.VER.2026 // END_OF_FILE</p>
++    </footer>
++  )
++}
+diff --git a/lib/styles-registry.ts b/lib/styles-registry.ts
+index 95f48ae..a61755d 100644
+--- a/lib/styles-registry.ts
++++ b/lib/styles-registry.ts
+@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
+   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
+   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
+   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
++  { slug: 'drillmaster', name: 'DrillMaster', category: 'Sports', vibe: 'Tactical, precise, educational playbook', bestFor: 'Coaching apps, Strategy tools', accentColor: '#FACC15', built: true, version: 'V3' },
++  { slug: 'fancave', name: 'FanCave', category: 'Sports', vibe: 'Premium, rare 3D collectible vault', bestFor: 'NFTs, Collectibles, Prestige items', accentColor: '#D4AF37', built: true, version: 'V3' },
++  { slug: 'matchday-sync', name: 'MatchDay Sync', category: 'Sports', vibe: 'Live, urgent, bouncy sports tracking', bestFor: 'Live updates, Fan engagement', accentColor: '#EE242C', built: true, version: 'V3' },
++  { slug: 'progear', name: 'ProGear', category: 'Tech', vibe: 'Industrial, engineering excellence, telemetry', bestFor: 'Hardware sales, eSports gear', accentColor: '#39FF14', built: true, version: 'V3' },
+ ]
+
