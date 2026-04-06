@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'pet-memorial', name: 'PetMemorial', category: 'Pets', vibe: 'The Eternal Garden, peaceful, respectful', bestFor: 'Tributes, memorials', accentColor: '#FAD02C', built: true, version: 'V3' },
+  { slug: 'adopt-flow', name: 'AdoptFlow', category: 'Pets', vibe: 'The Journey Home, progression, anticipation', bestFor: 'Pet adoption workflow', accentColor: '#6C5CE7', built: true, version: 'V3' },
+  { slug: 'pet-shop-hero', name: 'PetShopHero', category: 'Pets', vibe: 'Retail Reward, shiny, satisfying', bestFor: 'Pet e-commerce', accentColor: '#FFD700', built: true, version: 'V3' },
+  { slug: 'zoo-zoom', name: 'ZooZoom', category: 'Pets', vibe: 'The Panoramic Portal, immersive scale', bestFor: 'Virtual zoo, panoramas', accentColor: '#8BC34A', built: true, version: 'V3' },
 ]
