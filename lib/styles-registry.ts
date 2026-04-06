@@ -67,13 +67,45 @@ export const STYLES: StyleMeta[] = [
   { slug: 'figma', name: 'Figma', category: 'Creative', vibe: 'Typographic sophistication', bestFor: 'Design tools, Creativity', accentColor: '#000000', built: true, version: 'V2' },
 
   // --- V3 Animation Heavy Styles ---
+  { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Surgical & Scientific—cold, clean, and hyper-organized', bestFor: 'ML Model Lifecycle tools', accentColor: '#8B5CF6', built: true, version: 'V3' },
+  { slug: 'tensor-track', name: 'TensorTrack', category: 'AI', vibe: 'High-speed data streaming and real-time telemetry', bestFor: 'AI/ML infrastructure dashboards', accentColor: '#FF4D4D', built: true, version: 'V3' },
+  { slug: 'layer-logic', name: 'LayerLogic', category: 'Tech', vibe: 'Mechanical precision and tactile logic automation', bestFor: 'Workflow builders and visualization', accentColor: '#F59E0B', built: true, version: 'V3' },
+  { slug: 'semantic-sync', name: 'SemanticSync', category: 'AI', vibe: 'Fluid spatial intelligence and interconnected embeddings', bestFor: 'Vector databases and NLP tools', accentColor: '#38BDF8', built: true, version: 'V3' },
   { slug: 'velocity-scoreboard', name: 'Velocity Scoreboard', category: 'Sports', vibe: 'High-intensity sports analytics', bestFor: 'Live match dashboards', accentColor: '#CCFF00', built: true, version: 'V3' },
   { slug: 'neural-note', name: 'NeuralNote', category: 'AI', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
-  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
-  { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Surreal, amorphous, and ethereal', bestFor: 'Creative AI, Generative tools', accentColor: '#B6EADA', built: true, version: 'V3' },
+  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Creative', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'brand-story', name: 'BrandStory', category: 'Marketing', vibe: 'Cinematic brand legacy', bestFor: 'Premium storytelling', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'ad-metric', name: 'AdMetric', category: 'Tech', vibe: 'High-frequency ad-tech dashboard', bestFor: 'Marketing analytics', accentColor: '#00FF41', built: true, version: 'V3' },
+  { slug: 'folio-flux', name: 'FolioFlux', category: 'Creative', vibe: 'Adaptive morphing portfolio', bestFor: 'Creative agencies', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'market-magnet', name: 'MarketMagnet', category: 'Marketing', vibe: 'Behavioral growth engine', bestFor: 'Conversion optimization', accentColor: '#6366F1', built: true, version: 'V3' },
+  { slug: 'pixel-pulse', name: 'PixelPulse', category: 'Creative', vibe: 'Rhythmic pixel-perfect studio', bestFor: 'Digital artisans', accentColor: '#00FFCC', built: true, version: 'V3' },
+  { slug: 'ad-burst', name: 'AdBurst', category: 'Marketing', vibe: 'Explosive viral momentum', bestFor: 'High-impact campaigns', accentColor: '#F9004D', built: true, version: 'V3' },
+  { slug: 'canvas-flow', name: 'CanvasFlow', category: 'Tech', vibe: 'Infinite spatial design workspace', bestFor: 'Design tools, Collaboration', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'brand-bond', name: 'BrandBond', category: 'Marketing', vibe: 'Emotional resonant branding', bestFor: 'Customer loyalty, Identity', accentColor: '#F43F5E', built: true, version: 'V3' },
+  { slug: 'trend-tracker', name: 'TrendTracker', category: 'Tech', vibe: 'Living data pulse detection', bestFor: 'Market intelligence, Live data', accentColor: '#00FF66', built: true, version: 'V3' },
+  { slug: 'pitch-perfect', name: 'PitchPerfect', category: 'Marketing', vibe: 'Theatrical cinematic sales decks', bestFor: 'High-stakes presentations', accentColor: '#FFFFFF', built: true, version: 'V3' },
+  { slug: 'arena-pulse', name: 'Arena Pulse', category: 'Sports', vibe: 'Liquid-power athletic engine', bestFor: 'Pro performance tracking', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'mvp-spotlight', name: 'MVP Spotlight', category: 'Sports', vibe: 'Theatrical player profiles', bestFor: 'Elite athlete branding', accentColor: '#FFFFFF', built: true, version: 'V3' },
+  { slug: 'league-ladder', name: 'League Ladder', category: 'Sports', vibe: 'High-energy tournament hub', bestFor: 'eSports organizations', accentColor: '#00FF66', built: true, version: 'V3' },
+  { slug: 'drill-master', name: 'DrillMaster', category: 'Sports', vibe: 'Technical coaching command deck', bestFor: 'Pro training management', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'fan-cave', name: 'FanCave', category: 'Sports', vibe: 'Interactive 3D collectibles vault', bestFor: 'Memorabilia & NFTs', accentColor: '#FACC15', built: true, version: 'V3' },
+  { slug: 'matchday-sync', name: 'MatchDay Sync', category: 'Sports', vibe: 'Sub-ms multi-device match sync', bestFor: 'Live broadcast engines', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'bot-stream', name: 'BotStream', category: 'AI', vibe: 'High-fidelity AI agent orchestration', bestFor: 'Agentic workflows, Chatbots', accentColor: '#6366F1', built: true, version: 'V3' },
+  { slug: 'logic-gate', name: 'LogicGate', category: 'AI', vibe: 'Visual workflow & circuit logic', bestFor: 'Automation builders', accentColor: '#F97316', built: true, version: 'V3' },
+  { slug: 'code-flow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'prompt-palace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Generative creative intelligence', bestFor: 'AI art & music tools', accentColor: '#7000FF', built: true, version: 'V3' },
+
+  // --- V3 Batch 12 Styles ---
+  { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
+  { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'Immersive, high-density, performant', bestFor: 'Dev Tools', accentColor: '#58A6FF', built: true, version: 'V3' },
+  { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Majestic, weight-driven, experimental', bestFor: 'Prompt Engineering', accentColor: '#000000', built: true, version: 'V3' },
+
+  // --- V3 AI Landing Pages (Batch 13) ---
   { slug: 'vector-vault', name: 'VectorVault', category: 'AI', vibe: 'Geometric, spatial, and vast', bestFor: 'Vector databases, MLOps', accentColor: '#38BDF8', built: true, version: 'V3' },
   { slug: 'deep-draw', name: 'DeepDraw', category: 'AI', vibe: 'Creative, progressive, and painterly', bestFor: 'AI Art generation, Image editing', accentColor: '#F472B6', built: true, version: 'V3' },
   { slug: 'agent-orchestra', name: 'AgentOrchestra', category: 'AI', vibe: 'Orchestrated, complex, and systematic', bestFor: 'Multi-agent frameworks, Task delegation', accentColor: '#60A5FA', built: true, version: 'V3' },
-]
+];
