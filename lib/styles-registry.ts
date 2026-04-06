@@ -71,5 +71,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'neural-note', name: 'NeuralNote', category: 'AI', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
-  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Creative', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'brand-story', name: 'BrandStory', category: 'Marketing', vibe: 'Cinematic brand legacy', bestFor: 'Premium storytelling', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'ad-metric', name: 'AdMetric', category: 'Tech', vibe: 'High-frequency ad-tech dashboard', bestFor: 'Marketing analytics', accentColor: '#00FF41', built: true, version: 'V3' },
+  { slug: 'folio-flux', name: 'FolioFlux', category: 'Creative', vibe: 'Adaptive morphing portfolio', bestFor: 'Creative agencies', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'market-magnet', name: 'MarketMagnet', category: 'Marketing', vibe: 'Behavioral growth engine', bestFor: 'Conversion optimization', accentColor: '#6366F1', built: true, version: 'V3' },
+  { slug: 'pixel-pulse', name: 'PixelPulse', category: 'Creative', vibe: 'Rhythmic pixel-perfect studio', bestFor: 'Digital artisans', accentColor: '#00FFCC', built: true, version: 'V3' },
 ]
