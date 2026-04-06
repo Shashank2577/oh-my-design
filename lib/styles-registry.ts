@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Surreal, amorphous, and ethereal', bestFor: 'Creative AI, Generative tools', accentColor: '#B6EADA', built: true, version: 'V3' },
+  { slug: 'vector-vault', name: 'VectorVault', category: 'AI', vibe: 'Geometric, spatial, and vast', bestFor: 'Vector databases, MLOps', accentColor: '#38BDF8', built: true, version: 'V3' },
+  { slug: 'deep-draw', name: 'DeepDraw', category: 'AI', vibe: 'Creative, progressive, and painterly', bestFor: 'AI Art generation, Image editing', accentColor: '#F472B6', built: true, version: 'V3' },
+  { slug: 'agent-orchestra', name: 'AgentOrchestra', category: 'AI', vibe: 'Orchestrated, complex, and systematic', bestFor: 'Multi-agent frameworks, Task delegation', accentColor: '#60A5FA', built: true, version: 'V3' },
 ]
