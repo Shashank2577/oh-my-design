@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'golfers-edge', name: 'Golfer\'s Edge', category: 'Sports', vibe: 'Serene, precise, and luxurious', bestFor: 'Golf clubs, premium sports', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'esports-hub', name: 'Esports Hub', category: 'Sports', vibe: 'Informational, dense, and live', bestFor: 'Gaming news, tournaments', accentColor: '#00FF41', built: true, version: 'V3' },
+  { slug: 'fitgoal', name: 'FitGoal', category: 'Sports', vibe: 'Energetic, fluid, and biological', bestFor: 'Training apps, fitness', accentColor: '#38BDF8', built: true, version: 'V3' },
+  { slug: 'scoutpro', name: 'ScoutPro', category: 'Sports', vibe: 'Analytical, discovery-focused', bestFor: 'Talent scouting, analytics', accentColor: '#00FFC2', built: true, version: 'V3' },
 ]
