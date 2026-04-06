@@ -67,6 +67,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'figma', name: 'Figma', category: 'Creative', vibe: 'Typographic sophistication', bestFor: 'Design tools, Creativity', accentColor: '#000000', built: true, version: 'V2' },
 
   // --- V3 Animation Heavy Styles ---
+  { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Surgical & Scientific—cold, clean, and hyper-organized', bestFor: 'ML Model Lifecycle tools', accentColor: '#8B5CF6', built: true, version: 'V3' },
+  { slug: 'tensor-track', name: 'TensorTrack', category: 'AI', vibe: 'High-speed data streaming and real-time telemetry', bestFor: 'AI/ML infrastructure dashboards', accentColor: '#FF4D4D', built: true, version: 'V3' },
+  { slug: 'layer-logic', name: 'LayerLogic', category: 'Tech', vibe: 'Mechanical precision and tactile logic automation', bestFor: 'Workflow builders and visualization', accentColor: '#F59E0B', built: true, version: 'V3' },
+  { slug: 'semantic-sync', name: 'SemanticSync', category: 'AI', vibe: 'Fluid spatial intelligence and interconnected embeddings', bestFor: 'Vector databases and NLP tools', accentColor: '#38BDF8', built: true, version: 'V3' },
   { slug: 'velocity-scoreboard', name: 'Velocity Scoreboard', category: 'Sports', vibe: 'High-intensity sports analytics', bestFor: 'Live match dashboards', accentColor: '#CCFF00', built: true, version: 'V3' },
   { slug: 'neural-note', name: 'NeuralNote', category: 'AI', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
