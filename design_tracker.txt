@@ -95,3 +95,18 @@
 | wise | VoltAgent/V2 | PLANNED | - |
 | x.ai | VoltAgent/V2 | PLANNED | - |
 | zapier | VoltAgent/V2 | PLANNED | - |
+
+## Batch 3 (Version 3 - Animation Heavy)
+
+| Style | Category | Status | Date |
+|-------|----------|--------|------|
+| velocity-scoreboard | Sports | IMPLEMENTED | 2026-04-06 |
+| neural-note | AI | IMPLEMENTED | 2026-04-06 |
+| tail-wag | Pets | IMPLEMENTED | 2026-04-06 |
+| fragline | eSports | IMPLEMENTED | 2026-04-06 |
+| prism-portfolio | Marketing | IMPLEMENTED | 2026-04-06 |
+| arena-pulse | Sports | PLANNED | - |
+| mvp-spotlight | Sports | PLANNED | - |
+| league-ladder | Sports | PLANNED | - |
+| bot-stream | AI | PLANNED | - |
+| logic-gate | AI | PLANNED | - |
