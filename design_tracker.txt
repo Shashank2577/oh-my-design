@@ -87,5 +87,10 @@
 | drill-master | Sports | IMPLEMENTED | 2026-04-06 |
 | fan-cave | Sports | IMPLEMENTED | 2026-04-06 |
 | matchday-sync | Sports | IMPLEMENTED | 2026-04-06 |
-| bot-stream | AI | PLANNED | - |
-| logic-gate | AI | PLANNED | - |
+| bot-stream | AI | IMPLEMENTED | 2026-04-06 |
+| logic-gate | AI | IMPLEMENTED | 2026-04-06 |
+| code-flow | Tech | IMPLEMENTED | 2026-04-06 |
+| prompt-palace | AI | IMPLEMENTED | 2026-04-06 |
+| synth-mind | AI | IMPLEMENTED | 2026-04-06 |
+| vector-vault | AI | PLANNED | - |
+| deep-draw | AI | PLANNED | - |

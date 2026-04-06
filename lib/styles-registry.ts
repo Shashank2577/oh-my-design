@@ -88,4 +88,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'drill-master', name: 'DrillMaster', category: 'Sports', vibe: 'Technical coaching command deck', bestFor: 'Pro training management', accentColor: '#3B82F6', built: true, version: 'V3' },
   { slug: 'fan-cave', name: 'FanCave', category: 'Sports', vibe: 'Interactive 3D collectibles vault', bestFor: 'Memorabilia & NFTs', accentColor: '#FACC15', built: true, version: 'V3' },
   { slug: 'matchday-sync', name: 'MatchDay Sync', category: 'Sports', vibe: 'Sub-ms multi-device match sync', bestFor: 'Live broadcast engines', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'bot-stream', name: 'BotStream', category: 'AI', vibe: 'High-fidelity AI agent orchestration', bestFor: 'Agentic workflows, Chatbots', accentColor: '#6366F1', built: true, version: 'V3' },
+  { slug: 'logic-gate', name: 'LogicGate', category: 'AI', vibe: 'Visual workflow & circuit logic', bestFor: 'Automation builders', accentColor: '#F97316', built: true, version: 'V3' },
+  { slug: 'code-flow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'prompt-palace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Generative creative intelligence', bestFor: 'AI art & music tools', accentColor: '#7000FF', built: true, version: 'V3' },
 ]
