@@ -151,4 +151,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'vector-vault', name: 'VectorVault', category: 'AI', vibe: 'Geometric, spatial, and vast', bestFor: 'Vector databases, MLOps', accentColor: '#38BDF8', built: true, version: 'V3' },
   { slug: 'deep-draw', name: 'DeepDraw', category: 'AI', vibe: 'Creative, progressive, and painterly', bestFor: 'AI Art generation, Image editing', accentColor: '#F472B6', built: true, version: 'V3' },
   { slug: 'agent-orchestra', name: 'AgentOrchestra', category: 'AI', vibe: 'Orchestrated, complex, and systematic', bestFor: 'Multi-agent frameworks, Task delegation', accentColor: '#60A5FA', built: true, version: 'V3' },
+
+  // --- V3 Batch 2 Sports Styles ---
+  { slug: 'trophy-room', name: 'Trophy Room', category: 'Sports', vibe: 'Glorious spatial museum', bestFor: 'Achievements and milestones', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'gridiron-flow', name: 'Gridiron Flow', category: 'Sports', vibe: 'Tactical high-impact football', bestFor: 'Sports coaching and analytics', accentColor: '#8B4513', built: true, version: 'V3' },
+  { slug: 'pitchvision', name: 'PitchVision', category: 'Sports', vibe: 'Fluid clinical soccer analytics', bestFor: 'Match analysis and data', accentColor: '#00FF85', built: true, version: 'V3' },
+  { slug: 'e-league-pro', name: 'E-League Pro', category: 'Sports', vibe: 'Hyper-reactive broadcast HUD', bestFor: 'Live streaming overlays', accentColor: '#9146FF', built: true, version: 'V3' },
 ];
