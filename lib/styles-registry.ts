@@ -82,4 +82,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'brand-bond', name: 'BrandBond', category: 'Marketing', vibe: 'Emotional resonant branding', bestFor: 'Customer loyalty, Identity', accentColor: '#F43F5E', built: true, version: 'V3' },
   { slug: 'trend-tracker', name: 'TrendTracker', category: 'Tech', vibe: 'Living data pulse detection', bestFor: 'Market intelligence, Live data', accentColor: '#00FF66', built: true, version: 'V3' },
   { slug: 'pitch-perfect', name: 'PitchPerfect', category: 'Marketing', vibe: 'Theatrical cinematic sales decks', bestFor: 'High-stakes presentations', accentColor: '#FFFFFF', built: true, version: 'V3' },
+  { slug: 'arena-pulse', name: 'Arena Pulse', category: 'Sports', vibe: 'Liquid-power athletic engine', bestFor: 'Pro performance tracking', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'mvp-spotlight', name: 'MVP Spotlight', category: 'Sports', vibe: 'Theatrical player profiles', bestFor: 'Elite athlete branding', accentColor: '#FFFFFF', built: true, version: 'V3' },
+  { slug: 'league-ladder', name: 'League Ladder', category: 'Sports', vibe: 'High-energy tournament hub', bestFor: 'eSports organizations', accentColor: '#00FF66', built: true, version: 'V3' },
+  { slug: 'drill-master', name: 'DrillMaster', category: 'Sports', vibe: 'Technical coaching command deck', bestFor: 'Pro training management', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'fan-cave', name: 'FanCave', category: 'Sports', vibe: 'Interactive 3D collectibles vault', bestFor: 'Memorabilia & NFTs', accentColor: '#FACC15', built: true, version: 'V3' },
+  { slug: 'matchday-sync', name: 'MatchDay Sync', category: 'Sports', vibe: 'Sub-ms multi-device match sync', bestFor: 'Live broadcast engines', accentColor: '#10B981', built: true, version: 'V3' },
 ]
