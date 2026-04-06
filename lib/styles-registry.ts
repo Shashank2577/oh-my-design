@@ -72,4 +72,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'featherflow', name: 'FeatherFlow', category: 'Pets', vibe: 'Light as air, delicate and rhythmic', bestFor: 'Bird care, Aviaries', accentColor: '#38BDF8', built: true, version: 'V3' },
+  { slug: 'reptileroom', name: 'ReptileRoom', category: 'Pets', vibe: 'Primal, precise, cold-blooded tech', bestFor: 'Exotic pet care, Terrariums', accentColor: '#84CC16', built: true, version: 'V3' },
+  { slug: 'rescuerhythm', name: 'RescueRhythm', category: 'Pets', vibe: 'Emotional, urgent, pulse-driven', bestFor: 'Animal rescue, Charity', accentColor: '#E11D48', built: true, version: 'V3' },
+  { slug: 'pawstep', name: 'PawStep', category: 'Pets', vibe: 'Structured, instructional, positive', bestFor: 'Dog training, Obedience', accentColor: '#65A30D', built: true, version: 'V3' },
 ]
