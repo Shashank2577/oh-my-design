@@ -76,6 +76,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
+  { slug: 'drillmaster', name: 'DrillMaster', category: 'Sports', vibe: 'Tactical, precise, educational playbook', bestFor: 'Coaching apps, Strategy tools', accentColor: '#FACC15', built: true, version: 'V3' },
+  { slug: 'fancave', name: 'FanCave', category: 'Sports', vibe: 'Premium, rare 3D collectible vault', bestFor: 'NFTs, Collectibles, Prestige items', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'progear', name: 'ProGear', category: 'Tech', vibe: 'Industrial, engineering excellence, telemetry', bestFor: 'Hardware sales, eSports gear', accentColor: '#39FF14', built: true, version: 'V3' },
 
   // --- V3 Batch 3 Sports Styles ---
   { slug: 'courtside', name: 'CourtSide', category: 'Sports', vibe: 'High-gloss arena with rebound physics', bestFor: 'Basketball analytics, sports platforms', accentColor: '#FF6B00', built: true, version: 'V3' },
