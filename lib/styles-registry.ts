@@ -77,6 +77,12 @@ export const STYLES: StyleMeta[] = [
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
 
+  // --- V3 Batch 3 Sports Styles ---
+  { slug: 'courtside', name: 'CourtSide', category: 'Sports', vibe: 'High-gloss arena with rebound physics', bestFor: 'Basketball analytics, sports platforms', accentColor: '#FF6B00', built: true, version: 'V3' },
+  { slug: 'racetrack', name: 'RaceTrack', category: 'Sports', vibe: 'Aerodynamic telemetry dashboard', bestFor: 'Motorsport, high-speed analytics', accentColor: '#E10600', built: true, version: 'V3' },
+  { slug: 'combatzone', name: 'CombatZone', category: 'Sports', vibe: 'Underground fight club, raw and gritty', bestFor: 'MMA, boxing, extreme fitness', accentColor: '#D32F2F', built: true, version: 'V3' },
+  { slug: 'skatepark', name: 'SkatePark', category: 'Sports', vibe: 'Rebellious street culture, gravity-defying', bestFor: 'Action sports, community tracking', accentColor: '#FF00FF', built: true, version: 'V3' },
+
   // --- V3 Batch 7 Pet Styles ---
   { slug: 'barkboxer', name: 'BarkBoxer', category: 'Pets', vibe: 'The Joy of Unboxing', bestFor: 'Subscription Box', accentColor: '#FF6B00', built: true, version: 'V3' },
   { slug: 'petpals', name: 'PetPals', category: 'Pets', vibe: 'A Community of Tails', bestFor: 'Social Networking', accentColor: '#FBBF24', built: true, version: 'V3' },
