@@ -52,7 +52,7 @@ const tokens = {
   accent1: '#00D1FF', // Synapse Blue
   accent2: '#7000FF', // Intuition Purple
   accentForeground: '#FFFFFF',
-  easeOut: 'cubic-bezier(0.23, 1, 0.32, 1)',
+  easeOut: [0.23, 1, 0.32, 1] as const,
 }
 
 // ─────────────────────────────────────────────
