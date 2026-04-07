@@ -1,13 +1,5 @@
 'use client'
 
-/**
- * PAGE TEMPLATE — oh-my-design
- *
- * Copy this file to app/styles/[slug]/page.tsx
- * Replace STYLE_NAME, colors, fonts, and content
- * Follow designprompts_dev_all_styles.md for the design system
- */
-
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 // Replace fonts with those specified in the design system:
@@ -62,7 +54,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.23, 1, 0.32, 1] }}
     >
       {children}
     </motion.div>
@@ -92,59 +84,59 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 import type { Variants } from 'framer-motion'
 const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] } },
 }
 
 // ─────────────────────────────────────────────
-// DATA — replace with style-appropriate content
+// DATA
 // ─────────────────────────────────────────────
-const PRODUCT_NAME = 'ProductName'
-const TAGLINE = 'The product tagline goes here'
-const DESCRIPTION = 'A compelling description of what this product does and why it matters.'
+const PRODUCT_NAME = 'EarthTone'
+const TAGLINE = 'Grow your business naturally'
+const DESCRIPTION = 'Cultivate sustainable growth with tools designed to work in harmony with your natural workflow. Deeply rooted in simplicity and mindful productivity.'
 
 const NAV_LINKS = ['Features', 'Pricing', 'Testimonials', 'FAQ']
 
 const STATS = [
-  { value: '50K+', label: 'Active Users' },
-  { value: '99.9%', label: 'Uptime' },
-  { value: '140+', label: 'Countries' },
-  { value: '4.9/5', label: 'Rating' },
+  { value: '10M+', label: 'Trees Planted' },
+  { value: '100%', label: 'Carbon Neutral' },
+  { value: '50K+', label: 'Mindful Users' },
+  { value: '4.9/5', label: 'Customer Love' },
 ]
 
 const FEATURES = [
-  { icon: BookOpen, title: 'Feature One', description: 'Describe the first key feature and its benefit to users.' },
-  { icon: Layout, title: 'Feature Two', description: 'Describe the second key feature and its benefit to users.' },
-  { icon: Palette, title: 'Feature Three', description: 'Describe the third key feature and its benefit to users.' },
-  { icon: Code2, title: 'Feature Four', description: 'Describe the fourth key feature and its benefit to users.' },
-  { icon: BarChart, title: 'Feature Five', description: 'Describe the fifth key feature and its benefit to users.' },
-  { icon: Lock, title: 'Feature Six', description: 'Describe the sixth key feature and its benefit to users.' },
+  { icon: BookOpen, title: 'Natural Workflow', description: 'Intuitive processes that feel organic and adapt to your unique rhythm.' },
+  { icon: Layout, title: 'Clean Spaces', description: 'Clutter-free interfaces that help you focus on what truly matters.' },
+  { icon: Palette, title: 'Earthy Themes', description: 'Colors and textures inspired by nature to reduce digital eye strain.' },
+  { icon: Users, title: 'Community Roots', description: 'Connect with a thriving ecosystem of like-minded professionals.' },
+  { icon: BarChart, title: 'Organic Growth', description: 'Metrics that matter, visualizing your progress beautifully and clearly.' },
+  { icon: Shield, title: 'Deep Security', description: 'Solid protection rooted deeply in enterprise-grade security practices.' },
 ]
 
 const PRICING = [
   {
-    name: 'Free',
+    name: 'Seed',
     price: '$0',
     period: 'forever',
-    description: 'Perfect for individuals getting started.',
-    features: ['5 projects', '1 user', 'Basic analytics', 'Email support'],
-    cta: 'Get started',
+    description: 'Perfect for individuals planting their first ideas.',
+    features: ['3 projects', 'Basic tools', 'Community support', 'Monthly digest'],
+    cta: 'Plant a seed',
     highlighted: false,
   },
   {
-    name: 'Pro',
-    price: '$29',
+    name: 'Sprout',
+    price: '$19',
     period: 'per month',
-    description: 'For growing teams that need more power.',
-    features: ['Unlimited projects', '10 users', 'Advanced analytics', 'Priority support', 'Custom domains', 'API access'],
-    cta: 'Start free trial',
+    description: 'For growing teams branching out.',
+    features: ['Unlimited projects', 'Advanced tools', 'Priority support', 'Custom domains', 'Collaboration'],
+    cta: 'Grow with us',
     highlighted: true,
   },
   {
-    name: 'Enterprise',
-    price: '$99',
+    name: 'Forest',
+    price: '$89',
     period: 'per month',
-    description: 'For large organizations with custom needs.',
-    features: ['Everything in Pro', 'Unlimited users', 'SSO / SAML', 'Dedicated support', 'SLA guarantee', 'Custom integrations'],
+    description: 'An entire ecosystem for large organizations.',
+    features: ['Everything in Sprout', 'Unlimited users', 'Dedicated account manager', 'SLA guarantee', 'Custom integrations'],
     cta: 'Contact sales',
     highlighted: false,
   },
@@ -152,35 +144,35 @@ const PRICING = [
 
 const TESTIMONIALS = [
   {
-    name: 'Alexandra Chen',
-    role: 'Product Manager',
-    company: 'Acme Corp',
-    text: 'This product completely transformed how our team works. The results have been incredible.',
+    name: 'Elena Silva',
+    role: 'Creative Director',
+    company: 'Studio Verde',
+    text: 'EarthTone feels like a breath of fresh air. It helped our agency find our center and focus on what truly matters—the creative process.',
     rating: 5,
   },
   {
-    name: 'Marcus Williams',
-    role: 'CTO',
-    company: 'StartupXYZ',
-    text: 'I\'ve tried many tools in this space, but nothing comes close. The quality is exceptional.',
+    name: 'James O\'Connor',
+    role: 'Founder',
+    company: 'EcoTech',
+    text: 'Finally, a platform that doesn\'t scream at you. The muted tones and gentle animations make it a joy to use every single day.',
     rating: 5,
   },
   {
-    name: 'Sofia Rodriguez',
-    role: 'Designer',
-    company: 'Creative Studio',
-    text: 'The attention to detail is remarkable. Every interaction feels intentional and polished.',
+    name: 'Aisha Patel',
+    role: 'Product Lead',
+    company: 'Mindful Apps',
+    text: 'We switched our entire workflow to EarthTone. The organic structure adapted perfectly to our unconventional methodology.',
     rating: 5,
   },
 ]
 
 const FAQ_ITEMS = [
-  { q: 'How do I get started?', a: 'Sign up for a free account and follow the onboarding wizard. You\'ll be up and running in under 5 minutes.' },
-  { q: 'Can I cancel anytime?', a: 'Yes, absolutely. There are no long-term commitments. Cancel your subscription at any time from your account settings.' },
-  { q: 'Do you offer a free trial?', a: 'Yes! All Pro features are available free for 14 days. No credit card required.' },
-  { q: 'What payment methods do you accept?', a: 'We accept all major credit cards, PayPal, and bank transfers for Enterprise plans.' },
-  { q: 'Is my data secure?', a: 'Security is our top priority. All data is encrypted in transit and at rest. We\'re SOC 2 Type II certified.' },
-  { q: 'Do you have an API?', a: 'Yes, we offer a comprehensive REST API with full documentation available for Pro and Enterprise customers.' },
+  { q: 'How is this different from other tools?', a: 'We prioritize calm over chaos. Our interface is deliberately designed with earthy tones, gentle curves, and thoughtful spacing to reduce cognitive load and digital fatigue.' },
+  { q: 'Can I cancel my subscription?', a: 'Yes, just like seasons change, your needs might too. Cancel anytime with a single click, no questions asked.' },
+  { q: 'What does "Carbon Neutral" mean for EarthTone?', a: 'We offset 100% of our servers\' energy usage by investing in verified reforestation projects around the globe. Every Sprout and Forest subscription contributes directly to planting trees.' },
+  { q: 'Is there a steep learning curve?', a: 'Not at all. We believe software should feel intuitive and natural. Most users feel completely at home within their first hour of use.' },
+  { q: 'How secure is my data?', a: 'As secure as a deeply rooted oak. We employ bank-level encryption, regular third-party audits, and strict access controls to keep your data safe.' },
+  { q: 'Do you offer a discount for non-profits?', a: 'Yes, we love supporting organizations that make the world better. Contact our team for special non-profit and educational pricing.' },
 ]
 
 // ─────────────────────────────────────────────
@@ -212,6 +204,7 @@ function Navbar() {
         <motion.button
           whileHover={{ scale: 1.05, boxShadow: '0 6px 24px -4px rgba(93,112,82,0.25)' }}
           whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
           className="px-5 h-10 rounded-full text-sm font-medium"
           style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
         >
@@ -235,7 +228,7 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             className="text-sm uppercase tracking-widest mb-4"
             style={{ color: tokens.accent }}
           >
@@ -244,7 +237,7 @@ function Hero() {
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
             className="text-5xl md:text-7xl font-bold font-heading leading-tight mb-6"
             style={{ color: tokens.foreground }}
           >
@@ -253,7 +246,7 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
             className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
             style={{ color: tokens.mutedForeground }}
           >
@@ -262,12 +255,13 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
             className="flex flex-col sm:flex-row gap-4"
           >
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: '0 6px 24px -4px rgba(93,112,82,0.25)' }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
               className="h-14 px-8 rounded-full font-medium flex items-center gap-2"
               style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
             >
@@ -276,6 +270,7 @@ function Hero() {
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: '0 6px 24px -4px rgba(93,112,82,0.25)' }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
               className="h-14 px-8 rounded-full font-medium border"
               style={{ borderColor: tokens.border, color: tokens.foreground }}
             >
@@ -284,7 +279,7 @@ function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Hero Visual — replace with style-specific imagery */}
+        {/* Hero Visual */}
         <FadeUp delay={0.4}>
           <div
             className="mt-16 w-full h-72 md:h-96 organic-blob-1"
@@ -337,7 +332,7 @@ function Features() {
                 key={feature.title}
                 variants={staggerItem}
                 whileHover={{ y: -4, rotate: 1 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                 className="p-8 rounded-[2rem] border"
                 style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt, boxShadow: '0 4px 20px -2px rgba(93,112,82,0.15)' }}
               >
@@ -361,17 +356,17 @@ function ProductDetail() {
           <div className="text-center">
             <p className="text-sm uppercase tracking-widest mb-4" style={{ color: tokens.accent }}>About</p>
             <h2 className="text-4xl md:text-5xl font-bold font-heading mb-8" style={{ color: tokens.foreground }}>
-              Built for the way you work
+              Rooted in thoughtful design
             </h2>
             <div className="space-y-6 text-left">
               <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+                We believe that software shouldn't feel sterile or overwhelming. That's why we built EarthTone from the ground up using principles inspired by nature. Soft curves, muted colors, and gentle transitions help reduce cognitive load.
               </p>
               <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
+                Every element has been carefully considered to provide visual hierarchy without shouting for your attention. The result is an interface that feels calm, inviting, and effortlessly intuitive—letting you focus on your actual work, not the tool.
               </p>
               <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                By embracing organic shapes and thoughtful typography, we've created a digital environment that feels closer to holding a beautifully bound notebook than staring at a screen.
               </p>
             </div>
           </div>
@@ -430,6 +425,7 @@ function Pricing() {
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: '0 6px 24px -4px rgba(93,112,82,0.25)' }}
                   whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
                   className="w-full h-12 rounded-full font-medium text-sm border"
                   style={tier.highlighted
                     ? { backgroundColor: tokens.accent, color: tokens.accentForeground, borderColor: tokens.accent }
@@ -510,7 +506,7 @@ function FAQ() {
                   <span className="font-medium" style={{ color: tokens.foreground }}>{item.q}</span>
                   <motion.span
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <ChevronDown className="h-4 w-4 flex-shrink-0" style={{ color: tokens.mutedForeground }} />
                   </motion.span>
@@ -518,7 +514,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
@@ -573,6 +569,7 @@ function Newsletter() {
                 disabled={status === 'loading'}
                 whileHover={{ scale: 1.05, boxShadow: '0 6px 24px -4px rgba(93,112,82,0.25)' }}
                 whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
                 className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60"
                 style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
               >
