@@ -98,8 +98,10 @@ export const STYLES: StyleMeta[] = [
   { slug: 'influence-infinity', name: 'InfluenceInfinity', category: 'Marketing', vibe: 'Premium interconnected influencers', bestFor: 'Agency networking, Premium brands', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'campaign-cradle', name: 'CampaignCradle', category: 'Marketing', vibe: 'Structural blueprint planning', bestFor: 'Strategy tools, B2B marketing', accentColor: '#FFD700', built: true, version: 'V3' },
   { slug: 'studio-stack', name: 'StudioStack', category: 'Creative', vibe: 'Cinematic digital darkroom', bestFor: 'Photography, Studio portfolios', accentColor: '#FFFFFF', built: true, version: 'V3' },
+  { slug: 'pixel-perfect', name: 'PixelPerfect', category: 'Creative', vibe: '1px grid technical foundry', bestFor: 'Web design agencies, Tech artisans', accentColor: '#00FFCC', built: true, version: 'V3' },
+  { slug: 'color-cloud', name: 'ColorCloud', category: 'Creative', vibe: 'Liquid light spectral alchemy', bestFor: 'Artistic platforms, Color tools', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'motion-manifesto', name: 'MotionManifesto', category: 'Creative', vibe: 'Kinetic studio always-on', bestFor: 'Animation studios, Showreels', accentColor: '#FAFF00', built: true, version: 'V3' },
   ]
-
   // --- V3 Merged Batches ---
   { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Technical control center', bestFor: 'AI Ops, Model monitoring', accentColor: '#00D1FF', built: true, version: 'V3' },
   { slug: 'tensor-track', name: 'TensorTrack', category: 'AI', vibe: 'High-performance tensor visualization', bestFor: 'Deep learning analytics', accentColor: '#FF3E00', built: true, version: 'V3' },
