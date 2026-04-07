@@ -23,30 +23,9 @@
 # misc
 .DS_Store
 *.pem
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 .omc/
 .jules-plan.json
 .jules-state.json
-=======
->>>>>>> origin/feat/add-maximalism-style-page-693079652787345767
-=======
->>>>>>> origin/feat/claymorphism-landing-page-2831171048065339227
-=======
->>>>>>> origin/feat/fluent-2-style-page-9555066153407103773
-=======
->>>>>>> origin/feat/kinetic-style-page-12326666647198680389
-=======
->>>>>>> origin/feature/luxury-style-page-18345625391010426978
-=======
->>>>>>> origin/jules-bauhaus-style-16733158809462290817
-=======
->>>>>>> origin/jules-cyberpunk-page-11531001150779418135
 
 # debug
 npm-debug.log*
@@ -63,3 +42,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# junk files from automated PRs
+dev_server.log
+dev_server.pid
+npm_output.log
