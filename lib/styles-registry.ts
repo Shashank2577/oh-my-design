@@ -106,7 +106,6 @@ export const STYLES: StyleMeta[] = [
   { slug: 'git-glow', name: 'GitGlow', category: 'Tech', vibe: 'Spatial version control history', bestFor: 'Developer tools, Repositories', accentColor: '#F97316', built: true, version: 'V3' },
   { slug: 'api-arc', name: 'ApiArc', category: 'Tech', vibe: 'Architectural API bridge', bestFor: 'Developer experience, APIs', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'secure-sent', name: 'SecureSent', category: 'Tech', vibe: 'High-fidelity encrypted vaults', bestFor: 'Security tools, Encrypted comms', accentColor: '#10B981', built: true, version: 'V3' },
-  ]
 
   // --- V3 Merged Batches ---
   { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Technical control center', bestFor: 'AI Ops, Model monitoring', accentColor: '#00D1FF', built: true, version: 'V3' },
@@ -163,4 +162,6 @@ export const STYLES: StyleMeta[] = [
   { slug: 'esports-hub', name: 'Esports Hub', category: 'Sports', vibe: 'Community-driven competitive hub', bestFor: 'eSports communities', accentColor: '#F97316', built: true, version: 'V3' },
   { slug: 'fitgoal', name: 'FitGoal', category: 'Sports', vibe: 'Living fitness tracker', bestFor: 'Health & Fitness', accentColor: '#FF3D00', built: true, version: 'V3' },
   { slug: 'scoutpro', name: 'ScoutPro', category: 'Sports', vibe: 'Elite athlete talent engine', bestFor: 'Sports scouting', accentColor: '#000000', built: true, version: 'V3' },
+  { slug: 'market-mind', name: 'MarketMind', category: 'Marketing', vibe: 'Cerebral interconnected strategy', bestFor: 'Strategic consulting, Market analysis', accentColor: '#00D1FF', built: true, version: 'V3' },
+  { slug: 'design-draft', name: 'DesignDraft', category: 'Creative', vibe: 'Raw iterative hand-crafted process', bestFor: 'Freelancer portfolios, Creative process', accentColor: '#222222', built: false, version: 'V3' },
 ]

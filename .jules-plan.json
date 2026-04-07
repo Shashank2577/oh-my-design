@@ -1,131 +1,72 @@
 {
   "repo": "Shashank2577/oh-my-design",
   "branch": "main",
-  "created_at": "2026-04-06T10:00:00Z",
-  "total_tasks": 16,
+  "created_at": "2026-04-07T00:00:00Z",
+  "total_tasks": 28,
   "batches": [
     {
       "batch": 1,
-      "name": "Original Styles - Batch 1",
-      "rationale": "Implement the remaining original design styles from the designprompts_dev_all_styles.md document.",
+      "name": "Legacy & Core Styles (Wave 1)",
+      "rationale": "Independent design implementations for core styles",
       "tasks": [
-        {
-          "id": "t1",
-          "title": "Originals Set 1: academia, bold-typography, industrial, material",
-          "prompt": "Implement these 4 original design styles: academia, bold-typography, industrial, material. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
-          "depends_on": []
-        },
-        {
-          "id": "t2",
-          "title": "Originals Set 2: minimal-dark, neo-brutalism, neumorphism, newsprint",
-          "prompt": "Implement these 4 original design styles: minimal-dark, neo-brutalism, neumorphism, newsprint. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
-          "depends_on": []
-        },
-        {
-          "id": "t3",
-          "title": "Originals Set 3: organic, playful-geometric, professional, retro",
-          "prompt": "Implement these 4 original design styles: organic, playful-geometric, professional, retro. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
-          "depends_on": []
-        },
-        {
-          "id": "t4",
-          "title": "Originals Set 4: humanist-literary, saas, sketch, swiss",
-          "prompt": "Implement these 4 original design styles: humanist-literary, saas, sketch, swiss. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
-          "depends_on": []
-        },
-        {
-          "id": "t5",
-          "title": "Originals Set 5: terminal-cli, vaporwave, web3",
-          "prompt": "Implement these 3 original design styles: terminal-cli, vaporwave, web3. Follow the design system defined in `designprompts_dev_all_styles.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS.md.",
-          "depends_on": []
-        }
+        { "id": "t1", "title": "Implement 'academia' style", "prompt": "Create a new Next.js page in 'app/styles/academia/page.tsx' following the 'academia' design in 'lib/styles-registry.ts' (Elegant, Scholarly, refined). Reference 'app/styles/art-deco/page.tsx' for structure but use appropriate typography and colors.", "depends_on": [] },
+        { "id": "t2", "title": "Implement 'bold-typography' style", "prompt": "Create a new Next.js page in 'app/styles/bold-typography/page.tsx' following the 'bold-typography' design in 'lib/styles-registry.ts' (Creative, Type-driven design). Use large, impactful headers and stark layouts.", "depends_on": [] },
+        { "id": "t3", "title": "Implement 'industrial' style", "prompt": "Create a new Next.js page in 'app/styles/industrial/page.tsx' following the 'industrial' design in 'lib/styles-registry.ts' (Raw, mechanical, utilitarian). Use metallic colors, monospace fonts, and grid-heavy layouts.", "depends_on": [] },
+        { "id": "t4", "title": "Implement 'material' style", "prompt": "Create a new Next.js page in 'app/styles/material/page.tsx' following Google Material Design guidelines (Modern). Use elevation, shadows, and standard Material color palettes.", "depends_on": [] },
+        { "id": "t5", "title": "Implement 'minimal-dark' style", "prompt": "Create a new Next.js page in 'app/styles/minimal-dark/page.tsx' (Minimal dark theme). Focus on high-contrast, clean lines, and a dark aesthetic optimized for developer tools.", "depends_on": [] }
       ]
     },
     {
       "batch": 2,
-      "name": "Version 2 - External Brands Set 1",
-      "rationale": "Implement the first set of 25 external brands from the awesome-design-md repo.",
+      "name": "Creative & Editorial Styles (Wave 2)",
       "tasks": [
-        {
-          "id": "t6",
-          "title": "V2 Brands Set 1: airbnb, airtable, apple, bmw, cal",
-          "prompt": "Implement these 5 external styles: airbnb, airtable, apple, bmw, cal. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
-        },
-        {
-          "id": "t7",
-          "title": "V2 Brands Set 2: claude, clay, clickhouse, cohere, coinbase",
-          "prompt": "Implement these 5 external styles: claude, clay, clickhouse, cohere, coinbase. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
-        },
-        {
-          "id": "t8",
-          "title": "V2 Brands Set 3: composio, cursor, elevenlabs, expo, figma",
-          "prompt": "Implement these 5 external styles: composio, cursor, elevenlabs, expo, figma. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
-        },
-        {
-          "id": "t9",
-          "title": "V2 Brands Set 4: framer, hashicorp, ibm, intercom, kraken",
-          "prompt": "Implement these 5 external styles: framer, hashicorp, ibm, intercom, kraken. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
-        },
-        {
-          "id": "t10",
-          "title": "V2 Brands Set 5: linear.app, lovable, minimax, mintlify, miro",
-          "prompt": "Implement these 5 external styles: linear.app, lovable, minimax, mintlify, miro. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t1", "t2", "t3", "t4", "t5"]
-        }
+        { "id": "t6", "title": "Implement 'neo-brutalism' style", "prompt": "Create 'app/styles/neo-brutalism/page.tsx'. High contrast, bold borders, saturated colors, and aggressive shadows.", "depends_on": [] },
+        { "id": "t7", "title": "Implement 'neumorphism' style", "prompt": "Create 'app/styles/neumorphism/page.tsx'. Soft UI, monochromatic shadows (extrusion/intrusion) for a tactile feel.", "depends_on": [] },
+        { "id": "t8", "title": "Implement 'newsprint' style", "prompt": "Create 'app/styles/newsprint/page.tsx'. Serif fonts, multi-column layouts, and a physical newspaper aesthetic.", "depends_on": [] },
+        { "id": "t9", "title": "Implement 'humanist-literary' style", "prompt": "Create 'app/styles/humanist-literary/page.tsx'. Quiet intelligence, organic warmth, focus on readable serif typography and ample white space.", "depends_on": [] },
+        { "id": "t10", "title": "Implement 'saas' style", "prompt": "Create 'app/styles/saas/page.tsx'. Modern SaaS aesthetic: clean, gradient-accented, feature-rich landing page layout.", "depends_on": [] }
       ]
     },
     {
       "batch": 3,
-      "name": "Version 2 - External Brands Set 2",
-      "rationale": "Implement the second set of 25 external brands from the awesome-design-md repo.",
+      "name": "Artistic & Tech Styles (Wave 3)",
       "tasks": [
-        {
-          "id": "t11",
-          "title": "V2 Brands Set 6: mistral.ai, mongodb, notion, nvidia, ollama",
-          "prompt": "Implement these 5 external styles: mistral.ai, mongodb, notion, nvidia, ollama. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
-        },
-        {
-          "id": "t12",
-          "title": "V2 Brands Set 7: opencode.ai, pinterest, posthog, raycast, replicate",
-          "prompt": "Implement these 5 external styles: opencode.ai, pinterest, posthog, raycast, replicate. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
-        },
-        {
-          "id": "t13",
-          "title": "V2 Brands Set 8: resend, revolut, runwayml, sanity, sentry",
-          "prompt": "Implement these 5 external styles: resend, revolut, runwayml, sanity, sentry. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
-        },
-        {
-          "id": "t14",
-          "title": "V2 Brands Set 9: spacex, spotify, stripe, supabase, superhuman",
-          "prompt": "Implement these 5 external styles: spacex, spotify, stripe, supabase, superhuman. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
-        },
-        {
-          "id": "t15",
-          "title": "V2 Brands Set 10: together.ai, uber, vercel, voltagent, warp",
-          "prompt": "Implement these 5 external styles: together.ai, uber, vercel, voltagent, warp. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t6", "t7", "t8", "t9", "t10"]
-        }
+        { "id": "t11", "title": "Implement 'sketch' style", "prompt": "Create 'app/styles/sketch/page.tsx'. Hand-drawn icons, rough borders, and an artistic, 'work-in-progress' feel.", "depends_on": [] },
+        { "id": "t12", "title": "Implement 'swiss' style", "prompt": "Create 'app/styles/swiss/page.tsx'. International Typographic Style: grid-based, sans-serif (Helvetica-like), and asymmetric layouts.", "depends_on": [] },
+        { "id": "t13", "title": "Implement 'terminal-cli' style", "prompt": "Create 'app/styles/terminal-cli/page.tsx'. Green-on-black (or amber), monospace, command-line interface aesthetic.", "depends_on": [] },
+        { "id": "t14", "title": "Implement 'vaporwave' style", "prompt": "Create 'app/styles/vaporwave/page.tsx'. 80s/90s nostalgia: pink/blue/purple gradients, pixel art elements, and lo-fi aesthetics.", "depends_on": [] },
+        { "id": "t15", "title": "Implement 'web3' style", "prompt": "Create 'app/styles/web3/page.tsx'. Decentralized/crypto-inspired: dark theme, glassmorphism, and neon accents.", "depends_on": [] }
       ]
     },
     {
       "batch": 4,
-      "name": "Version 2 - Remaining",
-      "rationale": "Implement the final set of external brands.",
+      "name": "Brand Reference Styles (Wave 4)",
       "tasks": [
-        {
-          "id": "t16",
-          "title": "V2 Brands Set 11: webflow, wise, x.ai, zapier",
-          "prompt": "Implement these 4 external styles: webflow, wise, x.ai, zapier. Research each style from `https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/[style-name]/DESIGN.md`. Each style needs its own `app/styles/[slug]/page.tsx` with 10 sections as defined in `docs/architecture.md`. Update `lib/styles-registry.ts` when finished. Context: AGENTS_V2.md.",
-          "depends_on": ["t11", "t12", "t13", "t14", "t15"]
-        }
+        { "id": "t16", "title": "Implement 'resend' style", "prompt": "Create 'app/styles/resend/page.tsx'. Minimal, stark black-and-white, developer-focused email infrastructure aesthetic.", "depends_on": [] },
+        { "id": "t17", "title": "Implement 'revolut' style", "prompt": "Create 'app/styles/revolut/page.tsx'. Sleek fintech: smooth transitions, vibrant accent colors, and modern card-based UI.", "depends_on": [] },
+        { "id": "t18", "title": "Implement 'runwayml' style", "prompt": "Create 'app/styles/runwayml/page.tsx'. Dark, professional creative AI studio vibe with high-quality media previews.", "depends_on": [] },
+        { "id": "t19", "title": "Implement 'sanity' style", "prompt": "Create 'app/styles/sanity/page.tsx'. Structured, content-focused, and minimal developer tool aesthetic.", "depends_on": [] },
+        { "id": "t20", "title": "Implement 'sentry' style", "prompt": "Create 'app/styles/sentry/page.tsx'. Bold, functional, error-tracking dashboard aesthetic with purple accents.", "depends_on": [] }
+      ]
+    },
+    {
+      "batch": 5,
+      "name": "AI & Utility Styles (Wave 5)",
+      "tasks": [
+        { "id": "t21", "title": "Implement 'claude' style", "prompt": "Create 'app/styles/claude/page.tsx'. Warm, intellectual, focus on content and typography (Anthropic style).", "depends_on": [] },
+        { "id": "t22", "title": "Implement 'clay' style", "prompt": "Create 'app/styles/clay/page.tsx'. Soft shadows, tactile, personal CRM aesthetic with focus on networks.", "depends_on": [] },
+        { "id": "t23", "title": "Implement 'clickhouse' style", "prompt": "Create 'app/styles/clickhouse/page.tsx'. Data-dense, high-performance database monitoring aesthetic (yellow/black).", "depends_on": [] },
+        { "id": "t24", "title": "Implement 'cohere' style", "prompt": "Create 'app/styles/cohere/page.tsx'. Natural language patterns, earthy tones, and organic AI aesthetic.", "depends_on": [] },
+        { "id": "t25", "title": "Implement 'coinbase' style", "prompt": "Create 'app/styles/coinbase/page.tsx'. Clean, trusted, secure blue-and-white financial/crypto interface.", "depends_on": [] }
+      ]
+    },
+    {
+      "batch": 6,
+      "name": "Advanced V3 Logics (Wave 6)",
+      "tasks": [
+        { "id": "t26", "title": "Implement 'logic-gate' style", "prompt": "Create 'app/styles/logic-gate/page.tsx'. Visual workflow, circuit logic, and tactile automation builder aesthetic.", "depends_on": [] },
+        { "id": "t27", "title": "Implement 'code-flow' style", "prompt": "Create 'app/styles/code-flow/page.tsx'. Spatial repository visualization, high-density developer tool layout.", "depends_on": [] },
+        { "id": "t28", "title": "Implement 'prompt-palace' style", "prompt": "Create 'app/styles/prompt-palace/page.tsx'. Majestic LLM interface, luxury gold/black theme for prompt engineering.", "depends_on": [] }
       ]
     }
   ]
