@@ -601,6 +601,7 @@ export default function EsportsHubPage() {
         <FAQ />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

@@ -516,7 +516,8 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+      
+      </div>
   )
 }
 

@@ -510,6 +510,7 @@ export default function PitchVisionPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   );
 }

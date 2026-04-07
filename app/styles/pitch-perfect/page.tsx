@@ -333,6 +333,7 @@ export default function PitchPerfect() {
           <rect width="100" height="100" filter="url(#pitch-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

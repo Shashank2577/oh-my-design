@@ -593,6 +593,7 @@ export default function ScoutProPage() {
         <FAQ />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

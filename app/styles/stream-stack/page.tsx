@@ -586,6 +586,7 @@ function Footer() {
           <a href="#" className="hover:text-white transition-colors">Discord</a>
           <a href="#" className="hover:text-white transition-colors">Status</a>
         </div>
+        
       </div>
     </footer>
   )

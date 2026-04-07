@@ -694,6 +694,7 @@ function Footer() {
             ← All styles
           </a>
         </div>
+        
       </div>
     </footer>
   )

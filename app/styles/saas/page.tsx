@@ -836,6 +836,7 @@ export default function StylePage() {
           color: transparent;
         }
       `}} />
-    </div>
+      
+      </div>
   )
 }

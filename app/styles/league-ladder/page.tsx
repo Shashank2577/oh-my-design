@@ -326,6 +326,7 @@ export default function LeagueLadder() {
           <rect width="100" height="100" filter="url(#ladder-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

@@ -477,6 +477,7 @@ export default function TailWag() {
       <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] mix-blend-multiply">
         <div className="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
       </div>
-    </div>
+      
+      </div>
   )
 }

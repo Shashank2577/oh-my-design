@@ -774,6 +774,7 @@ export default function StylePage() {
         </main>
         <Footer />
       </div>
-    </div>
+      
+      </div>
   )
 }

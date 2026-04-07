@@ -359,7 +359,8 @@ function Newsletter() {
 function Footer() {
   return (
     <footer className="py-8 bg-black text-center border-t border-white/5">
-      <div className="font-heading text-xl uppercase tracking-widest mb-2" style={{ fontFamily: 'var(--font-michroma)' }}>{PRODUCT_NAME}</div>
+      <div className="font-heading text-xl uppercase tracking-widest mb-2" style={{ fontFamily: 'var(--font-michroma)' }}>{PRODUCT_NAME}  
+      </div>
       <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">SYS.VER.2026 // END_OF_FILE</p>
     </footer>
   )

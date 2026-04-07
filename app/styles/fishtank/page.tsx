@@ -780,6 +780,7 @@ export default function FishTankPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

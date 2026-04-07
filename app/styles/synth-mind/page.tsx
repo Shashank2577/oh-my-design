@@ -500,6 +500,7 @@ export default function SynthMindPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

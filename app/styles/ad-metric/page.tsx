@@ -486,6 +486,7 @@ export default function AdMetric() {
           <rect width="100" height="100" filter="url(#ad-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

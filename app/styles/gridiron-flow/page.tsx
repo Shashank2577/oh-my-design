@@ -518,6 +518,7 @@ export default function GridironFlowPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   );
 }

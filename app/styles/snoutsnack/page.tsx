@@ -472,6 +472,7 @@ function Footer() {
       <div className="flex justify-center items-center gap-2 font-bold text-2xl mb-6" style={{ fontFamily: 'var(--font-caveat)', color: tokens.accent }}>
         <Leaf className="h-6 w-6" style={{ color: tokens.accent2 }} />
         {PRODUCT_NAME}
+        
       </div>
       <p style={{ color: tokens.textLow }}>© 2026 {PRODUCT_NAME}. Nourishing naturally.</p>
     </footer>

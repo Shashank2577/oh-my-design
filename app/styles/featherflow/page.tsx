@@ -480,6 +480,7 @@ function AudioFeather({ x, y }: { x: number, y: number }) {
         <div className="w-12 h-12 rounded-full flex items-center justify-center relative z-10" style={{ backgroundColor: TOKENS.surface, boxShadow: `0 5px 15px ${TOKENS.border}` }}>
            {isPlaying ? <Pause size={16} color={TOKENS.accent1} /> : <Feather size={16} color={TOKENS.textLow} />}
         </div>
+        
       </div>
     </motion.div>
   )

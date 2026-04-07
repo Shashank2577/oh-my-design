@@ -644,6 +644,7 @@ export default function GolfersEdgePage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

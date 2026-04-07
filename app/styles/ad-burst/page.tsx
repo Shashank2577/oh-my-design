@@ -431,6 +431,7 @@ export default function AdBurst() {
           <rect width="100" height="100" filter="url(#burst-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

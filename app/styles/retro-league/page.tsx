@@ -420,6 +420,7 @@ function Footer() {
       <div className="max-w-6xl mx-auto px-6 text-center font-[family-name:var(--font-vt)] text-xl text-[#810CA8]">
          <p className="mb-2">© 1994-2026 RETRO LEAGUE CO. ALL RIGHTS RESERVED.</p>
          <p>CREDITS | OPTIONS | QUIT</p>
+        
       </div>
     </footer>
   )

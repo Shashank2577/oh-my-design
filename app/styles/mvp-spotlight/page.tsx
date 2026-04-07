@@ -290,6 +290,7 @@ export default function MVPSpotlight() {
           <rect width="100" height="100" filter="url(#spotlight-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

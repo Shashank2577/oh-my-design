@@ -316,6 +316,7 @@ export default function BrandBond() {
           <rect width="100" height="100" filter="url(#bond-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

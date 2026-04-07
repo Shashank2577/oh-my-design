@@ -315,6 +315,7 @@ export default function FanCave() {
           <rect width="100" height="100" filter="url(#cave-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

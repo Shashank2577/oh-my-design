@@ -303,6 +303,7 @@ export default function InfluenceInfinity() {
           <rect width="100" height="100" filter="url(#influence-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

@@ -610,6 +610,7 @@ export default function ModelMasterPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

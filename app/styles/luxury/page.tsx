@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Playfair_Display, Inter } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Star, ChevronDown, ArrowRight, Check,
   BookOpen, Layout, Palette, Code2, BarChart, Lock
@@ -763,7 +762,7 @@ export default function StylePage() {
       <div className="relative z-10">
         <Footer />
       </div>
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

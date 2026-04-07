@@ -656,6 +656,7 @@ export default function FitGoalPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

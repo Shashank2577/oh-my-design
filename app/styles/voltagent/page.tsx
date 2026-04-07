@@ -697,6 +697,7 @@ export default function VoltAgentPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

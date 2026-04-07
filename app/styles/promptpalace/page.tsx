@@ -1,7 +1,6 @@
-import { Variants } from 'framer-motion'
 'use client'
 
-import { motion, useReducedMotion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion, useInView, useScroll, useTransform, Variants } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Fraunces, JetBrains_Mono } from 'next/font/google'
 import { Inter } from 'next/font/google' // using Inter as fallback for Satoshi
@@ -183,6 +182,7 @@ export default function PromptPalacePage() {
         <Hero />
         <TokenWeightSection />
       </main>
-    </div>
+      
+      </div>
   )
 }

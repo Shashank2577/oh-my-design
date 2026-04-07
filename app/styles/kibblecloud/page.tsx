@@ -500,6 +500,7 @@ export default function KibbleCloudPage() {
         <CTA />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

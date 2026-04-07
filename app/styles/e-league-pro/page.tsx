@@ -584,6 +584,7 @@ export default function ELeagueProPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   );
 }

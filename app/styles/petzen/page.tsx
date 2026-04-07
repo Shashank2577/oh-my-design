@@ -490,6 +490,7 @@ function Footer() {
       <div className="flex justify-center items-center gap-2 font-bold text-2xl mb-6 tracking-tight" style={{ fontFamily: 'var(--font-quicksand)', color: tokens.textHigh }}>
         <Sparkles className="h-6 w-6" style={{ color: tokens.accent2 }} />
         {PRODUCT_NAME}
+        
       </div>
       <p className="font-light" style={{ color: tokens.textLow }}>© 2026 {PRODUCT_NAME}. Breathe deep.</p>
     </footer>

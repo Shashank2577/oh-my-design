@@ -696,6 +696,7 @@ export default function BarkBoxerPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

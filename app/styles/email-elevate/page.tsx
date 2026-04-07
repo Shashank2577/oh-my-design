@@ -350,6 +350,7 @@ export default function EmailElevate() {
           <rect width="100" height="100" filter="url(#elevate-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

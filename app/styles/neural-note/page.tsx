@@ -468,6 +468,7 @@ export default function NeuralNote() {
           <rect width="100" height="100" filter="url(#noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

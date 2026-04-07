@@ -685,6 +685,7 @@ export default function GroomGlidePage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

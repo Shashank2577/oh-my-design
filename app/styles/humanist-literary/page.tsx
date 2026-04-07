@@ -599,6 +599,7 @@ export default function HumanistPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

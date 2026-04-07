@@ -515,6 +515,7 @@ export default function DeepDrawPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

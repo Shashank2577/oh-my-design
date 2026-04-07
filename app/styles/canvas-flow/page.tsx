@@ -320,6 +320,7 @@ export default function CanvasFlow() {
           <rect width="100" height="100" filter="url(#canvas-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { Libre_Baskerville } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Heart, ChevronDown, ArrowRight, Check, Users, Shield,
   BookOpen, Feather, Sparkles, Sun, Star
@@ -781,7 +780,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

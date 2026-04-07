@@ -330,6 +330,7 @@ export default function MatchDaySync() {
           <rect width="100" height="100" filter="url(#sync-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

@@ -679,6 +679,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

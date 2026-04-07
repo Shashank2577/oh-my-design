@@ -759,6 +759,7 @@ export default function PetPalsPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

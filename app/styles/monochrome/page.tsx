@@ -699,6 +699,7 @@ export default function MonochromeStylePage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

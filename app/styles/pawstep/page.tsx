@@ -532,6 +532,7 @@ export default function PawStepPage() {
           </div>
         </div>
       </footer>
-    </div>
+      
+      </div>
   )
 }

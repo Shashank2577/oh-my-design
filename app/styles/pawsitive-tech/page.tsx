@@ -513,6 +513,7 @@ export default function PawsitiveTechPage() {
         <Pricing />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

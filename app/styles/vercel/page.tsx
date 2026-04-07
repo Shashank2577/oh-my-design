@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Star, ChevronDown, ArrowRight, Check, Triangle, LayoutTemplate, Layers, GitBranch,
   TerminalSquare, Workflow, Zap, Box, BarChart3, Fingerprint, Lock, Shield, Cpu, RefreshCw
@@ -808,7 +807,7 @@ export default function VercelPage() {
         <Newsletter />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

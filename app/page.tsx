@@ -1,150 +1,107 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { STYLES, StyleMeta } from '@/lib/styles-registry'
 import {
   Zap,
   Sparkles,
-  ChevronRight,
   Search,
   LayoutGrid,
   ExternalLink,
   Tag,
+  Play,
 } from 'lucide-react'
 
-/* ─── Mini Browser Preview ─────────────────────────────── */
-function MiniPreview({ style }: { style: StyleMeta }) {
-  const accent = style.accentColor
+/* ─── Video Preview ────────────────────────────────────── */
+function VideoPreview({ style }: { style: StyleMeta }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [hasThumb, setHasThumb] = useState(true)
+  const [videoLoaded, setVideoLoaded] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  // Generate a deterministic pattern based on slug
-  const hash = style.slug.split('').reduce((a, c) => a + c.charCodeAt(0), 0)
-  const pattern = hash % 5
-  const darkBg = isColorDark(accent)
-  const textColor = darkBg ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.5)'
-  const lineColor = darkBg ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.08)'
-  const blockColor = darkBg ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.06)'
+  const thumbSrc = `/previews/thumbs/${style.slug}.jpg`
+  const videoSrc = `/previews/${style.slug}.mp4`
+
+  const handleMouseEnter = useCallback(() => {
+    const vid = videoRef.current
+    if (!vid) return
+
+    // Lazy-load video src on first hover
+    if (!videoLoaded) {
+      vid.src = videoSrc
+      vid.load()
+      setVideoLoaded(true)
+    }
+
+    vid.currentTime = 0
+    vid.play().catch(() => {})
+    setIsPlaying(true)
+  }, [videoLoaded, videoSrc])
+
+  const handleMouseLeave = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.pause()
+      videoRef.current.currentTime = 0
+      setIsPlaying(false)
+    }
+  }, [])
 
   return (
-    <div className="relative w-full h-full overflow-hidden" style={{ backgroundColor: accent }}>
-      {/* Browser Chrome */}
-      <div
-        className="flex items-center gap-1.5 px-3 py-2"
-        style={{ backgroundColor: darkBg ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.06)' }}
-      >
-        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: darkBg ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.15)' }} />
-        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: darkBg ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.15)' }} />
-        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: darkBg ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.15)' }} />
-        <div
-          className="flex-1 h-3.5 rounded-full ml-2 mr-8"
-          style={{ backgroundColor: darkBg ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }}
+    <div
+      className="relative w-full h-full overflow-hidden"
+      style={{ backgroundColor: style.accentColor }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Thumbnail shown by default */}
+      {hasThumb && (
+        <img
+          src={thumbSrc}
+          alt={style.name}
+          onError={() => setHasThumb(false)}
+          className={`w-full h-full object-cover object-top transition-opacity duration-300 ${
+            isPlaying ? 'opacity-0' : 'opacity-100'
+          }`}
         />
-      </div>
+      )}
 
-      {/* Mini Page Content - varies by pattern */}
-      <div className="px-4 pt-3 pb-4">
-        {/* Nav dots */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="w-12 h-2 rounded-full" style={{ backgroundColor: textColor }} />
-          <div className="flex gap-2">
-            <div className="w-6 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-            <div className="w-6 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-            <div className="w-6 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
+      {/* Video element - src loaded lazily on first hover */}
+      <video
+        ref={videoRef}
+        muted
+        playsInline
+        loop
+        preload="none"
+        className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-300 ${
+          isPlaying ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+
+      {/* Fallback: accent color with play icon hint */}
+      {!hasThumb && !isPlaying && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-white/20">
+            <Play size={32} />
           </div>
         </div>
-
-        {pattern === 0 && (
-          /* Hero-centered layout */
-          <div className="flex flex-col items-center text-center gap-2">
-            <div className="w-20 h-2.5 rounded-full" style={{ backgroundColor: textColor }} />
-            <div className="w-28 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-            <div className="w-16 h-4 rounded-md mt-1" style={{ backgroundColor: darkBg ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)' }} />
-            <div className="grid grid-cols-3 gap-2 mt-3 w-full">
-              <div className="h-8 rounded-md" style={{ backgroundColor: blockColor }} />
-              <div className="h-8 rounded-md" style={{ backgroundColor: blockColor }} />
-              <div className="h-8 rounded-md" style={{ backgroundColor: blockColor }} />
-            </div>
-          </div>
-        )}
-
-        {pattern === 1 && (
-          /* Split hero layout */
-          <div className="flex gap-3">
-            <div className="flex-1 flex flex-col gap-1.5">
-              <div className="w-16 h-2.5 rounded-full" style={{ backgroundColor: textColor }} />
-              <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-              <div className="w-3/4 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-              <div className="w-12 h-3.5 rounded-md mt-1" style={{ backgroundColor: darkBg ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)' }} />
-            </div>
-            <div className="w-16 h-16 rounded-lg" style={{ backgroundColor: blockColor }} />
-          </div>
-        )}
-
-        {pattern === 2 && (
-          /* Card grid layout */
-          <div className="flex flex-col gap-2">
-            <div className="w-24 h-2 rounded-full mb-1" style={{ backgroundColor: textColor }} />
-            <div className="grid grid-cols-2 gap-2">
-              <div className="h-10 rounded-lg" style={{ backgroundColor: blockColor }} />
-              <div className="h-10 rounded-lg" style={{ backgroundColor: blockColor }} />
-              <div className="h-10 rounded-lg" style={{ backgroundColor: blockColor }} />
-              <div className="h-10 rounded-lg" style={{ backgroundColor: blockColor }} />
-            </div>
-          </div>
-        )}
-
-        {pattern === 3 && (
-          /* Dashboard layout */
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <div className="flex-1 h-8 rounded-lg" style={{ backgroundColor: blockColor }} />
-              <div className="flex-1 h-8 rounded-lg" style={{ backgroundColor: blockColor }} />
-              <div className="flex-1 h-8 rounded-lg" style={{ backgroundColor: blockColor }} />
-            </div>
-            <div className="w-full h-14 rounded-lg" style={{ backgroundColor: blockColor }} />
-          </div>
-        )}
-
-        {pattern === 4 && (
-          /* Magazine layout */
-          <div className="flex flex-col gap-2">
-            <div className="w-full h-10 rounded-lg" style={{ backgroundColor: blockColor }} />
-            <div className="flex gap-2">
-              <div className="flex-1 flex flex-col gap-1">
-                <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-                <div className="w-3/4 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-                <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-              </div>
-              <div className="flex-1 flex flex-col gap-1">
-                <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-                <div className="w-2/3 h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-                <div className="w-full h-1.5 rounded-full" style={{ backgroundColor: lineColor }} />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
 
       {/* Hover overlay */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-        <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-          <div className="bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-full text-xs font-bold tracking-widest text-slate-900 flex items-center gap-2 shadow-lg">
-            VIEW DEMO <ExternalLink size={12} />
+      <div className={`absolute inset-0 transition-all duration-300 flex items-end justify-center pb-3 ${
+        isPlaying ? 'bg-gradient-to-t from-black/40 via-transparent to-transparent' : 'bg-black/0 group-hover:bg-black/20'
+      }`}>
+        <div className={`transition-all duration-300 transform ${
+          isPlaying ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0'
+        }`}>
+          <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-[11px] font-bold tracking-widest text-slate-900 flex items-center gap-2 shadow-lg">
+            VIEW DEMO <ExternalLink size={11} />
           </div>
         </div>
       </div>
     </div>
   )
-}
-
-/* ─── Helpers ──────────────────────────────────────────── */
-function isColorDark(hex: string): boolean {
-  const c = hex.replace('#', '')
-  const r = parseInt(c.substring(0, 2), 16)
-  const g = parseInt(c.substring(2, 4), 16)
-  const b = parseInt(c.substring(4, 6), 16)
-  return (r * 299 + g * 587 + b * 114) / 1000 < 128
 }
 
 /* ─── Style Card ───────────────────────────────────────── */
@@ -160,9 +117,9 @@ function StyleCard({ style }: { style: StyleMeta }) {
     >
       <Link href={`/styles/${style.slug}`}>
         <div className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden hover:border-slate-300 hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
-          {/* Mini Preview */}
-          <div className="h-40 w-full overflow-hidden">
-            <MiniPreview style={style} />
+          {/* Video Preview */}
+          <div className="h-44 w-full overflow-hidden">
+            <VideoPreview style={style} />
           </div>
 
           {/* Content */}

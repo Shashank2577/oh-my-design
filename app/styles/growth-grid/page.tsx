@@ -330,6 +330,7 @@ export default function GrowthGrid() {
           <rect width="100" height="100" filter="url(#grid-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

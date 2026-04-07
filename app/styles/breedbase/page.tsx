@@ -453,6 +453,7 @@ function Footer() {
     <footer className="py-12 text-center border-t" style={{ borderColor: tokens.border, backgroundColor: tokens.background }}>
       <div className="flex justify-center items-center gap-2 font-bold text-xl mb-4 tracking-wide" style={{ fontFamily: 'var(--font-playfair)', color: tokens.textHigh }}>
         {PRODUCT_NAME}
+        
       </div>
       <p className="font-light text-sm uppercase tracking-widest" style={{ color: tokens.textLow }}>© 2026 {PRODUCT_NAME}. All rights reserved.</p>
     </footer>

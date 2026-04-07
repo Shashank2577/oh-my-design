@@ -326,6 +326,7 @@ export default function CopyCutter() {
           <rect width="100" height="100" filter="url(#cutter-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

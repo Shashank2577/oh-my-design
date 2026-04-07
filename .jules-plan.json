@@ -1,72 +1,100 @@
 {
   "repo": "Shashank2577/oh-my-design",
   "branch": "main",
-  "created_at": "2026-04-07T00:00:00Z",
-  "total_tasks": 28,
+  "created_at": "2026-04-07T05:30:00Z",
+  "total_tasks": 14,
   "batches": [
     {
       "batch": 1,
-      "name": "Legacy & Core Styles (Wave 1)",
-      "rationale": "Independent design implementations for core styles",
+      "name": "Template/Placeholder Page Fixes + Missing Styles",
+      "rationale": "All touch different style directories - fully parallel",
       "tasks": [
-        { "id": "t1", "title": "Implement 'academia' style", "prompt": "Create a new Next.js page in 'app/styles/academia/page.tsx' following the 'academia' design in 'lib/styles-registry.ts' (Elegant, Scholarly, refined). Reference 'app/styles/art-deco/page.tsx' for structure but use appropriate typography and colors.", "depends_on": [] },
-        { "id": "t2", "title": "Implement 'bold-typography' style", "prompt": "Create a new Next.js page in 'app/styles/bold-typography/page.tsx' following the 'bold-typography' design in 'lib/styles-registry.ts' (Creative, Type-driven design). Use large, impactful headers and stark layouts.", "depends_on": [] },
-        { "id": "t3", "title": "Implement 'industrial' style", "prompt": "Create a new Next.js page in 'app/styles/industrial/page.tsx' following the 'industrial' design in 'lib/styles-registry.ts' (Raw, mechanical, utilitarian). Use metallic colors, monospace fonts, and grid-heavy layouts.", "depends_on": [] },
-        { "id": "t4", "title": "Implement 'material' style", "prompt": "Create a new Next.js page in 'app/styles/material/page.tsx' following Google Material Design guidelines (Modern). Use elevation, shadows, and standard Material color palettes.", "depends_on": [] },
-        { "id": "t5", "title": "Implement 'minimal-dark' style", "prompt": "Create a new Next.js page in 'app/styles/minimal-dark/page.tsx' (Minimal dark theme). Focus on high-contrast, clean lines, and a dark aesthetic optimized for developer tools.", "depends_on": [] }
+        {
+          "id": "t1",
+          "title": "Fix fluent-2 and organic template pages",
+          "prompt": "In the oh-my-design Next.js project, two style pages are incomplete templates with boilerplate comments. Fix both:\n\n1. app/styles/fluent-2/page.tsx - Implement a complete Microsoft Fluent 2 design system landing page. Use soft gradients, subtle depth, clean typography with Segoe UI feel. Include: design tokens object, Navbar, Hero with fluid animation, Features grid (6 cards), Stats section, CTA, Footer.\n\n2. app/styles/organic/page.tsx - Implement a complete organic/natural design landing page. Use earthy tones (greens, browns, warm whites), flowing shapes, botanical motifs. Include: design tokens, Navbar, Hero with nature animation, Features (6 cards), Testimonials, CTA, Footer.\n\nBoth MUST: start with 'use client', import framer-motion, use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings like 'easeOut'), have useReducedMotion() for accessibility. Follow the pattern of existing well-built pages like app/styles/market-mind/page.tsx.\n\nRepo context: branch=main, 142 style pages, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        },
+        {
+          "id": "t2",
+          "title": "Fix professional and retro template pages",
+          "prompt": "In the oh-my-design Next.js project, two style pages are incomplete templates. Fix both:\n\n1. app/styles/professional/page.tsx - Implement a complete clean corporate/professional landing page. Use navy/white/gold palette, sharp typography, structured grid. Include: design tokens, Navbar, Hero, Features (6 cards), Pricing table, Testimonials, CTA, Footer.\n\n2. app/styles/retro/page.tsx - Implement a complete vintage/retro design landing page. Use warm tones, serif fonts, textured backgrounds, halftone patterns. Include: design tokens, Navbar, Hero with retro animation, Features (6 cards), CTA, Footer.\n\nBoth MUST: start with 'use client', import framer-motion, use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings), have useReducedMotion() for accessibility.\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        },
+        {
+          "id": "t3",
+          "title": "Fix playful-geometric and botanical template pages",
+          "prompt": "In the oh-my-design Next.js project, two style pages are incomplete templates. Fix both:\n\n1. app/styles/playful-geometric/page.tsx - Implement a complete colorful geometric patterns landing page. Use bold primary colors, circles/triangles/squares as decorative elements, playful typography. Include: design tokens, Navbar, Hero with geometric animation, Features (6 cards), CTA, Footer.\n\n2. app/styles/botanical/page.tsx - Implement a complete plant/nature-inspired landing page. Use deep greens, soft pinks, botanical illustrations feel, serif + sans-serif pairing. Include: design tokens, Navbar, Hero, Features (6 cards), CTA, Footer.\n\nBoth MUST: start with 'use client', import framer-motion, use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings), have useReducedMotion().\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        },
+        {
+          "id": "t4",
+          "title": "Fix enterprise and art-deco template pages",
+          "prompt": "In the oh-my-design Next.js project, two style pages are incomplete templates. Fix both:\n\n1. app/styles/enterprise/page.tsx - Implement a complete enterprise SaaS dashboard-style landing page. Use slate/blue palette, data visualization feel, trust-building layout. Include: design tokens, Navbar, Hero, Features (6 cards), Stats dashboard, Pricing, CTA, Footer.\n\n2. app/styles/art-deco/page.tsx - Implement a complete 1920s Art Deco glamour landing page. Use gold/black/cream, geometric patterns, ornamental borders, elegant serif fonts. Include: design tokens, Navbar, Hero with deco animation, Features (6 cards), CTA, Footer.\n\nBoth MUST: start with 'use client', import framer-motion, use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings), have useReducedMotion().\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        },
+        {
+          "id": "t5",
+          "title": "Fix maximalism and cyberpunk template pages",
+          "prompt": "In the oh-my-design Next.js project, two style pages are incomplete templates. Fix both:\n\n1. app/styles/maximalism/page.tsx - Implement a complete bold maximalist landing page. Use clashing colors, layered textures, oversized typography, dense information. Include: design tokens, Navbar, Hero with overwhelming animation, Features (6 cards), Gallery, CTA, Footer.\n\n2. app/styles/cyberpunk/page.tsx - Implement a complete neon cyberpunk landing page. Use dark backgrounds, neon pink/cyan/purple accents, glitch effects, monospace fonts. Include: design tokens, Navbar, Hero with glitch animation, Features (6 cards), CTA, Footer.\n\nBoth MUST: start with 'use client', import framer-motion, use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings), have useReducedMotion().\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        }
       ]
     },
     {
       "batch": 2,
-      "name": "Creative & Editorial Styles (Wave 2)",
+      "name": "Missing Style Implementations + Registry + Claymorphism",
+      "rationale": "New page creation and registry fixes. Independent directories.",
       "tasks": [
-        { "id": "t6", "title": "Implement 'neo-brutalism' style", "prompt": "Create 'app/styles/neo-brutalism/page.tsx'. High contrast, bold borders, saturated colors, and aggressive shadows.", "depends_on": [] },
-        { "id": "t7", "title": "Implement 'neumorphism' style", "prompt": "Create 'app/styles/neumorphism/page.tsx'. Soft UI, monochromatic shadows (extrusion/intrusion) for a tactile feel.", "depends_on": [] },
-        { "id": "t8", "title": "Implement 'newsprint' style", "prompt": "Create 'app/styles/newsprint/page.tsx'. Serif fonts, multi-column layouts, and a physical newspaper aesthetic.", "depends_on": [] },
-        { "id": "t9", "title": "Implement 'humanist-literary' style", "prompt": "Create 'app/styles/humanist-literary/page.tsx'. Quiet intelligence, organic warmth, focus on readable serif typography and ample white space.", "depends_on": [] },
-        { "id": "t10", "title": "Implement 'saas' style", "prompt": "Create 'app/styles/saas/page.tsx'. Modern SaaS aesthetic: clean, gradient-accented, feature-rich landing page layout.", "depends_on": [] }
+        {
+          "id": "t6",
+          "title": "Create industrial and sketch style pages",
+          "prompt": "In the oh-my-design Next.js project, create two new style landing pages:\n\n1. app/styles/industrial/page.tsx - Raw mechanical/factory aesthetic. Concrete grays, rust orange, steel blue, exposed-grid layouts, monospace + bold sans fonts. Include: design tokens, Navbar, Hero with mechanical animation, Features (6 cards), Stats, CTA, Footer.\n\n2. app/styles/sketch/page.tsx - Hand-drawn sketch style. Paper-white background, pencil-stroke borders, hand-drawn feel fonts, wobbly lines via CSS. Include: design tokens, Navbar, Hero with sketch animation, Features (6 cards), CTA, Footer.\n\nBoth MUST: start with 'use client', import { motion } from 'framer-motion', use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings), import useReducedMotion. Import icons from lucide-react. Use next/font/google for fonts.\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        },
+        {
+          "id": "t7",
+          "title": "Create newsprint, material, and humanist-literary style pages",
+          "prompt": "In the oh-my-design Next.js project, create three new style landing pages:\n\n1. app/styles/newsprint/page.tsx - Newspaper/editorial layout. Off-white/cream, black text, column layouts, serif headlines, ruled lines, pull quotes. Include: design tokens, Navbar, Hero, Features in column layout, CTA, Footer.\n\n2. app/styles/material/page.tsx - Google Material Design 3. Material color system, elevation shadows, rounded corners (28px), Roboto font. Include: design tokens, Navbar, Hero, Features (6 elevated cards), FAB-style CTA, Footer.\n\n3. app/styles/humanist-literary/page.tsx - Classical literary/humanist typography. Warm cream/parchment, serifs (Cormorant Garamond or Playfair Display), generous whitespace, drop caps. Include: design tokens, Navbar, Hero, Features (6 cards), Testimonials as book quotes, CTA, Footer.\n\nAll MUST: start with 'use client', import framer-motion, use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings), have useReducedMotion(). Import icons from lucide-react.\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        },
+        {
+          "id": "t8",
+          "title": "Update styles registry with all missing entries and dedup",
+          "prompt": "In the oh-my-design Next.js project, update lib/styles-registry.ts:\n\n1. ADD registry entries for these pages that exist but aren't registered (use appropriate category, vibe, bestFor, accentColor, set built: true):\n   - email-elevate, story-scale, type-tango, ad-agency-360 (V3)\n   - academia, neo-brutalism, neumorphism, terminal-cli, vaporwave, web3 (V1)\n   - claude, clay, clickhouse, cohere, coinbase, resend, revolut, runwayml, sanity, sentry (V2)\n\n2. DEDUPLICATE these pairs (keep the FIRST/kebab-case version, REMOVE the duplicate):\n   - Keep fan-cave, remove fancave\n   - Keep bot-stream, remove botstream\n   - Keep logic-gate, remove logicgate\n   - Keep code-flow, remove codeflow\n   - Keep prompt-palace, remove promptpalace\n   - Keep drill-master, remove drillmaster\n\n3. Ensure market-mind has built: true\n4. Do NOT change the StyleMeta interface or exports structure.\n\nRepo context: branch=main",
+          "depends_on": []
+        },
+        {
+          "id": "t9",
+          "title": "Fix claymorphism broken import",
+          "prompt": "In the oh-my-design Next.js project, fix app/styles/claymorphism/page.tsx which has a broken import on line 8:\n\nimport { AnimatedSection, AnimatedButton, AnimatedCard, AnimatedFAQ, AnimatedNewsletterForm, BackgroundBlobs } from './motion-wrappers'\n\nThe file ./motion-wrappers does NOT exist. Fix by:\n1. Remove the broken import\n2. Inline simple motion wrapper components at the top of the file:\n   - AnimatedSection: motion.section with fade-in on scroll\n   - AnimatedButton: motion.button with hover/tap scale\n   - AnimatedCard: motion.div with stagger animation\n   - AnimatedFAQ: motion.div with expand/collapse via AnimatePresence\n   - BackgroundBlobs: animated floating decorative blobs\n3. Use numeric easing arrays like [0.23, 1, 0.32, 1] (NOT string easings)\n4. Keep 'use client' at top, import { motion, AnimatePresence } from 'framer-motion'\n\nRepo context: branch=main, Next.js 15.5.14, framer-motion ^12.38.0",
+          "depends_on": []
+        }
       ]
     },
     {
       "batch": 3,
-      "name": "Artistic & Tech Styles (Wave 3)",
+      "name": "Framer-Motion String Easing Fixes",
+      "rationale": "Mechanical find-and-replace across many files. Split into 4 tasks of ~18 files each.",
       "tasks": [
-        { "id": "t11", "title": "Implement 'sketch' style", "prompt": "Create 'app/styles/sketch/page.tsx'. Hand-drawn icons, rough borders, and an artistic, 'work-in-progress' feel.", "depends_on": [] },
-        { "id": "t12", "title": "Implement 'swiss' style", "prompt": "Create 'app/styles/swiss/page.tsx'. International Typographic Style: grid-based, sans-serif (Helvetica-like), and asymmetric layouts.", "depends_on": [] },
-        { "id": "t13", "title": "Implement 'terminal-cli' style", "prompt": "Create 'app/styles/terminal-cli/page.tsx'. Green-on-black (or amber), monospace, command-line interface aesthetic.", "depends_on": [] },
-        { "id": "t14", "title": "Implement 'vaporwave' style", "prompt": "Create 'app/styles/vaporwave/page.tsx'. 80s/90s nostalgia: pink/blue/purple gradients, pixel art elements, and lo-fi aesthetics.", "depends_on": [] },
-        { "id": "t15", "title": "Implement 'web3' style", "prompt": "Create 'app/styles/web3/page.tsx'. Decentralized/crypto-inspired: dark theme, glassmorphism, and neon accents.", "depends_on": [] }
-      ]
-    },
-    {
-      "batch": 4,
-      "name": "Brand Reference Styles (Wave 4)",
-      "tasks": [
-        { "id": "t16", "title": "Implement 'resend' style", "prompt": "Create 'app/styles/resend/page.tsx'. Minimal, stark black-and-white, developer-focused email infrastructure aesthetic.", "depends_on": [] },
-        { "id": "t17", "title": "Implement 'revolut' style", "prompt": "Create 'app/styles/revolut/page.tsx'. Sleek fintech: smooth transitions, vibrant accent colors, and modern card-based UI.", "depends_on": [] },
-        { "id": "t18", "title": "Implement 'runwayml' style", "prompt": "Create 'app/styles/runwayml/page.tsx'. Dark, professional creative AI studio vibe with high-quality media previews.", "depends_on": [] },
-        { "id": "t19", "title": "Implement 'sanity' style", "prompt": "Create 'app/styles/sanity/page.tsx'. Structured, content-focused, and minimal developer tool aesthetic.", "depends_on": [] },
-        { "id": "t20", "title": "Implement 'sentry' style", "prompt": "Create 'app/styles/sentry/page.tsx'. Bold, functional, error-tracking dashboard aesthetic with purple accents.", "depends_on": [] }
-      ]
-    },
-    {
-      "batch": 5,
-      "name": "AI & Utility Styles (Wave 5)",
-      "tasks": [
-        { "id": "t21", "title": "Implement 'claude' style", "prompt": "Create 'app/styles/claude/page.tsx'. Warm, intellectual, focus on content and typography (Anthropic style).", "depends_on": [] },
-        { "id": "t22", "title": "Implement 'clay' style", "prompt": "Create 'app/styles/clay/page.tsx'. Soft shadows, tactile, personal CRM aesthetic with focus on networks.", "depends_on": [] },
-        { "id": "t23", "title": "Implement 'clickhouse' style", "prompt": "Create 'app/styles/clickhouse/page.tsx'. Data-dense, high-performance database monitoring aesthetic (yellow/black).", "depends_on": [] },
-        { "id": "t24", "title": "Implement 'cohere' style", "prompt": "Create 'app/styles/cohere/page.tsx'. Natural language patterns, earthy tones, and organic AI aesthetic.", "depends_on": [] },
-        { "id": "t25", "title": "Implement 'coinbase' style", "prompt": "Create 'app/styles/coinbase/page.tsx'. Clean, trusted, secure blue-and-white financial/crypto interface.", "depends_on": [] }
-      ]
-    },
-    {
-      "batch": 6,
-      "name": "Advanced V3 Logics (Wave 6)",
-      "tasks": [
-        { "id": "t26", "title": "Implement 'logic-gate' style", "prompt": "Create 'app/styles/logic-gate/page.tsx'. Visual workflow, circuit logic, and tactile automation builder aesthetic.", "depends_on": [] },
-        { "id": "t27", "title": "Implement 'code-flow' style", "prompt": "Create 'app/styles/code-flow/page.tsx'. Spatial repository visualization, high-density developer tool layout.", "depends_on": [] },
-        { "id": "t28", "title": "Implement 'prompt-palace' style", "prompt": "Create 'app/styles/prompt-palace/page.tsx'. Majestic LLM interface, luxury gold/black theme for prompt engineering.", "depends_on": [] }
+        {
+          "id": "t10",
+          "title": "Fix string easings batch A (worst offenders)",
+          "prompt": "In the oh-my-design Next.js project, fix framer-motion string easing values. Replace ALL string easings with numeric cubic-bezier arrays:\n\n- ease: \"easeOut\" → ease: [0.23, 1, 0.32, 1]\n- ease: \"easeInOut\" → ease: [0.42, 0, 0.58, 1]\n- ease: \"easeIn\" → ease: [0.42, 0, 1, 1]\n- ease: \"linear\" → ease: [0, 0, 1, 1]\n\nFix these files:\n1. app/styles/bauhaus/page.tsx (11 instances)\n2. app/styles/pet-memorial/page.tsx (10 instances)\n3. app/styles/kibblecloud/page.tsx (9 instances)\n4. app/styles/vetflow/page.tsx (7 instances)\n5. app/styles/featherflow/page.tsx (5 instances)\n6. app/styles/rescuerhythm/page.tsx (5 instances)\n7. app/styles/pawsitive-tech/page.tsx (4 instances)\n8. app/styles/golfers-edge/page.tsx (4 instances)\n9. app/styles/petzen/page.tsx (4 instances)\n10. app/styles/fishtank/page.tsx (4 instances)\n11. app/styles/whiskerwatch/page.tsx (3 instances)\n12. app/styles/reptileroom/page.tsx (3 instances)\n13. app/styles/deep-draw/page.tsx (3 instances)\n14. app/styles/fancave/page.tsx (3 instances)\n15. app/styles/groomglide/page.tsx (3 instances)\n16. app/styles/pitchvision/page.tsx (3 instances)\n17. app/styles/pet-shop-hero/page.tsx (3 instances)\n18. app/styles/botstream/page.tsx (3 instances)\n\nIMPORTANT: Only change easing values. Do NOT modify any other code.",
+          "depends_on": []
+        },
+        {
+          "id": "t11",
+          "title": "Fix string easings batch B",
+          "prompt": "In the oh-my-design Next.js project, fix framer-motion string easing values. Replace ALL string easings with numeric arrays:\n\n- ease: \"easeOut\" → ease: [0.23, 1, 0.32, 1]\n- ease: \"easeInOut\" → ease: [0.42, 0, 0.58, 1]\n- ease: \"easeIn\" → ease: [0.42, 0, 1, 1]\n- ease: \"linear\" → ease: [0, 0, 1, 1]\n\nFix these files:\n1. app/styles/stable-smart/page.tsx\n2. app/styles/petpals/page.tsx\n3. app/styles/fitgoal/page.tsx\n4. app/styles/model-master/page.tsx\n5. app/styles/zoo-zoo/page.tsx\n6. app/styles/gridiron-flow/page.tsx\n7. app/styles/breedbase/page.tsx\n8. app/styles/brand-story/page.tsx\n9. app/styles/type-tango/page.tsx\n10. app/styles/tensor-track/page.tsx\n11. app/styles/adopt-flow/page.tsx\n12. app/styles/pet-insurance/page.tsx\n13. app/styles/kinetic/page.tsx\n14. app/styles/modern-dark/page.tsx\n15. app/styles/synth-mind/page.tsx\n16. app/styles/snoutsnack/page.tsx\n17. app/styles/cat-nip/page.tsx\n18. app/styles/bet-edge/page.tsx\n\nIMPORTANT: Only change easing values. Do NOT modify any other code.",
+          "depends_on": []
+        },
+        {
+          "id": "t12",
+          "title": "Fix string easings batch C",
+          "prompt": "In the oh-my-design Next.js project, fix framer-motion string easing values. Replace ALL string easings with numeric arrays:\n\n- ease: \"easeOut\" → ease: [0.23, 1, 0.32, 1]\n- ease: \"easeInOut\" → ease: [0.42, 0, 0.58, 1]\n- ease: \"easeIn\" → ease: [0.42, 0, 1, 1]\n- ease: \"linear\" → ease: [0, 0, 1, 1]\n\nFix these files:\n1. app/styles/logicgate/page.tsx\n2. app/styles/vector-vault/page.tsx\n3. app/styles/fan-voice/page.tsx\n4. app/styles/agent-orchestra/page.tsx\n5. app/styles/uber/page.tsx\n6. app/styles/monochrome/page.tsx\n7. app/styles/scoutpro/page.tsx\n8. app/styles/ad-metric/page.tsx\n9. app/styles/prism-portfolio/page.tsx\n10. app/styles/color-cloud/page.tsx\n11. app/styles/puppy-primer/page.tsx\n12. app/styles/pitch-perfect/page.tsx\n13. app/styles/together.ai/page.tsx\n14. app/styles/ad-agency-360/page.tsx\n15. app/styles/racetrack/page.tsx\n16. app/styles/pawstep/page.tsx\n17. app/styles/mvp-spotlight/page.tsx\n18. app/styles/ad-burst/page.tsx\n19. app/styles/folio-flux/page.tsx\n20. app/styles/skatepark/page.tsx\n21. app/styles/studio-stack/page.tsx\n22. app/styles/combatzone/page.tsx\n23. app/styles/fan-cave/page.tsx\n24. app/styles/trophy-room/page.tsx\n25. app/styles/vetbot/page.tsx\n26. app/styles/progear/page.tsx\n27. app/styles/layer-logic/page.tsx\n\nIMPORTANT: Only change easing values. Do NOT modify any other code.",
+          "depends_on": []
+        }
       ]
     }
   ]

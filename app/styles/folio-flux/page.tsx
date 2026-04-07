@@ -269,7 +269,8 @@ const Footer = ({ accent }: any) => (
           <Globe size={20} style={{ color: accent }} className="opacity-30 hover:opacity-100 cursor-pointer transition-opacity" />
         </div>
       </div>
-    </div>
+      
+      </div>
   </footer>
 )
 

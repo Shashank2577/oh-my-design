@@ -617,6 +617,7 @@ function Footer() {
           <a href="#" className="hover:text-[#00D1FF] transition-colors">Terms</a>
         </div>
         <p className="font-bold text-gray-400">© 2026 OH-MY-DESIGN</p>
+        
       </div>
     </footer>
   )

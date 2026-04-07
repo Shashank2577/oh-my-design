@@ -23,7 +23,6 @@ import {
   Share2
 } from 'lucide-react'
 import { JetBrains_Mono, Inter, Outfit } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 
 const mono = JetBrains_Mono({ subsets: ['latin'] })
 const inter = Inter({ subsets: ['latin'] })
@@ -359,7 +358,7 @@ export default function BotStream() {
           <rect width="100" height="100" filter="url(#bot-noise)" />
         </svg>
       </div>
-          <CopyPromptButton prompt={PROMPT} />
+          
     </div>
   )
 }

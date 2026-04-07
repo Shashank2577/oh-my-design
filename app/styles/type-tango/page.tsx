@@ -299,6 +299,7 @@ export default function TypeTango() {
           <rect width="100" height="100" filter="url(#tango-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

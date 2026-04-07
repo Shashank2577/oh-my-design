@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check, ChevronDown, Menu, Star, PenTool, Layout, Box, Users, Settings, Zap, Play } from 'lucide-react'
 import { Inter, Space_Mono } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 
 const PROMPT = `
 # Design System Inspiration of Figma
@@ -604,7 +603,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

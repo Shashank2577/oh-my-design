@@ -473,6 +473,7 @@ export default function FragLine() {
           <rect width="100" height="100" filter="url(#noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

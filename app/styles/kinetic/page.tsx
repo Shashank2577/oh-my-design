@@ -632,6 +632,7 @@ export default function KineticPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

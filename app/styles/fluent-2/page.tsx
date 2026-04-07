@@ -651,6 +651,7 @@ export default function Fluent2StylePage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

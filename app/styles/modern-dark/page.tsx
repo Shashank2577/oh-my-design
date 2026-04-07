@@ -451,6 +451,7 @@ export default function ModernDarkPage() {
           animation: gradient-x 3s ease infinite;
         }
       `}} />
-    </div>
+      
+      </div>
   )
 }

@@ -826,6 +826,7 @@ export default function AcademiaPage() {
         </main>
         <Footer />
       </div>
-    </div>
+      
+      </div>
   )
 }

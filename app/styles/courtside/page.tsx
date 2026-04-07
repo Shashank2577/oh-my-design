@@ -386,7 +386,8 @@ export default function CourtSidePage() {
           <a href="/" className="mt-4 md:mt-0 hover:text-white transition-colors">← Back to Styles</a>
         </div>
       </footer>
-    </div>
+      
+      </div>
   )
 }
 

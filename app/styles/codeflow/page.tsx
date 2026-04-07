@@ -1,7 +1,6 @@
-import { Variants } from 'framer-motion'
 'use client'
 
-import { motion, useReducedMotion, useInView } from 'framer-motion'
+import { motion, useReducedMotion, useInView, Variants } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { JetBrains_Mono, Inter } from 'next/font/google'
 import { Michroma } from 'next/font/google'
@@ -212,6 +211,7 @@ export default function CodeFlowPage() {
       <main>
         <Hero />
       </main>
-    </div>
+      
+      </div>
   )
 }

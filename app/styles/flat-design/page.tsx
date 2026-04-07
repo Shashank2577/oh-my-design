@@ -416,6 +416,7 @@ export default function FlatDesignLandingPage() {
           </div>
         </div>
       </footer>
-    </div>
+      
+      </div>
   );
 }

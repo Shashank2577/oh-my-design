@@ -491,6 +491,7 @@ function Footer() {
       <div className="flex justify-center items-center gap-2 font-bold mb-2 tracking-tight" style={{ fontFamily: 'var(--font-space)', color: tokens.textHigh }}>
         <Bot className="h-5 w-5" style={{ color: tokens.accent }} />
         {PRODUCT_NAME}
+        
       </div>
       <p className="text-xs" style={{ color: tokens.textLow }}>© 2026 {PRODUCT_NAME}. Artificial Intelligence. Real Care.</p>
     </footer>

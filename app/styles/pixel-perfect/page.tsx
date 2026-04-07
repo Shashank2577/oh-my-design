@@ -324,6 +324,7 @@ export default function PixelPerfect() {
           <rect width="100" height="100" filter="url(#pixel-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

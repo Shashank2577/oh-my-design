@@ -1,7 +1,6 @@
-import { Variants } from 'framer-motion'
 'use client'
 
-import { motion, useReducedMotion, useInView } from 'framer-motion'
+import { motion, useReducedMotion, useInView, Variants } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { Fira_Code, Public_Sans } from 'next/font/google'
 // Geist is a custom font sometimes, we'll use a fallback or standard sans for it if not available, or Inter
@@ -297,6 +296,7 @@ export default function LogicGatePage() {
         <Hero />
         <Features />
       </main>
-    </div>
+      
+      </div>
   )
 }

@@ -318,6 +318,7 @@ export default function TrendTracker() {
           <rect width="100" height="100" filter="url(#trend-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

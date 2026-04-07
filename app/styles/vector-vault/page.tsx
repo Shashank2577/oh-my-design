@@ -533,6 +533,7 @@ export default function VectorVaultPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

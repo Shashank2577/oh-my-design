@@ -21,7 +21,6 @@ import {
   Smile,
 } from 'lucide-react'
 import { Bricolage_Grotesque, Inter } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 
 const bricolage = Bricolage_Grotesque({ subsets: ['latin'], weight: ['400', '700', '800'] })
 const inter = Inter({ subsets: ['latin'] })
@@ -372,7 +371,7 @@ export default function SocialSpark() {
           <rect width="100" height="100" filter="url(#spark-noise)" />
         </svg>
       </div>
-          <CopyPromptButton prompt={PROMPT} />
+          
     </div>
   )
 }

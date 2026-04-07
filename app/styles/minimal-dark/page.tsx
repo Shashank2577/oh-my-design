@@ -721,6 +721,7 @@ export default function MinimalDarkPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   )
 }

@@ -326,6 +326,7 @@ export default function MotionManifesto() {
           <rect width="100" height="100" filter="url(#manifesto-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

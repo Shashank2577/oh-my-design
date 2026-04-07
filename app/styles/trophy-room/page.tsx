@@ -515,6 +515,7 @@ export default function TrophyRoomPage() {
         <Newsletter />
       </main>
       <Footer />
-    </div>
+      
+      </div>
   );
 }

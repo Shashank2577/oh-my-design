@@ -530,6 +530,7 @@ function Footer() {
           <a href="#" className="hover:text-white transition-colors">TERMS</a>
           <a href="#" className="hover:text-white transition-colors">RESPONSIBLE GAMING</a>
         </div>
+        
       </div>
     </footer>
   )

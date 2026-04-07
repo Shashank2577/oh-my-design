@@ -7,6 +7,7 @@ export interface StyleMeta {
   accentColor: string // for gallery card preview
   built: boolean // flip to true once the page is created
   version?: 'V1' | 'V2' | 'V3'
+  prompt?: string
 }
 
 export const STYLES: StyleMeta[] = [
@@ -36,7 +37,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'humanist-literary', name: 'Humanist Literary', category: 'Elegant', vibe: 'Quiet intelligence, organic warmth', bestFor: 'Content platforms, Blogs', accentColor: '#8B6F47', built: true, version: 'V1' },
   { slug: 'saas', name: 'SaaS', category: 'Modern', vibe: 'Modern SaaS aesthetic', bestFor: 'SaaS products, Startups', accentColor: '#4F46E5', built: true, version: 'V1' },
   { slug: 'sketch', name: 'Sketch', category: 'Creative', vibe: 'Hand-drawn, artistic', bestFor: 'Creative portfolios, Artistic brands', accentColor: '#2D3748', built: true, version: 'V1' },
-  { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF0000', built: true, version: 'V1' },
+  { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF0000', built: false, version: 'V1' },
 
   // --- V2 Brand Styles ---
   { slug: 'together.ai', name: 'Together AI', category: 'Tech', vibe: 'Pastel-gradient dreamscape built for enterprise AI infrastructure', bestFor: 'AI platforms, enterprise infrastructure', accentColor: '#ef2cc1', built: true, version: 'V2' },
@@ -73,9 +74,9 @@ export const STYLES: StyleMeta[] = [
   { slug: 'fan-cave', name: 'FanCave', category: 'Sports', vibe: 'Interactive 3D collectibles vault', bestFor: 'Memorabilia & NFTs', accentColor: '#FACC15', built: true, version: 'V3' },
   { slug: 'matchday-sync', name: 'MatchDay Sync', category: 'Sports', vibe: 'Sub-ms multi-device match sync', bestFor: 'Live broadcast engines', accentColor: '#10B981', built: true, version: 'V3' },
   { slug: 'bot-stream', name: 'BotStream', category: 'AI', vibe: 'High-fidelity AI agent orchestration', bestFor: 'Agentic workflows, Chatbots', accentColor: '#6366F1', built: true, version: 'V3' },
-  { slug: 'logic-gate', name: 'LogicGate', category: 'AI', vibe: 'Visual workflow & circuit logic', bestFor: 'Automation builders', accentColor: '#F97316', built: true, version: 'V3' },
-  { slug: 'code-flow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
-  { slug: 'prompt-palace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Visual workflow & circuit logic', bestFor: 'Automation builders', accentColor: '#F97316', built: true, version: 'V3' },
+  { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Generative creative intelligence', bestFor: 'AI art & music tools', accentColor: '#7000FF', built: true, version: 'V3' },
   { slug: 'copy-cutter', name: 'CopyCutter', category: 'Marketing', vibe: 'Surgical editorial brutalism', bestFor: 'Content marketing, Magazines', accentColor: '#FF0000', built: true, version: 'V3' },
   { slug: 'social-spark', name: 'SocialSpark', category: 'Marketing', vibe: 'High-energy rewarding engagement', bestFor: 'Social platforms, Communities', accentColor: '#FF4DAB', built: true, version: 'V3' },
@@ -142,6 +143,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'scoutpro', name: 'ScoutPro', category: 'Sports', vibe: 'Elite athlete talent engine', bestFor: 'Sports scouting', accentColor: '#000000', built: true, version: 'V3' },
   { slug: 'market-mind', name: 'MarketMind', category: 'Marketing', vibe: 'Cerebral interconnected strategy', bestFor: 'Strategic consulting, Market analysis', accentColor: '#00D1FF', built: true, version: 'V3' },
   { slug: 'design-draft', name: 'DesignDraft', category: 'Creative', vibe: 'Raw iterative hand-crafted process', bestFor: 'Freelancer portfolios, Creative process', accentColor: '#222222', built: false, version: 'V3' },
+  { slug: 'growth-grid', name: 'GrowthGrid', category: 'Marketing', vibe: 'Data-driven growth engine', bestFor: 'Growth tools, Analytics dashboards', accentColor: '#10B981', built: true, version: 'V3' },
   { slug: 'email-elevate', name: 'Email Elevate', category: 'Marketing', vibe: 'Premium inbox experiences', bestFor: 'Email marketing, Newsletters', accentColor: '#FF6B6B', built: true, version: 'V3' },
   { slug: 'story-scale', name: 'Story Scale', category: 'Marketing', vibe: 'Data-driven narrative growth', bestFor: 'Content platforms, SEO', accentColor: '#4ECDC4', built: true, version: 'V3' },
   { slug: 'type-tango', name: 'Type Tango', category: 'Creative', vibe: 'Kinetic typography motion', bestFor: 'Design studios, Typography', accentColor: '#FFD93D', built: true, version: 'V3' },

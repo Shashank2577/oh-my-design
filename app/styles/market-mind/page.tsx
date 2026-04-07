@@ -11,7 +11,6 @@
 import { motion, useReducedMotion, useInView, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { Instrument_Sans, Inter, JetBrains_Mono } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Brain, Search, Target, Compass, Network, Activity, 
   BarChart3, Globe, Lock, ArrowRight, Check, Star, 
@@ -761,7 +760,7 @@ export default function MarketMindPage() {
         <Contact />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

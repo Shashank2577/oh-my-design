@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Inter } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Star, ChevronDown, ArrowRight, Check, MapPin, Navigation, Car, Package, Shield,
   CreditCard, Menu, X
@@ -673,7 +672,7 @@ export default function UberPage() {
         <Newsletter />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

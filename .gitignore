@@ -47,3 +47,4 @@ next-env.d.ts
 dev_server.log
 dev_server.pid
 npm_output.log
+.gstack/

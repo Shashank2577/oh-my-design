@@ -12,7 +12,6 @@ import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 // Replace fonts with those specified in the design system:
 import { Orbitron, Share_Tech_Mono, JetBrains_Mono } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
   BookOpen, Layout, Palette, Code2, BarChart, Lock
@@ -774,7 +773,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }

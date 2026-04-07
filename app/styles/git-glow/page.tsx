@@ -334,6 +334,7 @@ export default function GitGlow() {
           <rect width="100" height="100" filter="url(#git-noise)" />
         </svg>
       </div>
-    </div>
+      
+      </div>
   )
 }

@@ -567,7 +567,8 @@ export default function RescueRhythmPage() {
             <a href="#" className="hover:text-gray-800">Privacy Policy</a>
             <a href="#" className="hover:text-gray-800">Terms of Service</a>
           </div>
-        </div>
+          
+      </div>
       </footer>
 
       <LiveTicker />

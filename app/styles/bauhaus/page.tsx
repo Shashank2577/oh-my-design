@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Outfit } from 'next/font/google'
-import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Check, ArrowRight, ChevronDown, Circle, Square, Triangle, Quote,
   Layout, MousePointer, PaintBucket, Type, Layers, Box
@@ -779,7 +778,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
-      <CopyPromptButton prompt={PROMPT} />
+      
     </div>
   )
 }
