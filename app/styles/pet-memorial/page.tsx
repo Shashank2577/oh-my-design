@@ -3,10 +3,13 @@
 import { motion, useReducedMotion, useInView, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import { Libre_Baskerville } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Heart, ChevronDown, ArrowRight, Check, Users, Shield,
   BookOpen, Feather, Sparkles, Sun, Star
 } from 'lucide-react'
+
+const PROMPT = `\n### 38. PetMemorial (End-of-Life Planning for Pets)\n**Design Philosophy & Vibe**: Serene, deeply compassionate, and gentle. PetMemorial uses a "Soft-Focus" UI, where edges are blurred and the lighting feels like a soft morning sun. The vibe is "Peaceful Transition"—comforting, unhurried, and emotionally supportive. It avoids harsh lines or jarring colors.\n\n**Design Token System**:\n- **Background**: \`#FDFCFB\` (Warm White)\n- **Surface**: \`#F4F1ED\` (Stone Grey)\n- **Accent 1**: \`#8CA3A3\` (Sage Fog)\n- **Accent 2**: \`#D6C5B3\` (Soft Sand)\n- **Text High**: \`#4A4A4A\`\n- **Text Low**: \`#8E8E8E\`\n\n**Typography System**:\n- **Primary Font**: **Cormorant Garamond** (Headings - Elegantly empathetic)\n- **Secondary Font**: **Inter** (Body - Readable, quiet)\n\n**Motion Architecture (The "Ethereal" Factor)**:\n- **Fading Embers**: Particles that slowly drift upward and fade out.\n- **Breath Easing**: Extremely slow, easeOut transitions (2000ms+).\n`;
 
 // ─────────────────────────────────────────────
 // FONTS
@@ -778,6 +781,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
+      <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }

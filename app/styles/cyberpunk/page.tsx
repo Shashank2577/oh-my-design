@@ -12,10 +12,36 @@ import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 // Replace fonts with those specified in the design system:
 import { Orbitron, Share_Tech_Mono, JetBrains_Mono } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
   BookOpen, Layout, Palette, Code2, BarChart, Lock
 } from 'lucide-react'
+
+const PROMPT = `
+# Cyberpunk / Glitch Design System
+
+## 1. Design Philosophy
+
+**Core Principles**: "High-Tech, Low-Life." The aesthetic is a digital dystopia colliding with a high-tech noir reality. It captures the tension between advanced technology and societal decay—a world of underground hackers, neon-drenched megacities, and corrupted data streams. This isn't a clean, utopian future; it's gritty, imperfect, and palpably dangerous. Every pixel should feel like it's being rendered on a malfunctioning CRT monitor in a rain-soaked Tokyo alley or a rogue terminal in a subterranean bunker.
+
+**The Vibe**: Dangerous, electric, rebellious, and aggressively futuristic-retro. It draws heavily from the visual language of 80s sci-fi (Blade Runner, Akira) and hacker culture (The Matrix, Ghost in the Shell). The interface should feel *alive* and volatile—buzzing with digital energy, glitching with data corruption, and pulsing with raw power. It’s not just a website; it’s a hacked feed, a forbidden interface, a window into the sprawl.
+
+**The Tactile Experience**:
+
+- **Imperfect Technology**: Embrace the artifacts of analog-to-digital conversion. Scanlines, chromatic aberration (RGB splitting), and signal noise are not bugs; they are features. The UI should feel like it's struggling to contain the data it displays.
+- **The Void vs. The Light**: The background isn't just dark; it's a void. Against this absolute blackness, neon light (cyan, magenta, acid green) doesn't just color elements—it *illuminates* them. Light sources should feel physical, casting glows and shadows that define the hierarchy.
+- **Industrial Brutalism**: Shapes are hard, angular, and utilitarian. Chamfered corners (45-degree cuts) replace friendly rounded rectangles. Borders are technical and precise, resembling blueprints or HUD (Heads-Up Display) schematics rather than decorative frames.
+
+**Visual Signatures That Make This Unforgettable**:
+
+- **Chromatic Aberration**: RGB color splitting on text and elements (red/cyan offset shadows) to simulate lens distortion or signal interference.
+- **Scanlines**: Subtle horizontal line overlays mimicking the refresh rate of old CRT monitors, adding texture and unifying the composition.
+- **Glitch Effects**: Intentional "corruption" via clip-path animations, skewed transforms, and flickering text that suggests a unstable connection or a hacked system.
+- **Neon Glow**: Text and borders that literally glow with intense, multi-layered box-shadow/text-shadow stacking, creating a "light saber" or "neon sign" effect against the dark background.
+- **Corner Cuts**: Chamfered/clipped corners on cards and buttons creating a militaristic, tech-panel aesthetic.
+- **Circuit Patterns**: Decorative SVG backgrounds resembling PCB traces or data highways, suggesting the underlying hardware.
+`;
 
 // ─────────────────────────────────────────────
 // FONTS — replace with style-specific fonts
@@ -748,6 +774,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
+      <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }

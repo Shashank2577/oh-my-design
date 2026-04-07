@@ -3,10 +3,46 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Playfair_Display, Inter } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Star, ChevronDown, ArrowRight, Check,
   BookOpen, Layout, Palette, Code2, BarChart, Lock
 } from 'lucide-react'
+
+
+
+const PROMPT = `
+# Design Style: Luxury / Editorial
+
+## Design Philosophy
+
+**Core Principles**: Elegance through restraint, precision, and depth. This style emulates high-end fashion magazines (Vogue, Harper's Bazaar, Kinfolk) and luxury brand websites (Chanel, Hermès, Aesop). Success depends on **exquisite typography hierarchy**, **generous negative space**, **slow cinematic motion**, **intentional asymmetry**, and **layered depth through subtle shadows**. The design creates visual tension through grid-breaking layouts while maintaining perfect architectural balance.
+
+**Vibe**: Sophisticated, Timeless, Expensive, Serene, Curated, Deliberate, Editorial, Tactile.
+
+**The Secret**: Luxury isn't about adding decoration—it's about removing everything unnecessary and perfecting what remains. Every element must feel intentional and considered. Slow down all motion to cinematic speeds (1500-2000ms for images). Add more space than feels comfortable. Use asymmetry to create visual interest. Layer depth through subtle shadows (never harsh drops) and inner borders. The design should feel like expensive paper that you want to touch.
+
+## Design Token System (The DNA)
+
+### Colors (Sophisticated Monochrome)
+
+**Primary Palette:**
+
+- **Background**: \`#F9F8F6\` (Warm Alabaster) — Not pure white (#FFFFFF). This off-white feels like expensive paper or linen. The warm undertone is critical.
+- **Foreground**: \`#1A1A1A\` (Rich Charcoal) — Not pure black (#000000). Softer, more sophisticated. Used for primary text and sharp borders.
+- **Muted Background**: \`#EBE5DE\` (Pale Taupe) — For subtle surface elevation, disabled states, or alternate backgrounds.
+- **Muted Foreground**: \`#6C6863\` (Warm Grey) — For secondary text, captions, metadata. Maintains warmth of the palette.
+- **Accent**: \`#D4AF37\` (Metallic Gold) — Use sparingly. For hover states, underlines, focus indicators, small decorative elements. Never use gold for large areas.
+- **Accent Foreground**: \`#FFFFFF\` (Pure White) — Only used on top of dark backgrounds or gold elements.
+
+**Layering Strategy:**
+
+- Use opacity for borders and dividers: \`#1A1A1A\` at 10-20% opacity creates subtle separation
+- Dark sections use inverted palette: \`#1A1A1A\` background with \`#F9F8F6\` text and \`#EBE5DE\` muted text at 60-80% opacity
+- Never use pure black or pure white for text—always use the charcoal and alabaster values
+
+### Typography (The Most Critical Element)
+`;
 
 // ─────────────────────────────────────────────
 // FONTS
@@ -727,6 +763,7 @@ export default function StylePage() {
       <div className="relative z-10">
         <Footer />
       </div>
+      <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }

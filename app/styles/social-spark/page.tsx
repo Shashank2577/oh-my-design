@@ -21,11 +21,14 @@ import {
   Smile,
 } from 'lucide-react'
 import { Bricolage_Grotesque, Inter } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
 
 const bricolage = Bricolage_Grotesque({ subsets: ['latin'], weight: ['400', '700', '800'] })
 const inter = Inter({ subsets: ['latin'] })
 
 // --- Design Tokens ---
+const PROMPT = `\n### 100. SocialSpark (Community Building)\n**Design Philosophy & Vibe**: Energetic, connective, and vibrant. SocialSpark visualizes the "Energy" of a community. The UI is designed to feel alive, with elements that "spark" or glow when interacted with. The vibe is "The Festival"—loud, colorful, and constantly moving.\n\n**Design Token System**:\n- **Background**: \`#0F172A\` (Deep Slate)\n- **Surface**: \`rgba(255, 255, 255, 0.05)\` (Glass)\n- **Accent 1**: \`#F59E0B\` (Spark Orange)\n- **Accent 2**: \`#EC4899\` (Vibrant Pink)\n- **Text High**: \`#F8FAFC\`\n- **Text Low**: \`#94A3B8\`\n\n**Typography System**:\n- **Primary Font**: **DM Sans** (Headings - Friendly, round)\n- **Secondary Font**: **Inter** (Body/UI - Clear)\n\n**Motion Architecture (The "Spark" Factor)**:\n- **Connection Lines**: Lines that dynamically draw between user avatars.\n- **Spark Effects**: Particle bursts on clicks or successful actions.\n`;
+
 const tokens = {
   colors: {
     background: "#F8F0FF", // Soft Lavender
@@ -369,6 +372,7 @@ export default function SocialSpark() {
           <rect width="100" height="100" filter="url(#spark-noise)" />
         </svg>
       </div>
+          <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }
