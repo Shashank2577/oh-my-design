@@ -22,7 +22,8 @@ import {
   HardDrive,
   Database,
   Layers,
-  LayoutGrid
+  LayoutGrid,
+  Globe
 } from 'lucide-react'
 import { JetBrains_Mono, Inter, Space_Grotesk } from 'next/font/google'
 

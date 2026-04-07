@@ -21,7 +21,8 @@ import {
   FileText,
   Hammer,
   History,
-  Cloud
+  Cloud,
+  Users
 } from 'lucide-react'
 import { Space_Mono, Barlow, Inter } from 'next/font/google'
 
@@ -223,7 +224,8 @@ const Features = () => (
           { title: 'Funnel Builder', desc: 'A vertical drag-and-drop pipeline for mapping customer journeys with liquid lead flow.', icon: Target },
           { title: 'Grid Snap UI', desc: 'SATISFYING UI interactions where elements snap into a visible background grid.', icon: Grid3X3 },
           { title: 'Strategic Vault', desc: 'Encrypted storage for proprietary plan logic and historical performance data.', icon: ShieldCheck },
-          { title: 'Sub-ms Sync', desc: 'Synchronized plan updates across all collaborative devices with zero drift.', icon: Cloud },
+          { title: 'Sub-ms Sync', desc: 'Synchronized plan updates across all collaborative devices with zero drift.', icon: Cloud,
+  Users },
           { title: 'Plan Rollback', desc: 'Scrub through historical plan versions with real-time visual UI restoration.', icon: History }
         ].map((feature, i) => (
           <BlueprintCard key={i} title={`PROTOCOL_0${i + 1}`}>

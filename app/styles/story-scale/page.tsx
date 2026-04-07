@@ -13,6 +13,7 @@ import {
   Sparkles,
   Zap,
   Target,
+  Globe,
   Users,
   Video,
   Film,
