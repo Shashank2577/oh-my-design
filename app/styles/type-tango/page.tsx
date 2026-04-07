@@ -19,7 +19,8 @@ import {
   MousePointer2,
   Scan,
   Activity,
-  Palette
+  Palette,
+  Globe
 } from 'lucide-react'
 import { Fraunces, Inter, JetBrains_Mono, Bricolage_Grotesque } from 'next/font/google'
 

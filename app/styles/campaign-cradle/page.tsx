@@ -21,7 +21,8 @@ import {
   FileText,
   Hammer,
   History,
-  Cloud
+  Cloud,
+  Users
 } from 'lucide-react'
 import { Space_Mono, Barlow, Inter } from 'next/font/google'
 

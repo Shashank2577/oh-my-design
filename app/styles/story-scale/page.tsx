@@ -19,7 +19,8 @@ import {
   Type,
   Share2,
   Bookmark,
-  Play
+  Play,
+  Globe
 } from 'lucide-react'
 import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google'
 
