@@ -51,7 +51,7 @@ function EtherealDrift({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
       animate={{ y: [0, -10, 0] }}
-      transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+      transition={{ repeat: Infinity, duration: 8, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -68,7 +68,7 @@ function SlowFade({ children, delay = 0, blur = true }: { children: React.ReactN
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, filter: blur ? 'blur(10px)' : 'blur(0px)' }}
       animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 2, delay, ease: "easeIn" }}
+      transition={{ duration: 2, delay, ease: [0.42, 0, 1, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -97,7 +97,7 @@ function StaggerEthereal({ children }: { children: React.ReactNode }) {
 
 const staggerFade: import('framer-motion').Variants = {
   hidden: { opacity: 0, filter: 'blur(5px)' },
-  visible: { opacity: 1, filter: 'blur(0px)', transition: { duration: 1.5, ease: 'easeIn' as const } },
+  visible: { opacity: 1, filter: 'blur(0px)', transition: { duration: 1.5, ease: [0.42, 0, 1, 1] as [number, number, number, number] } },
 }
 
 function CandleFlicker({ children }: { children: React.ReactNode }) {
@@ -120,7 +120,7 @@ function CandleFlicker({ children }: { children: React.ReactNode }) {
                 duration: 0.5,
                 repeat: Infinity,
                 repeatType: "mirror",
-                ease: "linear",
+                ease: [0, 0, 1, 1] as [number, number, number, number],
                 times: [0, 0.2, 0.5, 0.8, 1]
             }}
         >
@@ -299,13 +299,13 @@ function Hero() {
             className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full mix-blend-screen"
             style={{ background: `radial-gradient(circle, ${tokens.accent2}10 0%, transparent 70%)` }}
             animate={{ x: [0, 50, -20, 0], y: [0, -30, 40, 0], scale: [1, 1.2, 0.9, 1] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 20, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           />
           <motion.div
             className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] rounded-full mix-blend-screen"
             style={{ background: `radial-gradient(circle, ${tokens.accent1}08 0%, transparent 70%)` }}
             animate={{ x: [0, -60, 30, 0], y: [0, 50, -40, 0], scale: [1, 1.1, 0.8, 1] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 25, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           />
       </div>
 
@@ -313,14 +313,14 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 3, ease: "easeIn" }}
+          transition={{ duration: 3, ease: [0.42, 0, 1, 1] as [number, number, number, number] }}
           className="max-w-3xl flex flex-col items-center"
         >
           <EtherealDrift>
             <motion.h1
               initial={{ opacity: 0, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 2.5, delay: 0.5, ease: "easeOut" }}
+              transition={{ duration: 2.5, delay: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
               className="text-5xl md:text-7xl lg:text-8xl font-normal leading-tight mb-8 italic"
               style={{ color: tokens.foreground }}
             >
@@ -331,7 +331,7 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2, delay: 1.5, ease: "easeOut" }}
+            transition={{ duration: 2, delay: 1.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="text-lg md:text-xl mb-12 max-w-xl leading-relaxed"
             style={{ color: tokens.mutedForeground }}
           >
@@ -460,7 +460,7 @@ function Features() {
                     backgroundColor: 'rgba(255, 255, 255, 0.05)',
                     y: -5
                 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
               >
                 <div className="p-4 rounded-full mb-6" style={{ backgroundColor: 'rgba(137, 207, 240, 0.05)' }}>
                     <feature.icon className="h-8 w-8" style={{ color: tokens.accent2 }} strokeWidth={1} />
@@ -616,7 +616,7 @@ function FAQ() {
                   <span className="font-normal text-lg italic">{item.q}</span>
                   <motion.span
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                   >
                     <ChevronDown className="h-4 w-4 flex-shrink-0" />
                   </motion.span>
@@ -624,7 +624,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="pb-8 text-sm leading-loose max-w-2xl" style={{ color: tokens.mutedForeground }}>
@@ -657,7 +657,7 @@ function Newsletter() {
             className="w-[40rem] h-[40rem] rounded-full mix-blend-screen"
             style={{ background: `radial-gradient(circle, ${tokens.accent2}10 0%, transparent 70%)` }}
             animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 15, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           />
       </div>
 

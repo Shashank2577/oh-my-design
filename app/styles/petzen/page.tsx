@@ -36,7 +36,7 @@ const staggerContainer: Variants = {
 
 const breathe: Variants = {
   hidden: { opacity: 0, scale: 0.95 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 2, ease: "easeInOut" } }
+  visible: { opacity: 1, scale: 1, transition: { duration: 2, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } }
 }
 
 const floatAnimation = {
@@ -44,7 +44,7 @@ const floatAnimation = {
   transition: {
     duration: 6,
     repeat: Infinity,
-    ease: "easeInOut"
+    ease: [0.42, 0, 0.58, 1] as [number, number, number, number]
   }
 }
 
@@ -61,7 +61,7 @@ const AuraGlow = ({ className = '', color = tokens.accent }: { className?: strin
       opacity: [0.3, 0.6, 0.3],
       scale: [1, 1.1, 1]
     }}
-    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+    transition={{ duration: 8, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
     className={`absolute rounded-full blur-[100px] pointer-events-none ${className}`}
     style={{ backgroundColor: color }}
   />
@@ -260,7 +260,7 @@ function ProductDetail() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="w-full md:w-1/2"
           >
             <div className="aspect-square rounded-full p-12 flex items-center justify-center relative overflow-hidden backdrop-blur-3xl border border-white/30 shadow-2xl" style={{ backgroundColor: tokens.surface }}>
@@ -269,7 +269,7 @@ function ProductDetail() {
                   scale: [1, 1.2, 1],
                   opacity: [0.5, 0.8, 0.5]
                 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                 className="absolute inset-0 rounded-full"
                 style={{ background: `radial-gradient(circle, ${tokens.accent} 0%, transparent 70%)` }}
               />
@@ -278,7 +278,7 @@ function ProductDetail() {
                   scale: [1.2, 1, 1.2],
                   opacity: [0.3, 0.6, 0.3]
                 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], delay: 2 }}
                 className="absolute inset-0 rounded-full"
                 style={{ background: `radial-gradient(circle, ${tokens.accent2} 0%, transparent 70%)` }}
               />

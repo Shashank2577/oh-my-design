@@ -50,7 +50,7 @@ function SoftFade({ children, delay = 0, className = '' }: { children: React.Rea
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, filter: 'blur(10px)' }}
       animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
       className={className}
     >
       {children}
@@ -63,7 +63,7 @@ function WindDrift({ children, delay = 0 }: { children: React.ReactNode; delay?:
   return (
     <motion.div
       animate={shouldReduce ? {} : { x: [0, 10, 0] }}
-      transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay }}
+      transition={{ repeat: Infinity, duration: 5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], delay }}
     >
       {children}
     </motion.div>
@@ -93,7 +93,7 @@ function StaggerContainer({ children, className = '' }: { children: React.ReactN
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, filter: 'blur(10px)' },
-  visible: { opacity: 1, filter: 'blur(0px)', transition: { duration: 1, ease: 'easeOut' as const } },
+  visible: { opacity: 1, filter: 'blur(0px)', transition: { duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
 }
 
 // ─────────────────────────────────────────────
@@ -493,7 +493,7 @@ function FAQ() {
                   <span className={`text-xl ${playfair.className}`} style={{ color: tokens.textHigh }}>{item.q}</span>
                   <motion.span
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                   >
                     <ChevronDown className="h-5 w-5 font-light" style={{ color: tokens.accent2 }} />
                   </motion.span>
@@ -501,7 +501,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="pb-8 text-base font-light leading-relaxed" style={{ color: tokens.textLow }}>

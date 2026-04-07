@@ -60,7 +60,7 @@ const DiffusionParticles = () => {
         transition={{
           duration: p.duration,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: [0.42, 0, 0.58, 1] as [number, number, number, number]
         }}
       />
     ))}
@@ -73,7 +73,7 @@ const FadeUp = ({ children, delay = 0, className = '', style }: { children: Reac
     initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
     whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
     viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
+    transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
     className={className}
     style={style}
   >
@@ -97,7 +97,7 @@ const BrushStrokeUI = ({ children, color = tokens.accent1 }: { children: React.R
         strokeLinecap="round"
         initial={{ pathLength: 0 }}
         whileHover={{ pathLength: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
       />
     </motion.svg>
   </motion.div>
@@ -305,7 +305,7 @@ function ProductDetail() {
           <div className="aspect-square rounded-2xl overflow-hidden relative border" style={{ borderColor: tokens.border }}>
             <motion.div
               animate={{ filter: ['blur(40px)', 'blur(20px)', 'blur(5px)', 'blur(0px)', 'blur(40px)'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 8, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
               className="absolute inset-0"
               style={{ background: `linear-gradient(45deg, ${tokens.accent1}, ${tokens.accent2}, #38BDF8)` }}
             >

@@ -41,7 +41,7 @@ function FadeUp({ children, delay = 0, yOffset = 20 }: { children: React.ReactNo
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: yOffset }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.8, delay, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -70,7 +70,7 @@ function StaggerContainer({ children, staggerDelay = 0.1 }: { children: React.Re
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
 }
 
 const PRODUCT_NAME = 'VetFlow'
@@ -137,7 +137,7 @@ function Hero() {
       <motion.div
         className="absolute inset-0 -z-10"
         animate={{ backgroundColor: [tokens.background, tokens.backgroundAlt, tokens.background] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 8, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
       />
 
       {/* Organic Wave Separator */}
@@ -153,7 +153,7 @@ function Hero() {
                 "M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
               ]
             }}
-            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           />
         </svg>
       </div>
@@ -223,7 +223,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.2 }}
             className="absolute right-0 top-10 w-80 p-6 rounded-[2rem] bg-white shadow-2xl border"
             style={{ borderColor: tokens.border, boxShadow: '0 25px 50px -12px rgba(14, 165, 233, 0.15)' }}
           >
@@ -253,7 +253,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut', delay: 0.4 }}
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: 0.4 }}
             className="absolute left-10 bottom-20 w-72 p-6 rounded-[2rem] bg-white/90 backdrop-blur-md shadow-2xl border"
             style={{ borderColor: tokens.border, boxShadow: '0 25px 50px -12px rgba(99, 102, 241, 0.15)' }}
           >
@@ -437,7 +437,7 @@ function HandHoldProgress() {
               initial={{ width: 0 }}
               whileInView={{ width: '100%' }}
               viewport={{ once: true }}
-              transition={{ duration: 2, ease: 'easeInOut' }}
+              transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
             />
           </div>
           {steps.map((step, i) => (

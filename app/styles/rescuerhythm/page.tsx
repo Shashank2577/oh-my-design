@@ -22,7 +22,7 @@ const TOKENS = {
 const theHeartbeat: import('framer-motion').Variants = {
   animate: {
     scale: [1, 1.05, 1],
-    transition: { duration: 0.8, repeat: Infinity, ease: "easeInOut" }
+    transition: { duration: 0.8, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }
   }
 }
 
@@ -54,7 +54,7 @@ function LifeLineDraw({ children, className }: { children: React.ReactNode, clas
            initial={{ pathLength: 0 }}
            whileInView={{ pathLength: 1 }}
            viewport={{ once: true }}
-           transition={{ duration: 1.5, ease: "easeInOut" }}
+           transition={{ duration: 1.5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
          />
       </svg>
     </div>
@@ -79,7 +79,7 @@ function PulseButton({ children, className, onClick, primary = true }: { childre
         className="absolute inset-0 rounded-full border-2"
         style={{ borderColor: primary ? 'white' : TOKENS.accent1, opacity: 0.5 }}
         animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+        transition={{ repeat: Infinity, duration: 1.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
       />
       <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
     </motion.button>
@@ -104,7 +104,7 @@ function SuccessStoryTimeline() {
           className="w-full bg-red-500 origin-top"
           initial={{ scaleY: 0 }}
           animate={{ scaleY: activeMilestone !== null ? (activeMilestone + 1) / milestones.length : 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
           style={{ backgroundColor: TOKENS.accent1 }}
         />
       </div>
@@ -169,7 +169,7 @@ function LiveTicker() {
         <motion.div
           className="absolute whitespace-nowrap flex gap-12 text-sm"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
         >
            <span>🚨 Emergency rescue team dispatched to Sector 4.</span>
            <span className="text-red-400 font-bold">❤️ {count} Lives Saved This Year!</span>
@@ -335,7 +335,7 @@ export default function RescueRhythmPage() {
           <motion.div
             className="absolute inset-0 opacity-10 pointer-events-none"
             animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
             style={{ backgroundImage: `radial-gradient(circle at center, ${TOKENS.accent1} 0%, transparent 70%)` }}
           />
 
@@ -486,7 +486,7 @@ export default function RescueRhythmPage() {
             <motion.div
               className="absolute inset-0 opacity-20"
               animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
               style={{ backgroundImage: 'radial-gradient(circle, #FFFFFF 2px, transparent 2.5px)', backgroundSize: '40px 40px' }}
             />
             <div className="relative z-10">

@@ -69,7 +69,7 @@ function BioluminescenceText({ children }: { children: React.ReactNode }) {
   return (
     <motion.span
       animate={{ opacity: [0.6, 1, 0.6], textShadow: [`0 0 10px ${tokens.accent}`, `0 0 20px ${tokens.accent}`, `0 0 10px ${tokens.accent}`] }}
-      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: 3, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
       style={{ color: tokens.accent }}
     >
       {children}
@@ -99,7 +99,7 @@ function SchoolingDataBackground() {
           transition={{
             duration: 20 + Math.random() * 20,
             repeat: Infinity,
-            ease: "linear"
+            ease: [0, 0, 1, 1] as [number, number, number, number]
           }}
           className="absolute font-space-mono text-[10px]"
           style={{ color: tokens.mutedForeground }}
@@ -110,13 +110,13 @@ function SchoolingDataBackground() {
       {/* Bioluminescence ambient glow */}
       <motion.div
         animate={{ opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 5, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[100px]"
         style={{ backgroundColor: tokens.accent }}
       />
       <motion.div
         animate={{ opacity: [0.05, 0.15, 0.05] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        transition={{ duration: 7, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], delay: 2 }}
         className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] rounded-full blur-[120px]"
         style={{ backgroundColor: tokens.accent2 }}
       />
@@ -289,7 +289,7 @@ function Hero() {
                rotateX: [5, -5, 5],
                rotateY: [-5, 5, -5]
              }}
-             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+             transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
              className="w-full h-full transform-style-3d relative"
            >
              {/* Abstract Dashboard UI */}
@@ -327,7 +327,7 @@ function Hero() {
                      <motion.path
                         initial={{ pathLength: 0 }}
                         animate={{ pathLength: 1 }}
-                        transition={{ duration: 2, ease: "easeInOut" }}
+                        transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                         d="M0,50 Q25,20 50,50 T100,40"
                         fill="none"
                         stroke={tokens.accent}
@@ -417,7 +417,7 @@ function ProductDetail() {
                  {/* Orbiting Elements */}
                  <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
                     className="absolute inset-8 border border-dashed rounded-full z-10"
                     style={{ borderColor: tokens.mutedForeground }}
                  >
@@ -428,7 +428,7 @@ function ProductDetail() {
 
                  <motion.div
                     animate={{ rotate: -360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                    transition={{ duration: 30, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
                     className="absolute inset-0 border border-dotted rounded-full z-10"
                     style={{ borderColor: tokens.mutedForeground }}
                  >

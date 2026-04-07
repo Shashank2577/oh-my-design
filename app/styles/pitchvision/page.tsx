@@ -149,7 +149,7 @@ function Hero() {
           <motion.path
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+            transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], repeat: Infinity, repeatType: "reverse" }}
             d="M 200 250 Q 400 100 600 250"
             fill="none"
             stroke="url(#pass-gradient)"
@@ -169,7 +169,7 @@ function Hero() {
         {/* Organic Heatmap overlay */}
         <motion.div
           animate={{ scale: [0.8, 1.1, 0.8], opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           className="absolute top-[30%] left-[60%] w-48 h-48 bg-[#38003C] rounded-full blur-3xl opacity-50 mix-blend-screen"
         />
       </motion.div>
@@ -419,7 +419,7 @@ function Newsletter() {
     <section className="py-32 px-6 bg-[#141C18] relative overflow-hidden flex justify-center">
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 8, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#00FF85] rounded-full blur-[100px] pointer-events-none"
       />
 

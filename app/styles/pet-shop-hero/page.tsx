@@ -113,7 +113,7 @@ function HeroButton({ children, onClick, className = '', primary = true, type = 
                     className="absolute inset-0 -translate-x-full"
                     style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)' }}
                     animate={{ translateX: ['-100%', '200%'] }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "linear", repeatDelay: 3 }}
+                    transition={{ repeat: Infinity, duration: 2, ease: [0, 0, 1, 1] as [number, number, number, number], repeatDelay: 3 }}
                 />
             )}
             <span className="relative z-10 flex items-center justify-center gap-2">
@@ -275,7 +275,7 @@ function Hero() {
             style={{ background: `linear-gradient(135deg, transparent, ${tokens.accent1}40)` }}
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
           />
       </div>
 
@@ -348,7 +348,7 @@ function Hero() {
                             x: [0, (i % 2 === 0 ? 10 : -10), 0],
                             rotate: [0, 180, 360]
                         }}
-                        transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: 3 + i, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                         initial={{ top: `${20 + i * 15}%`, left: `${10 + i * 20}%` }}
                     />
                 ))}
@@ -614,7 +614,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-6 pb-6 text-base font-medium leading-relaxed" style={{ color: tokens.mutedForeground }}>
