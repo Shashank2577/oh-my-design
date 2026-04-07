@@ -106,7 +106,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'git-glow', name: 'GitGlow', category: 'Tech', vibe: 'Spatial version control history', bestFor: 'Developer tools, Repositories', accentColor: '#F97316', built: true, version: 'V3' },
   { slug: 'api-arc', name: 'ApiArc', category: 'Tech', vibe: 'Architectural API bridge', bestFor: 'Developer experience, APIs', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'secure-sent', name: 'SecureSent', category: 'Tech', vibe: 'High-fidelity encrypted vaults', bestFor: 'Security tools, Encrypted comms', accentColor: '#10B981', built: true, version: 'V3' },
-  ]
+
 
   // --- V3 Merged Batches ---
   { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Technical control center', bestFor: 'AI Ops, Model monitoring', accentColor: '#00D1FF', built: true, version: 'V3' },

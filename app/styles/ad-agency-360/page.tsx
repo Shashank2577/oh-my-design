@@ -20,7 +20,8 @@ import {
   Camera,
   Share2,
   MousePointer2,
-  Rocket
+  Rocket,
+  TrendingUp
 } from 'lucide-react'
 import { Syne, Inter } from 'next/font/google'
 
