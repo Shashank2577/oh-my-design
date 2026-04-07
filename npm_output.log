@@ -1,0 +1,13 @@
+
+> oh-my-design@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.14 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 1675ms
+ ○ Compiling /styles/newsprint ...
+ ✓ Compiled /styles/newsprint in 10.7s
+ GET /styles/newsprint 200 in 12133ms
