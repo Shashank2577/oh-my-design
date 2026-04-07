@@ -21,7 +21,6 @@ import {
   Scan,
   Activity,
   Palette,
-  Globe
 } from 'lucide-react'
 import { Fraunces, Inter, JetBrains_Mono, Bricolage_Grotesque } from 'next/font/google'
 

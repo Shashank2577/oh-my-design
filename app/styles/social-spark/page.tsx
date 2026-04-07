@@ -19,7 +19,6 @@ import {
   Rocket,
   Plus,
   Smile,
-  MousePointer2
 } from 'lucide-react'
 import { Bricolage_Grotesque, Inter } from 'next/font/google'
 
