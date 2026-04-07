@@ -27,7 +27,7 @@ const antiGravityProps = {
   transition: {
     duration: 6,
     repeat: Infinity,
-    ease: "easeInOut" as const
+    ease: [0.42, 0, 0.58, 1] as const
   }
 };
 
@@ -122,7 +122,7 @@ function Hero() {
         <div className="w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] border border-[#D4AF37]/10 rounded-full absolute" />
         <motion.div
           animate={{ rotateZ: 360 }}
-          transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 100, repeat: Infinity, ease: [0, 0, 1, 1] }}
           className="w-[20vw] h-[20vw] max-w-[250px] max-h-[250px] border border-[#C0C0C0]/20 rounded-full absolute border-dashed"
         />
       </motion.div>
@@ -359,7 +359,7 @@ function Testimonials() {
       {/* Infinite scrolling parallax background text */}
       <motion.div
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 30, repeat: Infinity, ease: [0, 0, 1, 1] }}
         className="absolute top-1/4 left-0 w-[200%] flex whitespace-nowrap opacity-5 pointer-events-none"
       >
         <span className={`text-9xl ${bodoni.className} italic`}>THE HALL OF FAME — THE HALL OF FAME — THE HALL OF FAME — </span>

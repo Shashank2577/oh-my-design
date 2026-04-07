@@ -100,7 +100,7 @@ const Hero = ({ accent = '#000' }: any) => {
             x: [0, 50, 0],
             y: [0, -50, 0]
           }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
           className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-20"
           style={{ backgroundColor: accent }}
         />
@@ -144,7 +144,7 @@ const Hero = ({ accent = '#000' }: any) => {
                   borderRadius: ["40% 60% 70% 30% / 40% 50% 60% 50%", "60% 40% 30% 70% / 50% 60% 40% 60%", "40% 60% 70% 30% / 40% 50% 60% 50%"],
                   rotate: 360
                 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 15, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="w-80 h-80 opacity-40 blur-3xl"
                 style={{ backgroundColor: accent }}
                />
@@ -228,7 +228,7 @@ const ProductDetail = ({ accent }: any) => (
           <div className="aspect-square bg-white rounded-[60px] shadow-2xl flex items-center justify-center overflow-hidden relative group">
             <motion.div 
               animate={{ scale: [1, 1.1, 1], rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
               className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" 
             />
             <Maximize2 className="text-black/10 animate-pulse" size={200} />

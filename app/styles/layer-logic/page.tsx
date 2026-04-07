@@ -161,7 +161,7 @@ function Hero() {
         <div className="relative h-[500px] perspective-1200 flex items-center justify-center">
            <motion.div
              animate={{ rotateX: [20, 30, 20], rotateY: [-20, -10, -20] }}
-             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+             transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
              className="relative w-full max-w-md h-full transform-style-3d"
            >
               {[1, 2, 3].map((layer) => (
@@ -288,7 +288,7 @@ function WorkflowDemo() {
            <div className="absolute top-1/4 bottom-1/4 left-1/2 w-1 -translate-x-1/2" style={{ backgroundColor: tokens.border }}>
               <motion.div
                 animate={{ top: ["0%", "100%"] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="absolute w-full h-8 blur-sm"
                 style={{ backgroundColor: tokens.accent2 }}
               />

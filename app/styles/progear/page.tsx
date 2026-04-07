@@ -84,7 +84,7 @@ function Hero() {
       {/* Ambient Rotation Background */}
       <motion.div
         animate={{ rotateY: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full pointer-events-none"
         style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
       >
@@ -121,7 +121,7 @@ function Hero() {
         <div className="h-[500px] w-full flex justify-center items-center relative perspective-1000">
            <motion.div
               animate={{ rotateY: [0, 15, -15, 0], rotateX: [0, 5, -5, 0] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               className="w-64 h-80 relative preserve-3d"
            >
               {/* Outer Shell */}
@@ -236,7 +236,7 @@ function ThermalMapSection() {
            <motion.div
              className="absolute top-0 bottom-0 left-0 w-1 bg-[#39FF14] shadow-[0_0_10px_#39FF14] opacity-0 group-hover:opacity-100"
              animate={{ x: ["0%", "800%", "0%"] }}
-             transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+             transition={{ duration: 4, ease: [0, 0, 1, 1], repeat: Infinity }}
            />
 
            <div className="absolute bottom-4 right-4 text-xs font-mono text-[#39FF14] opacity-0 group-hover:opacity-100 transition-opacity">

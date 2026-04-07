@@ -93,7 +93,7 @@ function SonarPulse({ active }: { active: boolean }) {
           style={{ borderColor: tokens.accent1 }}
           initial={{ width: 0, height: 0, opacity: 1 }}
           animate={{ width: "200vw", height: "200vw", opacity: 0 }}
-          transition={{ duration: 4, repeat: Infinity, delay: i * 1.3, ease: "linear" }}
+          transition={{ duration: 4, repeat: Infinity, delay: i * 1.3, ease: [0, 0, 1, 1] }}
         />
       ))}
     </div>
@@ -280,7 +280,7 @@ function Hero() {
             {/* Primary Search Anchor */}
             <motion.div
               animate={{ scale: [1, 1.05, 1] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              transition={{ repeat: Infinity, duration: 2, ease: [0.42, 0, 0.58, 1] }}
               className="relative"
             >
               <motion.button

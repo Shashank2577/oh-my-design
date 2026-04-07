@@ -268,7 +268,7 @@ function Hero() {
           <motion.div
             className="absolute top-0 left-0 w-full h-1/2 bg-black"
             animate={{ y: [0, 64] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: [0, 0, 1, 1] }}
           />
         </div>
       </motion.div>
@@ -552,7 +552,7 @@ function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                       style={{ overflow: 'hidden' }}
                     >
                       <p className={`px-4 pb-8 text-xl leading-relaxed max-w-3xl ${bodyFont.className}`} style={{ color: tokens.mutedForeground }}>

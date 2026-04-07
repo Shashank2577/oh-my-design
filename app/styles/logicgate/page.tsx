@@ -76,7 +76,7 @@ function StaggerContainer({ children, className = "", style }: { children: React
 
 const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] } },
 }
 
 const PRODUCT_NAME = 'LogicGate'
@@ -215,7 +215,7 @@ function Hero() {
                     className="w-2 h-8 rounded-full"
                     style={{ backgroundColor: tokens.accent1, boxShadow: `0 0 10px ${tokens.accent1}` }}
                     animate={{ y: [-40, 100] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: [0, 0, 1, 1] }}
                  />
               </div>
 
@@ -227,7 +227,7 @@ function Hero() {
                     className="w-2 h-8 rounded-full"
                     style={{ backgroundColor: tokens.accent2, boxShadow: `0 0 10px ${tokens.accent2}` }}
                     animate={{ y: [-40, 100] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.75 }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: [0, 0, 1, 1], delay: 0.75 }}
                  />
               </div>
 

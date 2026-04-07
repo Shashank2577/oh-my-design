@@ -55,7 +55,7 @@ const PointCloud = () => {
         transition={{
           duration: p.duration,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: [0.42, 0, 0.58, 1]
         }}
       />
     ))}

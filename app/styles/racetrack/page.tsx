@@ -194,7 +194,7 @@ export default function RaceTrackPage() {
             <motion.div
               initial={{ x: -100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             >
               <div className="font-space text-[#E10600] text-sm uppercase tracking-[0.2em] mb-4 flex items-center">
                 <span className="w-2 h-2 bg-[#E10600] rounded-full mr-3 animate-pulse"></span>
@@ -225,7 +225,7 @@ export default function RaceTrackPage() {
               <motion.div
                 className="w-full h-full border border-[#252525] rounded-full relative"
                 animate={{ rotateZ: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
               >
                 <div className="absolute top-0 left-1/2 w-4 h-4 bg-[#E10600] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_20px_#E10600]" />
               </motion.div>

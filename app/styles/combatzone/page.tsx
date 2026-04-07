@@ -103,7 +103,7 @@ function TaleOfTheTape() {
                   x: (Math.random() - 0.5) * 400,
                   y: (Math.random() - 0.5) * 400
                 }}
-                transition={{ duration: 0.5 + Math.random() * 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.5 + Math.random() * 0.5, ease: [0.23, 1, 0.32, 1] }}
                 className="absolute w-2 h-2 bg-[#FFD700]"
                 style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
               />
