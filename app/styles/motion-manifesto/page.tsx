@@ -18,12 +18,13 @@ import {
   MousePointer2,
   Move,
   Flame,
-  LayoutGrid
+  LayoutGrid,
+  Target
 } from 'lucide-react'
 import { Inter, Space_Grotesk } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-const space = Space_Grotesk({ subsets: ['latin'], weight: ['400', '700', '900'] })
+const space = Space_Grotesk({ subsets: ['latin'], weight: ['400', '700', '700'] })
 
 // --- Design Tokens ---
 const tokens = {
