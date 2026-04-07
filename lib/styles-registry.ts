@@ -101,7 +101,13 @@ export const STYLES: StyleMeta[] = [
   { slug: 'pixel-perfect', name: 'PixelPerfect', category: 'Creative', vibe: '1px grid technical foundry', bestFor: 'Web design agencies, Tech artisans', accentColor: '#00FFCC', built: true, version: 'V3' },
   { slug: 'color-cloud', name: 'ColorCloud', category: 'Creative', vibe: 'Liquid light spectral alchemy', bestFor: 'Artistic platforms, Color tools', accentColor: '#FF3E00', built: true, version: 'V3' },
   { slug: 'motion-manifesto', name: 'MotionManifesto', category: 'Creative', vibe: 'Kinetic studio always-on', bestFor: 'Animation studios, Showreels', accentColor: '#FAFF00', built: true, version: 'V3' },
+  { slug: 'debug-disk', name: 'DebugDisk', category: 'Tech', vibe: 'High-fidelity digital diagnostics', bestFor: 'System monitoring, Debugging', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'cloud-core', name: 'CloudCore', category: 'Tech', vibe: 'Global serverless orchestration', bestFor: 'Infrastructure, Cloud tools', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'git-glow', name: 'GitGlow', category: 'Tech', vibe: 'Spatial version control history', bestFor: 'Developer tools, Repositories', accentColor: '#F97316', built: true, version: 'V3' },
+  { slug: 'api-arc', name: 'ApiArc', category: 'Tech', vibe: 'Architectural API bridge', bestFor: 'Developer experience, APIs', accentColor: '#00F3FF', built: true, version: 'V3' },
+  { slug: 'secure-sent', name: 'SecureSent', category: 'Tech', vibe: 'High-fidelity encrypted vaults', bestFor: 'Security tools, Encrypted comms', accentColor: '#10B981', built: true, version: 'V3' },
   ]
+
   // --- V3 Merged Batches ---
   { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Technical control center', bestFor: 'AI Ops, Model monitoring', accentColor: '#00D1FF', built: true, version: 'V3' },
   { slug: 'tensor-track', name: 'TensorTrack', category: 'AI', vibe: 'High-performance tensor visualization', bestFor: 'Deep learning analytics', accentColor: '#FF3E00', built: true, version: 'V3' },
