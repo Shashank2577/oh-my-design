@@ -346,7 +346,7 @@ function ShieldVisualizer() {
       <div className="relative aspect-square w-full max-w-sm mx-auto" style={{ perspective: '1000px' }}>
         <motion.div
           animate={{ rotateY: [0, 5, -5, 0] }}
-          transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          transition={{ repeat: Infinity, duration: 6, ease: [0.42, 0, 0.58, 1] }}
           className="absolute inset-0"
         >
           <Shield className="w-full h-full opacity-10" style={{ color: tokens.accent1 }} strokeWidth={1} />
@@ -649,7 +649,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-6 pb-6 text-base font-medium leading-relaxed" style={{ color: tokens.mutedForeground }}>

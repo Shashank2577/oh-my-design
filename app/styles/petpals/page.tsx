@@ -159,7 +159,7 @@ function BlobBackground() {
           y: [0, -20, 0],
           borderRadius: ["40% 60% 70% 30% / 40% 50% 60% 50%", "60% 40% 30% 70% / 60% 30% 70% 40%", "40% 60% 70% 30% / 40% 50% 60% 50%"]
         }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 15, repeat: Infinity, ease: [0, 0, 1, 1] }}
         className="absolute -top-20 -left-20 w-96 h-96 opacity-40 blur-3xl"
         style={{ backgroundColor: tokens.accent }}
       />
@@ -170,7 +170,7 @@ function BlobBackground() {
           y: [0, 30, 0],
           borderRadius: ["50% 50% 50% 50%", "30% 70% 70% 30% / 30% 30% 70% 70%", "50% 50% 50% 50%"]
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear", delay: 2 }}
+        transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1], delay: 2 }}
         className="absolute top-40 -right-20 w-[30rem] h-[30rem] opacity-30 blur-3xl"
         style={{ backgroundColor: tokens.border }}
       />
@@ -267,7 +267,7 @@ function Hero() {
           <PawPop delay={0.6} className="absolute top-10 -left-10">
             <motion.div
               animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               className="p-4 rounded-2xl shadow-xl flex items-center gap-4"
               style={{ backgroundColor: tokens.surface }}
             >
@@ -282,7 +282,7 @@ function Hero() {
           <PawPop delay={0.8} className="absolute bottom-20 -right-10">
             <motion.div
               animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              transition={{ duration: 5, repeat: Infinity, ease: [0.42, 0, 0.58, 1], delay: 1 }}
               className="p-4 rounded-2xl shadow-xl flex items-center gap-3"
               style={{ backgroundColor: tokens.surface }}
             >
@@ -417,7 +417,7 @@ function ProductDetail() {
             {/* Decorative blobbies */}
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
               className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full flex items-center justify-center shadow-lg"
               style={{ backgroundColor: tokens.accent }}
             >

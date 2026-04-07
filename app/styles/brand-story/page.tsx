@@ -35,7 +35,7 @@ const tokens = {
   },
   physics: {
     narrative: { type: "spring" as any, stiffness: 100, damping: 20 },
-    ink: { duration: 1.5, ease: "easeInOut" as any }
+    ink: { duration: 1.5, ease: [0.42, 0, 0.58, 1] as any }
   }
 }
 
@@ -135,7 +135,7 @@ const Hero = () => {
       
       <motion.div 
         animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[#D4AF37]/30 flex flex-col items-center gap-4"
       >
         <div className="text-[8px] tracking-[0.6em] uppercase font-black">Scroll_Down</div>

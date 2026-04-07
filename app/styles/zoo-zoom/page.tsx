@@ -106,7 +106,7 @@ function PanningBackground() {
                     filter: 'blur(100px)'
                 }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 60, repeat: Infinity, ease: [0, 0, 1, 1] }}
             />
         </div>
     )
@@ -477,7 +477,7 @@ function ProductDetail() {
                                 style={{ borderColor: tokens.accent1 }}
                                 initial={{ width: '20%', height: '20%', opacity: 1 }}
                                 animate={{ width: '100%', height: '100%', opacity: 0 }}
-                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.6, ease: "easeOut" }}
+                                transition={{ duration: 2, repeat: Infinity, delay: i * 0.6, ease: [0.23, 1, 0.32, 1] }}
                             />
                         ))}
                         <div className="w-16 h-16 rounded-full z-10" style={{ backgroundColor: tokens.accent1 }} />
@@ -618,7 +618,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-8 pb-8 font-secondary text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>

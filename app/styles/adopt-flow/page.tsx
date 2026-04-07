@@ -255,7 +255,7 @@ function Hero() {
                 fill="none"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 3, ease: "easeInOut" }}
+                transition={{ duration: 3, ease: [0.42, 0, 0.58, 1] }}
              />
          </svg>
       </div>
@@ -618,7 +618,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-6 pb-6 text-base leading-relaxed font-medium" style={{ color: tokens.mutedForeground }}>

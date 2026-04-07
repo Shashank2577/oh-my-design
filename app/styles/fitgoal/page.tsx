@@ -44,7 +44,7 @@ function BreathingContainer({ children, className = '', style }: { children?: Re
   return (
     <motion.div
       animate={shouldReduce ? {} : { scale: [1, 1.02, 1] }}
-      transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }} // 15 breaths per minute
+      transition={{ repeat: Infinity, duration: 4, ease: [0.42, 0, 0.58, 1] }} // 15 breaths per minute
       className={className}
       style={style}
     >
@@ -280,7 +280,7 @@ function Hero() {
                         borderTopLeftRadius: ["100px", "50px", "100px"],
                         borderTopRightRadius: ["50px", "100px", "50px"],
                       }}
-                      transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                      transition={{ repeat: Infinity, duration: 3, ease: [0.42, 0, 0.58, 1] }}
                     >
                       <div className="absolute inset-0 opacity-30" style={{ background: `linear-gradient(to top, transparent, ${tokens.textHigh})` }}></div>
                     </motion.div>

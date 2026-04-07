@@ -76,7 +76,7 @@ function MetricPulse({ active = true, children, className = "", style }: { activ
   return (
     <motion.div
       animate={active ? { filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"] } : {}}
-      transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+      transition={{ repeat: Infinity, duration: 2, ease: [0.42, 0, 0.58, 1] }}
       className={className}
       style={style}
     >
@@ -122,7 +122,7 @@ function Hero() {
         {/* Abstract streaming background */}
         <motion.div
           animate={{ x: ["0%", "-100%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
           className="absolute w-[200%] h-full flex opacity-10"
         >
            <div className="w-1/2 h-full" style={{ background: `repeating-linear-gradient(90deg, transparent, transparent 40px, ${tokens.accent1} 40px, ${tokens.accent1} 41px)` }} />
@@ -363,13 +363,13 @@ function DataVisualizer() {
                fill="none"
                initial={{ pathLength: 0 }}
                whileInView={{ pathLength: 1 }}
-               transition={{ duration: 1.5, ease: "easeOut" }}
+               transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
              />
            </svg>
            {/* Scanning line */}
            <motion.div
              animate={{ x: ["0%", "100%"] }}
-             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+             transition={{ duration: 4, repeat: Infinity, ease: [0, 0, 1, 1] }}
              className="absolute top-0 bottom-0 w-1 bg-white"
              style={{ boxShadow: `0 0 10px 2px ${tokens.textHigh}` }}
            />

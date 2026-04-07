@@ -325,7 +325,7 @@ function Stats() {
       {/* Scanning Line */}
       <motion.div
         animate={{ x: ["-100%", "100%"] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 3, repeat: Infinity, ease: [0, 0, 1, 1] }}
         className="absolute inset-y-0 w-1/4 bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent z-0 pointer-events-none"
       />
 
@@ -633,7 +633,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className={`px-6 pb-6 text-sm tracking-widest leading-loose ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>

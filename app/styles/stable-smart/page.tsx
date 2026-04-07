@@ -169,7 +169,7 @@ function Navbar() {
         <div className="flex items-center gap-3">
           <motion.div
             animate={{ y: [0, -3, 0, -3, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 2, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
           >
              <div className="w-8 h-8 rounded-full border-2 flex items-center justify-center" style={{ borderColor: tokens.accent1 }}>
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: tokens.accent2 }} />
@@ -210,7 +210,7 @@ function Hero() {
       {/* Rhythmic Pulse Background */}
       <motion.div
         animate={{ opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background: `radial-gradient(circle at center, ${tokens.muted} 0%, transparent 70%)`,
@@ -277,7 +277,7 @@ function Hero() {
              {/* Simulated slow, majestic map pan */}
              <motion.div
                animate={{ scale: [1, 1.15, 1] }}
-               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+               transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
                className="w-full h-full bg-cover bg-center"
                style={{
                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z' fill='%23DCD7C9' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E")`,
@@ -295,7 +295,7 @@ function Hero() {
                  strokeDasharray="2 2"
                  initial={{ pathLength: 0 }}
                  animate={{ pathLength: 1 }}
-                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                 transition={{ duration: 10, repeat: Infinity, ease: [0, 0, 1, 1] }}
                />
                <motion.circle
                  r="1.5"
@@ -304,7 +304,7 @@ function Hero() {
                    offsetDistance: ["0%", "100%"]
                  }}
                  style={{ offsetPath: "path('M 20 80 Q 40 20, 80 50 T 60 90')" } as any}
-                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                 transition={{ duration: 10, repeat: Infinity, ease: [0, 0, 1, 1] }}
                />
              </svg>
            </div>
@@ -602,7 +602,7 @@ function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      transition={{ duration: 0.3, ease: [0.42, 0, 0.58, 1] }}
                       style={{ overflow: 'hidden' }}
                     >
                       <p className={`pb-8 text-base leading-relaxed ${bodyFont.variable} font-body`} style={{ color: tokens.mutedForeground }}>

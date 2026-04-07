@@ -163,7 +163,7 @@ function Hero() {
               <motion.path
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 2, delay: 1, ease: "easeOut" }}
+                transition={{ duration: 2, delay: 1, ease: [0.23, 1, 0.32, 1] }}
                 d="M 20 80 Q 40 40 80 20"
                 fill="none"
                 stroke="white"
@@ -173,7 +173,7 @@ function Hero() {
               <motion.path
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5, delay: 1.5, ease: "easeOut" }}
+                transition={{ duration: 1.5, delay: 1.5, ease: [0.23, 1, 0.32, 1] }}
                 d="M 50 80 L 50 40 L 70 40"
                 fill="none"
                 stroke="#8B4513"

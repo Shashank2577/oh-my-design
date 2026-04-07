@@ -36,7 +36,7 @@ const staggerContainer: Variants = {
 
 const organicGrow: Variants = {
   hidden: { opacity: 0, scale: 0.8, rotate: -5 },
-  visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 1, ease: "easeOut" } }
+  visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } }
 }
 
 // Components
@@ -50,7 +50,7 @@ const WaterColorStain = ({ className = '' }: { className?: string }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.8 }}
     whileInView={{ opacity: 0.4, scale: 1 }}
-    transition={{ duration: 1.5, ease: "easeInOut" }}
+    transition={{ duration: 1.5, ease: [0.42, 0, 0.58, 1] }}
     className={`absolute rounded-full blur-3xl pointer-events-none ${className}`}
     style={{ backgroundColor: tokens.surface }}
   />
@@ -258,7 +258,7 @@ function ProductDetail() {
               <WaterColorStain className="w-full h-full inset-0 opacity-50" />
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 60, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="w-full h-full border-4 rounded-full border-dashed opacity-30 absolute"
                 style={{ borderColor: tokens.accent }}
               />
