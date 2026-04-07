@@ -39,7 +39,7 @@ const pulseAnim: Variants = {
   visible: {
     scale: [1, 1.05, 1],
     opacity: [0.8, 1, 0.8],
-    transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+    transition: { duration: 2, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }
   }
 }
 
@@ -169,7 +169,7 @@ function Hero() {
               />
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="absolute inset-4 rounded-full border border-dashed opacity-50"
                 style={{ borderColor: tokens.accent }}
               />

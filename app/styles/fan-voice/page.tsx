@@ -203,7 +203,7 @@ function WaveBackground() {
     <div className="absolute inset-0 z-0 opacity-10 pointer-events-none overflow-hidden">
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
         className="flex h-full w-[200%]"
       >
         <div className="w-1/2 h-full bg-[radial-gradient(circle_at_center,_#FF005C_2px,_transparent_2px)] bg-[size:40px_40px]" />
@@ -354,7 +354,7 @@ function UniqueSection() {
                 {/* Simulated live comments */}
                 <motion.div
                   animate={{ y: [0, -100] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                  transition={{ duration: 4, repeat: Infinity, ease: [0, 0, 1, 1] }}
                   className="space-y-4"
                 >
                   {[104, 892, 451, 933, 212].map((id, i) => (
@@ -378,14 +378,14 @@ function UniqueSection() {
                  <motion.div
                    className="absolute whitespace-nowrap text-4xl"
                    animate={{ x: ['100%', '-100%'] }}
-                   transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+                   transition={{ duration: 5, repeat: Infinity, ease: [0, 0, 1, 1] }}
                  >
                    🚂 💨 💨 💨 💨 💨 💨
                  </motion.div>
                  <motion.div
                     className="absolute inset-0 bg-white/20"
                     animate={{ x: [`${hype}%`, `${hype - 100}%`] }}
-                    transition={{ duration: 0, ease: 'linear' }}
+                    transition={{ duration: 0, ease: [0, 0, 1, 1] }}
                  />
                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <span className="font-[family-name:var(--font-bungee)] text-white text-3xl drop-shadow-md">HYPE TRAIN ACTIVE</span>
@@ -578,7 +578,7 @@ function Newsletter() {
     <section className="py-32 bg-black text-white overflow-hidden relative">
       <motion.div
          animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
-         transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+         transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
          className="absolute -right-20 -top-20 w-96 h-96 bg-[#FF005C] rounded-full mix-blend-screen filter blur-[100px] opacity-50"
       />
       <div className="max-w-3xl mx-auto px-6 text-center relative z-10">

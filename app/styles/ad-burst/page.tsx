@@ -211,7 +211,7 @@ const CampaignCore = () => {
                   y: (Math.random() - 0.5) * 600,
                   opacity: 0
                 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
+                transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
                 className="absolute w-4 h-4 bg-[#F9004D] rotate-45 z-10"
               />
             ))}
@@ -276,7 +276,7 @@ const ProductDetail = () => (
             <div className="w-full h-full border border-dashed border-[#F9004D]/30 flex items-center justify-center">
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="relative"
               >
                 <Target className="text-[#F9004D]/20" size={200} />

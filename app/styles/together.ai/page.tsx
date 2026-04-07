@@ -81,7 +81,7 @@ function StaggerContainer({ children, className = "" }: { children: React.ReactN
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as const } },
 }
 
 // ─────────────────────────────────────────────

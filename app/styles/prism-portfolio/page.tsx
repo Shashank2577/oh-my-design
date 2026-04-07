@@ -35,7 +35,7 @@ const tokens = {
   physics: {
     floating: {
       y: [-10, 10, -10],
-      transition: { repeat: Infinity, duration: 5, ease: "easeInOut" }
+      transition: { repeat: Infinity, duration: 5, ease: [0.42, 0, 0.58, 1] }
     },
     prismatic: {
       textShadow: [

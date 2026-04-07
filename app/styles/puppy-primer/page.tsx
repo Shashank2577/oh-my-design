@@ -278,7 +278,7 @@ function Hero() {
            <div className="relative w-full aspect-square max-w-lg mx-auto">
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 40, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="absolute inset-0 rounded-full border-[20px] border-dashed"
                 style={{ borderColor: tokens.muted }}
               />
@@ -620,7 +620,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-8 pb-8 text-lg font-medium leading-relaxed" style={{ color: tokens.mutedForeground }}>

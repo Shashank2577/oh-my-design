@@ -41,7 +41,7 @@ const tokens = {
     float: {
       y: [-10, 10, -10],
       rotate: [-2, 2, -2],
-      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+      transition: { duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }
     }
   }
 }
@@ -166,7 +166,7 @@ const Hero = () => {
           </div>
           <motion.div 
             animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
             className="absolute -top-10 -right-10 opacity-20 pointer-events-none"
           >
             <LayoutGrid size={200} className="text-[#FACC15]" />
@@ -237,7 +237,7 @@ const ProductDetail = () => (
               </div>
               <motion.div 
                 animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 10, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="absolute inset-0 border-t-2 border-[#FACC15] rounded-full shadow-[0_0_15px_#FACC15]"
               />
            </div>

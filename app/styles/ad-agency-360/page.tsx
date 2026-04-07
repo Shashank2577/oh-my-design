@@ -39,7 +39,7 @@ const tokens = {
     textLow: "#666666"
   },
   physics: {
-    orbit: { animate: { rotate: 360 }, transition: { duration: 20, repeat: Infinity, ease: "linear" } }
+    orbit: { animate: { rotate: 360 }, transition: { duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] } }
   }
 }
 
@@ -107,12 +107,12 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <motion.div 
           animate={{ rotate: 360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 40, repeat: Infinity, ease: [0, 0, 1, 1] }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-white/5 rounded-full" 
         />
         <motion.div 
           animate={{ rotate: -360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 60, repeat: Infinity, ease: [0, 0, 1, 1] }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full" 
         />
       </div>
@@ -141,7 +141,7 @@ const Hero = () => {
       
       <motion.div 
         animate={{ y: [0, 15, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 5, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/20 flex flex-col items-center gap-6"
       >
         <div className="text-[10px] tracking-[0.8em] uppercase font-black">Scroll</div>
@@ -213,7 +213,7 @@ const ProductDetail = () => (
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#FFFFFF08_0%,_transparent_70%)]" />
             <motion.div 
               animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 30, repeat: Infinity, ease: [0, 0, 1, 1] }}
               className="absolute inset-0 border border-dashed border-white/10 rounded-full"
             />
             <Activity className="text-white/10" size={300} strokeWidth={0.5} />

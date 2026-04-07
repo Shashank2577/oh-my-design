@@ -140,7 +140,7 @@ function TrickComboBuilder() {
                   fill={['#FF00FF', '#00FFFF', '#FFFF00'][Math.floor(Math.random() * 3)]}
                   initial={{ r: 0, opacity: 1 }}
                   animate={{ r: Math.random() * 20 + 5, opacity: 0 }}
-                  transition={{ duration: 1, ease: "easeOut" }}
+                  transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
                 />
               ))}
             </svg>

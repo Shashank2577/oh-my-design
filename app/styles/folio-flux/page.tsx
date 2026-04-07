@@ -107,7 +107,7 @@ const Hero = ({ accent = '#000' }: any) => {
       
       <motion.div 
         animate={{ y: [0, 20, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 5, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
         className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6"
         style={{ color: accent, opacity: 0.2 }}
       >

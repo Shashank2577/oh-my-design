@@ -85,7 +85,7 @@ const TacticalCard = ({ children, title = '', value = '', trend = 0, className =
       <motion.div 
         initial={{ width: 0 }}
         whileInView={{ width: '70%' }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
         className={`h-full ${trend > 0 ? 'bg-[#00FF41]' : 'bg-[#00D1FF]'}`}
       />
     </div>
@@ -271,7 +271,7 @@ const ProductDetail = () => (
               </div>
               <motion.div 
                 animate={{ y: [0, 200, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 4, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="absolute top-0 left-0 w-full h-0.5 bg-[#00FF41] shadow-[0_0_15px_#00FF41]"
               />
            </div>
