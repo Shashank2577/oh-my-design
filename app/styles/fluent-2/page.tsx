@@ -1,16 +1,7 @@
 'use client'
 
-/**
- * PAGE TEMPLATE — oh-my-design
- *
- * Copy this file to app/styles/[slug]/page.tsx
- * Replace STYLE_NAME, colors, fonts, and content
- * Follow designprompts_dev_all_styles.md for the design system
- */
-
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-// Replace fonts with those specified in the design system:
 import { Inter } from 'next/font/google'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
@@ -18,7 +9,7 @@ import {
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────
-// FONTS — replace with style-specific fonts
+// FONTS
 // ─────────────────────────────────────────────
 const bodyFont = Inter({
   subsets: ['latin'],
@@ -27,9 +18,8 @@ const bodyFont = Inter({
 })
 
 // ─────────────────────────────────────────────
-// DESIGN TOKENS — replace ALL values per style
+// DESIGN TOKENS
 // ─────────────────────────────────────────────
-// Tokens based on Microsoft Fluent 2 (Web)
 const tokens = {
   background: '#F5F5F5', // surface-base (Mica canvas)
   backgroundAlt: '#FFFFFF', // surface-layer (Cards, elevated surfaces)
@@ -56,7 +46,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ type: 'spring', stiffness: 300, damping: 30, delay }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1], delay }}
     >
       {children}
     </motion.div>
@@ -83,53 +73,53 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
   )
 }
 
-import { Variants } from 'framer-motion'
+import type { Variants } from 'framer-motion'
 
 const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] } },
 }
 
 // ─────────────────────────────────────────────
-// DATA — replace with style-appropriate content
+// DATA
 // ─────────────────────────────────────────────
-const PRODUCT_NAME = 'FluentScale'
-const TAGLINE = 'Enterprise-grade architecture for modern teams'
-const DESCRIPTION = 'Seamlessly integrate, scale, and manage your cloud operations with the familiar and intuitive Fluent 2 design language.'
+const PRODUCT_NAME = 'AzureFlow'
+const TAGLINE = 'Orchestrate tasks with seamless clarity'
+const DESCRIPTION = 'Streamline your enterprise workflows with AzureFlow. Built entirely on the Fluent 2 design language, it feels familiar from the very first click.'
 
 const NAV_LINKS = ['Features', 'Pricing', 'Testimonials', 'FAQ']
 
 const STATS = [
-  { value: '99.99%', label: 'SLA Guarantee' },
-  { value: '500+', label: 'Enterprise Clients' },
-  { value: '140', label: 'Global Data Centers' },
-  { value: '10M+', label: 'Daily Transactions' },
+  { value: '1.2B', label: 'Tasks automated' },
+  { value: '99.9%', label: 'Uptime reliability' },
+  { value: 'ISO', label: '27001 Certified' },
+  { value: '24/7', label: 'Active Support' },
 ]
 
 const FEATURES = [
-  { icon: AppWindow, title: 'Windows Native Feel', description: 'Familiar UI paradigms that your team already knows how to use.' },
-  { icon: Shield, title: 'Enterprise Security', description: 'Role-based access control and comprehensive audit logging built right in.' },
-  { icon: BarChart, title: 'Advanced Analytics', description: 'Deep insights with PowerBI-inspired visualization capabilities.' },
-  { icon: Cpu, title: 'Scalable Processing', description: 'Handles millions of events with a resilient distributed architecture.' },
-  { icon: Globe, title: 'Global Deployment', description: 'Deploy anywhere with our multi-region container orchestration.' },
-  { icon: Lock, title: 'Compliance Ready', description: 'SOC2, HIPAA, and GDPR compliant infrastructure right out of the box.' },
+  { icon: AppWindow, title: 'Native Integration', description: 'Integrates perfectly with Microsoft 365, Teams, and the entire Azure ecosystem.' },
+  { icon: Shield, title: 'Zero-Trust Security', description: 'Enterprise-grade access controls enforced across every single data pipeline.' },
+  { icon: BarChart, title: 'Power BI Ready', description: 'Export directly to Power BI for deep, actionable business intelligence.' },
+  { icon: Cpu, title: 'AI-Powered Routing', description: 'Leverage Microsoft Copilot to automatically route tasks to the best team member.' },
+  { icon: Globe, title: 'Global Availability', description: 'Deployed across 60+ Azure regions to guarantee low-latency performance globally.' },
+  { icon: Lock, title: 'Data Residency', description: 'Strict compliance tools to ensure your data never leaves your chosen geography.' },
 ]
 
 const PRICING = [
   {
-    name: 'Standard',
-    price: '$49',
-    period: 'per user/month',
-    description: 'Essential tools for growing organizations.',
-    features: ['Up to 50 users', 'Standard support', 'Core analytics', 'Community access'],
+    name: 'Basic',
+    price: '$15',
+    period: 'user / mo',
+    description: 'Perfect for small teams getting started with automation.',
+    features: ['Up to 10 users', 'Standard support', 'Basic workflow templates', 'M365 integration'],
     cta: 'Start trial',
     highlighted: false,
   },
   {
-    name: 'Professional',
-    price: '$99',
-    period: 'per user/month',
-    description: 'Advanced capabilities for scaling teams.',
+    name: 'Business',
+    price: '$35',
+    period: 'user / mo',
+    description: 'Advanced capabilities for scaling organizations.',
     features: ['Unlimited users', 'Priority 24/7 support', 'Advanced reporting', 'Custom integrations', 'API access'],
     cta: 'Get started',
     highlighted: true,
@@ -137,7 +127,7 @@ const PRICING = [
   {
     name: 'Enterprise',
     price: 'Custom',
-    period: 'annual billing',
+    period: 'annual contract',
     description: 'Dedicated infrastructure and tailored SLAs.',
     features: ['Dedicated tenant', 'Account manager', 'Custom contracts', 'On-premise option', 'Security review'],
     cta: 'Contact sales',
@@ -147,35 +137,35 @@ const PRICING = [
 
 const TESTIMONIALS = [
   {
-    name: 'Sarah Jenkins',
-    role: 'VP of Engineering',
+    name: 'Robert Hastings',
+    role: 'CIO',
     company: 'Contoso Ltd.',
-    text: 'The adoption rate among our internal teams was incredible. It feels exactly like the native Microsoft tools they already use every day.',
+    text: 'AzureFlow felt like a natural extension of our existing Microsoft environment. Adoption was instantaneous and required zero formal training.',
     rating: 5,
   },
   {
-    name: 'David Chen',
+    name: 'Emily Davis',
     role: 'IT Director',
     company: 'Fabrikam Inc.',
-    text: 'Deploying this solution saved us months of custom development. The security features and compliance readiness are unparalleled.',
+    text: 'The security features out of the box are unmatched. Knowing it relies on Azure Active Directory for RBAC gives our compliance team peace of mind.',
     rating: 5,
   },
   {
-    name: 'Elena Rodriguez',
-    role: 'Chief Operations Officer',
+    name: 'Michael Chen',
+    role: 'VP of Operations',
     company: 'Adventure Works',
-    text: 'A truly robust platform that scales effortlessly. The intuitive design means minimal training required for new employees.',
+    text: 'We replaced five different automation tools with AzureFlow. The centralized dashboard and Fluent 2 aesthetics make managing complex tasks surprisingly pleasant.',
     rating: 5,
   },
 ]
 
 const FAQ_ITEMS = [
-  { q: 'How does it integrate with Azure Active Directory?', a: 'We offer native Single Sign-On (SSO) integration with Azure AD, allowing your team to use their existing Microsoft credentials with full role-based access control.' },
-  { q: 'What kind of support is included?', a: 'Standard plans include business-hours email support. Professional and Enterprise plans include 24/7 priority support with guaranteed SLAs for response times.' },
-  { q: 'Can we deploy on our own infrastructure?', a: 'Yes, our Enterprise plan offers both private cloud and on-premise deployment options for organizations with strict data residency requirements.' },
-  { q: 'Is there a limit to data storage?', a: 'Storage limits depend on your tier. Professional plans include 1TB per user, while Enterprise plans offer custom storage solutions tailored to your needs.' },
-  { q: 'How long does implementation take?', a: 'Most teams are up and running within a week. Enterprise deployments typically involve a 30-day onboarding period with our implementation specialists.' },
-  { q: 'Do you offer custom integrations?', a: 'We have a robust API and support custom integrations via our Enterprise tier, which includes dedicated engineering hours for setup.' },
+  { q: 'How does it integrate with Azure Active Directory?', a: 'We offer native Single Sign-On (SSO) integration with Entra ID (formerly Azure AD), allowing your team to use their existing Microsoft credentials with full role-based access control.' },
+  { q: 'What kind of support is included?', a: 'Basic plans include business-hours email support. Business and Enterprise plans include 24/7 priority support with guaranteed SLAs for response times.' },
+  { q: 'Can we deploy on our own infrastructure?', a: 'Yes, our Enterprise plan offers private cloud and Azure Stack deployment options for organizations with strict data residency and compliance requirements.' },
+  { q: 'Is there a limit to data storage?', a: 'Storage limits depend on your tier. Business plans include 1TB per user pooled across the tenant, while Enterprise plans offer custom storage solutions tailored to your needs.' },
+  { q: 'How long does implementation take?', a: 'Most teams are up and running within a week. Enterprise deployments typically involve a 30-day onboarding period with our implementation specialists to map your existing complex workflows.' },
+  { q: 'Do you offer custom integrations?', a: 'We have a robust API and support custom integrations via our Enterprise tier, which includes dedicated engineering hours for setup. You can also build your own using our well-documented REST APIs.' },
 ]
 
 // ─────────────────────────────────────────────
@@ -208,7 +198,7 @@ function Navbar() {
         <motion.button
           whileHover={{ backgroundColor: tokens.accentHover }}
           whileTap={{ scale: 0.98, backgroundColor: tokens.accentPressed }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
           className="px-4 h-8 rounded-[4px] text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0F6CBD]"
           style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
         >
@@ -257,7 +247,7 @@ function Hero() {
             <motion.button
               whileHover={{ backgroundColor: tokens.accentHover }}
               whileTap={{ scale: 0.98, backgroundColor: tokens.accentPressed }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
               className="h-10 px-6 rounded-[4px] font-medium flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0F6CBD]"
               style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
             >
@@ -266,7 +256,7 @@ function Hero() {
             <motion.button
               whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)' }}
               whileTap={{ scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
               className="h-10 px-6 rounded-[4px] font-medium border bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0F6CBD]"
               style={{ borderColor: tokens.border, color: tokens.foreground }}
             >
@@ -332,7 +322,7 @@ function Features() {
                 key={feature.title}
                 variants={staggerItem}
                 whileHover={{ y: -2, boxShadow: '0 2px 4px rgba(0,0,0,0.14)' }}
-                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                 className="p-6 rounded-lg border shadow-[0_1px_2px_rgba(0,0,0,0.12)]"
                 style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}
               >
@@ -391,7 +381,7 @@ function Pricing() {
                 key={tier.name}
                 variants={staggerItem}
                 whileHover={{ y: -2, boxShadow: '0 2px 4px rgba(0,0,0,0.14)' }}
-                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                 className="p-6 rounded-lg border shadow-[0_1px_2px_rgba(0,0,0,0.12)] relative"
                 style={{
                   borderColor: tier.highlighted ? tokens.accent : tokens.border,
@@ -418,7 +408,7 @@ function Pricing() {
                 <motion.button
                   whileHover={{ backgroundColor: tier.highlighted ? tokens.accentHover : 'rgba(0,0,0,0.05)' }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                  transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
                   className="w-full h-10 rounded-[4px] font-medium text-sm border focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0F6CBD]"
                   style={tier.highlighted
                     ? { backgroundColor: tokens.accent, color: tokens.accentForeground, borderColor: tokens.accent }
@@ -501,7 +491,7 @@ function FAQ() {
                   <span className="font-medium text-sm" style={{ color: tokens.foreground }}>{item.q}</span>
                   <motion.span
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   >
                     <ChevronDown className="h-4 w-4 flex-shrink-0" style={{ color: tokens.mutedForeground }} />
                   </motion.span>
@@ -509,7 +499,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-4 pb-4 pt-1 text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
@@ -569,7 +559,7 @@ function Newsletter() {
                 <motion.div
                   initial={false}
                   animate={{ scaleX: isFocused ? 1 : 0 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   className="absolute bottom-0 left-0 right-0 h-0.5 origin-center"
                   style={{ backgroundColor: tokens.accent }}
                 />
@@ -579,7 +569,7 @@ function Newsletter() {
                 disabled={status === 'loading'}
                 whileHover={{ backgroundColor: tokens.accentHover }}
                 whileTap={{ scale: 0.98, backgroundColor: tokens.accentPressed }}
-                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
                 className="h-10 px-6 rounded-[4px] font-medium text-sm disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0F6CBD] w-full sm:w-auto"
                 style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
               >
