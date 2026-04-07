@@ -30,7 +30,7 @@ function FadeUp({ children, delay = 0, y = 28 }: { children: React.ReactNode; de
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.5, delay, ease: [0.23, 1, 0.32, 1] }}
     >
       {children}
     </motion.div>
@@ -125,7 +125,7 @@ function LiveTicker() {
        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#1E293B] to-transparent z-10" />
        <motion.div
          animate={{ x: [0, -500] }}
-         transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+         transition={{ duration: 15, repeat: Infinity, ease: [0, 0, 1, 1] }}
          className="flex gap-4 font-mono text-xs whitespace-nowrap"
        >
           <span className="text-[#10B981]">BTC/USD +2.4%</span>

@@ -128,7 +128,7 @@ const Hero = () => {
         </motion.div>
         <motion.h1 
           animate={{ fontWeight: weight }}
-          transition={{ duration: 2, ease: "easeInOut" }}
+          transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] }}
           className={`${fraunces.className} text-8xl md:text-[14rem] text-black leading-[0.8] mb-16 uppercase italic tracking-tighter`}
         >
           DANCE WITH <br/> <span className="opacity-20 not-italic">THE FONT.</span>
@@ -146,7 +146,7 @@ const Hero = () => {
       
       <motion.div 
         animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 text-black/20 flex flex-col items-center gap-4"
       >
         <div className="text-[8px] tracking-[0.6em] uppercase font-black">Scroll_to_Read</div>
@@ -221,7 +221,7 @@ const ProductDetail = () => (
               </div>
               <motion.div 
                 animate={{ y: [0, 400, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 5, repeat: Infinity, ease: [0, 0, 1, 1] }}
                 className="absolute top-0 left-0 w-full h-px bg-black shadow-[0_0_15px_black]"
               />
            </div>

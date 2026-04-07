@@ -36,7 +36,7 @@ const staggerContainer: Variants = {
 
 const inkBleed: Variants = {
   hidden: { opacity: 0, filter: 'blur(10px)', scale: 0.95 },
-  visible: { opacity: 1, filter: 'blur(0px)', scale: 1, transition: { duration: 1.2, ease: "easeOut" } }
+  visible: { opacity: 1, filter: 'blur(0px)', scale: 1, transition: { duration: 1.2, ease: [0.23, 1, 0.32, 1] } }
 }
 
 // Components
@@ -241,7 +241,7 @@ function ProductDetail() {
             initial={{ opacity: 0, filter: 'grayscale(100%) blur(5px)' }}
             whileInView={{ opacity: 1, filter: 'grayscale(20%) blur(0px)' }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
             className="w-full md:w-1/2"
           >
             <div className="aspect-[3/4] p-4 border" style={{ borderColor: tokens.border, backgroundColor: tokens.background }}>

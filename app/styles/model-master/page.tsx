@@ -83,7 +83,7 @@ function WeightsDraw({ children, delay = 0, className = "", style }: { children:
       ref={ref}
       initial={{ opacity: 0, pathLength: 0 }}
       animate={isInView ? { opacity: 1, pathLength: 1 } : {}}
-      transition={{ duration: 1.5, delay, ease: "easeInOut" }}
+      transition={{ duration: 1.5, delay, ease: [0.42, 0, 0.58, 1] }}
       className={className}
       style={style}
     >
@@ -96,7 +96,7 @@ function ConvergencePulse({ active = true, children, className = "", style }: { 
   return (
     <motion.div
       animate={active ? { scale: [1, 1.02, 1] } : {}}
-      transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+      transition={{ repeat: Infinity, duration: 1.5, ease: [0.42, 0, 0.58, 1] }}
       className={className}
       style={style}
     >
@@ -332,7 +332,7 @@ function Architecture() {
         <div className="relative h-80 perspective-1000">
            <motion.div
              animate={{ rotateY: 360 }}
-             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+             transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] }}
              className="w-full h-full transform-style-3d relative flex items-center justify-center"
            >
               {[0, 1, 2].map((layer) => (

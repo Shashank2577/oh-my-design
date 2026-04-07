@@ -156,7 +156,7 @@ export default function ModernDarkPage() {
     rotate: prefersReducedMotion ? 0 : [0, 1, 0],
     transition: {
       duration: 10,
-      ease: "easeInOut" as const,
+      ease: [0.42, 0, 0.58, 1] as const,
       repeat: Infinity,
     }
   }
@@ -166,7 +166,7 @@ export default function ModernDarkPage() {
     rotate: prefersReducedMotion ? 0 : [0, -1, 0],
     transition: {
       duration: 8,
-      ease: "easeInOut" as const,
+      ease: [0.42, 0, 0.58, 1] as const,
       repeat: Infinity,
     }
   }

@@ -37,7 +37,7 @@ const Blob = () => {
     transition={{
       duration: 20,
       repeat: Infinity,
-      ease: "easeInOut"
+      ease: [0.42, 0, 0.58, 1]
     }}
     style={{
       background: `radial-gradient(circle at center, ${tokens.accent2} 0%, transparent 70%)`
@@ -258,7 +258,7 @@ function ProductDetail() {
           <div className="aspect-square rounded-full border border-dashed flex items-center justify-center relative p-12" style={{ borderColor: tokens.border }}>
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 50, repeat: Infinity, ease: [0, 0, 1, 1] }}
               className="absolute inset-0 rounded-full border-2 border-transparent"
               style={{ borderLeftColor: tokens.accent1, borderRightColor: tokens.accent2 }}
             />
@@ -266,7 +266,7 @@ function ProductDetail() {
               animate={{
                 borderRadius: ["30% 70% 70% 30% / 30% 30% 70% 70%", "70% 30% 30% 70% / 70% 70% 30% 30%", "30% 70% 70% 30% / 30% 30% 70% 70%"]
               }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
               className="w-full h-full"
               style={{ background: `linear-gradient(135deg, ${tokens.accent1}, ${tokens.accent2})`, opacity: 0.8, filter: 'blur(20px)' }}
             />
