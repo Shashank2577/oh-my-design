@@ -64,7 +64,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.23, 1, 0.32, 1] }}
     >
       {children}
     </motion.div>
@@ -212,8 +212,9 @@ function Navbar() {
           ))}
         </div>
         <motion.button
-          className="px-5 h-10 rounded-full text-sm font-medium hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          className="px-5 h-10 rounded-full text-sm font-medium hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300"
           style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
         >
           Get started
         </motion.button>
@@ -266,14 +267,16 @@ function Hero() {
             className="flex flex-col sm:flex-row gap-4"
           >
             <motion.button
-              className="h-14 px-8 rounded-full font-medium flex items-center gap-2 hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              className="h-14 px-8 rounded-full font-medium flex items-center gap-2 hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300"
               style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
+              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
             >
               Start for free <ArrowRight className="h-4 w-4" />
             </motion.button>
             <motion.button
-              className="h-14 px-8 rounded-full font-medium border hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              className="h-14 px-8 rounded-full font-medium border hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300"
               style={{ borderColor: tokens.border, color: tokens.foreground, backgroundColor: 'transparent' }}
+              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
             >
               View demo
             </motion.button>
@@ -283,9 +286,31 @@ function Hero() {
         {/* Hero Visual — replace with style-specific imagery */}
         <FadeUp delay={0.4}>
           <div
-            className="mt-16 w-full h-72 md:h-96 rounded-2xl"
-            style={{ background: `linear-gradient(135deg, ${tokens.accent}20, ${tokens.accent}05)`, border: `1px solid ${tokens.border}` }}
-          />
+            className="mt-16 w-full h-72 md:h-96 rounded-2xl relative overflow-hidden flex items-center justify-center border-4"
+            style={{ backgroundColor: tokens.tertiary, borderColor: tokens.border }}
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: [0.23, 1, 0.32, 1] }}
+              className="absolute -top-20 -left-20 w-64 h-64 border-4 rounded-full"
+              style={{ borderColor: tokens.secondary }}
+            />
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: [0.23, 1, 0.32, 1] }}
+              className="absolute top-10 right-20 w-32 h-32 border-4 bg-white"
+              style={{ borderColor: tokens.accent, transform: 'rotate(15deg)' }}
+            />
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: [0.23, 1, 0.32, 1] }}
+              className="absolute -bottom-10 left-1/3 w-48 h-48 border-4"
+              style={{ borderColor: tokens.quaternary, borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%', backgroundColor: tokens.accent }}
+            />
+            <div className="relative z-10 text-center font-bold font-heading text-4xl md:text-6xl p-8 bg-white border-4 hard-shadow" style={{ borderColor: tokens.border, color: tokens.foreground }}>
+              Playful Vibes
+            </div>
+          </div>
         </FadeUp>
       </div>
     </section>
@@ -424,11 +449,12 @@ function Pricing() {
                   ))}
                 </ul>
                 <motion.button
-                  className="w-full h-12 rounded-full font-medium text-sm border hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                  className="w-full h-12 rounded-full font-medium text-sm border hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300"
                   style={tier.highlighted
                     ? { backgroundColor: tokens.accent, color: tokens.accentForeground, borderColor: tokens.accent }
                     : { backgroundColor: 'transparent', color: tokens.foreground, borderColor: tokens.border }
                   }
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                 >
                   {tier.cta}
                 </motion.button>
@@ -512,7 +538,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
@@ -565,8 +591,9 @@ function Newsletter() {
               <motion.button
                 type="submit"
                 disabled={status === 'loading'}
-                className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60 hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60 hard-shadow hard-shadow-hover hard-shadow-active transition-all duration-300"
                 style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
+                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
               >
                 {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
               </motion.button>

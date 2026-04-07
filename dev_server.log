@@ -1,0 +1,17 @@
+
+> oh-my-design@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by an unknown process, using available port 3005 instead.
+   ▲ Next.js 15.5.14 (Turbopack)
+   - Local:        http://localhost:3005
+   - Network:      http://192.168.0.2:3005
+
+ ✓ Starting...
+ ✓ Ready in 1794ms
+ ○ Compiling /styles/playful-geometric ...
+ ✓ Compiled /styles/playful-geometric in 9.2s
+ GET /styles/playful-geometric 200 in 10119ms
+ ○ Compiling /styles/botanical ...
+ ✓ Compiled /styles/botanical in 1276ms
+ GET /styles/botanical 200 in 1745ms

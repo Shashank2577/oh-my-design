@@ -14,7 +14,7 @@ import { useRef, useState } from 'react'
 import { Playfair_Display, Source_Sans_3 } from 'next/font/google'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
-  BookOpen, Layout, Palette, Code2, BarChart, Lock
+  BookOpen, Layout, Palette, Code2, BarChart, Lock, Leaf
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────
@@ -60,7 +60,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: 'easeInOut' }}
+      transition={{ duration: 0.7, delay, ease: [0.23, 1, 0.32, 1] }}
     >
       {children}
     </motion.div>
@@ -87,9 +87,10 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
   )
 }
 
-const staggerItem = {
+import type { Variants } from 'framer-motion'
+const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeInOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.23, 1, 0.32, 1] } },
 }
 
 // ─────────────────────────────────────────────
@@ -209,9 +210,10 @@ function Navbar() {
         <motion.button
           whileHover={{ backgroundColor: tokens.interactive }}
           whileTap={{ scale: 0.98 }}
-          className="px-5 h-10 rounded-full text-sm font-medium uppercase tracking-widest transition-colors duration-300"
+          className="px-5 h-10 rounded-full text-sm font-medium uppercase tracking-widest"
           style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
-        >
+
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}>
           Get started
         </motion.button>
       </div>
@@ -265,17 +267,19 @@ function Hero() {
             <motion.button
               whileHover={{ backgroundColor: tokens.interactive }}
               whileTap={{ scale: 0.98 }}
-              className="h-14 px-8 rounded-full font-medium flex items-center gap-2 uppercase tracking-widest text-sm transition-colors duration-300"
+              className="h-14 px-8 rounded-full font-medium flex items-center gap-2 uppercase tracking-widest text-sm"
               style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
-            >
+
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}>
               Start for free <ArrowRight className="h-4 w-4" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="h-14 px-8 rounded-full font-medium border uppercase tracking-widest text-sm transition-colors duration-300"
+              className="h-14 px-8 rounded-full font-medium border uppercase tracking-widest text-sm"
               style={{ borderColor: tokens.accent, color: tokens.accent }}
-            >
+
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}>
               View demo
             </motion.button>
           </motion.div>
@@ -284,10 +288,38 @@ function Hero() {
         {/* Hero Visual — replace with style-specific imagery */}
         <FadeUp delay={0.4}>
           <div
-            className="mt-16 w-full h-72 md:h-96 rounded-[200px_200px_0_0] overflow-hidden relative"
+            className="mt-16 w-full h-72 md:h-96 rounded-[200px_200px_0_0] overflow-hidden relative flex items-center justify-center"
             style={{ background: `linear-gradient(135deg, ${tokens.accent}40, ${tokens.accent}10)`, border: `1px solid ${tokens.border}` }}
           >
-             <div className="absolute inset-0 bg-black/5" />
+            <div className="absolute inset-0 bg-black/5" />
+
+            {/* Botanical Illustrations */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
+              className="relative z-10 flex gap-8 items-center"
+            >
+              <Leaf className="w-24 h-24 md:w-32 md:h-32" style={{ color: tokens.foreground, opacity: 0.8 }} />
+              <div className="flex flex-col gap-4">
+                <Leaf className="w-16 h-16 md:w-20 md:h-20" style={{ color: tokens.interactive, opacity: 0.9, transform: 'rotate(45deg)' }} />
+                <Leaf className="w-12 h-12 md:w-16 md:h-16" style={{ color: tokens.accent, opacity: 0.7, transform: 'rotate(-30deg)' }} />
+              </div>
+            </motion.div>
+
+            {/* Decorative circles representing soft pink flowers */}
+            <motion.div
+               animate={{ y: [0, -10, 0] }}
+               transition={{ duration: 4, repeat: Infinity, ease: [0.23, 1, 0.32, 1] }}
+               className="absolute top-1/4 left-1/4 w-16 h-16 rounded-full mix-blend-multiply filter blur-xl opacity-60"
+               style={{ backgroundColor: tokens.interactive }}
+            />
+            <motion.div
+               animate={{ y: [0, 15, 0] }}
+               transition={{ duration: 5, repeat: Infinity, ease: [0.23, 1, 0.32, 1], delay: 1 }}
+               className="absolute bottom-1/4 right-1/3 w-24 h-24 rounded-full mix-blend-multiply filter blur-xl opacity-60"
+               style={{ backgroundColor: tokens.accent }}
+            />
           </div>
         </FadeUp>
       </div>
@@ -336,7 +368,7 @@ function Features() {
                 key={feature.title}
                 variants={staggerItem}
                 whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
+                transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
                 className={`p-8 rounded-3xl border ${i % 2 === 1 ? 'md:translate-y-12' : ''}`}
                 style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}
               >
@@ -398,7 +430,7 @@ function Pricing() {
                 key={tier.name}
                 variants={staggerItem}
                 whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
+                transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
                 className="p-8 rounded-3xl border relative"
                 style={{
                   borderColor: tier.highlighted ? tokens.accent : tokens.border,
@@ -431,12 +463,13 @@ function Pricing() {
                 <motion.button
                   whileHover={{ backgroundColor: tier.highlighted ? tokens.interactive : tokens.accent, color: tokens.accentForeground }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 rounded-full font-medium text-sm border uppercase tracking-widest transition-colors duration-300"
+                  className="w-full h-12 rounded-full font-medium text-sm border uppercase tracking-widest"
                   style={tier.highlighted
                     ? { backgroundColor: tokens.foreground, color: tokens.accentForeground, borderColor: tokens.foreground }
                     : { backgroundColor: 'transparent', color: tokens.accent, borderColor: tokens.accent }
                   }
-                >
+
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}>
                   {tier.cta}
                 </motion.button>
               </motion.div>
@@ -466,7 +499,7 @@ function Testimonials() {
                 variants={staggerItem}
                 className={`p-8 rounded-3xl border ${i % 2 === 1 ? 'md:translate-y-12' : ''}`}
                 whileHover={{ y: -8, boxShadow: `0 10px 15px -3px rgba(45, 58, 49, 0.05)` }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
+                transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
                 style={{ borderColor: tokens.border, backgroundColor: tokens.background }}
               >
                 <div className="flex mb-4">
@@ -521,7 +554,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>
@@ -582,9 +615,10 @@ function Newsletter() {
                 disabled={status === 'loading'}
                 whileHover={{ backgroundColor: tokens.interactive }}
                 whileTap={{ scale: 0.98 }}
-                className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60 uppercase tracking-widest transition-colors duration-300"
+                className="h-12 px-6 rounded-full font-medium text-sm disabled:opacity-60 uppercase tracking-widest"
                 style={{ backgroundColor: tokens.foreground, color: tokens.accentForeground }}
-              >
+
+          transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}>
                 {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
               </motion.button>
             </form>
