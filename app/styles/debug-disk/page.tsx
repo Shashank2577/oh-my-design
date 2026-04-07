@@ -8,6 +8,7 @@ import {
   Zap, 
   Activity, 
   TrendingUp, 
+  Globe,
   ShieldCheck, 
   ChevronDown, 
   ArrowRight,

@@ -6,6 +6,7 @@ import {
   Layers, 
   Layout, 
   MousePointer2, 
+  Users,
   Sparkles, 
   ShieldCheck, 
   ChevronDown, 
