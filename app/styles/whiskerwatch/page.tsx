@@ -41,7 +41,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1.2, delay, ease: [0.2, 0.8, 0.2, 1] }} // Slower, stealthy ease
+      transition={{ duration: 1.2, delay, ease: [0.2, 0.8, 0.2, 1] as [number, number, number, number] }} // Slower, stealthy ease
     >
       {children}
     </motion.div>
@@ -70,7 +70,7 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.2, 0.8, 0.2, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.2, 0.8, 0.2, 1] as [number, number, number, number] } },
 }
 
 const PRODUCT_NAME = 'WhiskerWatch'
@@ -141,7 +141,7 @@ function Hero() {
           className="w-[800px] h-[800px] rounded-full blur-[100px] opacity-20"
           style={{ backgroundColor: tokens.accent1 }}
           animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 15, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
         />
       </div>
 
@@ -149,7 +149,7 @@ function Hero() {
         <motion.div
           initial={{ filter: "blur(20px)", opacity: 0 }}
           animate={{ filter: "blur(0px)", opacity: 1 }}
-          transition={{ duration: 2, ease: "easeOut" }}
+          transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
           className="mb-8"
         >
           <Eye className="w-12 h-12 mx-auto mb-8" style={{ color: tokens.accent1 }} strokeWidth={1} />
@@ -158,7 +158,7 @@ function Hero() {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, delay: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+          transition={{ duration: 1.5, delay: 0.5, ease: [0.2, 0.8, 0.2, 1] as [number, number, number, number] }}
           className="font-primary text-5xl md:text-7xl lg:text-8xl mb-8 leading-tight tracking-wide"
           style={{ color: tokens.textHigh }}
         >
@@ -238,7 +238,7 @@ function LiveCam() {
             initial={{ clipPath: "circle(0% at 50% 50%)" }}
             whileInView={{ clipPath: "circle(100% at 50% 50%)" }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            transition={{ duration: 1.5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
             className="w-full aspect-video bg-black relative border overflow-hidden"
             style={{ borderColor: tokens.border }}
           >

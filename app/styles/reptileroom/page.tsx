@@ -26,7 +26,7 @@ const theBlink: import('framer-motion').Variants = {
       duration: 0.2,
       repeat: Infinity,
       repeatDelay: 10,
-      ease: "easeInOut" as const
+      ease: [0.42, 0, 0.58, 1] as [number, number, number, number]
     }
   }
 }
@@ -93,7 +93,7 @@ function HumidityGauge({ humidity }: { humidity: number }) {
           strokeDasharray="283"
           initial={{ strokeDashoffset: 283 }}
           animate={{ strokeDashoffset: 283 - (283 * humidity) / 100 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
           className="drop-shadow-[0_0_8px_rgba(132,204,22,0.5)]"
         />
       </svg>
@@ -240,7 +240,7 @@ export default function ReptileRoomPage() {
                  className="absolute -top-1/4 -right-1/4 w-3/4 h-3/4 rounded-full blur-3xl opacity-30"
                  style={{ backgroundColor: TOKENS.accent2 }}
                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                 transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                />
                <div className="absolute bottom-8 left-8 right-8 font-mono text-sm space-y-2 z-20" style={{ fontFamily: 'var(--font-jetbrains)', color: TOKENS.textLow }}>
                  <div className="flex justify-between border-b pb-1" style={{ borderColor: TOKENS.border }}><span>Zone_A_Temp:</span> <span style={{ color: TOKENS.accent2 }}>32.4°C</span></div>
@@ -479,7 +479,7 @@ export default function ReptileRoomPage() {
               className="absolute inset-0 border-b z-10 pointer-events-none"
               style={{ borderColor: TOKENS.accent1, height: '10%' }}
               animate={{ y: ['-100%', '1000%'] }}
-              transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
+              transition={{ repeat: Infinity, duration: 4, ease: [0, 0, 1, 1] as [number, number, number, number] }}
             />
 
             <ShieldAlert size={48} color={TOKENS.accent1} className="mx-auto mb-6" />

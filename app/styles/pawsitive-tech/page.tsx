@@ -41,7 +41,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -70,7 +70,7 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
 }
 
 const PRODUCT_NAME = 'Pawsitive Tech'
@@ -202,13 +202,13 @@ function Hero() {
             className="absolute rounded-full border border-dashed"
             style={{ borderColor: tokens.accent1, width: '400px', height: '400px' }}
             animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 20, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
           />
           <motion.div
             className="absolute rounded-full"
             style={{ backgroundColor: `${tokens.accent1}10`, width: '400px', height: '400px' }}
             animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.1, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           />
           <div className="relative z-10 w-24 h-24 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(132,204,22,0.5)]" style={{ backgroundColor: tokens.surface }}>
             <MapPin className="w-10 h-10" style={{ color: tokens.accent1 }} />
@@ -222,7 +222,7 @@ function Hero() {
               x: [0, 100, 150, 50, -50, -120, -80, 0],
               y: [0, -50, 80, 150, 100, 20, -60, 0]
             }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 15, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
           />
 
           {/* Dashboard overlay */}
@@ -359,7 +359,7 @@ function SafeZonePulse() {
               animate={{
                 x: [0, 80, 140, 80, 0], // Leaves zone at 140
               }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              transition={{ duration: 6, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
             />
 
             {/* Alert State */}
@@ -370,7 +370,7 @@ function SafeZonePulse() {
                 opacity: [0, 0, 1, 0, 0],
                 scale: [1, 1, 1.1, 1.2, 1]
               }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', times: [0, 0.4, 0.5, 0.6, 1] }}
+              transition={{ duration: 6, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], times: [0, 0.4, 0.5, 0.6, 1] }}
             />
           </div>
 
@@ -431,7 +431,7 @@ function Pricing() {
                 className="absolute inset-0 w-full h-[2px] opacity-20 pointer-events-none"
                 style={{ backgroundColor: tokens.accent1 }}
                 animate={{ y: [0, 400, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 4, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
               />
 
               <div className="flex justify-between items-start mb-6">

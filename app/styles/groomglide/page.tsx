@@ -38,7 +38,7 @@ function RevealUp({ children, delay = 0, className = '' }: { children: React.Rea
       initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, ease: "easeOut", delay }}
+      transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay }}
       className={className}
     >
       {children}
@@ -63,7 +63,7 @@ function StaggerReveal({ children }: { children: React.ReactNode }) {
 
 const revealItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
-  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: "easeOut" } }
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } }
 }
 
 function BubbleBackground() {
@@ -82,7 +82,7 @@ function BubbleBackground() {
             duration: 8 + Math.random() * 10,
             repeat: Infinity,
             delay: Math.random() * 5,
-            ease: "linear"
+            ease: [0, 0, 1, 1] as [number, number, number, number]
           }}
           className="absolute rounded-full"
           style={{
@@ -172,7 +172,7 @@ function Navbar() {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
       className="fixed top-0 w-full z-50 bg-opacity-70 backdrop-blur-xl border-b transition-colors"
       style={{ backgroundColor: 'rgba(248, 250, 252, 0.7)', borderColor: tokens.border }}
     >
@@ -247,7 +247,7 @@ function Hero() {
       <motion.div
         initial={{ clipPath: 'inset(100% 0 0 0)' }}
         animate={{ clipPath: 'inset(0% 0 0 0)' }}
-        transition={{ duration: 1.5, ease: [0.7, 0, 0.3, 1], delay: 0.5 }}
+        transition={{ duration: 1.5, ease: [0.7, 0, 0.3, 1] as [number, number, number, number], delay: 0.5 }}
         className="absolute right-0 top-0 w-1/2 h-full hidden lg:block"
       >
         <img

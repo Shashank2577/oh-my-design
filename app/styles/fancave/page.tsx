@@ -123,7 +123,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="h-[1px] w-12" style={{ backgroundColor: tokens.accent }} />
@@ -162,7 +162,7 @@ function Hero() {
                      {/* Holographic placeholder */}
                      <motion.div
                        animate={{ y: [-5, 5, -5] }}
-                       transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                       transition={{ repeat: Infinity, duration: 4, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                        className="w-32 h-32 mx-auto rounded-full mix-blend-screen opacity-80"
                        style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)', filter: 'blur(10px)' }}
                      />
@@ -244,7 +244,7 @@ function VaultSection() {
       {/* Laser Scanning line */}
       <motion.div
         animate={{ top: ['0%', '100%', '0%'] }}
-        transition={{ duration: 8, ease: "linear", repeat: Infinity }}
+        transition={{ duration: 8, ease: [0, 0, 1, 1] as [number, number, number, number], repeat: Infinity }}
         className="absolute left-0 right-0 h-[2px] z-20 pointer-events-none"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent)', boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)' }}
       />
@@ -262,7 +262,7 @@ function VaultSection() {
                    style={{ backgroundColor: tokens.accent }}
                    initial={{ width: 0 }}
                    whileInView={{ width: '99.9%' }}
-                   transition={{ duration: 2, ease: "easeOut" }}
+                   transition={{ duration: 2, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
                    viewport={{ once: true }}
                 />
              </div>

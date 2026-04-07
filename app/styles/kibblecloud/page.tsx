@@ -40,7 +40,7 @@ function FadeUp({ children, delay = 0, yOffset = 20 }: { children: React.ReactNo
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: yOffset }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -69,7 +69,7 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem: import('framer-motion').Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
 }
 
 const PRODUCT_NAME = 'KibbleCloud'
@@ -137,13 +137,13 @@ function Hero() {
           className="absolute top-20 right-[10%] w-32 h-32 rounded-full opacity-20 blur-2xl"
           style={{ backgroundColor: tokens.accent1 }}
           animate={{ y: [0, -30, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 8, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
         />
         <motion.div
           className="absolute bottom-20 left-[10%] w-48 h-48 rounded-full opacity-20 blur-3xl"
           style={{ backgroundColor: tokens.accent2 }}
           animate={{ y: [0, 40, 0], x: [0, 20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
         />
       </div>
 
@@ -207,7 +207,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="relative w-96 h-96 rounded-full flex items-center justify-center shadow-2xl"
             style={{ backgroundColor: tokens.surface, border: `1px solid ${tokens.border}` }}
           >
@@ -217,14 +217,14 @@ function Hero() {
               <motion.div
                 className="absolute"
                 animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{ duration: 6, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
               >
                 <div className="w-48 h-48 rounded-full opacity-50 blur-xl" style={{ backgroundColor: tokens.accent1 }} />
               </motion.div>
               <motion.div
                 className="absolute"
                 animate={{ y: [0, 15, 0], x: [0, -10, 0] }}
-                transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{ duration: 7, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
               >
                 <div className="w-40 h-40 rounded-full opacity-50 blur-xl mix-blend-multiply" style={{ backgroundColor: tokens.accent2 }} />
               </motion.div>
@@ -236,7 +236,7 @@ function Hero() {
               className="absolute -top-4 right-10 bg-white p-3 rounded-2xl shadow-lg border flex items-center gap-2"
               style={{ borderColor: tokens.border }}
               animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], delay: 1 }}
             >
               <Leaf className="w-5 h-5" style={{ color: tokens.accent2 }} />
               <span className="font-secondary text-sm font-semibold" style={{ color: tokens.textHigh }}>Fresh Veggies</span>
@@ -246,7 +246,7 @@ function Hero() {
               className="absolute bottom-10 -left-6 bg-white p-3 rounded-2xl shadow-lg border flex items-center gap-2"
               style={{ borderColor: tokens.border }}
               animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              transition={{ duration: 5, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], delay: 0.5 }}
             >
               <Droplet className="w-5 h-5" style={{ color: tokens.accent1 }} />
               <span className="font-secondary text-sm font-semibold" style={{ color: tokens.textHigh }}>Rich in Omega-3</span>
@@ -359,7 +359,7 @@ function HowItWorks() {
               initial={{ width: 0 }}
               whileInView={{ width: '100%' }}
               viewport={{ once: true }}
-              transition={{ duration: 2, ease: 'easeInOut' }}
+              transition={{ duration: 2, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
             />
           </div>
 

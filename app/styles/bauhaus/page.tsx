@@ -46,7 +46,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
       className={className}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.3, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.3, delay, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -76,7 +76,7 @@ function StaggerContainer({ children, className = "" }: { children: React.ReactN
 
 const staggerItem = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
 }
 
 // ─────────────────────────────────────────────
@@ -243,7 +243,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
           >
             <div className="inline-block bg-[#121212] text-white px-4 py-2 font-bold uppercase tracking-widest text-sm mb-8">
               {PRODUCT_NAME} V1.0
@@ -253,7 +253,7 @@ function Hero() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tighter uppercase mb-8"
           >
             {TAGLINE}
@@ -262,7 +262,7 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.2, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="text-lg md:text-xl font-medium leading-relaxed mb-12 max-w-md"
           >
             {DESCRIPTION}
@@ -271,7 +271,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.5, delay: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="flex flex-col sm:flex-row gap-4"
           >
             <Button variant="primary">
@@ -290,13 +290,13 @@ function Hero() {
           className="relative w-full max-w-md aspect-square"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
         >
           {/* Large Circle */}
           <motion.div
             className="absolute top-[10%] left-[10%] w-[60%] h-[60%] rounded-full bg-[#D02020] border-4 border-black mix-blend-normal shadow-[8px_8px_0px_0px_black]"
             animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 60, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
           />
 
           {/* Rotated Square */}
@@ -304,7 +304,7 @@ function Hero() {
             className="absolute top-[30%] right-[10%] w-[50%] h-[50%] bg-[#F0C020] border-4 border-black mix-blend-normal shadow-[8px_8px_0px_0px_black]"
             initial={{ rotate: 45 }}
             animate={{ rotate: [45, 45, 135, 135, 225, 225, 315, 315, 405] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", times: [0, 0.1, 0.25, 0.35, 0.5, 0.6, 0.75, 0.85, 1] }}
+            transition={{ duration: 20, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number], times: [0, 0.1, 0.25, 0.35, 0.5, 0.6, 0.75, 0.85, 1] }}
           />
 
           {/* Triangle */}
@@ -407,7 +407,7 @@ function ProductDetail() {
           <motion.div
             className="absolute top-[20%] left-[10%] w-[30%] h-[30%] rounded-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_black] flex items-center justify-center"
             animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           >
             <div className="w-1/3 h-1/3 rounded-full bg-black" />
           </motion.div>
@@ -416,7 +416,7 @@ function ProductDetail() {
           <motion.div
             className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-none bg-[#1040C0] border-4 border-black shadow-[8px_8px_0px_0px_black] flex items-center justify-center rotate-45"
             animate={{ rotate: [45, 45, 135, 135] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 4, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
           >
             <div className="w-1/3 h-1/3 bg-black -rotate-45" />
           </motion.div>
@@ -428,7 +428,7 @@ function ProductDetail() {
           <motion.div
             className="absolute bottom-[10%] left-[20%] w-[60%] h-[15%] rounded-full bg-[#F0C020] border-4 border-black shadow-[8px_8px_0px_0px_black]"
             whileHover={{ height: '25%', bottom: '5%' }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
           />
         </div>
       </div>
@@ -487,7 +487,7 @@ function Pricing() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-5% 0px' }}
-              transition={{ duration: 0.3, ease: 'easeOut', delay: i * 0.1 }}
+              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number], delay: i * 0.1 }}
               className={`border-4 border-black bg-white p-8 ${tier.highlighted ? 'md:-mt-4 md:mb-4 shadow-[12px_12px_0px_0px_black]' : 'shadow-[8px_8px_0px_0px_black]'}`}
               whileHover={{ y: -8 }}
             >
@@ -591,7 +591,7 @@ function FAQ() {
                   <span className="font-black text-xl md:text-2xl uppercase tracking-tighter pr-8">{item.q}</span>
                   <motion.div
                     animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
                     className={`flex-shrink-0 w-10 h-10 border-4 ${openIndex === i ? 'border-white bg-[#F0C020]' : 'border-black bg-[#1040C0]'} flex items-center justify-center`}
                   >
                     <ChevronDown className={`w-6 h-6 ${openIndex === i ? 'text-black' : 'text-white'}`} strokeWidth={3} />
@@ -600,7 +600,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <div className={`p-6 md:p-8 pt-0 font-medium text-lg border-t-4 ${openIndex === i ? 'bg-[#FFF9C4] border-black text-black' : 'border-transparent'}`}>

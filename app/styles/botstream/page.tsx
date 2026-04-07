@@ -45,7 +45,7 @@ function FadeUp({ children, delay = 0, className = "", style }: { children: Reac
   return (
     <motion.div ref={ref} className={className} style={style} initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
     >
       {children}
     </motion.div>
@@ -72,7 +72,7 @@ function StaggerContainer({ children, className = "", style }: { children: React
 
 const staggerItem: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] } },
 }
 
 const PRODUCT_NAME = 'BotStream'
@@ -121,7 +121,7 @@ function Hero() {
             `radial-gradient(circle at 50% 50%, ${tokens.accent1}10 0%, transparent 50%)`
           ]
         }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 5, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
       />
 
       <div className="max-w-6xl mx-auto px-6 py-12 w-full relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -325,7 +325,7 @@ function Intelligence() {
               d="M0,50 Q25,20 50,50 T100,50 L100,100 L0,100 Z"
               fill={tokens.accent1}
               animate={{ d: ["M0,50 Q25,20 50,50 T100,50 L100,100 L0,100 Z", "M0,50 Q25,80 50,50 T100,50 L100,100 L0,100 Z", "M0,50 Q25,20 50,50 T100,50 L100,100 L0,100 Z"] }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+              transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
            />
          </svg>
        </div>

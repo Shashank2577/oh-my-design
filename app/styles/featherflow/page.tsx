@@ -37,7 +37,7 @@ const flockingLayout: import('framer-motion').Variants = {
 
 const featherDriftHover = {
   rotate: [0, 5, -5, 0],
-  transition: { duration: 1.5, ease: 'easeInOut' as const }
+  transition: { duration: 1.5, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }
 }
 
 function FlockingContainer({ children, className }: { children: React.ReactNode, className?: string }) {
@@ -106,7 +106,7 @@ export default function FeatherFlowPage() {
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
         className="fixed top-0 left-0 right-0 z-50 px-8 py-6 flex justify-between items-center backdrop-blur-md"
         style={{ borderBottom: `1px solid ${TOKENS.border}` }}
       >
@@ -138,7 +138,7 @@ export default function FeatherFlowPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
             className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent to-[#F1F5F9] opacity-50"
             style={{
               backgroundImage: `radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.1) 0%, transparent 60%)`
@@ -193,7 +193,7 @@ export default function FeatherFlowPage() {
             {/* Circular sequencer mock */}
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+              transition={{ duration: 60, repeat: Infinity, ease: [0, 0, 1, 1] as [number, number, number, number] }}
               className="absolute w-80 h-80 rounded-full border border-dashed"
               style={{ borderColor: TOKENS.accent1 }}
             />
@@ -256,13 +256,13 @@ export default function FeatherFlowPage() {
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] as [number, number, number, number] }}
               className="aspect-square rounded-full p-8 flex items-center justify-center relative"
               style={{ backgroundImage: `linear-gradient(135deg, ${TOKENS.surface} 0%, #E2E8F0 100%)`, boxShadow: `0 20px 50px ${TOKENS.border}` }}
             >
                <motion.div
                  animate={{ y: [0, -15, 0], rotate: [0, 2, -2, 0] }}
-                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                 transition={{ repeat: Infinity, duration: 6, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] }}
                >
                  <div className="w-64 h-64 rounded-full flex items-center justify-center" style={{ backgroundColor: TOKENS.accent1 }}>
                    <Bird size={80} color="white" />
