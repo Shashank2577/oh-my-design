@@ -79,7 +79,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       ref={ref}
       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.2, delay, ease: 'linear' }}
+      transition={{ duration: 0.2, delay, ease: [0.23, 1, 0.32, 1] }}
     >
       {children}
     </motion.div>
@@ -108,7 +108,7 @@ function StaggerContainer({ children }: { children: React.ReactNode }) {
 
 const staggerItem = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.15, ease: 'linear' } as any },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] } as any },
 }
 
 // ─────────────────────────────────────────────
@@ -592,7 +592,7 @@ function FAQ() {
                 <motion.div
                   initial={false}
                   animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.2, ease: 'linear' }}
+                  transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
                   <div className="px-6 pb-6 pt-2">
