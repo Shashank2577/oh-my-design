@@ -11,7 +11,7 @@ export interface StyleMeta {
 
 export const STYLES: StyleMeta[] = [
   // --- V1 Original Styles ---
-  { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: true, version: 'V1' },
+  { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#3A2E28', built: true, version: 'V1' },
   { slug: 'art-deco', name: 'Art Deco', category: 'Elegant', vibe: 'Luxurious 1920s glamour', bestFor: 'Luxury brands, Hotels', accentColor: '#D4AF37', built: true, version: 'V1' },
   { slug: 'bauhaus', name: 'Bauhaus', category: 'Minimal', vibe: 'Functionalist, geometric minimalism', bestFor: 'Design tools, Architecture sites', accentColor: '#E63329', built: true, version: 'V1' },
   { slug: 'bold-typography', name: 'Bold Typography', category: 'Creative', vibe: 'Type-driven design', bestFor: 'Content platforms, Editorial sites', accentColor: '#000000', built: true, version: 'V1' },
@@ -106,7 +106,6 @@ export const STYLES: StyleMeta[] = [
   { slug: 'git-glow', name: 'GitGlow', category: 'Tech', vibe: 'Spatial version control history', bestFor: 'Developer tools, Repositories', accentColor: '#F97316', built: true, version: 'V3' },
   { slug: 'api-arc', name: 'ApiArc', category: 'Tech', vibe: 'Architectural API bridge', bestFor: 'Developer experience, APIs', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'secure-sent', name: 'SecureSent', category: 'Tech', vibe: 'High-fidelity encrypted vaults', bestFor: 'Security tools, Encrypted comms', accentColor: '#10B981', built: true, version: 'V3' },
-  ]
 
   // --- V3 Merged Batches ---
   { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Technical control center', bestFor: 'AI Ops, Model monitoring', accentColor: '#00D1FF', built: true, version: 'V3' },

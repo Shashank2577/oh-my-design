@@ -10,7 +10,7 @@ import {
   Maximize2, 
   ChevronRight, 
   ArrowRight,
-  Zap,
+  Zap, Globe,
   Award,
   Users,
   Target,

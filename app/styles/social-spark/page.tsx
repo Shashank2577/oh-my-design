@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Zap, 
-  Sparkles, 
+  Sparkles, MousePointer2,
   Share2, 
   MessageCircle, 
   Heart, 

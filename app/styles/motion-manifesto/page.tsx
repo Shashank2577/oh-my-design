@@ -16,14 +16,14 @@ import {
   Video,
   Share2,
   MousePointer2,
-  Move,
+  Move, Target,
   Flame,
   LayoutGrid
 } from 'lucide-react'
 import { Inter, Space_Grotesk } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-const space = Space_Grotesk({ subsets: ['latin'], weight: ['400', '700', '900'] })
+const space = Space_Grotesk({ subsets: ['latin'], weight: ['400', '700'] })
 
 // --- Design Tokens ---
 const tokens = {

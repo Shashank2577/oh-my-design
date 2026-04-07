@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { 
   Cpu, 
   Terminal, 
-  Zap, 
+  Zap, Globe,
   Activity, 
   TrendingUp, 
   ShieldCheck, 

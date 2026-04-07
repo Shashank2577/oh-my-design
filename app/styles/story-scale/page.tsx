@@ -12,7 +12,7 @@ import {
   ArrowRight,
   Sparkles,
   Zap,
-  Target,
+  Target, Globe,
   Users,
   Video,
   Film,

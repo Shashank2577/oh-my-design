@@ -189,7 +189,7 @@ const Features = () => (
           { title: 'Global Sync', desc: 'Sub-ms multi-device synchronization for high-stakes digital agency environments.', icon: Activity },
           { title: 'Foundry Logic', desc: 'A proprietary creative engine that builds unique visual typefaces for your brand story.', icon: Palette },
           { title: 'Network Vault', desc: 'Encrypted storage for proprietary talent data and high-value interaction logs.', icon: ShieldCheck },
-          { title: '360 Analytics', desc: 'Predictive ROI analytics that map the long-term impact of emotional brand loyalty.', icon: TrendingUp }
+          { title: '360 Analytics', desc: 'Predictive ROI analytics that map the long-term impact of emotional brand loyalty.', icon: TrendingUpOriginal }
         ].map((feature, i) => (
           <OrbitCard key={i} title={`PROTOCOL_0${i + 1}`}>
             <div className="w-16 h-16 border border-white/10 flex items-center justify-center mb-10 rotate-45 group-hover:rotate-0 transition-transform duration-500 bg-white/5">
@@ -275,7 +275,7 @@ const Footer = () => (
 )
 
 const ShieldCheck = ({ className, size }: any) => <ShieldCheckOriginal className={className} size={size} />
-import { ShieldCheck as ShieldCheckOriginal } from 'lucide-react'
+import { ShieldCheck as ShieldCheckOriginal, TrendingUp as TrendingUpOriginal } from 'lucide-react'
 
 export default function AdAgency360() {
   return (

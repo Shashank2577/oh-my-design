@@ -19,7 +19,7 @@ import {
   Search,
   Layout,
   Layers,
-  Sparkles
+  Sparkles, Cpu, Clock
 } from 'lucide-react'
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
 

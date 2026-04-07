@@ -20,7 +20,7 @@ import {
   Box,
   FileText,
   Hammer,
-  History,
+  History, Users,
   Cloud
 } from 'lucide-react'
 import { Space_Mono, Barlow, Inter } from 'next/font/google'
