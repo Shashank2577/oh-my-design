@@ -11,6 +11,7 @@
 import { motion, useReducedMotion, useInView, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { Instrument_Sans, Inter, JetBrains_Mono } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Brain, Search, Target, Compass, Network, Activity, 
   BarChart3, Globe, Lock, ArrowRight, Check, Star, 
@@ -39,6 +40,38 @@ const monoFont = JetBrains_Mono({
 })
 
 // ─────────────────────────────────────────────
+const PROMPT = `
+### 99. MarketMind (Strategic Consulting)
+**Design Philosophy & Vibe**: Cerebral, interconnected, and illuminating. MarketMind is about "Seeing the Unseen." It uses abstract, organic "thought" visualizations—neurons, neural networks, and glowing pathways—to represent strategy. The vibe is "The War Room"—dimly lit, high-tech, and focused on the big picture. It uses soft, ethereal transitions to suggest complex ideas coming into focus.
+
+**Design Token System**:
+- **Background**: \`#0A0C10\` (Deep Strategist Blue)
+- **Surface**: \`rgba(20, 25, 35, 0.6)\` (Frosted Glass)
+- **Accent 1**: \`#00D1FF\` (Synapse Blue)
+- **Accent 2**: \`#7000FF\` (Intuition Purple)
+- **Border**: \`1px solid rgba(0, 209, 255, 0.1)\`
+- **Text High**: \`#E0E6ED\`
+- **Text Low**: \`#5C6B7A\`
+
+**Typography System**:
+- **Primary Font**: **Instrument Sans** (Headings - Precise, modern)
+- **Secondary Font**: **Inter** (Body/UI - Reliable)
+- **Scale**: Hero (88px), H1 (56px), H2 (28px), Body (18px)
+
+**Motion Architecture (The "Depth" Factor)**:
+- **Synapse Pulse**: \`opacity: [0.3, 1, 0.3], scale: [1, 1.05, 1]\`, \`transition: { repeat: Infinity, duration: 4 }\`.
+- **Node Expansion**: \`layoutId\` for connecting circles that grow into data modals.
+- **Float Parallax**: Background "Thought-Particles" move in response to device orientation (gyroscope) or mouse coordinates.
+
+**Niche-Specific Section Requirements**:
+- **Competitor Landscape Map**: A Voronoi diagram where each cell represents a competitor. The user's "Market Share" is a central glowing core that they can "drag" to see how it affects neighboring cells, with cells "compressing" or "stretching" with fluid physics.
+
+**Component Styling**:
+- **Buttons**: Transparent with a "liquid-glow" border that flows around the perimeter.
+- **Cards**: Glassmorphism with a \`blur(30px)\` and a subtle internal "shimmer" effect.
+- **Inputs**: Search bars that "expand" from a single glowing dot into a full input field.
+`;
+
 // DESIGN TOKENS
 // ─────────────────────────────────────────────
 const tokens = {
@@ -728,6 +761,7 @@ export default function MarketMindPage() {
         <Contact />
       </main>
       <Footer />
+      <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }

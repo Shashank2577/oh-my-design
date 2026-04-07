@@ -3,10 +3,44 @@
 import { motion, useReducedMotion, useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Outfit } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
 import {
   Check, ArrowRight, ChevronDown, Circle, Square, Triangle, Quote,
   Layout, MousePointer, PaintBucket, Type, Layers, Box
 } from 'lucide-react'
+
+const PROMPT = `
+# Design Style: Bauhaus
+
+## 1. Design Philosophy
+
+The Bauhaus style embodies the revolutionary principle "form follows function" while celebrating pure geometric beauty and primary color theory. This is **constructivist modernism**—every element is deliberately composed from circles, squares, and triangles. The aesthetic should evoke 1920s Bauhaus posters: bold, asymmetric, architectural, and unapologetically graphic.
+
+**Vibe**: Constructivist, Geometric, Modernist, Artistic-yet-Functional, Bold, Architectural
+
+**Core Concept**: The interface is not merely a layout—it is a **geometric composition**. Every section is constructed rather than designed. Think of the page as a Bauhaus poster brought to life: shapes overlap, borders are thick and deliberate, colors are pure primaries (Red #D02020, Blue #1040C0, Yellow #F0C020), and everything is grounded by stark black (#121212) and clean white.
+
+**Key Characteristics**:
+
+- **Geometric Purity**: All decorative elements derive from circles, squares, and triangles
+- **Hard Shadows**: 4px and 8px offset shadows (never soft/blurred) create depth through layering
+- **Color Blocking**: Entire sections use solid primary colors as backgrounds
+- **Thick Borders**: 2px and 4px black borders define every major element
+- **Asymmetric Balance**: Grids are used but intentionally broken with overlapping elements
+- **Constructivist Typography**: Massive uppercase headlines (text-6xl to text-8xl) with tight tracking
+- **Functional Honesty**: No gradients, no subtle effects—everything is direct and declarative
+
+## 2. Design Token System (The DNA)
+
+### Colors (Single Palette - Light Mode)
+
+The palette is strictly limited to the Bauhaus primaries, plus stark black and white.
+
+- \`background\`: \`#F0F0F0\` (Off-white canvas)
+- \`foreground\`: \`#121212\` (Stark Black)
+- \`primary-red\`: \`#D02020\` (Bauhaus Red)
+- \`primary-blue\`: \`#1040C0\` (Bauhaus Blue)
+`;
 
 // ─────────────────────────────────────────────
 // FONTS
@@ -745,6 +779,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
+      <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }

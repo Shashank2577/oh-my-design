@@ -4,6 +4,40 @@ import React, { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check, ChevronDown, Menu, Star, PenTool, Layout, Box, Users, Settings, Zap, Play } from 'lucide-react'
 import { Inter, Space_Mono } from 'next/font/google'
+import { CopyPromptButton } from '@/components/CopyPromptButton'
+
+const PROMPT = `
+# Design System Inspiration of Figma
+
+## 1. Visual Theme & Atmosphere
+
+Figma's interface is the design tool that designed itself — a masterclass in typographic sophistication where a custom variable font (figmaSans) modulates between razor-thin (weight 320) and bold (weight 700) with stops at unusual intermediates (330, 340, 450, 480, 540) that most type systems never explore. This granular weight control gives every text element a precisely calibrated visual weight, creating hierarchy through micro-differences rather than the blunt instrument of "regular vs bold."
+
+The page presents a fascinating duality: the interface chrome is strictly black-and-white (literally only \`#000000\` and \`#ffffff\` detected as colors), while the hero section and product showcases explode with vibrant multi-color gradients — electric greens, bright yellows, deep purples, hot pinks. This separation means the design system itself is colorless, treating the product's colorful output as the hero content. Figma's marketing page is essentially a white gallery wall displaying colorful art.
+
+What makes Figma distinctive beyond the variable font is its circle-and-pill geometry. Buttons use 50px radius (pill) or 50% (perfect circle for icon buttons), creating an organic, tool-palette-like feel. The dashed-outline focus indicator (\`dashed 2px\`) is a deliberate design choice that echoes selection handles in the Figma editor itself — the website's UI language references the product's UI language.
+
+**Key Characteristics:**
+- Custom variable font (figmaSans) with unusual weight stops: 320, 330, 340, 450, 480, 540, 700
+- Strictly black-and-white interface chrome — color exists only in product content
+- figmaMono for uppercase technical labels with wide letter-spacing
+- Pill (50px) and circular (50%) button geometry
+- Dashed focus outlines echoing Figma's editor selection handles
+- Vibrant multi-color hero gradients (green, yellow, purple, pink)
+- OpenType \`"kern"\` feature enabled globally
+- Negative letter-spacing throughout — even body text at -0.14px to -0.26px
+
+## 2. Color Palette & Roles
+
+### Primary
+- **Pure Black** (\`#000000\`): All text, all solid buttons, all borders. The sole "color" of the interface.
+- **Pure White** (\`#ffffff\`): All backgrounds, white buttons, text on dark surfaces. The other half of the binary.
+
+*Note: Figma's marketing site uses ONLY these two colors for its interface layer. All vibrant colors appear exclusively in product screenshots, hero gradients, and embedded content.*
+
+### Surface & Background
+- **Pure White** (\`#ffffff\`): Primary page background and card surfaces.
+`;
 
 // Using Inter with a wide range of weights as a proxy for figmaSans
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans', weight: ['300', '400', '500', '600', '700'] })
@@ -570,6 +604,7 @@ export default function StylePage() {
         <Newsletter />
       </main>
       <Footer />
+      <CopyPromptButton prompt={PROMPT} />
     </div>
   )
 }
