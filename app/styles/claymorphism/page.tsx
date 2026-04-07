@@ -5,7 +5,7 @@ import {
   Star, Check, Layout, Palette, Code2, BarChart, Lock, Settings
 } from 'lucide-react'
 import * as React from 'react'
-import { AnimatedSection, AnimatedButton, AnimatedCard, AnimatedFAQ, AnimatedNewsletterForm, BackgroundBlobs } from './motion-wrappers'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // 1. Font imports via next/font/google
 const nunito = Nunito({
@@ -42,6 +42,147 @@ const shadows = {
   button: '12px 12px 24px rgba(139, 92, 246, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.4), inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.1)',
   buttonHover: '16px 16px 32px rgba(139, 92, 246, 0.4), -10px -10px 20px rgba(255, 255, 255, 0.5), inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.1)',
   pressed: 'inset 10px 10px 20px #d9d4e3, inset -10px -10px 20px #ffffff',
+}
+
+const EASE = [0.23, 1, 0.32, 1] as const;
+
+function AnimatedSection({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) {
+  return (
+    <motion.section
+      className={className}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay, ease: EASE }}
+    >
+      {children}
+    </motion.section>
+  )
+}
+
+function AnimatedButton({ children, className, style, hoverShadow, activeShadow, ...props }: any) {
+  return (
+    <motion.button
+      className={className}
+      style={style}
+      whileHover={{ scale: 1.02, boxShadow: hoverShadow }}
+      whileTap={{ scale: 0.98, boxShadow: activeShadow }}
+      transition={{ duration: 0.3, ease: EASE }}
+      {...props}
+    >
+      {children}
+    </motion.button>
+  )
+}
+
+function AnimatedCard({ children, className, style, hoverShadow }: any) {
+  return (
+    <motion.div
+      className={className}
+      style={style}
+      whileHover={{ y: -5, boxShadow: hoverShadow }}
+      transition={{ duration: 0.4, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function AnimatedFAQ({ question, answer, tokens, shadows }: any) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <div
+      className="p-6 md:p-8 rounded-[32px] cursor-pointer backdrop-blur-xl"
+      style={{ backgroundColor: tokens.cardBg, boxShadow: shadows.card }}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <div className="flex justify-between items-center gap-4">
+        <h3 className="font-black text-xl" style={{ fontFamily: 'var(--font-heading)', color: tokens.foreground }}>
+          {question}
+        </h3>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.4, ease: EASE }}
+          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+          style={{ backgroundColor: tokens.background, boxShadow: shadows.button }}
+        >
+          <span style={{ color: tokens.accent, fontWeight: 'bold' }}>↓</span>
+        </motion.div>
+      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <p className="pt-4 font-medium" style={{ color: tokens.muted }}>
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function AnimatedNewsletterForm({ tokens, shadows }: any) {
+  return (
+    <form className="relative z-10 flex flex-col sm:flex-row gap-4 max-w-xl mx-auto" onSubmit={(e) => e.preventDefault()}>
+      <motion.input
+        type="email"
+        placeholder="Enter your email"
+        className="flex-grow h-14 px-6 rounded-[24px] bg-transparent outline-none font-bold"
+        style={{ color: tokens.foreground, boxShadow: shadows.pressed }}
+        whileFocus={{ scale: 1.01 }}
+        transition={{ duration: 0.3, ease: EASE }}
+      />
+      <AnimatedButton
+        className="h-14 px-8 rounded-[24px] font-bold text-white whitespace-nowrap"
+        style={{ background: `linear-gradient(to bottom right, #A78BFA, ${tokens.accent})`, boxShadow: shadows.button }}
+        hoverShadow={shadows.buttonHover}
+        activeShadow={shadows.pressed}
+      >
+        Subscribe Now
+      </AnimatedButton>
+    </form>
+  )
+}
+
+function BackgroundBlobs() {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      <motion.div
+        animate={{
+          y: [0, -30, 0],
+          x: [0, 20, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: EASE
+        }}
+        className="absolute top-[10%] left-[5%] w-96 h-96 rounded-full blur-3xl opacity-20"
+        style={{ backgroundColor: '#7C3AED' }}
+      />
+      <motion.div
+        animate={{
+          y: [0, 40, 0],
+          x: [0, -20, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: EASE
+        }}
+        className="absolute bottom-[10%] right-[5%] w-[30rem] h-[30rem] rounded-full blur-3xl opacity-20"
+        style={{ backgroundColor: '#DB2777' }}
+      />
+    </div>
+  )
 }
 
 // ─────────────────────────────────────────────
