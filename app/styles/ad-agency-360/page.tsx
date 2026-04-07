@@ -276,7 +276,8 @@ const Footer = () => (
 )
 
 const ShieldCheck = ({ className, size }: any) => <ShieldCheckOriginal className={className} size={size} />
-import { ShieldCheck as ShieldCheckOriginal } from 'lucide-react'
+import { ShieldCheck as ShieldCheckOriginal, TrendingUp as TrendingUpIcon } from 'lucide-react'
+const TrendingUp = ({ className, size }: any) => <TrendingUpIcon className={className} size={size} />
 
 export default function AdAgency360() {
   return (

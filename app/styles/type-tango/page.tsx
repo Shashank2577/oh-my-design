@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { 
   Type, 
-  Sparkles, 
+  Sparkles,
+  Globe,
   Layers, 
   PenTool, 
   Maximize2, 
