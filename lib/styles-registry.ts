@@ -67,47 +67,11 @@ export const STYLES: StyleMeta[] = [
   { slug: 'figma', name: 'Figma', category: 'Creative', vibe: 'Typographic sophistication', bestFor: 'Design tools, Creativity', accentColor: '#000000', built: true, version: 'V2' },
 
   // --- V3 Animation Heavy Styles ---
-  { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Surgical & Scientific—cold, clean, and hyper-organized', bestFor: 'ML Model Lifecycle tools', accentColor: '#8B5CF6', built: true, version: 'V3' },
-  { slug: 'tensor-track', name: 'TensorTrack', category: 'AI', vibe: 'High-speed data streaming and real-time telemetry', bestFor: 'AI/ML infrastructure dashboards', accentColor: '#FF4D4D', built: true, version: 'V3' },
-  { slug: 'layer-logic', name: 'LayerLogic', category: 'Tech', vibe: 'Mechanical precision and tactile logic automation', bestFor: 'Workflow builders and visualization', accentColor: '#F59E0B', built: true, version: 'V3' },
-  { slug: 'semantic-sync', name: 'SemanticSync', category: 'AI', vibe: 'Fluid spatial intelligence and interconnected embeddings', bestFor: 'Vector databases and NLP tools', accentColor: '#38BDF8', built: true, version: 'V3' },
   { slug: 'velocity-scoreboard', name: 'Velocity Scoreboard', category: 'Sports', vibe: 'High-intensity sports analytics', bestFor: 'Live match dashboards', accentColor: '#CCFF00', built: true, version: 'V3' },
   { slug: 'neural-note', name: 'NeuralNote', category: 'AI', vibe: 'AI-native thought-graph', bestFor: 'Knowledge management tools', accentColor: '#6366F1', built: true, version: 'V3' },
   { slug: 'tail-wag', name: 'TailWag', category: 'Pets', vibe: 'Joyful pet adoption', bestFor: 'Pet care services', accentColor: '#F59E0B', built: true, version: 'V3' },
   { slug: 'fragline', name: 'FragLine', category: 'Sports', vibe: 'Cyber-tabloid eSports HUD', bestFor: 'Competitive gaming portfolios', accentColor: '#00F3FF', built: true, version: 'V3' },
   { slug: 'prism-portfolio', name: 'PrismPortfolio', category: 'Marketing', vibe: 'Refractive visionary agency', bestFor: 'Creative design studios', accentColor: '#00FFF0', built: true, version: 'V3' },
-  { slug: 'fan-voice', name: 'FanVoice', category: 'Sports', vibe: 'Community, democratic, vibrant', bestFor: 'Sports community forums', accentColor: '#FF005C', built: true, version: 'V3' },
-  { slug: 'stream-stack', name: 'StreamStack', category: 'Tech', vibe: 'Modular, immersive, control-centric', bestFor: 'Multi-stream viewing, eSports', accentColor: '#9146FF', built: true, version: 'V3' },
-  { slug: 'bet-edge', name: 'BetEdge', category: 'Sports', vibe: 'Precise, fast, high-stakes', bestFor: 'Sports Betting, Finance', accentColor: '#10B981', built: true, version: 'V3' },
-  { slug: 'retro-league', name: 'RetroLeague', category: 'Sports', vibe: 'Nostalgic, pixelated, playful', bestFor: 'Classic Sports gaming, eSports', accentColor: '#FF00FF', built: true, version: 'V3' },
-  { slug: 'drillmaster', name: 'DrillMaster', category: 'Sports', vibe: 'Tactical, precise, educational playbook', bestFor: 'Coaching apps, Strategy tools', accentColor: '#FACC15', built: true, version: 'V3' },
-  { slug: 'fancave', name: 'FanCave', category: 'Sports', vibe: 'Premium, rare 3D collectible vault', bestFor: 'NFTs, Collectibles, Prestige items', accentColor: '#D4AF37', built: true, version: 'V3' },
-  { slug: 'progear', name: 'ProGear', category: 'Tech', vibe: 'Industrial, engineering excellence, telemetry', bestFor: 'Hardware sales, eSports gear', accentColor: '#39FF14', built: true, version: 'V3' },
-
-  // --- V3 Batch 3 Sports Styles ---
-  { slug: 'courtside', name: 'CourtSide', category: 'Sports', vibe: 'High-gloss arena with rebound physics', bestFor: 'Basketball analytics, sports platforms', accentColor: '#FF6B00', built: true, version: 'V3' },
-  { slug: 'racetrack', name: 'RaceTrack', category: 'Sports', vibe: 'Aerodynamic telemetry dashboard', bestFor: 'Motorsport, high-speed analytics', accentColor: '#E10600', built: true, version: 'V3' },
-  { slug: 'combatzone', name: 'CombatZone', category: 'Sports', vibe: 'Underground fight club, raw and gritty', bestFor: 'MMA, boxing, extreme fitness', accentColor: '#D32F2F', built: true, version: 'V3' },
-  { slug: 'skatepark', name: 'SkatePark', category: 'Sports', vibe: 'Rebellious street culture, gravity-defying', bestFor: 'Action sports, community tracking', accentColor: '#FF00FF', built: true, version: 'V3' },
-
-  // --- V3 Batch 7 Pet Styles ---
-  { slug: 'barkboxer', name: 'BarkBoxer', category: 'Pets', vibe: 'The Joy of Unboxing', bestFor: 'Subscription Box', accentColor: '#FF6B00', built: true, version: 'V3' },
-  { slug: 'petpals', name: 'PetPals', category: 'Pets', vibe: 'A Community of Tails', bestFor: 'Social Networking', accentColor: '#FBBF24', built: true, version: 'V3' },
-  { slug: 'groomglide', name: 'GroomGlide', category: 'Pets', vibe: 'Satisfyingly Clean', bestFor: 'Grooming Salon', accentColor: '#22D3EE', built: true, version: 'V3' },
-  { slug: 'fishtank', name: 'FishTank', category: 'Tech', vibe: 'Submerged Intelligence', bestFor: 'Aquarium Tech', accentColor: '#94D2BD', built: true, version: 'V3' },
-
-  // --- V3 Batch 8 Pet Styles ---
-  { slug: 'featherflow', name: 'FeatherFlow', category: 'Pets', vibe: 'Light as air, delicate and rhythmic', bestFor: 'Bird care, Aviaries', accentColor: '#38BDF8', built: true, version: 'V3' },
-  { slug: 'reptileroom', name: 'ReptileRoom', category: 'Pets', vibe: 'Primal, precise, cold-blooded tech', bestFor: 'Exotic pet care, Terrariums', accentColor: '#84CC16', built: true, version: 'V3' },
-  { slug: 'rescuerhythm', name: 'RescueRhythm', category: 'Pets', vibe: 'Emotional, urgent, pulse-driven', bestFor: 'Animal rescue, Charity', accentColor: '#E11D48', built: true, version: 'V3' },
-  { slug: 'pawstep', name: 'PawStep', category: 'Pets', vibe: 'Structured, instructional, positive', bestFor: 'Dog training, Obedience', accentColor: '#65A30D', built: true, version: 'V3' },
-
-  // --- V3 Batch 6 Pet Styles ---
-  { slug: 'vetflow', name: 'VetFlow', category: 'Pets', vibe: 'Professional, calming, and transparent', bestFor: 'Veterinary clinics, Pet healthcare', accentColor: '#0EA5E9', built: true, version: 'V3' },
-  { slug: 'pawsitive-tech', name: 'Pawsitive Tech', category: 'Pets', vibe: 'High-tech, outdoor-ready, and energetic', bestFor: 'Pet trackers, GPS collars', accentColor: '#84CC16', built: true, version: 'V3' },
-  { slug: 'kibblecloud', name: 'KibbleCloud', category: 'Pets', vibe: 'Fresh, appetizing, and effortless', bestFor: 'Pet food subscriptions', accentColor: '#EA580C', built: true, version: 'V3' },
-  { slug: 'whiskerwatch', name: 'WhiskerWatch', category: 'Pets', vibe: 'Intimate, observant, and sophisticated', bestFor: 'Cat sitting, Pet cameras', accentColor: '#FDE047', built: true, version: 'V3' },
-
   { slug: 'brand-story', name: 'BrandStory', category: 'Marketing', vibe: 'Cinematic brand legacy', bestFor: 'Premium storytelling', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'ad-metric', name: 'AdMetric', category: 'Tech', vibe: 'High-frequency ad-tech dashboard', bestFor: 'Marketing analytics', accentColor: '#00FF41', built: true, version: 'V3' },
   { slug: 'folio-flux', name: 'FolioFlux', category: 'Creative', vibe: 'Adaptive morphing portfolio', bestFor: 'Creative agencies', accentColor: '#FF3E00', built: true, version: 'V3' },
@@ -129,45 +93,66 @@ export const STYLES: StyleMeta[] = [
   { slug: 'code-flow', name: 'CodeFlow', category: 'Tech', vibe: 'Spatial repository visualization', bestFor: 'Dev tools, Git GUIs', accentColor: '#3B82F6', built: true, version: 'V3' },
   { slug: 'prompt-palace', name: 'PromptPalace', category: 'AI', vibe: 'Luxury LLM interface & playground', bestFor: 'Prompt engineering', accentColor: '#D4AF37', built: true, version: 'V3' },
   { slug: 'synth-mind', name: 'SynthMind', category: 'AI', vibe: 'Generative creative intelligence', bestFor: 'AI art & music tools', accentColor: '#7000FF', built: true, version: 'V3' },
+  { slug: 'copy-cutter', name: 'CopyCutter', category: 'Marketing', vibe: 'Surgical editorial brutalism', bestFor: 'Content marketing, Magazines', accentColor: '#FF0000', built: true, version: 'V3' },
+  { slug: 'social-spark', name: 'SocialSpark', category: 'Marketing', vibe: 'High-energy rewarding engagement', bestFor: 'Social platforms, Communities', accentColor: '#FF4DAB', built: true, version: 'V3' },
+  { slug: 'influence-infinity', name: 'InfluenceInfinity', category: 'Marketing', vibe: 'Premium interconnected influencers', bestFor: 'Agency networking, Premium brands', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'campaign-cradle', name: 'CampaignCradle', category: 'Marketing', vibe: 'Structural blueprint planning', bestFor: 'Strategy tools, B2B marketing', accentColor: '#FFD700', built: true, version: 'V3' },
+  { slug: 'studio-stack', name: 'StudioStack', category: 'Creative', vibe: 'Cinematic digital darkroom', bestFor: 'Photography, Studio portfolios', accentColor: '#FFFFFF', built: true, version: 'V3' },
+  ]
 
-  // --- V3 Batch 11 Pet Styles ---
-  { slug: 'pet-memorial', name: 'PetMemorial', category: 'Pets', vibe: 'The Eternal Garden, peaceful, respectful', bestFor: 'Tributes, memorials', accentColor: '#FAD02C', built: true, version: 'V3' },
-  { slug: 'adopt-flow', name: 'AdoptFlow', category: 'Pets', vibe: 'The Journey Home, progression, anticipation', bestFor: 'Pet adoption workflow', accentColor: '#6C5CE7', built: true, version: 'V3' },
+  // --- V3 Merged Batches ---
+  { slug: 'model-master', name: 'ModelMaster', category: 'AI', vibe: 'Technical control center', bestFor: 'AI Ops, Model monitoring', accentColor: '#00D1FF', built: true, version: 'V3' },
+  { slug: 'tensor-track', name: 'TensorTrack', category: 'AI', vibe: 'High-performance tensor visualization', bestFor: 'Deep learning analytics', accentColor: '#FF3E00', built: true, version: 'V3' },
+  { slug: 'layer-logic', name: 'LayerLogic', category: 'Tech', vibe: 'Layered information architecture', bestFor: 'Software design tools', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'semantic-sync', name: 'SemanticSync', category: 'AI', vibe: 'Concept-mapping intelligence', bestFor: 'Knowledge graphs', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'fan-voice', name: 'FanVoice', category: 'Sports', vibe: 'Community-driven momentum', bestFor: 'Fan engagement platforms', accentColor: '#F9004D', built: true, version: 'V3' },
+  { slug: 'stream-stack', name: 'StreamStack', category: 'Tech', vibe: 'High-density stream management', bestFor: 'Broadcast tech', accentColor: '#00F3FF', built: true, version: 'V3' },
+  { slug: 'bet-edge', name: 'BetEdge', category: 'Sports', vibe: 'Precision analytics for high-stakes decisions', bestFor: 'Sports betting platforms', accentColor: '#00FF66', built: true, version: 'V3' },
+  { slug: 'retro-league', name: 'RetroLeague', category: 'Sports', vibe: 'Nostalgic eSports aesthetic', bestFor: 'Gaming tournaments', accentColor: '#FAFF00', built: true, version: 'V3' },
+  { slug: 'drillmaster', name: 'DrillMaster', category: 'Sports', vibe: 'Tactical playboarding', bestFor: 'Coaching tools', accentColor: '#FACC15', built: true, version: 'V3' },
+  { slug: 'fancave', name: 'FanCave', category: 'Sports', vibe: 'Interactive collectible vault', bestFor: 'NFTs & Memorabilia', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'progear', name: 'ProGear', category: 'Tech', vibe: 'Mechanical hardware excellence', bestFor: 'Gear reviews & sales', accentColor: '#39FF14', built: true, version: 'V3' },
+  { slug: 'courtside', name: 'CourtSide', category: 'Sports', vibe: 'High-fidelity court analytics', bestFor: 'Basketball/Tennis metrics', accentColor: '#FF6B00', built: true, version: 'V3' },
+  { slug: 'racetrack', name: 'RaceTrack', category: 'Sports', vibe: 'High-velocity F1 telemetry', bestFor: 'Racing dashboards', accentColor: '#FF0000', built: true, version: 'V3' },
+  { slug: 'combatzone', name: 'CombatZone', category: 'Sports', vibe: 'Aggressive HUD aesthetic', bestFor: 'MMA/Boxing analytics', accentColor: '#FF0055', built: true, version: 'V3' },
+  { slug: 'skatepark', name: 'SkatePark', category: 'Sports', vibe: 'Grainy, kinetic skate culture', bestFor: 'Streetwear, Skate brands', accentColor: '#00F3FF', built: true, version: 'V3' },
+  { slug: 'barkboxer', name: 'BarkBoxer', category: 'Pets', vibe: 'Energetic and playful training', bestFor: 'Pet training apps', accentColor: '#FF4DAB', built: true, version: 'V3' },
+  { slug: 'petpals', name: 'PetPals', category: 'Pets', vibe: 'Friendly social connection', bestFor: 'Pet social networks', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'groomglide', name: 'GroomGlide', category: 'Pets', vibe: 'Clean and airy service design', bestFor: 'Pet grooming', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'fishtank', name: 'FishTank', category: 'Tech', vibe: 'Fluid and immersive aquatic tech', bestFor: 'Aquarium management', accentColor: '#00D1FF', built: true, version: 'V3' },
+  { slug: 'featherflow', name: 'FeatherFlow', category: 'Pets', vibe: 'Light as air, delicate and rhythmic', bestFor: 'Bird care', accentColor: '#38BDF8', built: true, version: 'V3' },
+  { slug: 'reptileroom', name: 'ReptileRoom', category: 'Pets', vibe: 'Primal, precise tech', bestFor: 'Exotic pet care', accentColor: '#84CC16', built: true, version: 'V3' },
+  { slug: 'rescuerhythm', name: 'RescueRhythm', category: 'Pets', vibe: 'Emotional, urgent charity design', bestFor: 'Animal rescue', accentColor: '#E11D48', built: true, version: 'V3' },
+  { slug: 'pawstep', name: 'PawStep', category: 'Pets', vibe: 'Structured, positive instruction', bestFor: 'Dog obedience', accentColor: '#65A30D', built: true, version: 'V3' },
+  { slug: 'vetflow', name: 'VetFlow', category: 'Pets', vibe: 'Professional, calming healthcare', bestFor: 'Veterinary clinics', accentColor: '#0EA5E9', built: true, version: 'V3' },
+  { slug: 'pawsitive-tech', name: 'Pawsitive Tech', category: 'Pets', vibe: 'High-tech pet tracking', bestFor: 'GPS collars', accentColor: '#84CC16', built: true, version: 'V3' },
+  { slug: 'kibblecloud', name: 'KibbleCloud', category: 'Pets', vibe: 'Fresh pet food subscription', bestFor: 'Pet food', accentColor: '#EA580C', built: true, version: 'V3' },
+  { slug: 'whiskerwatch', name: 'WhiskerWatch', category: 'Pets', vibe: 'Intimate cat sitting interface', bestFor: 'Cat sitting', accentColor: '#FDE047', built: true, version: 'V3' },
+  { slug: 'pet-memorial', name: 'PetMemorial', category: 'Pets', vibe: 'The Eternal Garden, peaceful', bestFor: 'Tributes', accentColor: '#FAD02C', built: true, version: 'V3' },
+  { slug: 'adopt-flow', name: 'AdoptFlow', category: 'Pets', vibe: 'The Journey Home, anticipation', bestFor: 'Adoption workflow', accentColor: '#6C5CE7', built: true, version: 'V3' },
   { slug: 'pet-shop-hero', name: 'PetShopHero', category: 'Pets', vibe: 'Retail Reward, shiny, satisfying', bestFor: 'Pet e-commerce', accentColor: '#FFD700', built: true, version: 'V3' },
-  { slug: 'zoo-zoom', name: 'ZooZoom', category: 'Pets', vibe: 'The Panoramic Portal, immersive scale', bestFor: 'Virtual zoo, panoramas', accentColor: '#8BC34A', built: true, version: 'V3' },
-
-  // --- V3 Batch 10 Pet Styles ---
-  { slug: 'pet-insurance', name: 'PetInsurance', category: 'Pets', vibe: 'The Digital Vault', bestFor: 'Pet insurance providers', accentColor: '#10B981', built: true, version: 'V3' },
-  { slug: 'puppy-primer', name: 'PuppyPrimer', category: 'Pets', vibe: 'Playful Momentum', bestFor: 'Puppy training', accentColor: '#FF6B6B', built: true, version: 'V3' },
-  { slug: 'cat-nip', name: 'CatNip', category: 'Pets', vibe: 'The Laser Chase', bestFor: 'Cat toys and interactivity', accentColor: '#FF007A', built: true, version: 'V3' },
-  { slug: 'stable-smart', name: 'StableSmart', category: 'Pets', vibe: 'Equestrian Elegance', bestFor: 'Horse care tracking', accentColor: '#2D5A27', built: true, version: 'V3' },
-
-  // --- V3 Batch 9 Pet Styles ---
-  { slug: 'breedbase', name: 'BreedBase', category: 'Pets', vibe: 'Archive Gold / Vellum', bestFor: 'Pet directory, breed history', accentColor: '#D4AF37', built: true, version: 'V3' },
-  { slug: 'petzen', name: 'PetZen', category: 'Pets', vibe: 'Aura Glow / Calm / Zen', bestFor: 'Pet wellness, meditation', accentColor: '#A78BFA', built: true, version: 'V3' },
-  { slug: 'snoutsnack', name: 'SnoutSnack', category: 'Pets', vibe: 'Organic / Earthy / Warm', bestFor: 'Pet nutrition, treats', accentColor: '#D97706', built: true, version: 'V3' },
-  { slug: 'vetbot', name: 'VetBot', category: 'Pets', vibe: 'Clinical / Precise / AI', bestFor: 'Pet healthcare, AI diagnosis', accentColor: '#0077B6', built: true, version: 'V3' },
-
-  // --- V3 Batch 12 Styles ---
-  { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious, collaborative, responsive', bestFor: 'Meeting Assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
-  { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise, tactile, satisfying', bestFor: 'Workflow Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
-  { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'Immersive, high-density, performant', bestFor: 'Dev Tools', accentColor: '#58A6FF', built: true, version: 'V3' },
-  { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Majestic, weight-driven, experimental', bestFor: 'Prompt Engineering', accentColor: '#000000', built: true, version: 'V3' },
-
-  // --- V3 AI Landing Pages (Batch 13) ---
-  { slug: 'vector-vault', name: 'VectorVault', category: 'AI', vibe: 'Geometric, spatial, and vast', bestFor: 'Vector databases, MLOps', accentColor: '#38BDF8', built: true, version: 'V3' },
-  { slug: 'deep-draw', name: 'DeepDraw', category: 'AI', vibe: 'Creative, progressive, and painterly', bestFor: 'AI Art generation, Image editing', accentColor: '#F472B6', built: true, version: 'V3' },
-  { slug: 'agent-orchestra', name: 'AgentOrchestra', category: 'AI', vibe: 'Orchestrated, complex, and systematic', bestFor: 'Multi-agent frameworks, Task delegation', accentColor: '#60A5FA', built: true, version: 'V3' },
-
-  // --- V3 Batch 2 Sports Styles ---
-  { slug: 'trophy-room', name: 'Trophy Room', category: 'Sports', vibe: 'Glorious spatial museum', bestFor: 'Achievements and milestones', accentColor: '#D4AF37', built: true, version: 'V3' },
-  { slug: 'gridiron-flow', name: 'Gridiron Flow', category: 'Sports', vibe: 'Tactical high-impact football', bestFor: 'Sports coaching and analytics', accentColor: '#8B4513', built: true, version: 'V3' },
-  { slug: 'pitchvision', name: 'PitchVision', category: 'Sports', vibe: 'Fluid clinical soccer analytics', bestFor: 'Match analysis and data', accentColor: '#00FF85', built: true, version: 'V3' },
-  { slug: 'e-league-pro', name: 'E-League Pro', category: 'Sports', vibe: 'Hyper-reactive broadcast HUD', bestFor: 'Live streaming overlays', accentColor: '#9146FF', built: true, version: 'V3' },
-
-  // --- V3 Batch 4 Sports Styles ---
-  { slug: 'golfers-edge', name: 'Golfer\'s Edge', category: 'Sports', vibe: 'Serene, precise, and luxurious', bestFor: 'Golf clubs, premium sports', accentColor: '#D4AF37', built: true, version: 'V3' },
-  { slug: 'esports-hub', name: 'Esports Hub', category: 'Sports', vibe: 'Informational, dense, and live', bestFor: 'Gaming news, tournaments', accentColor: '#00FF41', built: true, version: 'V3' },
-  { slug: 'fitgoal', name: 'FitGoal', category: 'Sports', vibe: 'Energetic, fluid, and biological', bestFor: 'Training apps, fitness', accentColor: '#38BDF8', built: true, version: 'V3' },
-  { slug: 'scoutpro', name: 'ScoutPro', category: 'Sports', vibe: 'Analytical, discovery-focused', bestFor: 'Talent scouting, analytics', accentColor: '#00FFC2', built: true, version: 'V3' },
-];
+  { slug: 'zoo-zoom', name: 'ZooZoom', category: 'Pets', vibe: 'Panoramic scale portal', bestFor: 'Virtual zoo', accentColor: '#8BC34A', built: true, version: 'V3' },
+  { slug: 'pet-insurance', name: 'PetInsurance', category: 'Pets', vibe: 'Secure digital insurance vault', bestFor: 'Pet insurance', accentColor: '#10B981', built: true, version: 'V3' },
+  { slug: 'puppy-primer', name: 'PuppyPrimer', category: 'Pets', vibe: 'Playful training momentum', bestFor: 'Puppy training', accentColor: '#FF6B6B', built: true, version: 'V3' },
+  { slug: 'cat-nip', name: 'CatNip', category: 'Pets', vibe: 'Hyper-interactive laser chase', bestFor: 'Cat toys', accentColor: '#FF007A', built: true, version: 'V3' },
+  { slug: 'stable-smart', name: 'StableSmart', category: 'Pets', vibe: 'Equestrian tracking elegance', bestFor: 'Horse care', accentColor: '#2D5A27', built: true, version: 'V3' },
+  { slug: 'breedbase', name: 'BreedBase', category: 'Pets', vibe: 'Archive Gold / Vellum', bestFor: 'Breed directory', accentColor: '#D4AF37', built: true, version: 'V3' },
+  { slug: 'petzen', name: 'PetZen', category: 'Pets', vibe: 'Calm aura wellness', bestFor: 'Pet meditation', accentColor: '#A78BFA', built: true, version: 'V3' },
+  { slug: 'snoutsnack', name: 'SnoutSnack', category: 'Pets', vibe: 'Organic earthy nutrition', bestFor: 'Pet treats', accentColor: '#D97706', built: true, version: 'V3' },
+  { slug: 'vetbot', name: 'VetBot', category: 'Pets', vibe: 'Clinical precise AI', bestFor: 'AI diagnosis', accentColor: '#0077B6', built: true, version: 'V3' },
+  { slug: 'botstream', name: 'BotStream', category: 'AI', vibe: 'Harmonious collaborative AI', bestFor: 'Meeting assistant', accentColor: '#3B82F6', built: true, version: 'V3' },
+  { slug: 'logicgate', name: 'LogicGate', category: 'AI', vibe: 'Precise tactile logic', bestFor: 'Automation', accentColor: '#F59E0B', built: true, version: 'V3' },
+  { slug: 'codeflow', name: 'CodeFlow', category: 'Tech', vibe: 'High-density performant dev tools', bestFor: 'Git GUIs', accentColor: '#58A6FF', built: true, version: 'V3' },
+  { slug: 'promptpalace', name: 'PromptPalace', category: 'AI', vibe: 'Majestic prompt engineering', bestFor: 'LLM interface', accentColor: '#000000', built: true, version: 'V3' },
+  { slug: 'vector-vault', name: 'VectorVault', category: 'AI', vibe: 'Spatial database intelligence', bestFor: 'Vector DBs', accentColor: '#7000FF', built: true, version: 'V3' },
+  { slug: 'deep-draw', name: 'DeepDraw', category: 'AI', vibe: 'Generative artistic unblurring', bestFor: 'AI art generation', accentColor: '#00FFCC', built: true, version: 'V3' },
+  { slug: 'agent-orchestra', name: 'AgentOrchestra', category: 'AI', vibe: 'Multi-agent coordination logic', bestFor: 'AI agents', accentColor: '#6366F1', built: true, version: 'V3' },
+  { slug: 'trophy-room', name: 'Trophy Room', category: 'Sports', vibe: 'Achievement gallery', bestFor: 'Sports portfolios', accentColor: '#FAD02C', built: true, version: 'V3' },
+  { slug: 'gridiron-flow', name: 'Gridiron Flow', category: 'Sports', vibe: 'American football momentum', bestFor: 'Football analytics', accentColor: '#004953', built: true, version: 'V3' },
+  { slug: 'pitchvision', name: 'PitchVision', category: 'Sports', vibe: 'Cricket-driven data pulse', bestFor: 'Cricket platforms', accentColor: '#1D4ED8', built: true, version: 'V3' },
+  { slug: 'e-league-pro', name: 'E-League Pro', category: 'Sports', vibe: 'High-stakes eSports broadcast', bestFor: 'eSports leagues', accentColor: '#7C3AED', built: true, version: 'V3' },
+  { slug: 'golfers-edge', name: 'Golfer\'s Edge', category: 'Sports', vibe: 'Precision golf telemetry', bestFor: 'Golf analytics', accentColor: '#15803D', built: true, version: 'V3' },
+  { slug: 'esports-hub', name: 'Esports Hub', category: 'Sports', vibe: 'Community-driven competitive hub', bestFor: 'eSports communities', accentColor: '#F97316', built: true, version: 'V3' },
+  { slug: 'fitgoal', name: 'FitGoal', category: 'Sports', vibe: 'Living fitness tracker', bestFor: 'Health & Fitness', accentColor: '#FF3D00', built: true, version: 'V3' },
+  { slug: 'scoutpro', name: 'ScoutPro', category: 'Sports', vibe: 'Elite athlete talent engine', bestFor: 'Sports scouting', accentColor: '#000000', built: true, version: 'V3' },
+]

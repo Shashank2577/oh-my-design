@@ -18,10 +18,11 @@ import {
   Video,
   Share2
 } from 'lucide-react'
-import { Playfair_Display, Montserrat, JetBrains_Mono } from 'next/font/google'
+import { Playfair_Display, Montserrat, JetBrains_Mono, Inter } from 'next/font/google'
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700', '900'] })
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '900'] })
+const inter = Inter({ subsets: ['latin'] })
 const mono = JetBrains_Mono({ subsets: ['latin'] })
 
 // --- Design Tokens ---

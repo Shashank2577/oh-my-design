@@ -1,5 +1,5 @@
-// 1. Next.js metadata
-import type { Metadata } from 'next'
+'use client'
+
 import { Nunito, DM_Sans } from 'next/font/google'
 import {
   Star, Check, Layout, Palette, Code2, BarChart, Lock, Settings
@@ -7,12 +7,7 @@ import {
 import * as React from 'react'
 import { AnimatedSection, AnimatedButton, AnimatedCard, AnimatedFAQ, AnimatedNewsletterForm, BackgroundBlobs } from './motion-wrappers'
 
-export const metadata: Metadata = {
-  title: 'Claymorphism Style | Oh My Design',
-  description: 'High-fidelity claymorphism design system implementation.',
-}
-
-// 2. Font imports via next/font/google
+// 1. Font imports via next/font/google
 const nunito = Nunito({
   subsets: ['latin'],
   weight: ['700', '800', '900'],

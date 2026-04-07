@@ -14,7 +14,7 @@ import {
   Heart,
   Flame,
   Target,
-  Dribbble,
+  Globe,
   Timer,
   BarChart3
 } from 'lucide-react'

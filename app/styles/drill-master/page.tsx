@@ -9,6 +9,7 @@ import {
   Users, 
   ChevronRight, 
   Shield, 
+  TrendingUp,
   Play,
   ArrowRight,
   ClipboardList,

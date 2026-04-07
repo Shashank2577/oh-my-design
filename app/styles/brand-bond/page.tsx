@@ -12,6 +12,7 @@ import {
   ChevronDown, 
   ArrowRight,
   HandHeart,
+  TrendingUp,
   Globe,
   Star,
   Zap,
