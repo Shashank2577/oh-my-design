@@ -24,7 +24,8 @@ import {
   Terminal,
   Cpu,
   Layers,
-  LayoutGrid
+  LayoutGrid,
+  Users
 } from 'lucide-react'
 import { JetBrains_Mono, Inter, Space_Grotesk } from 'next/font/google'
 
