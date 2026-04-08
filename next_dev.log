@@ -1,0 +1,222 @@
+
+> oh-my-design@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.14 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 2.5s
+ ○ Compiling /styles/gridiron-flow ...
+ ✓ Compiled /styles/gridiron-flow in 13.8s
+ ⨯ ./app/styles/gridiron-flow/page.tsx
+Module not found: Can't resolve 'next/font/google/target.css'
+Unknown font
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of resolve_internal failed
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+Error while looking up import map: Unknown font
+
+Debug info:
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+
+
+Import traces:
+  Client Component Browser:
+    ./app/styles/gridiron-flow/page.tsx [Client Component Browser]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/styles/gridiron-flow/page.tsx [Client Component SSR]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.5s
+ GET /styles/gridiron-flow 500 in 17831ms
+ ⨯ ./app/styles/gridiron-flow/page.tsx
+Module not found: Can't resolve 'next/font/google/target.css'
+Unknown font
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of resolve_internal failed
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+Error while looking up import map: Unknown font
+
+Debug info:
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+
+
+Import traces:
+  Client Component Browser:
+    ./app/styles/gridiron-flow/page.tsx [Client Component Browser]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/styles/gridiron-flow/page.tsx [Client Component SSR]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./app/styles/gridiron-flow/page.tsx
+Module not found: Can't resolve 'next/font/google/target.css'
+Unknown font
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of resolve_internal failed
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+Error while looking up import map: Unknown font
+
+Debug info:
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+
+
+Import traces:
+  Client Component Browser:
+    ./app/styles/gridiron-flow/page.tsx [Client Component Browser]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/styles/gridiron-flow/page.tsx [Client Component SSR]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./app/styles/gridiron-flow/page.tsx
+Module not found: Can't resolve 'next/font/google/target.css'
+Unknown font
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of resolve_internal failed
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+Error while looking up import map: Unknown font
+
+Debug info:
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+
+
+Import traces:
+  Client Component Browser:
+    ./app/styles/gridiron-flow/page.tsx [Client Component Browser]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/styles/gridiron-flow/page.tsx [Client Component SSR]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./app/styles/gridiron-flow/page.tsx
+Module not found: Can't resolve 'next/font/google/target.css'
+Unknown font
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of resolve_internal failed
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+Error while looking up import map: Unknown font
+
+Debug info:
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+
+
+Import traces:
+  Client Component Browser:
+    ./app/styles/gridiron-flow/page.tsx [Client Component Browser]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/styles/gridiron-flow/page.tsx [Client Component SSR]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./app/styles/gridiron-flow/page.tsx
+Module not found: Can't resolve 'next/font/google/target.css'
+Unknown font
+
+Debug info:
+- Execution of <ModuleAssetContext as AssetContext>::resolve_asset failed
+- Execution of resolve failed
+- Execution of resolve_internal failed
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+Error while looking up import map: Unknown font
+
+Debug info:
+- Execution of NextFontGoogleReplacer::import_map_result failed
+- Execution of *get_font_css_properties failed
+- Execution of font_options_from_query_map failed
+- Unknown font
+
+
+Import traces:
+  Client Component Browser:
+    ./app/styles/gridiron-flow/page.tsx [Client Component Browser]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/styles/gridiron-flow/page.tsx [Client Component SSR]
+    ./app/styles/gridiron-flow/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /styles/gridiron-flow 500 in 70ms
+ ✓ Compiled in 735ms
+ ✓ Compiled /styles/gridiron-flow in 18ms
+ GET /styles/gridiron-flow 200 in 894ms

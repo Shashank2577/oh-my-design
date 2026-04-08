@@ -1,3 +1,9 @@
+export interface StyleVariant {
+  id: string
+  label: string
+  isDefault?: boolean
+}
+
 export interface StyleMeta {
   slug: string
   name: string
@@ -8,6 +14,7 @@ export interface StyleMeta {
   built: boolean // flip to true once the page is created
   version?: 'V1' | 'V2' | 'V3'
   prompt?: string
+  variants?: StyleVariant[]
 }
 
 export const STYLES: StyleMeta[] = [
@@ -148,8 +155,8 @@ export const STYLES: StyleMeta[] = [
   { slug: 'story-scale', name: 'Story Scale', category: 'Marketing', vibe: 'Data-driven narrative growth', bestFor: 'Content platforms, SEO', accentColor: '#4ECDC4', built: true, version: 'V3' },
   { slug: 'type-tango', name: 'Type Tango', category: 'Creative', vibe: 'Kinetic typography motion', bestFor: 'Design studios, Typography', accentColor: '#FFD93D', built: true, version: 'V3' },
   { slug: 'ad-agency-360', name: 'Ad Agency 360', category: 'Marketing', vibe: 'Full-spectrum creative campaigns', bestFor: 'Creative agencies, Media', accentColor: '#FF8A65', built: true, version: 'V3' },
-  { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: true, version: 'V1' },
-  { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FF6B6B', built: true, version: 'V1' },
+  { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: true, version: 'V3', variants: [{ id: 'classic', label: 'Classic Library' }, { id: 'kinetic', label: 'Living Manuscript', isDefault: true }] },
+  { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FF6B6B', built: true, version: 'V3', variants: [{ id: 'classic', label: 'DIY Zine' }, { id: 'kinetic', label: 'Kinetic Riot', isDefault: true }] },
   { slug: 'neumorphism', name: 'Neumorphism', category: 'Modern', vibe: 'Soft UI, skeuomorphic', bestFor: 'Mobile apps, Smart home', accentColor: '#6C63FF', built: true, version: 'V1' },
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: true, version: 'V1' },
   { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: '80s/90s aesthetic, nostalgic', bestFor: 'Art projects, Music platforms', accentColor: '#FF71CE', built: true, version: 'V1' },

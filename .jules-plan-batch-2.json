@@ -1,0 +1,71 @@
+{
+  "repo": "Shashank2577/oh-my-design",
+  "branch": "top-20-designs",
+  "spec_file": "AGENTS.md",
+  "created_at": "2026-04-08T00:00:00Z",
+  "total_tasks": 8,
+  "batches": [
+    {
+      "batch": 1,
+      "name": "Kinetic Update Batch A",
+      "rationale": "Independent style updates for BotStream, LayerLogic, GridironFlow, and NeoBrutalism.",
+      "tasks": [
+        {
+          "id": "t1",
+          "title": "Implement Kinetic Protocol for BotStream",
+          "prompt": "On branch 'top-20-designs', implement the 'bot-stream' style page (app/styles/bot-stream/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with SVG liquid blobs that merge/split on scroll, 'Breathing Orb' hero element reactive to scroll, velocity-driven background ripple effects, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        },
+        {
+          "id": "t2",
+          "title": "Implement Kinetic Protocol for LayerLogic",
+          "prompt": "On branch 'top-20-designs', implement the 'layer-logic' style page (app/styles/layer-logic/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with 'IA Stacking' (sections stack vertically with shadow deepening on scroll), internal depth-parallax within cards, and high-fidelity Framer Motion usage (useScroll, useTransform). Ensure the code is heavily commented.",
+          "depends_on": []
+        },
+        {
+          "id": "t3",
+          "title": "Implement Kinetic Protocol for GridironFlow",
+          "prompt": "On branch 'top-20-designs', implement the 'gridiron-flow' style page (app/styles/gridiron-flow/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with 'Impact Physics' (camera shake/jolt on element entry), yard-line progress bar that stretches based on scroll velocity, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        },
+        {
+          "id": "t4",
+          "title": "Implement Kinetic Protocol for NeoBrutalism",
+          "prompt": "On branch 'top-20-designs', implement the 'neo-brutalism' style page (app/styles/neo-brutalism/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with hard-shadow detachment on scroll, snappy 90-degree image rotations on entrance, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        }
+      ]
+    },
+    {
+      "batch": 2,
+      "name": "Kinetic Update Batch B",
+      "rationale": "Independent style updates for TerminalCLI, Academia, Swiss, and GrowthGrid.",
+      "tasks": [
+        {
+          "id": "t5",
+          "title": "Implement Kinetic Protocol for TerminalCLI",
+          "prompt": "On branch 'top-20-designs', implement the 'terminal-cli' style page (app/styles/terminal-cli/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with CRT Phosphor persistence effect, blinking cursor that teleports to active scroll sections, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        },
+        {
+          "id": "t6",
+          "title": "Implement Kinetic Protocol for Academia",
+          "prompt": "On branch 'top-20-designs', implement the 'academia' style page (app/styles/academia/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with ink-bleed reveal animations, slow 'unfolding' of paper-textured sections on scroll, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        },
+        {
+          "id": "t7",
+          "title": "Implement Kinetic Protocol for Swiss",
+          "prompt": "On branch 'top-20-designs', implement the 'swiss' style page (app/styles/swiss/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with strict horizontal/vertical grid snaps, typographic scale shifts that align to grid on scroll, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        },
+        {
+          "id": "t8",
+          "title": "Implement Kinetic Protocol for GrowthGrid",
+          "prompt": "On branch 'top-20-designs', implement the 'growth-grid' style page (app/styles/growth-grid/page.tsx) and a 'DESIGN_SYSTEM.md' in the same folder. Follow the 'Kinetic Design Protocol': 1. Create DESIGN_SYSTEM.md defining Visual Ethos, Tokens, and Motion Language. 2. Implement page.tsx with a data-driven growth engine theme, featuring interactive data visualizations (charts/graphs) that build on scroll, sticky metrics headers, and high-fidelity Framer Motion usage. Ensure the code is heavily commented.",
+          "depends_on": []
+        }
+      ]
+    }
+  ]
+}
