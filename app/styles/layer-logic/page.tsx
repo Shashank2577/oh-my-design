@@ -57,6 +57,19 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
 function LayerSpread({ children, delay = 0, className = "", style }: { children: React.ReactNode; delay?: number; className?: string; style?: React.CSSProperties }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-10% 0px' })
+  // Internal depth parallax tracking mouse movement inside the card
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+    setMousePos({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0 })
+  }
 
   return (
     <motion.div
@@ -64,10 +77,28 @@ function LayerSpread({ children, delay = 0, className = "", style }: { children:
       initial={{ opacity: 0, z: -100, rotateX: 15 }}
       animate={isInView ? { opacity: 1, z: 0, rotateX: 0 } : {}}
       transition={{ type: "spring", stiffness: 200, damping: 25, delay }}
-      className={className}
+      className={`relative ${className}`}
       style={{ perspective: 1200, ...style }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      {children}
+      {/* 
+        Depth Parallax implementation: 
+        The content wrapper animates smoothly towards the calculated rotation 
+        based on the mouse position relative to the center of the card. 
+      */}
+      <motion.div
+        animate={{ 
+          rotateX: -mousePos.y * 0.05, 
+          rotateY: mousePos.x * 0.05,
+          z: Math.abs(mousePos.x) > 0 || Math.abs(mousePos.y) > 0 ? 20 : 0
+        }}
+        transition={{ type: "spring", stiffness: 150, damping: 20, mass: 0.5 }}
+        style={{ transformStyle: 'preserve-3d' }}
+        className="w-full h-full"
+      >
+        {children}
+      </motion.div>
     </motion.div>
   )
 }
@@ -250,17 +281,18 @@ function Features() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {FEATURES.map((feature, i) => (
-            <LayerSpread key={feature.title} delay={i * 0.1}>
+            <LayerSpread key={feature.title} delay={i * 0.1} className="h-full">
+              {/* Internal elements shifted in Z space when wrapped by the parallax wrapper */}
               <motion.div
                 whileHover={{ y: -5, boxShadow: `0 10px 30px rgba(0,0,0,0.5)` }}
                 className="p-8 rounded-xl border bg-opacity-50 backdrop-blur-sm h-full"
-                style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}
+                style={{ borderColor: tokens.border, backgroundColor: tokens.surface, transformStyle: 'preserve-3d' }}
               >
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-6" style={{ backgroundColor: `${tokens.accent2}20` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-6 transform-style-3d" style={{ backgroundColor: `${tokens.accent2}20`, transform: 'translateZ(30px)' }}>
                   <feature.icon className="w-6 h-6" style={{ color: tokens.accent2 }} />
                 </div>
-                <h3 className={`text-xl font-bold mb-3 ${publicSans.className}`} style={{ color: tokens.textHigh }}>{feature.title}</h3>
-                <p className={`text-sm leading-relaxed ${inter.className}`} style={{ color: tokens.textLow }}>{feature.desc}</p>
+                <h3 className={`text-xl font-bold mb-3 ${publicSans.className} transform-style-3d`} style={{ color: tokens.textHigh, transform: 'translateZ(20px)' }}>{feature.title}</h3>
+                <p className={`text-sm leading-relaxed ${inter.className} transform-style-3d`} style={{ color: tokens.textLow, transform: 'translateZ(10px)' }}>{feature.desc}</p>
               </motion.div>
             </LayerSpread>
           ))}
@@ -344,40 +376,44 @@ function Pricing() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {PRICING.map((tier, i) => (
-            <LayerSpread key={tier.name} delay={i * 0.1} className="p-8 rounded-xl border relative flex flex-col" style={{ borderColor: i === 1 ? tokens.accent1 : tokens.border, backgroundColor: tokens.surface }}>
-              {i === 1 && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: tokens.accent1, color: tokens.background }}>
-                  MOST POPULAR
+            <LayerSpread key={tier.name} delay={i * 0.1} className="h-full">
+              <div className="p-8 rounded-xl border relative flex flex-col h-full" style={{ borderColor: i === 1 ? tokens.accent1 : tokens.border, backgroundColor: tokens.surface, transformStyle: 'preserve-3d' }}>
+                {i === 1 && (
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 rounded-full text-xs font-bold transform-style-3d" style={{ backgroundColor: tokens.accent1, color: tokens.background, transform: 'translateZ(40px)' }}>
+                    MOST POPULAR
+                  </div>
+                )}
+                <h3 className={`text-2xl font-bold mb-2 ${publicSans.className} transform-style-3d`} style={{ color: tokens.textHigh, transform: 'translateZ(30px)' }}>{tier.name}</h3>
+                <p className={`text-sm mb-6 ${inter.className} transform-style-3d`} style={{ color: tokens.textLow, transform: 'translateZ(20px)' }}>{tier.desc}</p>
+                <div className="mb-8 transform-style-3d" style={{ transform: 'translateZ(25px)' }}>
+                  <span className={`text-5xl font-bold ${firaCode.className}`} style={{ color: tokens.textHigh }}>{tier.price}</span>
+                  {i !== 2 && <span className={`text-sm ${inter.className}`} style={{ color: tokens.textLow }}>/mo</span>}
                 </div>
-              )}
-              <h3 className={`text-2xl font-bold mb-2 ${publicSans.className}`} style={{ color: tokens.textHigh }}>{tier.name}</h3>
-              <p className={`text-sm mb-6 ${inter.className}`} style={{ color: tokens.textLow }}>{tier.desc}</p>
-              <div className="mb-8">
-                <span className={`text-5xl font-bold ${firaCode.className}`} style={{ color: tokens.textHigh }}>{tier.price}</span>
-                {i !== 2 && <span className={`text-sm ${inter.className}`} style={{ color: tokens.textLow }}>/mo</span>}
+
+                <ul className="space-y-4 mb-8 flex-1 transform-style-3d" style={{ transform: 'translateZ(15px)' }}>
+                  {tier.features.map(f => (
+                    <li key={f} className={`flex items-center gap-3 text-sm ${publicSans.className}`} style={{ color: tokens.textHigh }}>
+                      <Check className="w-4 h-4" style={{ color: tokens.accent2 }} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="transform-style-3d" style={{ transform: 'translateZ(35px)' }}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`w-full py-4 rounded-lg font-bold transition-colors ${publicSans.className}`}
+                    style={{
+                      backgroundColor: i === 1 ? tokens.accent1 : 'transparent',
+                      border: `1px solid ${i === 1 ? tokens.accent1 : tokens.border}`,
+                      color: i === 1 ? tokens.background : tokens.textHigh
+                    }}
+                  >
+                    {i === 2 ? 'Contact Sales' : 'Start Building'}
+                  </motion.button>
+                </div>
               </div>
-
-              <ul className="space-y-4 mb-8 flex-1">
-                {tier.features.map(f => (
-                  <li key={f} className={`flex items-center gap-3 text-sm ${publicSans.className}`} style={{ color: tokens.textHigh }}>
-                    <Check className="w-4 h-4" style={{ color: tokens.accent2 }} />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`w-full py-4 rounded-lg font-bold transition-colors ${publicSans.className}`}
-                style={{
-                  backgroundColor: i === 1 ? tokens.accent1 : 'transparent',
-                  border: `1px solid ${i === 1 ? tokens.accent1 : tokens.border}`,
-                  color: i === 1 ? tokens.background : tokens.textHigh
-                }}
-              >
-                {i === 2 ? 'Contact Sales' : 'Start Building'}
-              </motion.button>
             </LayerSpread>
           ))}
         </div>
@@ -484,17 +520,74 @@ function Footer() {
 }
 
 export default function LayerLogicPage() {
+  const { scrollYProgress } = useScroll()
+
   return (
     <div className={`min-h-screen ${inter.variable} ${firaCode.variable} ${publicSans.variable} selection:bg-amber-500/30`} style={{ backgroundColor: tokens.background }}>
       <Navbar />
       <main>
-        <Hero />
-        <StatGrid />
-        <Features />
-        <WorkflowDemo />
-        <Pricing />
-        <FAQ />
-        <Newsletter />
+        {/* IA Stacking implemented using motion.div wrappers that react to scroll progress */}
+        <motion.div 
+          style={{ 
+            scale: useTransform(scrollYProgress, [0, 0.2], [1, 0.95]),
+            opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0.5]),
+            transformOrigin: "top center",
+            zIndex: 10,
+            position: "relative"
+          }}
+        >
+          <Hero />
+        </motion.div>
+        
+        <motion.div 
+          style={{ 
+            scale: useTransform(scrollYProgress, [0.1, 0.4], [0.95, 1]),
+            y: useTransform(scrollYProgress, [0.1, 0.3], [50, 0]),
+            zIndex: 20,
+            position: "relative",
+            boxShadow: "0 -20px 40px rgba(0,0,0,0.5)"
+          }}
+        >
+          <StatGrid />
+          <Features />
+        </motion.div>
+
+        <motion.div 
+          style={{ 
+            scale: useTransform(scrollYProgress, [0.3, 0.6], [0.95, 1]),
+            y: useTransform(scrollYProgress, [0.3, 0.5], [50, 0]),
+            zIndex: 30,
+            position: "relative",
+            boxShadow: "0 -20px 40px rgba(0,0,0,0.5)"
+          }}
+        >
+          <WorkflowDemo />
+        </motion.div>
+
+        <motion.div 
+          style={{ 
+            scale: useTransform(scrollYProgress, [0.5, 0.8], [0.95, 1]),
+            y: useTransform(scrollYProgress, [0.5, 0.7], [50, 0]),
+            zIndex: 40,
+            position: "relative",
+            boxShadow: "0 -20px 40px rgba(0,0,0,0.5)"
+          }}
+        >
+          <Pricing />
+        </motion.div>
+
+        <motion.div 
+          style={{ 
+            scale: useTransform(scrollYProgress, [0.7, 1], [0.95, 1]),
+            y: useTransform(scrollYProgress, [0.7, 0.9], [50, 0]),
+            zIndex: 50,
+            position: "relative",
+            boxShadow: "0 -20px 40px rgba(0,0,0,0.5)"
+          }}
+        >
+          <FAQ />
+          <Newsletter />
+        </motion.div>
       </main>
       <Footer />
     </div>

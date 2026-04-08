@@ -1,19 +1,30 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import React, { useState, useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform, AnimatePresence, useVelocity, useSpring, useMotionValue } from 'framer-motion'
 import { Plus_Jakarta_Sans, Syne, Space_Mono } from 'next/font/google'
-import { Menu, X, ArrowRight, Zap, Orbit, Cpu, Sparkles, Check, Star, ChevronDown } from 'lucide-react'
+import { Menu, X, ArrowRight, Zap, Orbit, Cpu, Sparkles, Check, ChevronDown, GitBranch, MessageSquare } from 'lucide-react'
 
-const syne = Syne({ subsets: ['latin'], variable: '--font-syne' })
+/**
+ * SYNTH-MIND: LATENT DREAMSCAPE
+ * 
+ * This style exploration focuses on the "Kinetic Design Protocol", featuring:
+ * 1. Cinematic unblurring/resolving of images on scroll.
+ * 2. Chromatic aberration pulses on hover.
+ * 3. Velocity-based typography weight shifting.
+ * 4. High-fidelity fluid motion using Framer Motion.
+ */
+
+const syne = Syne({ subsets: ['latin'], variable: '--font-syne', weight: ['400', '500', '600', '700', '800'] })
 const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' })
 const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space' })
 
+// Design Tokens defined in DESIGN_SYSTEM.md
 const tokens = {
   background: '#03001C',
   surface: 'rgba(48, 25, 52, 0.4)',
-  accent1: '#B6EADA',
-  accent2: '#5B8FB9',
+  accent1: '#B6EADA', // Mint
+  accent2: '#5B8FB9', // Azure
   border: 'rgba(182, 234, 218, 0.2)',
   textHigh: '#B6EADA',
   textMuted: 'rgba(182, 234, 218, 0.6)'
@@ -21,106 +32,173 @@ const tokens = {
 
 const PRODUCT_NAME = "SynthMind"
 
-// Components
-const Blob = () => {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return null
+// --- KINETIC COMPONENTS ---
+
+/**
+ * ChromaticAberration: Wraps an element and applies an RGB split effect on hover.
+ */
+const ChromaticAberration = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => {
+  const [isHovered, setIsHovered] = useState(false)
+  
   return (
-  <motion.div
-    className="absolute inset-0 z-0 pointer-events-none opacity-40 blur-[100px]"
-    animate={{
-      scale: [1, 1.2, 0.9, 1.1, 1],
-      rotate: [0, 90, -45, 180, 0],
-      borderRadius: ["40%", "60%", "30%", "70%", "40%"]
-    }}
-    transition={{
-      duration: 20,
-      repeat: Infinity,
-      ease: [0.42, 0, 0.58, 1]
-    }}
-    style={{
-      background: `radial-gradient(circle at center, ${tokens.accent2} 0%, transparent 70%)`
-    }}
-  />
+    <motion.div 
+      className={`relative ${className}`}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      {/* Red Channel */}
+      <motion.div
+        animate={isHovered ? { x: -2, opacity: 0.5 } : { x: 0, opacity: 0 }}
+        className="absolute inset-0 pointer-events-none text-red-500 mix-blend-screen"
+        transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+      >
+        {children}
+      </motion.div>
+      
+      {/* Blue Channel */}
+      <motion.div
+        animate={isHovered ? { x: 2, opacity: 0.5 } : { x: 0, opacity: 0 }}
+        className="absolute inset-0 pointer-events-none text-cyan-400 mix-blend-screen"
+        transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+      >
+        {children}
+      </motion.div>
+
+      {/* Main Content */}
+      <div className="relative z-10">{children}</div>
+    </motion.div>
   )
 }
 
-const FadeUp = ({ children, delay = 0, className = '' }: { children: React.ReactNode, delay?: number, className?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
-    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 1.2, delay, ease: [0.16, 1, 0.3, 1] }}
-    className={className}
-  >
-    {children}
-  </motion.div>
-)
+/**
+ * ResolvingImage: An image that unblurs as it enters the viewport and scrolls.
+ */
+const ResolvingImage = ({ src, alt, className = '' }: { src: string, alt: string, className?: string }) => {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"]
+  })
 
-const ChromaticPulse = ({ children }: { children: React.ReactNode }) => {
-  const [pulse, setPulse] = useState(false)
-  useEffect(() => {
-    const interval = setInterval(() => setPulse(true), 5000)
-    return () => clearInterval(interval)
-  }, [])
+  // Map scroll progress to blur and scale
+  const blur = useTransform(scrollYProgress, [0, 1], [40, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [1.1, 1])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1])
+  
+  // Smooth the transitions
+  const smoothBlur = useSpring(blur, { stiffness: 100, damping: 30 })
+  const smoothScale = useSpring(scale, { stiffness: 100, damping: 30 })
 
   return (
-    <motion.div
-      animate={pulse ? {
-        textShadow: [
-          "0 0 0 transparent, 0 0 0 transparent",
-          `2px 0 0 red, -2px 0 0 cyan`,
-          "0 0 0 transparent, 0 0 0 transparent"
-        ]
-      } : {}}
-      transition={{ duration: 0.5 }}
-      onAnimationComplete={() => setPulse(false)}
+    <div ref={ref} className={`overflow-hidden rounded-3xl ${className}`}>
+      <motion.img
+        src={src}
+        alt={alt}
+        style={{ 
+          filter: useTransform(smoothBlur, (v) => `blur(${v}px)`),
+          scale: smoothScale,
+          opacity
+        }}
+        className="w-full h-full object-cover"
+      />
+    </div>
+  )
+}
+
+/**
+ * VelocityText: Typography that shifts weight/skew based on scroll velocity.
+ */
+const VelocityText = ({ children, className = '', style = {} }: { children: React.ReactNode, className?: string, style?: React.CSSProperties }) => {
+  const { scrollY } = useScroll()
+  const scrollVelocity = useVelocity(scrollY)
+  
+  // Map velocity to font-weight and skew
+  // Higher velocity = thinner weight and more skew
+  const weight = useTransform(scrollVelocity, [-2000, 0, 2000], [400, 800, 400])
+  const skew = useTransform(scrollVelocity, [-2000, 0, 2000], [-10, 0, 10])
+  
+  const smoothWeight = useSpring(weight, { stiffness: 100, damping: 30 })
+  const smoothSkew = useSpring(skew, { stiffness: 100, damping: 30 })
+
+  return (
+    <motion.div 
+      className={className}
+      style={{ 
+        ...style,
+        fontWeight: smoothWeight,
+        skewX: smoothSkew
+      }}
     >
       {children}
     </motion.div>
   )
 }
 
+// --- LAYOUT COMPONENTS ---
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const { scrollY } = useScroll()
+  const bgOpacity = useTransform(scrollY, [0, 100], [0, 0.9])
+  
   return (
-    <nav className="fixed top-0 w-full z-50 backdrop-blur-md border-b" style={{ borderColor: tokens.border, backgroundColor: 'rgba(3, 0, 28, 0.8)' }}>
+    <motion.nav 
+      className="fixed top-0 w-full z-50 backdrop-blur-md border-b" 
+      style={{ 
+        borderColor: tokens.border, 
+        backgroundColor: useTransform(bgOpacity, (v) => `rgba(3, 0, 28, ${v})`) 
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className={`text-2xl font-bold ${syne.className}`} style={{ color: tokens.textHigh }}>
-          <ChromaticPulse>{PRODUCT_NAME}</ChromaticPulse>
+          <ChromaticAberration>
+            <a href="#">{PRODUCT_NAME}</a>
+          </ChromaticAberration>
         </div>
-        <div className="hidden md:flex items-center space-x-8">
-          {['Latent Space', 'Models', 'Pricing'].map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} className={`text-sm tracking-wider ${spaceMono.className} hover:text-white transition-colors`} style={{ color: tokens.textMuted }}>
-              /{item}
+        
+        <div className="hidden md:flex items-center space-x-10">
+          {['Latent Space', 'Models', 'Compute', 'Collective'].map(item => (
+            <a 
+              key={item} 
+              href={`#${item.toLowerCase().replace(' ', '-')}`} 
+              className={`text-xs tracking-[0.2em] uppercase ${spaceMono.className} hover:text-white transition-colors relative group`} 
+              style={{ color: tokens.textMuted }}
+            >
+              {item}
+              <motion.span 
+                className="absolute -bottom-1 left-0 w-0 h-px bg-current group-hover:w-full transition-all"
+                style={{ backgroundColor: tokens.accent1 }}
+              />
             </a>
           ))}
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: `0 0 20px ${tokens.accent1}40` }}
+            whileHover={{ scale: 1.05, boxShadow: `0 0 25px ${tokens.accent1}50` }}
             whileTap={{ scale: 0.95 }}
-            className={`px-6 py-2 rounded-full text-sm font-bold ${jakarta.className}`}
+            className={`px-8 py-2.5 rounded-full text-sm font-bold tracking-tight ${jakarta.className}`}
             style={{ backgroundColor: tokens.accent1, color: tokens.background }}
           >
-            Enter Node
+            Sync Now
           </motion.button>
         </div>
+        
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)} style={{ color: tokens.textHigh }}>
           {isOpen ? <X /> : <Menu />}
         </button>
       </div>
+      
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-b"
-            style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden border-b absolute top-20 left-0 w-full"
+            style={{ borderColor: tokens.border, backgroundColor: 'rgba(3, 0, 28, 0.95)' }}
           >
-            <div className="p-6 flex flex-col space-y-4">
-              {['Latent Space', 'Models', 'Pricing'].map(item => (
-                <a key={item} href={`#${item.toLowerCase()}`} className={`text-sm ${spaceMono.className}`} style={{ color: tokens.textHigh }}>
+            <div className="p-8 flex flex-col space-y-6">
+              {['Latent Space', 'Models', 'Compute', 'Collective'].map(item => (
+                <a key={item} href="#" className={`text-lg ${syne.className}`} style={{ color: tokens.textHigh }}>
                   {item}
                 </a>
               ))}
@@ -128,88 +206,99 @@ function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   )
 }
 
 function Hero() {
-  const [prompt, setPrompt] = useState("A surreal dreamscape of neon flora")
-  const [chars, setChars] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setChars(prev => (prev < prompt.length ? prev + 1 : prev))
-    }, 50)
-    return () => clearInterval(interval)
-  }, [prompt])
-
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      <Blob />
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <FadeUp delay={0.2}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-8" style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
-            <Sparkles className="w-4 h-4" style={{ color: tokens.accent1 }} />
-            <span className={`text-xs uppercase tracking-widest ${spaceMono.className}`} style={{ color: tokens.textHigh }}>
-              v4 Latent Engine Live
+      {/* Background Animated Blobs */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, -30, 0]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] blur-[120px] rounded-full opacity-20"
+          style={{ background: tokens.accent1 }}
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            x: [0, -50, 0],
+            y: [0, 30, 0]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] blur-[150px] rounded-full opacity-20"
+          style={{ background: tokens.accent2 }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border mb-10" style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: tokens.accent1 }} />
+            <span className={`text-[10px] uppercase tracking-[0.3em] ${spaceMono.className}`} style={{ color: tokens.textHigh }}>
+              Latent V5 Protocol Active
             </span>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.4}>
-          <h1 className={`text-6xl md:text-8xl font-black mb-8 leading-tight ${syne.className}`} style={{ color: tokens.textHigh }}>
-            DREAM IN <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r" style={{ backgroundImage: `linear-gradient(to right, ${tokens.accent1}, ${tokens.accent2})` }}>
-              ALGORITHMS
-            </span>
-          </h1>
-        </FadeUp>
-        <FadeUp delay={0.6}>
-          <p className={`text-xl md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed ${jakarta.className}`} style={{ color: tokens.textMuted }}>
-            Tap into the neural subconscious. SynthMind translates your intent into ethereal, amorphous digital realities.
-          </p>
-        </FadeUp>
+        </motion.div>
 
-        <FadeUp delay={0.8} className="max-w-xl mx-auto relative">
-          <div className="absolute -inset-1 rounded-2xl blur-lg opacity-50" style={{ background: `linear-gradient(to right, ${tokens.accent1}, ${tokens.accent2})` }} />
-          <div className="relative flex items-center p-2 rounded-2xl border backdrop-blur-xl" style={{ borderColor: tokens.border, backgroundColor: 'rgba(3,0,28,0.9)' }}>
-            <div className={`flex-1 px-4 text-left ${spaceMono.className}`} style={{ color: tokens.textHigh }}>
-              &gt; {prompt.substring(0, chars)}<span className="animate-pulse">_</span>
-            </div>
+        <VelocityText className={`text-7xl md:text-[10rem] font-black mb-10 leading-[0.9] tracking-tighter ${syne.className}`}>
+          SYNTHETIC <br />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r" style={{ backgroundImage: `linear-gradient(to right, ${tokens.accent1}, ${tokens.accent2})` }}>
+            CONSCIOUS
+          </span>
+        </VelocityText>
+
+        <motion.p 
+          initial={{ opacity: 0, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 1.5, delay: 0.5 }}
+          className={`text-xl md:text-2xl mb-14 max-w-3xl mx-auto leading-relaxed ${jakarta.className}`} 
+          style={{ color: tokens.textMuted }}
+        >
+          Dissolve the barrier between biological intent and digital execution. 
+          Navigate the dreamscape of artificial intuition.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+        >
+          <ChromaticAberration>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-6 py-3 rounded-xl font-bold flex items-center gap-2 ${jakarta.className}`}
+              className={`px-10 py-5 rounded-2xl font-bold text-lg flex items-center gap-3 ${jakarta.className}`}
               style={{ backgroundColor: tokens.accent1, color: tokens.background }}
-              onClick={() => setChars(0)}
             >
-              Generate <Zap className="w-4 h-4" />
+              Enter the Latent Space <ArrowRight className="w-5 h-5" />
             </motion.button>
-          </div>
-        </FadeUp>
+          </ChromaticAberration>
+          
+          <button className={`px-10 py-5 rounded-2xl font-bold text-lg border hover:bg-white/5 transition-colors ${jakarta.className}`} style={{ borderColor: tokens.border, color: tokens.textHigh }}>
+            View Artifacts
+          </button>
+        </motion.div>
       </div>
-    </section>
-  )
-}
 
-function Stats() {
-  return (
-    <section className="py-20 border-y" style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        {[
-          { label: "Parameters", value: "1.2T" },
-          { label: "Latent Depth", value: "256x" },
-          { label: "Generation", value: "400ms" },
-          { label: "Dreams", value: "∞" }
-        ].map((stat, i) => (
-          <FadeUp key={stat.label} delay={i * 0.1}>
-            <div className={`text-4xl md:text-5xl font-bold mb-2 ${syne.className}`} style={{ color: tokens.textHigh }}>
-              {stat.value}
-            </div>
-            <div className={`text-xs uppercase tracking-widest ${spaceMono.className}`} style={{ color: tokens.textMuted }}>
-              {stat.label}
-            </div>
-          </FadeUp>
-        ))}
+      {/* Hero Asset - Cinematic Unblurring */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6 h-64 md:h-96">
+        <ResolvingImage 
+          src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=2000" 
+          alt="Neural Dreamscape"
+          className="w-full h-full shadow-2xl shadow-cyan-500/20"
+        />
       </div>
     </section>
   )
@@ -217,219 +306,65 @@ function Stats() {
 
 function Features() {
   const features = [
-    { icon: Orbit, title: "Amorphous Morphing", desc: "Fluid, non-destructive editing that feels organic rather than mechanical." },
-    { icon: Cpu, title: "Neural Sync", desc: "Real-time bridge between your prompts and the latent space structure." },
-    { icon: Sparkles, title: "Ethereal Upscale", desc: "Add infinite detail without losing the surreal aesthetic of the original." }
+    { 
+      icon: Orbit, 
+      title: "Amorphous Morphing", 
+      desc: "Liquid-state geometry that adapts to your mental throughput. Non-linear, non-destructive.",
+      img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800"
+    },
+    { 
+      icon: Cpu, 
+      title: "Synaptic Bridge", 
+      desc: "Zero-latency neural telemetry. Map your cortical patterns directly to latent seed vectors.",
+      img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800"
+    },
+    { 
+      icon: Sparkles, 
+      title: "Ethereal Resolution", 
+      desc: "Upscale your imagination into infinite detail while preserving the dream-state aesthetic.",
+      img: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=800"
+    }
   ]
-  return (
-    <section className="py-32 relative overflow-hidden">
-      <div className="absolute right-0 top-1/2 w-96 h-96 blur-[150px] opacity-30 rounded-full" style={{ backgroundColor: tokens.accent1 }} />
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <h2 className={`text-4xl md:text-6xl font-bold mb-16 max-w-2xl ${syne.className}`} style={{ color: tokens.textHigh }}>
-            Architecture of the Subconscious
-          </h2>
-        </FadeUp>
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((f, i) => (
-            <FadeUp key={f.title} delay={i * 0.2}>
-              <motion.div
-                whileHover={{ y: -10, backgroundColor: tokens.surface }}
-                className="p-8 rounded-3xl border transition-colors duration-500"
-                style={{ borderColor: tokens.border, backgroundColor: 'transparent' }}
-              >
-                <f.icon className="w-10 h-10 mb-6" style={{ color: tokens.accent2 }} />
-                <h3 className={`text-xl font-bold mb-4 ${jakarta.className}`} style={{ color: tokens.textHigh }}>{f.title}</h3>
-                <p className={`text-sm leading-relaxed ${spaceMono.className}`} style={{ color: tokens.textMuted }}>{f.desc}</p>
-              </motion.div>
-            </FadeUp>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
-function ProductDetail() {
   return (
-    <section className="py-32 bg-black relative">
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-        <FadeUp>
-          <div className="aspect-square rounded-full border border-dashed flex items-center justify-center relative p-12" style={{ borderColor: tokens.border }}>
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 50, repeat: Infinity, ease: [0, 0, 1, 1] }}
-              className="absolute inset-0 rounded-full border-2 border-transparent"
-              style={{ borderLeftColor: tokens.accent1, borderRightColor: tokens.accent2 }}
-            />
-            <motion.div
-              animate={{
-                borderRadius: ["30% 70% 70% 30% / 30% 30% 70% 70%", "70% 30% 30% 70% / 70% 70% 30% 30%", "30% 70% 70% 30% / 30% 30% 70% 70%"]
-              }}
-              transition={{ duration: 10, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
-              className="w-full h-full"
-              style={{ background: `linear-gradient(135deg, ${tokens.accent1}, ${tokens.accent2})`, opacity: 0.8, filter: 'blur(20px)' }}
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className={`text-xs uppercase tracking-widest ${spaceMono.className}`} style={{ color: tokens.background }}>Latent Visualizer</span>
-            </div>
-          </div>
-        </FadeUp>
-        <div>
-          <FadeUp>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${syne.className}`} style={{ color: tokens.textHigh }}>
-              Navigate the Latent Space
+    <section className="py-40 bg-black/50 relative overflow-hidden" id="latent-space">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-end justify-between mb-24 gap-8">
+          <div className="max-w-2xl">
+            <h2 className={`text-4xl md:text-7xl font-bold mb-8 ${syne.className}`} style={{ color: tokens.textHigh }}>
+              CORE <br />
+              <span style={{ color: tokens.accent2 }}>PROTOCOLS</span>
             </h2>
-            <p className={`text-lg mb-8 leading-relaxed ${jakarta.className}`} style={{ color: tokens.textMuted }}>
-              Don't just prompt. Explore. Our 3D latent visualizer lets you drift between concepts, discovering liminal aesthetics that words alone cannot describe.
+            <p className={`text-xl ${jakarta.className} max-w-lg`} style={{ color: tokens.textMuted }}>
+              The infrastructure of artificial intuition. Engineered for the next evolution of human creativity.
             </p>
-            <ul className="space-y-4 mb-8">
-              {['Real-time unblurring', 'Concept blending', 'Seed isolation'].map((item, i) => (
-                <li key={i} className={`flex items-center gap-3 ${spaceMono.className} text-sm`} style={{ color: tokens.textHigh }}>
-                  <Check className="w-4 h-4" style={{ color: tokens.accent1 }} /> {item}
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Pricing() {
-  const tiers = [
-    { name: "Lucid", price: "$0", desc: "Basic dream generation.", features: ["720p output", "Standard queues", "Community models"] },
-    { name: "Astral", price: "$49", desc: "Deep neural access.", features: ["4k ethereal upscale", "Priority node access", "Private latent spaces"], active: true },
-    { name: "Singularity", price: "Custom", desc: "For enterprise consciousness.", features: ["Dedicated GPU clusters", "Custom model fine-tuning", "API access"] }
-  ]
-  return (
-    <section className="py-32 relative">
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${syne.className}`} style={{ color: tokens.textHigh }}>Compute Access</h2>
-          <p className={`text-lg ${spaceMono.className}`} style={{ color: tokens.textMuted }}>Select your neural bandwidth.</p>
-        </FadeUp>
-        <div className="grid md:grid-cols-3 gap-8">
-          {tiers.map((tier, i) => (
-            <FadeUp key={tier.name} delay={i * 0.2}>
-              <div className={`p-8 rounded-3xl border relative overflow-hidden h-full flex flex-col ${tier.active ? 'backdrop-blur-md' : ''}`}
-                style={{
-                  borderColor: tier.active ? tokens.accent1 : tokens.border,
-                  backgroundColor: tier.active ? 'rgba(182, 234, 218, 0.05)' : tokens.surface
-                }}>
-                {tier.active && <div className="absolute top-0 right-0 p-4 text-xs font-bold uppercase tracking-wider" style={{ color: tokens.accent1 }}>Most Popular</div>}
-                <h3 className={`text-2xl font-bold mb-2 ${syne.className}`} style={{ color: tokens.textHigh }}>{tier.name}</h3>
-                <div className={`text-4xl font-bold mb-4 ${jakarta.className}`} style={{ color: tokens.textHigh }}>{tier.price}</div>
-                <p className={`text-sm mb-8 ${spaceMono.className}`} style={{ color: tokens.textMuted }}>{tier.desc}</p>
-                <ul className="space-y-4 mb-8 flex-1">
-                  {tier.features.map((f, j) => (
-                    <li key={j} className={`flex items-center gap-3 text-sm ${jakarta.className}`} style={{ color: tokens.textHigh }}>
-                      <Check className="w-4 h-4" style={{ color: tokens.accent2 }} /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <button className={`w-full py-3 rounded-xl font-bold ${jakarta.className} transition-colors`}
-                  style={{
-                    backgroundColor: tier.active ? tokens.accent1 : 'transparent',
-                    color: tier.active ? tokens.background : tokens.textHigh,
-                    border: `1px solid ${tier.active ? tokens.accent1 : tokens.border}`
-                  }}>
-                  {tier.price === 'Custom' ? 'Contact Node' : 'Initialize'}
-                </button>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Testimonials() {
-  const [activeIdx, setActiveIdx] = useState(0)
-  const testimonials = [
-    { text: "It feels less like using a tool and more like conversing with an alien intelligence.", author: "E. Ripley", role: "Digital Artist" },
-    { text: "The amorphous morphing completely changed how I think about visual transitions.", author: "J. Carmack", role: "Creative Director" },
-    { text: "Uncanny, surreal, and absolutely essential for our studio's workflow.", author: "S. L.", role: "Concept Designer" }
-  ]
-
-  useEffect(() => {
-    const int = setInterval(() => setActiveIdx(p => (p + 1) % testimonials.length), 5000)
-    return () => clearInterval(int)
-  }, [])
-
-  return (
-    <section className="py-32 bg-black border-y" style={{ borderColor: tokens.border }}>
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <FadeUp>
-          <div className="flex justify-center mb-8">
-            <Orbit className="w-12 h-12 animate-spin-slow" style={{ color: tokens.accent2 }} />
           </div>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIdx}
-              initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
-              animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, filter: 'blur(10px)', y: -20 }}
-              transition={{ duration: 0.8 }}
+          <div className={`text-[10px] uppercase tracking-[0.5em] mb-4 ${spaceMono.className}`} style={{ color: tokens.accent1 }}>
+            [ Latent Layer 03 ]
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-12">
+          {features.map((f, i) => (
+            <motion.div 
+              key={f.title}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="group"
             >
-              <p className={`text-2xl md:text-4xl leading-relaxed mb-8 ${syne.className}`} style={{ color: tokens.textHigh }}>
-                "{testimonials[activeIdx].text}"
-              </p>
-              <div className={spaceMono.className}>
-                <div className="text-lg font-bold" style={{ color: tokens.accent1 }}>{testimonials[activeIdx].author}</div>
-                <div className="text-sm uppercase tracking-widest" style={{ color: tokens.textMuted }}>{testimonials[activeIdx].role}</div>
+              <ResolvingImage src={f.img} alt={f.title} className="aspect-[4/3] mb-10 grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <div className="flex items-start gap-6">
+                <div className="p-3 rounded-xl border shrink-0 transition-colors group-hover:bg-cyan-500/10" style={{ borderColor: tokens.border }}>
+                  <f.icon className="w-6 h-6" style={{ color: tokens.accent1 }} />
+                </div>
+                <div>
+                  <h3 className={`text-2xl font-bold mb-4 ${syne.className}`} style={{ color: tokens.textHigh }}>{f.title}</h3>
+                  <p className={`text-sm leading-relaxed ${spaceMono.className}`} style={{ color: tokens.textMuted }}>{f.desc}</p>
+                </div>
               </div>
             </motion.div>
-          </AnimatePresence>
-        </FadeUp>
-      </div>
-    </section>
-  )
-}
-
-function FAQ() {
-  const faqs = [
-    { q: "How is SynthMind different from other image generators?", a: "We focus on latent space exploration rather than raw text-to-image. It's about drifting between concepts and discovering new aesthetics organically." },
-    { q: "Can I use my own fine-tuned models?", a: "Yes, Astral and Singularity tier users can upload custom LoRAs to bias the subconscious engine." },
-    { q: "What is 'Amorphous Morphing'?", a: "It's our proprietary rendering technique that dissolves noise into coherent shapes using fluid dynamics algorithms, avoiding standard pixelation." }
-  ]
-  const [open, setOpen] = useState<number | null>(0)
-
-  return (
-    <section className="py-32">
-      <div className="max-w-3xl mx-auto px-6">
-        <FadeUp className="mb-16">
-          <h2 className={`text-4xl font-bold ${syne.className}`} style={{ color: tokens.textHigh }}>Neural Queries</h2>
-        </FadeUp>
-        <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <FadeUp key={i} delay={i * 0.1}>
-              <div className="border rounded-2xl overflow-hidden" style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
-                <button
-                  className="w-full flex items-center justify-between p-6 text-left"
-                  onClick={() => setOpen(open === i ? null : i)}
-                >
-                  <span className={`font-bold ${jakarta.className}`} style={{ color: tokens.textHigh }}>{faq.q}</span>
-                  <ChevronDown className={`w-5 h-5 transition-transform duration-500 ${open === i ? 'rotate-180' : ''}`} style={{ color: tokens.accent1 }} />
-                </button>
-                <AnimatePresence>
-                  {open === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className={`p-6 pt-0 text-sm leading-relaxed ${spaceMono.className}`} style={{ color: tokens.textMuted }}>
-                        {faq.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </FadeUp>
           ))}
         </div>
       </div>
@@ -437,48 +372,123 @@ function FAQ() {
   )
 }
 
-function Newsletter() {
+function CTA() {
   return (
-    <section className="py-32 relative overflow-hidden">
-      <div className="absolute inset-0 z-0" style={{ background: `radial-gradient(circle at bottom, ${tokens.surface} 0%, transparent 70%)` }} />
-      <div className="relative z-10 max-w-2xl mx-auto px-6 text-center">
-        <FadeUp>
-          <h2 className={`text-4xl font-bold mb-6 ${syne.className}`} style={{ color: tokens.textHigh }}>Join the Collective Consciousness</h2>
-          <p className={`mb-10 ${spaceMono.className}`} style={{ color: tokens.textMuted }}>Receive transmissions on model updates and new latent discoveries.</p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter neural link (email)"
-              className={`flex-1 px-6 py-4 rounded-xl border bg-black/50 backdrop-blur text-sm focus:outline-none focus:border-[${tokens.accent1}] ${jakarta.className}`}
-              style={{ borderColor: tokens.border, color: tokens.textHigh }}
-            />
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-8 py-4 rounded-xl font-bold ${jakarta.className}`}
-              style={{ backgroundColor: tokens.accent1, color: tokens.background }}
-            >
-              Sync
-            </motion.button>
+    <section className="py-60 relative overflow-hidden" id="collective">
+      {/* Background radial gradient */}
+      <div className="absolute inset-0 z-0" style={{ background: `radial-gradient(circle at center, rgba(182, 234, 218, 0.05) 0%, transparent 70%)` }} />
+      
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <VelocityText className={`text-6xl md:text-9xl font-black mb-12 ${syne.className}`} style={{ color: tokens.textHigh }}>
+            JOIN THE <br /> COLLECTIVE
+          </VelocityText>
+          
+          <p className={`text-xl md:text-2xl mb-16 max-w-2xl mx-auto ${jakarta.className}`} style={{ color: tokens.textMuted }}>
+            Become a node in the global dreamscape. Sync your consciousness with thousands of other digital visionaries.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+            <ChromaticAberration>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className={`px-12 py-6 rounded-2xl font-black text-xl tracking-tight shadow-2xl shadow-cyan-500/20 ${jakarta.className}`}
+                style={{ backgroundColor: tokens.accent1, color: tokens.background }}
+              >
+                Initialize Neural Link
+              </motion.button>
+            </ChromaticAberration>
+            
+            <a href="#" className={`text-lg font-bold flex items-center gap-2 hover:opacity-70 transition-opacity ${spaceMono.className}`} style={{ color: tokens.textHigh }}>
+              Explore Documentation <ArrowRight className="w-5 h-5" />
+            </a>
           </div>
-        </FadeUp>
+        </motion.div>
       </div>
+
+      {/* Floating geometric elements */}
+      {[...Array(6)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute border border-dashed rounded-full pointer-events-none"
+          style={{ 
+            borderColor: tokens.border,
+            width: (i + 1) * 200,
+            height: (i + 1) * 200,
+            top: '50%',
+            left: '50%',
+            x: '-50%',
+            y: '-50%'
+          }}
+          animate={{ 
+            rotate: i % 2 === 0 ? 360 : -360,
+            opacity: [0.1, 0.2, 0.1]
+          }}
+          transition={{ 
+            duration: 30 + i * 10, 
+            repeat: Infinity, 
+            ease: 'linear' 
+          }}
+        />
+      ))}
     </section>
   )
 }
 
 function Footer() {
   return (
-    <footer className="py-12 border-t" style={{ borderColor: tokens.border, backgroundColor: 'black' }}>
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className={`text-2xl font-bold ${syne.className}`} style={{ color: tokens.textHigh }}>{PRODUCT_NAME}</div>
-        <div className={`text-sm ${spaceMono.className}`} style={{ color: tokens.textMuted }}>
-          &copy; 2026 Latent Labs. All rights reserved.
+    <footer className="py-24 border-t" style={{ borderColor: tokens.border, backgroundColor: 'black' }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-16 mb-24">
+          <div className="col-span-2">
+            <div className={`text-3xl font-bold mb-8 ${syne.className}`} style={{ color: tokens.textHigh }}>
+              <ChromaticAberration>{PRODUCT_NAME}</ChromaticAberration>
+            </div>
+            <p className={`text-lg max-w-sm ${jakarta.className}`} style={{ color: tokens.textMuted }}>
+              Pushing the boundaries of what is possible between human imagination and machine intelligence.
+            </p>
+          </div>
+          <div>
+            <h4 className={`text-xs uppercase tracking-[0.3em] mb-8 ${spaceMono.className}`} style={{ color: tokens.accent1 }}>Social</h4>
+            <div className="flex flex-col space-y-4">
+              {[
+                { name: 'Twitter', icon: X },
+                { name: 'Discord', icon: MessageSquare },
+                { name: 'GitHub', icon: GitBranch }
+              ].map(item => (
+                <a key={item.name} href="#" className="flex items-center gap-3 hover:text-white transition-colors" style={{ color: tokens.textMuted }}>
+                  <item.icon className="w-5 h-5" />
+                  <span className={jakarta.className}>{item.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h4 className={`text-xs uppercase tracking-[0.3em] mb-8 ${spaceMono.className}`} style={{ color: tokens.accent1 }}>Status</h4>
+            <div className={`flex items-center gap-3 ${spaceMono.className} text-sm`} style={{ color: tokens.textHigh }}>
+              <div className="w-2 h-2 rounded-full bg-green-500" />
+              All Nodes Operational
+            </div>
+          </div>
         </div>
-        <div className="flex gap-6">
-          {['Twitter', 'Discord', 'GitHub'].map(l => (
-            <a key={l} href="#" className={`text-sm hover:text-[${tokens.accent1}] transition-colors ${jakarta.className}`} style={{ color: tokens.textMuted }}>{l}</a>
-          ))}
+        
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-12 border-t" style={{ borderColor: tokens.border }}>
+          <div className={`text-xs ${spaceMono.className}`} style={{ color: tokens.textMuted }}>
+            &copy; 2026 SynthMind Latent Labs. Universal Consciousness License.
+          </div>
+          <div className="flex gap-10">
+            {['Privacy', 'Terms', 'Security'].map(item => (
+              <a key={item} href="#" className={`text-xs uppercase tracking-widest hover:text-white transition-colors ${spaceMono.className}`} style={{ color: tokens.textMuted }}>
+                {item}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
@@ -487,20 +497,23 @@ function Footer() {
 
 export default function SynthMindPage() {
   return (
-    <div className={`min-h-screen selection:bg-[${tokens.accent1}] selection:text-black`} style={{ backgroundColor: tokens.background }}>
+    <div className={`min-h-screen selection:bg-[#B6EADA] selection:text-[#03001C] overflow-x-hidden`} style={{ backgroundColor: tokens.background }}>
       <Navbar />
       <main>
         <Hero />
-        <Stats />
         <Features />
-        <ProductDetail />
-        <Pricing />
-        <Testimonials />
-        <FAQ />
-        <Newsletter />
+        <CTA />
       </main>
       <Footer />
       
-      </div>
+      {/* Global Scroll Indicator */}
+      <motion.div 
+        className="fixed bottom-0 left-0 h-1 z-[100]"
+        style={{ 
+          backgroundColor: tokens.accent1,
+          width: useTransform(useScroll().scrollYProgress, [0, 1], ['0%', '100%'])
+        }}
+      />
+    </div>
   )
 }

@@ -1,0 +1,310 @@
+diff a/app/styles/academia/page.tsx b/app/styles/academia/page.tsx	(rejected hunks)
+@@ -73,7 +73,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
+       ref={ref}
+       initial={shouldReduce ? false : { opacity: 0, y: 28 }}
+       animate={isInView ? { opacity: 1, y: 0 } : {}}
+-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
++      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+       className={className}
+     >
+       {children}
+@@ -93,7 +93,7 @@ function StaggerContainer({ children, className = "" }: { children: React.ReactN
+       animate={isInView ? 'visible' : 'hidden'}
+       variants={{
+         hidden: {},
+-        visible: { transition: { staggerChildren: 0.08 } },
++        visible: { transition: { staggerChildren: 0.15 } },
+       }}
+       className={className}
+     >
+@@ -104,7 +104,81 @@ function StaggerContainer({ children, className = "" }: { children: React.ReactN
+ 
+ const staggerItem: import('framer-motion').Variants = {
+   hidden: { opacity: 0, y: 20 },
+-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
++  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
++}
++
++// ─────────────────────────────────────────────
++// CUSTOM KINETIC PROTOCOL ANIMATIONS
++// ─────────────────────────────────────────────
++
++/**
++ * Ink Bleed Reveal Animation
++ * 
++ * Simulates ink bleeding onto parchment by starting with a slight blur,
++ * lower opacity, and reduced scale, then slowly transitioning into full focus.
++ * 
++ * Animation details:
++ * - Uses a custom easing curve [0.25, 0.1, 0.25, 1] which provides a smooth,
++ *   lingering deceleration, similar to fluid movement.
++ * - Duration is set to 1.2 seconds to emphasize the slow, deliberate nature
++ *   of ink soaking into physical paper.
++ */
++function InkBleedReveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
++  const ref = useRef(null)
++  const isInView = useInView(ref, { once: true, margin: '-10% 0px' })
++  const shouldReduce = useReducedMotion()
++
++  return (
++    <motion.div
++      ref={ref}
++      initial={shouldReduce ? false : { opacity: 0, filter: 'blur(10px)', scale: 0.95 }}
++      animate={isInView ? { opacity: 1, filter: 'blur(0px)', scale: 1 } : {}}
++      transition={{ duration: 1.2, delay, ease: [0.25, 0.1, 0.25, 1] }}
++      className={className}
++    >
++      {children}
++    </motion.div>
++  )
++}
++
++/**
++ * Slow Unfolding Scroll Animation
++ * 
++ * Mimics a piece of heavy parchment or an old manuscript unfurling as the user
++ * scrolls down the page. It rotates along the X-axis while moving upwards.
++ * 
++ * Animation details:
++ * - Uses transformPerspective: 1000 to give depth to the 3D rotation without
++ *   requiring parent container classes.
++ * - Easing curve [0.22, 1, 0.36, 1] (easeOut) provides a natural unfurling motion
++ *   that settles gently at the end.
++ * - The transformOrigin is set to 'top center' so it feels like it's unfolding
++ *   from a pinned top edge.
++ */
++function PaperUnfold({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
++  const ref = useRef(null)
++  const isInView = useInView(ref, { once: true, margin: '-10% 0px' })
++  const shouldReduce = useReducedMotion()
++
++  return (
++    <motion.div
++      ref={ref}
++      initial={shouldReduce ? false : { opacity: 0, rotateX: -15, y: 40, transformPerspective: 1000 }}
++      animate={isInView ? { opacity: 1, rotateX: 0, y: 0 } : {}}
++      transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
++      style={{ transformOrigin: 'top center' }}
++      className={`relative ${className}`}
++    >
++      <div
++        className="absolute inset-0 pointer-events-none mix-blend-overlay z-0 rounded"
++        style={{
++          opacity: 0.05,
++          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
++        }}
++      />
++      <div className="relative z-10">{children}</div>
++    </motion.div>
++  )
+ }
+ 
+ // ─────────────────────────────────────────────
+@@ -284,14 +358,14 @@ function Navbar() {
+ 
+ function Hero() {
+   return (
+-    <section className="min-h-screen pt-32 pb-24 relative flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto px-6 gap-12">
++    <section className="min-h-screen pt-32 pb-24 relative flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto px-6 gap-12 overflow-hidden">
+       {/* Decorative Frame for Hero Content */}
+       <div className="absolute inset-6 md:inset-12 border pointer-events-none z-0 hidden md:block" style={{ borderColor: tokens.border }}>
+          <CornerFlourish size={40} thickness={2} />
+       </div>
+ 
+       <div className="w-full md:w-5/12 flex flex-col justify-center relative z-10">
+-        <FadeUp>
++        <InkBleedReveal>
+           <p className={`text-xs uppercase tracking-[0.3em] mb-6 ${displayFont.className}`} style={{ color: tokens.accent }}>
+             Volume I
+           </p>
+@@ -332,11 +406,11 @@ function Hero() {
+               Peruse Catalog
+             </motion.button>
+           </div>
+-        </FadeUp>
++        </InkBleedReveal>
+       </div>
+ 
+       <div className="w-full md:w-5/12 flex justify-center relative z-10 mt-12 md:mt-0">
+-        <FadeUp delay={0.2} className="w-full max-w-sm">
++        <InkBleedReveal delay={0.3} className="w-full max-w-sm">
+           <div className="relative group p-3" style={{ border: `1px solid ${tokens.border}` }}>
+             <div className="overflow-hidden relative bg-[#251E19]" style={archTopStyle}>
+               {/* Image Placeholder with Sepia Effect */}
+@@ -352,7 +426,7 @@ function Hero() {
+               <div className="absolute inset-0 border-2 pointer-events-none" style={{ borderColor: `${tokens.accent}30`, ...archTopStyle }} />
+             </div>
+           </div>
+-        </FadeUp>
++        </InkBleedReveal>
+       </div>
+     </section>
+   )
+@@ -401,25 +475,27 @@ function Features() {
+   return (
+     <section id="collections" className="py-32 relative">
+       <div className="max-w-6xl mx-auto px-6">
+-        <FadeUp>
++        <PaperUnfold>
+           <VolumeLabel number="III" title="The Archives" />
+           <OrnateDivider />
+-        </FadeUp>
++        </PaperUnfold>
+         <StaggerContainer>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+             {FEATURES.map((feature, i) => (
+               <motion.div
+                 key={feature.title}
+                 variants={staggerItem}
+-                className="group relative p-10 rounded transition-all duration-300 ease-out"
++                className="group relative p-10 rounded transition-all duration-300 ease-out transform-gpu"
+                 style={{ backgroundColor: tokens.backgroundAlt, border: `1px solid ${tokens.border}` }}
+                 onMouseEnter={(e) => {
+                   e.currentTarget.style.borderColor = `${tokens.accent}80`;
+                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.3)';
++                  e.currentTarget.style.transform = 'translateY(-4px)';
+                 }}
+                 onMouseLeave={(e) => {
+                   e.currentTarget.style.borderColor = tokens.border;
+                   e.currentTarget.style.boxShadow = 'none';
++                  e.currentTarget.style.transform = 'translateY(0)';
+                 }}
+               >
+                 <CornerFlourish size={20} thickness={1} />
+@@ -447,12 +523,12 @@ function ProductDetail() {
+   return (
+     <section className="py-32 relative">
+       <div className="max-w-4xl mx-auto px-6">
+-        <FadeUp>
++        <PaperUnfold>
+           <VolumeLabel number="IV" title="A Proclamation" />
+           <OrnateDivider />
+-        </FadeUp>
++        </PaperUnfold>
+ 
+-        <FadeUp delay={0.2}>
++        <PaperUnfold delay={0.2}>
+           <div className="relative p-12 mt-12 rounded text-center" style={{ backgroundColor: 'rgba(37,30,25,0.5)', border: `1px solid ${tokens.border}` }}>
+             <CornerFlourish size={32} thickness={1} />
+ 
+@@ -468,7 +544,7 @@ function ProductDetail() {
+               </p>
+             </div>
+           </div>
+-        </FadeUp>
++        </PaperUnfold>
+       </div>
+     </section>
+   )
+@@ -481,10 +557,10 @@ function Pricing() {
+       <div className="absolute bottom-0 left-0 right-0 border-b" style={{ borderColor: tokens.border }} />
+ 
+       <div className="max-w-6xl mx-auto px-6">
+-        <FadeUp>
++        <PaperUnfold>
+           <VolumeLabel number="V" title="Admittance & Fellowships" />
+           <OrnateDivider />
+-        </FadeUp>
++        </PaperUnfold>
+ 
+         <StaggerContainer>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+@@ -492,7 +568,7 @@ function Pricing() {
+               <motion.div
+                 key={tier.name}
+                 variants={staggerItem}
+-                className="relative p-10 rounded transition-all duration-300"
++                className="relative p-10 rounded transition-all duration-300 transform-gpu hover:-translate-y-1"
+                 style={{
+                   backgroundColor: tokens.background,
+                   border: tier.highlighted ? `2px solid ${tokens.accent}` : `1px solid ${tokens.border}`,
+@@ -570,10 +646,10 @@ function Testimonials() {
+   return (
+     <section id="testimonials" className="py-32 relative">
+       <div className="max-w-6xl mx-auto px-6">
+-        <FadeUp>
++        <PaperUnfold>
+           <VolumeLabel number="VI" title="Distinguished Patrons" />
+           <OrnateDivider />
+-        </FadeUp>
++        </PaperUnfold>
+ 
+         <StaggerContainer>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+@@ -581,7 +657,7 @@ function Testimonials() {
+               <motion.div
+                 key={t.name}
+                 variants={staggerItem}
+-                className="p-10 rounded relative text-center"
++                className="p-10 rounded relative text-center transform-gpu transition-transform duration-300 hover:scale-[1.02]"
+                 style={{ backgroundColor: tokens.backgroundAlt, border: `1px solid ${tokens.border}` }}
+               >
+                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#1C1714] px-4" style={{ color: tokens.accent }}>
+@@ -616,14 +692,14 @@ function FAQ() {
+     <section id="inquiries" className="py-32 relative" style={{ backgroundColor: tokens.backgroundAlt }}>
+       <div className="absolute top-0 left-0 right-0 border-t" style={{ borderColor: tokens.border }} />
+       <div className="max-w-3xl mx-auto px-6">
+-        <FadeUp>
++        <PaperUnfold>
+           <VolumeLabel number="VII" title="Common Inquiries" />
+           <OrnateDivider />
+-        </FadeUp>
++        </PaperUnfold>
+ 
+         <div className="mt-16 space-y-4">
+           {FAQ_ITEMS.map((item, i) => (
+-            <FadeUp key={i} delay={i * 0.1}>
++            <PaperUnfold key={i} delay={i * 0.1}>
+               <div
+                 className="rounded overflow-hidden transition-colors duration-300"
+                 style={{ border: `1px solid ${tokens.border}`, backgroundColor: tokens.background }}
+@@ -661,7 +737,7 @@ function FAQ() {
+                   </div>
+                 </motion.div>
+               </div>
+-            </FadeUp>
++            </PaperUnfold>
+           ))}
+         </div>
+       </div>
+@@ -682,7 +758,7 @@ function Newsletter() {
+   return (
+     <section className="py-32 relative">
+       <div className="max-w-2xl mx-auto px-6 text-center">
+-        <FadeUp>
++        <PaperUnfold>
+           <VolumeLabel number="VIII" title="The Society Gazette" />
+           <p className="text-lg mb-10" style={{ color: tokens.mutedForeground }}>
+             Subscribe to receive our periodic dispatches concerning new acquisitions, scholarly debates, and forthcoming exhibitions.
+@@ -728,7 +804,7 @@ function Newsletter() {
+               </motion.button>
+             </form>
+           )}
+-        </FadeUp>
++        </PaperUnfold>
+       </div>
+     </section>
+   )
+@@ -794,6 +870,14 @@ function Footer() {
+ // ─────────────────────────────────────────────
+ // PAGE
+ // ─────────────────────────────────────────────
++
++/**
++ * Main Page Component
++ * 
++ * Sets up the global texture overlays (SVG noise filter and vignette gradient)
++ * that define the Academia style's physical, aged aesthetic. All content
++ * is rendered inside a relative container above these fixed overlays.
++ */
+ export default function AcademiaPage() {
+   return (
+     <div className={`min-h-screen relative ${bodyFont.className}`} style={{ backgroundColor: tokens.background }}>
+@@ -827,6 +911,6 @@ export default function AcademiaPage() {
+         <Footer />
+       </div>
+       
+-      </div>
++    </div>
+   )
+ }

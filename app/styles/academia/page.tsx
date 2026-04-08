@@ -1,832 +1,608 @@
 'use client'
 
-import { motion, useReducedMotion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
-import { Cormorant_Garamond, Crimson_Pro, Cinzel } from 'next/font/google'
-import {
-  BookOpen, Feather, Library, ScrollText, Landmark, Search,
-  ChevronDown, ArrowRight, Shield, Award, Users, Star
+/**
+ * ACADEMIA - KINETIC DESIGN PROTOCOL
+ * Style: Refined Scholarly
+ * 
+ * This page implements "The Unfolding Archive" protocol, focusing on 
+ * intellectual rigor, timeless materials, and the deliberate pace 
+ * of analog research. 
+ * 
+ * Key Features:
+ * 1. Ink-Bleed Reveal: Radial mask transitions simulating ink soaking into paper.
+ * 2. Unfolding Parchment: Scroll-triggered 3D rotations for section transitions.
+ * 3. Archival Aesthetics: High-fidelity grain, parchment textures, and formal institutional typography.
+ */
+
+import React, { useRef, useState, useEffect } from 'react'
+import { 
+  motion, 
+  useScroll, 
+  useTransform, 
+  useSpring, 
+  AnimatePresence,
+  useInView 
+} from 'framer-motion'
+import { 
+  Book, 
+  Library, 
+  Search, 
+  PenTool, 
+  History, 
+  Archive, 
+  Compass, 
+  Feather,
+  Quote,
+  Stamp,
+  Globe,
+  Award,
+  BookOpen,
+  Mail,
+  ChevronRight,
+  ArrowRight,
+  Scale,
+  GraduationCap
 } from 'lucide-react'
+import { EB_Garamond, IBM_Plex_Mono, Lora } from 'next/font/google'
 
-// ─────────────────────────────────────────────
-// FONTS
-// ─────────────────────────────────────────────
-const headingFont = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-heading',
-  display: 'swap',
-})
+// --- Fonts ---
+const ebGaramond = EB_Garamond({ subsets: ['latin'], weight: ['400', '700'], style: ['normal', 'italic'] })
+const ibmPlexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '700'] })
+const lora = Lora({ subsets: ['latin'], weight: ['400', '700'] })
 
-const bodyFont = Crimson_Pro({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-body',
-  display: 'swap',
-})
-
-const displayFont = Cinzel({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-  variable: '--font-display',
-  display: 'swap',
-})
-
-// ─────────────────────────────────────────────
-// DESIGN TOKENS
-// ─────────────────────────────────────────────
+// --- Design Tokens (as per DESIGN_SYSTEM.md) ---
 const tokens = {
-  background: '#1C1714', // Deep Mahogany
-  backgroundAlt: '#251E19', // Aged Oak
-  foreground: '#E8DFD4', // Antique Parchment
-  muted: '#3D332B', // Worn Leather
-  mutedForeground: '#9C8B7A', // Faded Ink
-  border: '#4A3F35', // Wood Grain
-  accent: '#C9A962', // Polished Brass
-  accentSecondary: '#8B2635', // Library Crimson
-  accentForeground: '#1C1714', // Dark on Brass
+  colors: {
+    ink: "#0A0A0A",
+    parchment: "#F5F2EA",
+    oxfordBlue: "#1A2C42",
+    crimson: "#8B0000",
+    gold: "#D4AF37",
+    shadow: "rgba(0, 0, 0, 0.08)"
+  },
+  physics: {
+    deliberate: { 
+      type: "spring" as const, 
+      stiffness: 80, 
+      damping: 25, 
+      mass: 1.5 
+    },
+    unfold: {
+      type: "spring" as const,
+      stiffness: 120,
+      damping: 30,
+      mass: 1
+    }
+  }
 }
 
-// ─────────────────────────────────────────────
-// UTILS & EFFECTS
-// ─────────────────────────────────────────────
-const archTopStyle = {
-  borderRadius: '40% 40% 0 0 / 20% 20% 0 0'
-}
+// --- Kinetic UI Components ---
 
-const engravedTextEffect = {
-  textShadow: '1px 1px 1px rgba(0,0,0,0.4), -1px -1px 1px rgba(255,255,255,0.1)'
-}
-
-const brassGradient = 'linear-gradient(180deg, #D4B872 0%, #C9A962 50%, #B8953F 100%)'
-
-// ─────────────────────────────────────────────
-// MOTION HELPERS
-// ─────────────────────────────────────────────
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+/**
+ * InkBleedReveal
+ * Simulates ink soaking into a surface using a radial mask that expands over time.
+ * This component wraps children and reveals them when they enter the viewport.
+ */
+const InkBleedReveal = ({ children, delay = 0, duration = 2 }: { children: React.ReactNode, delay?: number, duration?: number }) => {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
-  const shouldReduce = useReducedMotion()
-
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
   return (
     <motion.div
       ref={ref}
-      initial={shouldReduce ? false : { opacity: 0, y: 28 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-function StaggerContainer({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
-  const shouldReduce = useReducedMotion()
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={shouldReduce ? false : 'hidden'}
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: 0.08 } },
+      initial={{ 
+        maskImage: "radial-gradient(circle at center, black 0%, transparent 0%)",
       }}
-      className={className}
+      animate={isInView ? { 
+        maskImage: "radial-gradient(circle at center, black 150%, transparent 160%)",
+      } : {}}
+      transition={{ duration, delay, ease: [0.19, 1, 0.22, 1] }} // Archival Ease
+      className="relative"
     >
       {children}
     </motion.div>
   )
 }
 
-const staggerItem: import('framer-motion').Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+/**
+ * UnfoldingSection
+ * Simulates a section of parchment unfolding as the user scrolls.
+ * Uses 3D rotations on the X-axis for that "folding map" effect.
+ */
+const UnfoldingSection = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+  const container = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start end", "end start"]
+  })
+  
+  // Rotate from -15deg (folded) to 0deg (flat) and then 15deg (folding away)
+  const rotateX = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [-20, 0, 0, 20])
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95])
+  
+  const springRotateX = useSpring(rotateX, tokens.physics.unfold)
+  
+  return (
+    <motion.section
+      ref={container}
+      style={{ 
+        rotateX: springRotateX, 
+        opacity,
+        scale,
+        perspective: "2000px",
+        transformOrigin: "center top"
+      }}
+      className={`min-h-[80vh] flex flex-col justify-center py-20 px-10 relative ${className}`}
+    >
+      {/* Texture Overlay */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/parchment.png')] opacity-10 pointer-events-none mix-blend-multiply" />
+      {children}
+    </motion.section>
+  )
 }
 
-// ─────────────────────────────────────────────
-// DECORATIVE COMPONENTS
-// ─────────────────────────────────────────────
-const OrnateDivider = () => (
-  <div className="relative w-64 mx-auto my-12 h-px flex items-center justify-center">
-    <div className="absolute inset-0" style={{ background: `linear-gradient(90deg, transparent 0%, ${tokens.border} 20%, ${tokens.accent} 50%, ${tokens.border} 80%, transparent 100%)` }} />
-    <div className="absolute bg-[#1C1714] px-3 text-[12px]" style={{ color: tokens.accent }}>
-      ❧
-    </div>
+/**
+ * ScholarlyButton
+ * A formal, high-fidelity button with gold-leaf hover effects and a wax-seal inspired interaction.
+ */
+const ScholarlyButton = ({ children, variant = 'primary', className = '' }: any) => (
+  <motion.button
+    whileHover={{ 
+      y: -2,
+      boxShadow: `0 10px 30px ${tokens.colors.shadow}`,
+      borderColor: tokens.colors.gold
+    }}
+    whileTap={{ scale: 0.98 }}
+    transition={tokens.physics.deliberate}
+    className={`px-8 py-4 border relative group overflow-hidden ${ibmPlexMono.className} text-[10px] font-bold tracking-[0.3em] uppercase transition-all ${
+      variant === 'primary' 
+        ? `bg-[#0A0A0A] text-[#F5F2EA] border-[#0A0A0A]` 
+        : `bg-transparent text-[#0A0A0A] border-[#0A0A0A]/20`
+    } ${className}`}
+  >
+    <span className="relative z-10 flex items-center justify-center gap-3">
+      {children}
+      <Feather size={14} className={variant === 'primary' ? 'text-[#D4AF37]' : 'text-[#8B0000]'} />
+    </span>
+    {/* Archival Glint */}
+    <motion.div 
+      initial={{ x: "-100%" }}
+      whileHover={{ x: "100%" }}
+      transition={{ duration: 1, ease: "easeInOut" }}
+      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none"
+    />
+  </motion.button>
+)
+
+// --- Background Components ---
+
+/**
+ * ArchiveBackground
+ * Fixed background with parchment texture and subtle grain.
+ */
+const ArchiveBackground = () => (
+  <div className="fixed inset-0 z-0 bg-[#F5F2EA] pointer-events-none">
+    {/* High-fidelity Grain */}
+    <div className="absolute inset-0 opacity-[0.05] pointer-events-none contrast-150 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/graphy-very-light.png')]" />
+    
+    {/* Subtle Vignette */}
+    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/5" />
+    
+    {/* Archival Grid - subtle rule lines */}
+    <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(0,0,0,1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,1)_1px,transparent_1px)] [background-size:100px_100px]" />
   </div>
 )
 
-const CornerFlourish = ({ size = 24, thickness = 2 }) => (
-  <>
-    <div className="absolute top-0 left-0 transition-opacity duration-300 opacity-60 group-hover:opacity-100 pointer-events-none" style={{ width: size, height: size, borderTop: `${thickness}px solid ${tokens.accent}`, borderLeft: `${thickness}px solid ${tokens.accent}`, borderTopLeftRadius: '2px' }} />
-    <div className="absolute bottom-0 right-0 transition-opacity duration-300 opacity-60 group-hover:opacity-100 pointer-events-none" style={{ width: size, height: size, borderBottom: `${thickness}px solid ${tokens.accent}`, borderRight: `${thickness}px solid ${tokens.accent}`, borderBottomRightRadius: '2px' }} />
-  </>
-)
+// --- Page Content ---
 
-const VolumeLabel = ({ number, title }: { number: string; title?: string }) => (
-  <div className="flex flex-col items-center mb-8">
-    <p className={`text-xs uppercase tracking-[0.25em] mb-2 ${displayFont.className}`} style={{ color: tokens.accent }}>
-      Volume {number}
-    </p>
-    {title && (
-      <h2 className={`text-4xl md:text-5xl tracking-tight leading-[1.1] text-center ${headingFont.className}`} style={{ color: tokens.foreground }}>
-        {title}
-      </h2>
-    )}
-  </div>
-)
-
-const WaxSeal = () => (
-  <div className="absolute -top-3 right-6 w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
-       style={{
-         background: 'radial-gradient(circle at 30% 30%, #a82e40 0%, #8B2635 60%, #5a1822 100%)',
-         boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.4)',
-         border: '1px solid #a82e40'
-       }}>
-    <Star className="w-5 h-5 text-[#E8DFD4] opacity-80" fill="currentColor" />
-  </div>
-)
-
-// ─────────────────────────────────────────────
-// DATA
-// ─────────────────────────────────────────────
-const PRODUCT_NAME = 'Lumina Lexicon'
-const TAGLINE = 'Where Knowledge Meets Antiquity'
-const DESCRIPTION = 'A distinguished digital repository curated for the pursuit of higher learning. We bridge the timeless traditions of classical academia with the frontier of modern research.'
-
-const NAV_LINKS = ['Collections', 'Fellowships', 'Testimonials', 'Inquiries']
-
-const STATS = [
-  { value: 'XII', label: 'Centuries of Archives' },
-  { value: 'IV', label: 'Million Volumes' },
-  { value: 'C', label: 'Esteemed Scholars' },
-  { value: 'X', label: 'Global Campuses' },
-]
-
-const FEATURES = [
-  { icon: ScrollText, title: 'Archival Manuscripts', description: 'Access digitized manuscripts dating back to the Renaissance, meticulously restored.' },
-  { icon: Landmark, title: 'Classical Architecture', description: 'A structured environment designed to foster contemplation and deep intellectual focus.' },
-  { icon: BookOpen, title: 'Curated Curricula', description: 'Structured learning paths crafted by leading academics across fifty disciplines.' },
-  { icon: Feather, title: 'Scholarly Discourse', description: 'Engage in rigorous peer review and debate with verified academic professionals.' },
-  { icon: Library, title: 'The Great Halls', description: 'Navigate our vast taxonomy of knowledge through an intuitive, dignified interface.' },
-  { icon: Search, title: 'Antiquarian Search', description: 'Advanced semantic indexing that comprehends classical Latin and Greek texts.' },
-]
-
-const PRICING = [
-  {
-    name: 'Reader',
-    price: 'Complimentary',
-    period: 'perpetual',
-    description: 'For the casual observer of the humanities.',
-    features: ['Access to public archives', 'Monthly gazette', 'Standard reading rooms'],
-    cta: 'Register',
-    highlighted: false,
-  },
-  {
-    name: 'Scholar',
-    price: 'XXV',
-    period: 'per mensem',
-    description: 'For the dedicated academic researcher.',
-    features: ['Full archival access', 'Annotation tools', 'Private study carrels', 'Priority publication'],
-    cta: 'Matriculate',
-    highlighted: true,
-  },
-  {
-    name: 'Fellow',
-    price: 'C',
-    period: 'per mensem',
-    description: 'For tenured professors and institutions.',
-    features: ['Everything in Scholar', 'Directorial privileges', 'Special collections access', 'Dedicated archivist'],
-    cta: 'Inquire',
-    highlighted: false,
-  },
-]
-
-const TESTIMONIALS = [
-  {
-    name: 'Dr. Eleanor Vance',
-    role: 'Professor of Antiquities',
-    company: 'Oxford University',
-    text: 'A profound resource. It perfectly balances the gravity of physical archives with the swiftness of digital retrieval.',
-  },
-  {
-    name: 'Prof. Julian Morrow',
-    role: 'Dean of Humanities',
-    company: 'Hampden College',
-    text: 'The most dignified digital environment I have encountered. It respects the text and the reader alike.',
-  },
-  {
-    name: 'Arthur Pendelton',
-    role: 'Head Archivist',
-    company: 'The Royal Society',
-    text: 'Impeccable curation. The attention to typographical detail makes extended reading an absolute pleasure.',
-  },
-]
-
-const FAQ_ITEMS = [
-  { q: 'How does one gain admittance?', a: 'Admittance is open to all seekers of knowledge. Simply register your credentials at the primary desk to begin your journey.' },
-  { q: 'Are physical tomes available?', a: 'While our primary interface is digital, we maintain partnerships with several prestigious physical libraries for inter-library loans.' },
-  { q: 'Is the archive peer-reviewed?', a: 'Indubitably. All contemporary additions are subject to a rigorous blind review by our board of fellows.' },
-  { q: 'What is the policy on dissemination?', a: 'We encourage the sharing of knowledge. Scholars may excerpt and cite texts under standard academic fair use guidelines.' },
-]
-
-// ─────────────────────────────────────────────
-// COMPONENTS
-// ─────────────────────────────────────────────
-
-function Navbar() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-500" style={{ backgroundColor: `${tokens.background}f0`, borderColor: tokens.border, backdropFilter: 'blur(8px)' }}>
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <span className={`font-medium text-2xl tracking-wide ${headingFont.className}`} style={{ color: tokens.accent }}>
-          {PRODUCT_NAME}
-        </span>
-        <div className="hidden md:flex items-center gap-10">
-          {NAV_LINKS.map(link => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
-              className={`text-xs uppercase tracking-[0.2em] transition-all duration-300 ${displayFont.className}`}
-              style={{ color: tokens.foreground }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = tokens.accent;
-                e.currentTarget.style.letterSpacing = '0.25em';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = tokens.foreground;
-                e.currentTarget.style.letterSpacing = '0.2em';
-              }}
-            >
-              {link}
-            </a>
-          ))}
+const Navbar = () => (
+  <nav className="fixed top-0 w-full z-[100] bg-[#F5F2EA]/80 backdrop-blur-sm border-b border-[#0A0A0A]/10 px-10 py-6">
+    <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <motion.div 
+        whileHover={{ scale: 1.02 }}
+        className={`flex items-center gap-4 ${ebGaramond.className} text-2xl font-bold text-[#0A0A0A] cursor-pointer`}
+      >
+        <div className="p-2 border border-[#0A0A0A] bg-[#0A0A0A] text-[#D4AF37]">
+          <Library size={24} />
         </div>
-        <motion.button
-          whileHover={{ filter: 'brightness(1.1)', boxShadow: '0 4px 12px rgba(201,169,98,0.3)' }}
-          whileTap={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }}
-          className={`h-10 px-6 rounded text-xs uppercase tracking-[0.15em] transition-all duration-150 ${displayFont.className}`}
-          style={{
-            background: brassGradient,
-            color: tokens.accentForeground,
-            ...engravedTextEffect,
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.3)'
-          }}
-        >
-          Admittance
-        </motion.button>
-      </div>
-    </nav>
-  )
-}
-
-function Hero() {
-  return (
-    <section className="min-h-screen pt-32 pb-24 relative flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto px-6 gap-12">
-      {/* Decorative Frame for Hero Content */}
-      <div className="absolute inset-6 md:inset-12 border pointer-events-none z-0 hidden md:block" style={{ borderColor: tokens.border }}>
-         <CornerFlourish size={40} thickness={2} />
-      </div>
-
-      <div className="w-full md:w-5/12 flex flex-col justify-center relative z-10">
-        <FadeUp>
-          <p className={`text-xs uppercase tracking-[0.3em] mb-6 ${displayFont.className}`} style={{ color: tokens.accent }}>
-            Volume I
-          </p>
-          <h1 className={`text-5xl md:text-7xl leading-[1.05] tracking-tight mb-8 ${headingFont.className}`} style={{ color: tokens.foreground }}>
-            {TAGLINE}
-          </h1>
-          <p className="text-lg leading-relaxed mb-10" style={{ color: tokens.mutedForeground }}>
-            {DESCRIPTION}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6">
-            <motion.button
-              whileHover={{ filter: 'brightness(1.1)', boxShadow: '0 4px 12px rgba(201,169,98,0.3)' }}
-              whileTap={{ boxShadow: 'inset 0 4px 8px rgba(0,0,0,0.5)' }}
-              className={`h-12 px-8 rounded text-xs uppercase tracking-[0.15em] transition-all duration-150 ${displayFont.className}`}
-              style={{
-                background: brassGradient,
-                color: tokens.accentForeground,
-                ...engravedTextEffect,
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.3)'
-              }}
-            >
-              Enter Archives
-            </motion.button>
-            <motion.button
-              className={`h-12 px-8 rounded border-2 text-xs uppercase tracking-[0.15em] transition-all duration-300 ${displayFont.className}`}
-              style={{ borderColor: tokens.accent, color: tokens.accent }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = tokens.accentSecondary;
-                e.currentTarget.style.borderColor = tokens.accentSecondary;
-                e.currentTarget.style.color = tokens.foreground;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.borderColor = tokens.accent;
-                e.currentTarget.style.color = tokens.accent;
-              }}
-            >
-              Peruse Catalog
-            </motion.button>
-          </div>
-        </FadeUp>
-      </div>
-
-      <div className="w-full md:w-5/12 flex justify-center relative z-10 mt-12 md:mt-0">
-        <FadeUp delay={0.2} className="w-full max-w-sm">
-          <div className="relative group p-3" style={{ border: `1px solid ${tokens.border}` }}>
-            <div className="overflow-hidden relative bg-[#251E19]" style={archTopStyle}>
-              {/* Image Placeholder with Sepia Effect */}
-              <div
-                className="w-full aspect-[3/4] bg-cover bg-center transition-all duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage: 'url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1000&auto=format&fit=crop")',
-                  filter: 'sepia(0.6) contrast(0.95) brightness(0.9)'
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.filter = 'sepia(0) contrast(1) brightness(1)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.filter = 'sepia(0.6) contrast(0.95) brightness(0.9)' }}
-              />
-              <div className="absolute inset-0 border-2 pointer-events-none" style={{ borderColor: `${tokens.accent}30`, ...archTopStyle }} />
-            </div>
-          </div>
-        </FadeUp>
-      </div>
-    </section>
-  )
-}
-
-function Stats() {
-  return (
-    <section className="py-24 relative" style={{ backgroundColor: tokens.backgroundAlt }}>
-      <div className="absolute top-0 left-0 right-0 border-t" style={{ borderColor: tokens.border }} />
-      <div className="absolute bottom-0 left-0 right-0 border-b" style={{ borderColor: tokens.border }} />
-
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <VolumeLabel number="II" />
-        </FadeUp>
-        <StaggerContainer>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:divide-x" style={{ borderColor: `${tokens.border}80` }}>
-            {STATS.map(stat => (
-              <motion.div
-                key={stat.label}
-                variants={staggerItem}
-                className="text-center py-6 px-4 group transition-all duration-300"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(28,23,20,0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent'
-                }}
-              >
-                <p className={`text-4xl md:text-5xl mb-3 transition-transform duration-500 group-hover:scale-[1.05] ${headingFont.className}`} style={{ color: tokens.foreground }}>
-                  {stat.value}
-                </p>
-                <p className={`text-xs uppercase tracking-[0.2em] transition-colors duration-500 ${displayFont.className}`} style={{ color: tokens.mutedForeground }}>
-                  {stat.label}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function Features() {
-  return (
-    <section id="collections" className="py-32 relative">
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <VolumeLabel number="III" title="The Archives" />
-          <OrnateDivider />
-        </FadeUp>
-        <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            {FEATURES.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                variants={staggerItem}
-                className="group relative p-10 rounded transition-all duration-300 ease-out"
-                style={{ backgroundColor: tokens.backgroundAlt, border: `1px solid ${tokens.border}` }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = `${tokens.accent}80`;
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = tokens.border;
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <CornerFlourish size={20} thickness={1} />
-
-                <div className="mb-6 w-12 h-12 rounded-full border flex items-center justify-center bg-[#1C1714] transition-colors duration-300 group-hover:border-[#C9A962]" style={{ borderColor: `${tokens.accent}40` }}>
-                  <feature.icon className="h-5 w-5" style={{ color: tokens.accent }} strokeWidth={1.5} />
-                </div>
-
-                <h3 className={`text-2xl mb-4 ${headingFont.className}`} style={{ color: tokens.foreground }}>
-                  {feature.title}
-                </h3>
-                <p className="text-base leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function ProductDetail() {
-  return (
-    <section className="py-32 relative">
-      <div className="max-w-4xl mx-auto px-6">
-        <FadeUp>
-          <VolumeLabel number="IV" title="A Proclamation" />
-          <OrnateDivider />
-        </FadeUp>
-
-        <FadeUp delay={0.2}>
-          <div className="relative p-12 mt-12 rounded text-center" style={{ backgroundColor: 'rgba(37,30,25,0.5)', border: `1px solid ${tokens.border}` }}>
-            <CornerFlourish size={32} thickness={1} />
-
-            <div className="space-y-6 text-lg leading-[1.7] text-left">
-              <p style={{ color: tokens.mutedForeground }}>
-                <span className={`float-left mr-4 leading-[0.8] text-7xl mt-2 ${displayFont.className}`} style={{ color: tokens.accent, textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-                  I
-                </span>
-                n an age characterized by fleeting information and ephemeral discourse, the Lumina Lexicon stands as a bastion of permanence. We have meticulously assembled the greatest philosophical, scientific, and literary works known to civilization, presenting them within an environment that honors their gravity.
-              </p>
-              <p style={{ color: tokens.mutedForeground }}>
-                Every pixel, every typographic choice, every interaction has been engineered not merely for efficiency, but for reverence. Here, reading is not consumption; it is a profound communion with the minds that shaped our history. Step into the digital halls, where the light of knowledge never dims.
-              </p>
-            </div>
-          </div>
-        </FadeUp>
-      </div>
-    </section>
-  )
-}
-
-function Pricing() {
-  return (
-    <section id="fellowships" className="py-32 relative" style={{ backgroundColor: tokens.backgroundAlt }}>
-      <div className="absolute top-0 left-0 right-0 border-t" style={{ borderColor: tokens.border }} />
-      <div className="absolute bottom-0 left-0 right-0 border-b" style={{ borderColor: tokens.border }} />
-
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <VolumeLabel number="V" title="Admittance & Fellowships" />
-          <OrnateDivider />
-        </FadeUp>
-
-        <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            {PRICING.map((tier) => (
-              <motion.div
-                key={tier.name}
-                variants={staggerItem}
-                className="relative p-10 rounded transition-all duration-300"
-                style={{
-                  backgroundColor: tokens.background,
-                  border: tier.highlighted ? `2px solid ${tokens.accent}` : `1px solid ${tokens.border}`,
-                  boxShadow: tier.highlighted ? `inset 0 0 0 4px ${tokens.backgroundAlt}, 0 8px 32px rgba(0,0,0,0.3)` : 'none'
-                }}
-              >
-                {tier.highlighted && <WaxSeal />}
-                {tier.highlighted && <CornerFlourish size={24} thickness={2} />}
-
-                <div className="text-center mb-8 pb-8 border-b" style={{ borderColor: tokens.border }}>
-                  <h3 className={`text-2xl mb-4 ${headingFont.className}`} style={{ color: tokens.foreground }}>
-                    {tier.name}
-                  </h3>
-                  <div className="flex justify-center items-baseline gap-2 mb-4">
-                    <span className={`text-4xl ${headingFont.className}`} style={{ color: tokens.foreground }}>{tier.price}</span>
-                  </div>
-                  <p className={`text-xs uppercase tracking-[0.2em] ${displayFont.className}`} style={{ color: tokens.accent }}>
-                    {tier.period}
-                  </p>
-                </div>
-
-                <p className="text-base mb-8 text-center" style={{ color: tokens.mutedForeground }}>
-                  {tier.description}
-                </p>
-
-                <ul className="space-y-4 mb-10">
-                  {tier.features.map(f => (
-                    <li key={f} className="flex items-start gap-3">
-                      <span className="text-[10px] mt-1.5" style={{ color: tokens.accent }}>❧</span>
-                      <span className="text-sm" style={{ color: tokens.foreground }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  className={`w-full h-12 rounded text-xs uppercase tracking-[0.15em] transition-all duration-150 ${displayFont.className}`}
-                  style={{
-                    background: tier.highlighted ? brassGradient : 'transparent',
-                    border: tier.highlighted ? 'none' : `1px solid ${tokens.accent}`,
-                    color: tier.highlighted ? tokens.accentForeground : tokens.accent,
-                    ...(tier.highlighted ? engravedTextEffect : {}),
-                    boxShadow: tier.highlighted ? 'inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.3)' : 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    if(tier.highlighted) {
-                      e.currentTarget.style.filter = 'brightness(1.1)';
-                    } else {
-                      e.currentTarget.style.backgroundColor = tokens.accentSecondary;
-                      e.currentTarget.style.borderColor = tokens.accentSecondary;
-                      e.currentTarget.style.color = tokens.foreground;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if(tier.highlighted) {
-                      e.currentTarget.style.filter = 'brightness(1)';
-                    } else {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.borderColor = tokens.accent;
-                      e.currentTarget.style.color = tokens.accent;
-                    }
-                  }}
-                >
-                  {tier.cta}
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function Testimonials() {
-  return (
-    <section id="testimonials" className="py-32 relative">
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <VolumeLabel number="VI" title="Distinguished Patrons" />
-          <OrnateDivider />
-        </FadeUp>
-
-        <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            {TESTIMONIALS.map(t => (
-              <motion.div
-                key={t.name}
-                variants={staggerItem}
-                className="p-10 rounded relative text-center"
-                style={{ backgroundColor: tokens.backgroundAlt, border: `1px solid ${tokens.border}` }}
-              >
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#1C1714] px-4" style={{ color: tokens.accent }}>
-                  ❧
-                </div>
-                <p className={`text-xl leading-relaxed mb-8 italic ${headingFont.className}`} style={{ color: tokens.foreground }}>
-                  &ldquo;{t.text}&rdquo;
-                </p>
-                <div>
-                  <p className={`text-sm uppercase tracking-widest mb-1 ${displayFont.className}`} style={{ color: tokens.foreground }}>
-                    {t.name}
-                  </p>
-                  <p className="text-xs" style={{ color: tokens.mutedForeground }}>
-                    {t.role}, {t.company}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-
-  return (
-    <section id="inquiries" className="py-32 relative" style={{ backgroundColor: tokens.backgroundAlt }}>
-      <div className="absolute top-0 left-0 right-0 border-t" style={{ borderColor: tokens.border }} />
-      <div className="max-w-3xl mx-auto px-6">
-        <FadeUp>
-          <VolumeLabel number="VII" title="Common Inquiries" />
-          <OrnateDivider />
-        </FadeUp>
-
-        <div className="mt-16 space-y-4">
-          {FAQ_ITEMS.map((item, i) => (
-            <FadeUp key={i} delay={i * 0.1}>
-              <div
-                className="rounded overflow-hidden transition-colors duration-300"
-                style={{ border: `1px solid ${tokens.border}`, backgroundColor: tokens.background }}
-              >
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                  style={{ '--tw-ring-color': tokens.accent, '--tw-ring-offset-color': tokens.background } as any}
-                >
-                  <div className="flex items-center gap-6">
-                    <span className={`text-lg w-8 ${displayFont.className}`} style={{ color: tokens.accent }}>
-                      {romanNumerals[i]}.
-                    </span>
-                    <span className={`text-xl ${headingFont.className}`} style={{ color: tokens.foreground }}>
-                      {item.q}
-                    </span>
-                  </div>
-                  <motion.div
-                    animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <ChevronDown className="h-5 w-5" style={{ color: tokens.accent }} />
-                  </motion.div>
-                </button>
-                <motion.div
-                  initial={false}
-                  animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <div className="px-6 pb-6 pt-2 md:ml-14 ml-0">
-                    <p className="text-base leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                      {item.a}
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Newsletter() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('loading')
-    setTimeout(() => setStatus('success'), 1200)
-  }
-
-  return (
-    <section className="py-32 relative">
-      <div className="max-w-2xl mx-auto px-6 text-center">
-        <FadeUp>
-          <VolumeLabel number="VIII" title="The Society Gazette" />
-          <p className="text-lg mb-10" style={{ color: tokens.mutedForeground }}>
-            Subscribe to receive our periodic dispatches concerning new acquisitions, scholarly debates, and forthcoming exhibitions.
-          </p>
-
-          {status === 'success' ? (
-            <p className={`text-xl italic ${headingFont.className}`} style={{ color: tokens.accent }}>
-              Your missive has been received. Welcome to the society.
-            </p>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
-              <input
-                id="newsletter-email"
-                type="email"
-                required
-                placeholder="Enter your correspondence address..."
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="w-full sm:w-96 h-12 px-4 rounded bg-transparent transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
-                style={{
-                  border: `1px solid ${tokens.border}`,
-                  color: tokens.foreground,
-                  backgroundColor: tokens.backgroundAlt,
-                  '--tw-ring-color': `${tokens.accent}80`,
-                  '--tw-ring-offset-color': tokens.background
-                } as any}
-              />
-              <motion.button
-                type="submit"
-                disabled={status === 'loading'}
-                whileHover={{ filter: 'brightness(1.1)' }}
-                whileTap={{ boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.5)' }}
-                className={`h-12 px-8 rounded text-xs uppercase tracking-[0.15em] transition-all duration-150 disabled:opacity-60 whitespace-nowrap w-full sm:w-auto ${displayFont.className}`}
-                style={{
-                  background: brassGradient,
-                  color: tokens.accentForeground,
-                  ...engravedTextEffect,
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.3)'
-                }}
-              >
-                {status === 'loading' ? 'Sealing...' : 'Subscribe'}
-              </motion.button>
-            </form>
-          )}
-        </FadeUp>
-      </div>
-    </section>
-  )
-}
-
-function Footer() {
-  const links = {
-    Library: ['Archives', 'Collections', 'Rare Books', 'Manuscripts'],
-    Institution: ['About', 'Fellows', 'Careers', 'Endowment'],
-    Resources: ['Citations', 'API', 'Guidelines', 'Help Desk'],
-    Legal: ['Privacy', 'Terms', 'Copyright', 'Security'],
-  }
-
-  return (
-    <footer className="py-20 relative border-t" style={{ backgroundColor: tokens.background, borderColor: tokens.border }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-12 mb-16">
-          <div className="col-span-2">
-            <span className={`font-medium text-2xl tracking-wide mb-6 block ${headingFont.className}`} style={{ color: tokens.accent }}>
-              {PRODUCT_NAME}
-            </span>
-            <p className="text-sm leading-relaxed max-w-xs" style={{ color: tokens.mutedForeground }}>
-              Preserving the intellect of yesteryear for the scholars of tomorrow.
-            </p>
-          </div>
-          {Object.entries(links).map(([group, items]) => (
-            <div key={group}>
-              <p className={`text-xs uppercase tracking-[0.2em] mb-6 ${displayFont.className}`} style={{ color: tokens.foreground }}>
-                {group}
-              </p>
-              <ul className="space-y-4">
-                {items.map(item => (
-                  <li key={item}>
-                    <a href="#" className="text-sm transition-colors hover:text-[#C9A962]" style={{ color: tokens.mutedForeground }}>
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t" style={{ borderColor: tokens.border }}>
-          <p className={`text-xs uppercase tracking-widest ${displayFont.className}`} style={{ color: tokens.mutedForeground }}>
-            © MMXXVI {PRODUCT_NAME}. All rights reserved.
-          </p>
-          <a
-            href="/"
-            className={`text-xs uppercase tracking-[0.2em] transition-colors mt-4 md:mt-0 ${displayFont.className}`}
-            style={{ color: tokens.accent }}
-            onMouseEnter={(e) => e.currentTarget.style.color = tokens.foreground}
-            onMouseLeave={(e) => e.currentTarget.style.color = tokens.accent}
-          >
-            Return to Gallery
+        ACADEMIA
+      </motion.div>
+      
+      <div className={`hidden lg:flex items-center gap-12 ${ibmPlexMono.className} text-[9px] font-bold tracking-[0.4em] uppercase text-[#0A0A0A]/50`}>
+        {['The_Archives', 'Curriculum', 'Scholarly_Pubs', 'Terminal'].map(item => (
+          <a key={item} href="#" className="hover:text-[#8B0000] transition-colors relative group">
+            {item}
+            <motion.span 
+              className="absolute -bottom-2 left-0 w-0 h-[1px] bg-[#8B0000] group-hover:w-full transition-all duration-300" 
+            />
           </a>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
-// ─────────────────────────────────────────────
-// PAGE
-// ─────────────────────────────────────────────
-export default function AcademiaPage() {
-  return (
-    <div className={`min-h-screen relative ${bodyFont.className}`} style={{ backgroundColor: tokens.background }}>
-      {/* Texture Overlays */}
-      <div
-        className="fixed inset-0 pointer-events-none mix-blend-overlay z-0"
-        style={{
-          opacity: 0.03,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }}
-      />
-      <div
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(28,23,20,0.4) 100%)'
-        }}
-      />
-
-      <div className="relative z-10 selection:bg-[#C9A962] selection:text-[#1C1714]">
-        <Navbar />
-        <main>
-          <Hero />
-          <Stats />
-          <Features />
-          <ProductDetail />
-          <Pricing />
-          <Testimonials />
-          <FAQ />
-          <Newsletter />
-        </main>
-        <Footer />
+        ))}
       </div>
       
+      <ScholarlyButton variant="secondary" className="hidden sm:block">REQUEST_ACCESS</ScholarlyButton>
+    </div>
+  </nav>
+)
+
+const Hero = () => {
+  return (
+    <UnfoldingSection className="pt-40">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
+        <InkBleedReveal>
+          <div className={`inline-flex items-center gap-3 px-4 py-2 bg-[#1A2C42]/5 border border-[#1A2C42]/10 mb-10 ${ibmPlexMono.className}`}>
+            <Archive size={12} className="text-[#1A2C42]" />
+            <span className="text-[9px] font-bold text-[#1A2C42] tracking-[0.4em] uppercase">
+              ARCHIVAL_SYSTEM_ACTIVE // V.26
+            </span>
+          </div>
+          
+          <h1 className={`${ebGaramond.className} text-[clamp(3.5rem,7vw,10rem)] font-bold text-[#0A0A0A] leading-[0.9] mb-12`}>
+            INTELLECTUAL <br/>
+            <span className="italic text-[#8B0000]">RIGOR.</span>
+          </h1>
+          
+          <p className={`${lora.className} text-xl text-[#0A0A0A]/70 max-w-xl mb-16 leading-relaxed italic`}>
+            "The mind is not a vessel to be filled, but a fire to be kindled." — Plutarch. Explore the archival foundations of timeless knowledge.
+          </p>
+          
+          <div className="flex flex-wrap items-center gap-10">
+            <ScholarlyButton>OPEN_MANUSCRIPT</ScholarlyButton>
+            <motion.div 
+              whileHover={{ x: 5 }}
+              className={`flex items-center gap-3 text-[#0A0A0A] text-[10px] font-bold tracking-[0.3em] uppercase cursor-pointer group ${ibmPlexMono.className}`}
+            >
+              BROWSE_CATALOGUE <ArrowRight size={16} className="text-[#8B0000] transition-transform group-hover:translate-x-2" />
+            </motion.div>
+          </div>
+        </InkBleedReveal>
+
+        {/* Hero Asset - Simulated via CSS and Framer Motion */}
+        <div className="relative hidden lg:block">
+           <motion.div
+            initial={{ opacity: 0, rotate: -5, scale: 0.9 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            transition={tokens.physics.deliberate}
+            className="aspect-[4/5] bg-white p-1 shadow-2xl relative overflow-hidden group"
+           >
+              {/* Paper Texture and Content Simulation */}
+              <div className="absolute inset-0 bg-[#F5F2EA] p-16 flex flex-col justify-between border border-[#0A0A0A]/5">
+                 <div className="space-y-4">
+                    <div className="w-16 h-[2px] bg-[#8B0000] mb-8" />
+                    <div className={`${ebGaramond.className} text-4xl font-bold text-[#0A0A0A]`}>Tractatus Logico-Philosophicus</div>
+                    <div className={`${ibmPlexMono.className} text-[10px] text-[#0A0A0A]/40 uppercase tracking-widest`}>MS. Cod. 1204 // 1921</div>
+                 </div>
+                 
+                 <div className="space-y-6">
+                    <div className="h-[1px] w-full bg-[#0A0A0A]/10" />
+                    <div className="flex justify-between items-end">
+                       <div className={`${lora.className} text-sm text-[#0A0A0A]/60 italic max-w-[200px]`}>
+                          The world is everything that is the case.
+                       </div>
+                       <Stamp size={48} className="text-[#8B0000]/20" />
+                    </div>
+                 </div>
+              </div>
+              
+              {/* Gold Leaf Corner */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#D4AF37]/10 -rotate-45 translate-x-12 -translate-y-12 border border-[#D4AF37]/30" />
+           </motion.div>
+           
+           {/* Floating Annotations */}
+           <motion.div 
+            animate={{ y: [-10, 10] }}
+            transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
+            className={`absolute -top-12 -left-12 bg-[#1A2C42] text-[#F5F2EA] p-6 ${ibmPlexMono.className} text-[9px] font-bold tracking-[0.3em] uppercase shadow-xl`}
+           >
+              CURRICULUM_REF: ALPHA_01
+           </motion.div>
+        </div>
       </div>
+    </UnfoldingSection>
+  )
+}
+
+const Metrics = () => (
+  <UnfoldingSection className="bg-[#0A0A0A] text-[#F5F2EA]">
+    <div className="max-w-7xl mx-auto px-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+        {[
+          { label: 'Archival Records', value: '1.2M', icon: Archive, color: '#D4AF37' },
+          { label: 'Citations', value: '850K', icon: BookOpen, color: '#8B0000' },
+          { label: 'Peer Reviews', value: '14K', icon: Scale, color: '#F5F2EA' },
+          { label: 'Fellowships', value: '122', icon: GraduationCap, color: '#D4AF37' }
+        ].map((metric, i) => (
+          <motion.div 
+            key={i}
+            whileHover={{ scale: 1.05 }}
+            className="p-8 border-l border-[#F5F2EA]/10 group"
+          >
+            <metric.icon className="mb-6 opacity-30 group-hover:opacity-100 transition-opacity" style={{ color: metric.color }} size={24} />
+            <div className={`${ebGaramond.className} text-5xl font-bold mb-2 italic tracking-tighter`}>{metric.value}</div>
+            <div className={`${ibmPlexMono.className} text-[9px] font-bold text-[#F5F2EA]/40 uppercase tracking-[0.4em]`}>{metric.label}</div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </UnfoldingSection>
+)
+
+const TheArchives = () => {
+  const archives = [
+    { title: 'Classical Manuscripts', desc: 'Preserving the original texts from the Greco-Roman period with high-fidelity digitization.', icon: Feather },
+    { title: 'Modern Dialectics', desc: 'A curated collection of post-enlightenment philosophical works and critical essays.', icon: Compass },
+    { title: 'Scientific Archives', desc: 'Historical scientific journals dating back to the formation of the Royal Society.', icon: Globe },
+    { title: 'Institutional Honors', desc: 'Cataloguing the academic achievements and awards of our global scholarly network.', icon: Award },
+    { title: 'Correspondence', desc: 'Annotated letters from leading intellectuals of the 20th century.', icon: Mail },
+    { title: 'Legal Precedents', desc: 'A comprehensive database of historical legal cases and their societal impact.', icon: Scale }
+  ]
+
+  return (
+    <UnfoldingSection>
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-32 gap-12">
+          <InkBleedReveal>
+            <h2 className={`${ebGaramond.className} text-7xl lg:text-8xl font-bold text-[#0A0A0A] mb-8 leading-[0.9]`}>
+              ARCHIVAL <br/> <span className="text-[#8B0000]">DOMAINS.</span>
+            </h2>
+            <p className={`${lora.className} text-[#0A0A0A]/60 max-w-xl text-lg italic`}>
+              The Academia protocol categorizes human knowledge into six distinct archival domains, each governed by rigorous standards of preservation and peer verification.
+            </p>
+          </InkBleedReveal>
+          <ScholarlyButton variant="secondary" className="lg:mb-4">VIEW_ALL_CATALOGUES</ScholarlyButton>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
+          {archives.map((item, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group border-b border-[#0A0A0A]/10 pb-12"
+            >
+              <div className="flex items-center gap-6 mb-8">
+                <div className="w-12 h-12 border border-[#0A0A0A]/10 flex items-center justify-center group-hover:bg-[#0A0A0A] group-hover:text-[#D4AF37] transition-all duration-500">
+                  <item.icon size={20} />
+                </div>
+                <div className={`${ibmPlexMono.className} text-[9px] font-bold text-[#0A0A0A]/30 uppercase tracking-[0.4em]`}>DOMAIN_00{i + 1}</div>
+              </div>
+              <h3 className={`${ebGaramond.className} text-3xl font-bold text-[#0A0A0A] mb-6 italic`}>{item.title}</h3>
+              <p className={`${lora.className} text-[#0A0A0A]/50 text-base leading-relaxed mb-10`}>{item.desc}</p>
+              <motion.div 
+                whileHover={{ x: 5 }}
+                className={`flex items-center gap-3 text-[9px] font-bold text-[#8B0000] tracking-[0.3em] uppercase cursor-pointer ${ibmPlexMono.className}`}
+              >
+                REQUEST_DOCUMENTS <ChevronRight size={14} />
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </UnfoldingSection>
+  )
+}
+
+const TechnicalCurriculum = () => (
+  <UnfoldingSection className="bg-[#1A2C42] text-[#F5F2EA] overflow-hidden">
+    <div className="absolute top-0 right-0 p-20 opacity-[0.05] pointer-events-none">
+      <Library size={600} strokeWidth={0.1} />
+    </div>
+
+    <div className="max-w-7xl mx-auto">
+      <div className="grid lg:grid-cols-2 gap-32 items-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={tokens.physics.deliberate}
+          className="relative"
+        >
+          {/* Simulated Scholarly Asset */}
+          <div className="aspect-square bg-[#0A0A0A] p-2 shadow-2xl relative flex items-center justify-center border border-[#F5F2EA]/10">
+             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-30 pointer-events-none" />
+             
+             {/* Central Illuminated Circle */}
+             <motion.div 
+              animate={{ 
+                rotate: 360,
+                opacity: [0.3, 0.5, 0.3]
+              }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="w-3/4 h-3/4 border-2 border-dashed border-[#D4AF37]/30 rounded-full flex items-center justify-center"
+             >
+                <div className="w-1/2 h-1/2 border border-[#F5F2EA]/10 rounded-full flex items-center justify-center">
+                   <Globe size={100} strokeWidth={0.5} className="text-[#D4AF37]" />
+                </div>
+             </motion.div>
+             
+             {/* Corner Accents */}
+             <div className="absolute top-10 left-10 ${ibmPlexMono.className} text-[8px] text-[#F5F2EA]/30 tracking-widest uppercase">
+                System_Curriculum_Map <br/>
+                Verification: Stable
+             </div>
+             <div className="absolute bottom-10 right-10 ${ibmPlexMono.className} text-[8px] text-[#D4AF37] tracking-widest uppercase">
+                Illuminated_Archive_v4.0
+             </div>
+          </div>
+          
+          <div className="absolute -bottom-10 -left-10 bg-[#8B0000] text-[#F5F2EA] p-10 -rotate-3 shadow-2xl border border-[#F5F2EA]/20">
+            <div className={`${ebGaramond.className} text-2xl font-bold italic`}>VERITAS.</div>
+          </div>
+        </motion.div>
+
+        <InkBleedReveal>
+          <div className={`${ibmPlexMono.className} text-[#D4AF37] text-[9px] tracking-[0.5em] font-bold mb-10 uppercase italic`}>
+            [ CURRICULUM_TECHNICAL_SPECS ]
+          </div>
+          <h2 className={`${ebGaramond.className} text-7xl lg:text-8xl font-bold text-[#F5F2EA] mb-10 leading-[0.9]`}>
+            THE BEYOND <br/><span className="italic text-[#D4AF37]">OBSERVABLE.</span>
+          </h2>
+          <div className={`${lora.className} space-y-8 text-[#F5F2EA]/60 text-xl italic leading-relaxed`}>
+            <p>Scholarly research is more than the accumulation of data; it is the refinement of perception through historical context and technical precision.</p>
+            <p>Our curriculum engine leverages semantic mapping to connect disparate archival nodes into a coherent intellectual journey.</p>
+          </div>
+          
+          <div className="mt-20 flex flex-col sm:flex-row items-start gap-10">
+            <ScholarlyButton>ENROLL_FELLOWSHIP</ScholarlyButton>
+            <div className="flex items-center gap-6">
+              {[Archive, PenTool, Search].map((Icon, i) => (
+                <motion.div 
+                  key={i} 
+                  whileHover={{ y: -5, color: tokens.colors.gold }}
+                  className="p-4 bg-[#F5F2EA]/5 border border-[#F5F2EA]/10 text-[#F5F2EA]/40 cursor-pointer transition-colors"
+                >
+                  <Icon size={18} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </InkBleedReveal>
+      </div>
+    </div>
+  </UnfoldingSection>
+)
+
+const Footer = () => (
+  <footer className="py-32 px-10 bg-[#0A0A0A] text-[#F5F2EA] border-t border-[#D4AF37]/20 relative z-10">
+    <div className="max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-20 mb-32">
+        <div className="lg:col-span-2">
+          <div className={`flex items-center gap-4 ${ebGaramond.className} text-3xl font-bold text-[#F5F2EA] uppercase mb-10 cursor-pointer`}>
+            <div className="p-2 border border-[#D4AF37] bg-transparent text-[#D4AF37]">
+              <Library size={28} />
+            </div>
+            ACADEMIA
+          </div>
+          <p className={`${ibmPlexMono.className} text-[#F5F2EA]/40 text-[9px] font-bold leading-loose uppercase tracking-[0.2em] max-w-sm`}>
+            THE GLOBAL STANDARD FOR ARCHIVAL RESEARCH AND INTELLECTUAL RIGOR. BUILT ON TRADITION, REFINED BY PRECISION.
+          </p>
+        </div>
+        
+        {[
+          { title: 'The Archives', links: ['Classical', 'Modern', 'Scientific', 'Legal'] },
+          { title: 'Fellowships', links: ['Admissions', 'Grants', 'Research', 'Faculty'] },
+          { title: 'Terminal', links: ['SSH_Connect', 'Node_Map', 'Status_Log', 'Security'] }
+        ].map((group, i) => (
+          <div key={i}>
+            <div className={`${ibmPlexMono.className} text-[9px] font-bold text-[#D4AF37] uppercase tracking-[0.5em] mb-12`}>{group.title}</div>
+            <ul className="space-y-6">
+              {group.links.map(link => (
+                <li key={link}>
+                  <a href="#" className={`${ebGaramond.className} text-base italic text-[#F5F2EA]/60 hover:text-[#D4AF37] transition-colors flex items-center gap-3 group`}>
+                    <div className="w-0 h-[1px] bg-[#D4AF37] group-hover:w-4 transition-all" />
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      
+      <div className="pt-16 border-t border-[#F5F2EA]/10 flex flex-col md:flex-row justify-between items-center gap-10">
+        <div className={`${ibmPlexMono.className} text-[8px] font-bold text-[#F5F2EA]/30 uppercase tracking-[0.6em]`}>
+          © 2026 ACADEMIA_CORP // PROPRIETARY_ARCHIVES // ALL_RIGHTS_RESERVED
+        </div>
+        <div className="flex gap-12 text-[#F5F2EA]/40">
+          <motion.div whileHover={{ scale: 1.2, color: tokens.colors.gold }} className="cursor-pointer transition-colors">
+            <Globe size={18} />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2, color: tokens.colors.crimson }} className="cursor-pointer transition-colors">
+            <Award size={18} />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.2, color: tokens.colors.oxfordBlue }} className="cursor-pointer transition-colors">
+            <Search size={18} />
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  </footer>
+)
+
+// --- Main Page Component ---
+
+export default function AcademiaPage() {
+  return (
+    <div className={`min-h-screen bg-[#F5F2EA] text-[#0A0A0A] overflow-x-hidden ${ebGaramond.className} selection:bg-[#8B0000] selection:text-[#F5F2EA]`}>
+      {/* Archival Background Layers */}
+      <ArchiveBackground />
+      
+      {/* Navigation HUD */}
+      <Navbar />
+      
+      {/* Main Content Sections with Kinetic Protocols */}
+      <main className="relative z-10">
+        <Hero />
+        <Metrics />
+        <TheArchives />
+        <TechnicalCurriculum />
+        
+        {/* Call to Action - Final Seal */}
+        <section className="py-40 px-10 relative overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={tokens.physics.deliberate}
+            className="max-w-5xl mx-auto bg-[#8B0000] p-24 text-[#F5F2EA] relative overflow-hidden group shadow-[0_50px_100px_rgba(0,0,0,0.3)]"
+          >
+            {/* Wax Seal Decoration */}
+            <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-20 transition-opacity">
+              <Stamp size={300} strokeWidth={1} />
+            </div>
+            
+            <div className="relative z-10 text-center">
+              <h2 className={`${ebGaramond.className} text-6xl lg:text-8xl font-bold uppercase italic tracking-tighter mb-12`}>
+                SEAL THE <br/> <span className="bg-[#F5F2EA] text-[#8B0000] px-4">CONVENANT.</span>
+              </h2>
+              <p className={`${lora.className} text-xl italic tracking-wide mb-16 max-w-2xl mx-auto opacity-70`}>
+                "Knowledge is the only wealth that can be given away without being diminished." Join the archival fellowship.
+              </p>
+              <motion.button 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                className={`bg-[#F5F2EA] text-[#0A0A0A] px-16 py-8 text-xl font-bold italic uppercase tracking-tighter shadow-2xl ${ibmPlexMono.className}`}
+              >
+                APPLY_FOR_ACCESS
+              </motion.button>
+            </div>
+          </motion.div>
+        </section>
+      </main>
+      
+      <Footer />
+      
+      {/* Global Texture Overlay - Archival Grain */}
+      <div className="fixed inset-0 pointer-events-none z-[1000] opacity-[0.03] contrast-150 mix-blend-multiply">
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+        </svg>
+      </div>
+
+      {/* Archival HUD (Bottom Left) */}
+      <div className="fixed bottom-10 left-10 z-[100] hidden xl:block">
+        <div className="p-6 border border-[#0A0A0A]/10 bg-[#F5F2EA]/90 backdrop-blur-sm shadow-xl">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-2 h-2 bg-[#8B0000] rounded-full animate-pulse" />
+            <span className={`${ibmPlexMono.className} text-[8px] font-bold text-[#0A0A0A]/40 tracking-widest uppercase`}>Archival_Node_Verified // 0x882</span>
+          </div>
+          <div className="flex items-center gap-6">
+             <div className="h-[1px] w-24 bg-[#0A0A0A]/10 overflow-hidden relative">
+                <motion.div 
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                  className="h-full w-12 bg-[#D4AF37]"
+                />
+             </div>
+             <span className={`${ibmPlexMono.className} text-[8px] font-bold text-[#0A0A0A] tracking-widest uppercase`}>SYNC_STABLE</span>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

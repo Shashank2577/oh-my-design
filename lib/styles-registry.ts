@@ -37,7 +37,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'humanist-literary', name: 'Humanist Literary', category: 'Elegant', vibe: 'Quiet intelligence, organic warmth', bestFor: 'Content platforms, Blogs', accentColor: '#8B6F47', built: true, version: 'V1' },
   { slug: 'saas', name: 'SaaS', category: 'Modern', vibe: 'Modern SaaS aesthetic', bestFor: 'SaaS products, Startups', accentColor: '#4F46E5', built: true, version: 'V1' },
   { slug: 'sketch', name: 'Sketch', category: 'Creative', vibe: 'Hand-drawn, artistic', bestFor: 'Creative portfolios, Artistic brands', accentColor: '#2D3748', built: true, version: 'V1' },
-  { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF0000', built: false, version: 'V1' },
+  { slug: 'swiss', name: 'Swiss', category: 'Minimal', vibe: 'International Typographic Style', bestFor: 'Design studios, Portfolios', accentColor: '#FF3000', built: true, version: 'V1' },
 
   // --- V2 Brand Styles ---
   { slug: 'together.ai', name: 'Together AI', category: 'Tech', vibe: 'Pastel-gradient dreamscape built for enterprise AI infrastructure', bestFor: 'AI platforms, enterprise infrastructure', accentColor: '#ef2cc1', built: true, version: 'V2' },
@@ -149,7 +149,7 @@ export const STYLES: StyleMeta[] = [
   { slug: 'type-tango', name: 'Type Tango', category: 'Creative', vibe: 'Kinetic typography motion', bestFor: 'Design studios, Typography', accentColor: '#FFD93D', built: true, version: 'V3' },
   { slug: 'ad-agency-360', name: 'Ad Agency 360', category: 'Marketing', vibe: 'Full-spectrum creative campaigns', bestFor: 'Creative agencies, Media', accentColor: '#FF8A65', built: true, version: 'V3' },
   { slug: 'academia', name: 'Academia', category: 'Elegant', vibe: 'Scholarly, classic, refined', bestFor: 'Educational platforms, Publishing', accentColor: '#C9A962', built: true, version: 'V1' },
-  { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FFE500', built: true, version: 'V1' },
+  { slug: 'neo-brutalism', name: 'Neo-brutalism', category: 'Creative', vibe: 'Bold, raw, colorful brutalism', bestFor: 'Creative studios, Startups', accentColor: '#FF6B6B', built: true, version: 'V1' },
   { slug: 'neumorphism', name: 'Neumorphism', category: 'Modern', vibe: 'Soft UI, skeuomorphic', bestFor: 'Mobile apps, Smart home', accentColor: '#6C63FF', built: true, version: 'V1' },
   { slug: 'terminal-cli', name: 'Terminal CLI', category: 'Tech', vibe: 'Command-line interface aesthetic', bestFor: 'Developer tools, CLI apps', accentColor: '#00FF00', built: true, version: 'V1' },
   { slug: 'vaporwave', name: 'Vaporwave', category: 'Nostalgic', vibe: '80s/90s aesthetic, nostalgic', bestFor: 'Art projects, Music platforms', accentColor: '#FF71CE', built: true, version: 'V1' },

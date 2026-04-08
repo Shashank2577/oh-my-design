@@ -1,364 +1,882 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { 
-  Cpu, 
-  MessageSquare, 
-  Zap, 
-  Activity, 
-  TrendingUp, 
-  ShieldCheck, 
-  ChevronDown, 
-  ArrowRight,
-  Bot,
-  Users,
-  Signal,
-  Globe,
-  Network,
-  Radio,
-  Sparkles,
-  Terminal,
-  Code2,
-  Share2
+/**
+ * PAGE TEMPLATE — oh-my-design
+ * BotStream Style Implementation
+ */
+
+import { motion, useReducedMotion, useInView, useScroll, useTransform, useVelocity, useSpring, useAnimationFrame } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google'
+import {
+  Mic, Activity, Waves, Volume2, Shield, Settings, Play, ChevronDown, ArrowRight, Check, Sparkles, MessageSquare, Plus,
 } from 'lucide-react'
-import { JetBrains_Mono, Inter, Outfit } from 'next/font/google'
 
-const mono = JetBrains_Mono({ subsets: ['latin'] })
-const inter = Inter({ subsets: ['latin'] })
-const outfit = Outfit({ subsets: ['latin'] })
+// ─────────────────────────────────────────────
+// FONTS
+// ─────────────────────────────────────────────
+const headingFont = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+})
 
-// --- Design Tokens ---
-const PROMPT = `
-### 52. BotStream (Meeting Assistant)
-**Philosophy**: Harmonious, collaborative, and responsive. BotStream is centered around the human voice. The UI breathes with the participants, using fluid shapes to represent audio and sentiment. It’s designed to be non-intrusive yet highly informative, acting as a "silent observer."
+const bodyFont = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+})
 
-**Tokens**:
-- **Background**: \`#08090A\` (Obsidian)
-- **Surface**: \`rgba(255, 255, 255, 0.03)\` (Frosted Glass)
-- **Accent 1**: \`#3B82F6\` (Stream Blue)
-- **Accent 2**: \`#F43F5E\` (Pulse Rose)
-- **Border**: \`rgba(255, 255, 255, 0.1)\`
-- **Text High**: \`#FFFFFF\`
+const monoFont = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
-**Typography**:
-- **Headings**: **Space Grotesk** (Modern, wide tracking)
-- **Body**: **Inter** (Clean, high readability)
-- **Data**: **JetBrains Mono** (For timestamps and sentiment scores)
-
-**Motion Physics**:
-- **Orb Dynamics**: \`stiffness: 50, damping: 10, mass: 2\` (Heavy, liquid-like oscillation).
-- **Waveform Mapping**: \`stiffness: 800, damping: 50\` (Ultra-responsive frequency tracking).
-- **Sentiment Shift**: \`stiffness: 100, damping: 40\` (Slow, atmospheric color bleeding).
-
-**Niche-specific Components**:
-- **Sentiment Analysis Waveform**: A real-time line chart that moves from left to right, color-coded by detected emotional tone.
-- **Voice Orbs**: Glowing spherical avatars that expand and "vibrate" in sync with active audio frequency.
-- **Action-Item Pop**: A side-panel that "catches" key phrases and pins them as interactive cards using \`layoutId\`.
-
-**Signature Elements**:
-- **The Breathing Background**: Subtle background gradient shifts that mimic a slow breathing rhythm (12-18 BPM).
-- **Live Summary Ticker**: Key points slide in from the bottom, fading out as they lose relevance in the conversation.
-- **Audio Proximity Glow**: Orbs brighten and move toward the center of the viewport as they become the dominant speaker.
-`;
-
+// ─────────────────────────────────────────────
+// DESIGN TOKENS
+// ─────────────────────────────────────────────
 const tokens = {
-  colors: {
-    background: "#020408",
-    surface: "#0A0D14",
-    accent1: "#6366F1", // Neural Indigo
-    accent2: "#10B981", // Synapse Green
-    border: "rgba(99, 102, 241, 0.1)",
-    glow: "rgba(99, 102, 241, 0.4)",
-    textHigh: "#F8FAFC",
-    textLow: "#94A3B8"
-  },
-  physics: {
-    stream: { type: "spring" as any, stiffness: 200, damping: 30, mass: 1 },
-    pulse: { scale: [1, 1.1, 1], transition: { duration: 3, repeat: Infinity } }
-  }
+  background: '#08090A', // Obsidian
+  surface: 'rgba(255, 255, 255, 0.03)', // Frosted Glass
+  accent1: '#3B82F6', // Stream Blue
+  accent2: '#F43F5E', // Pulse Rose
+  border: 'rgba(255, 255, 255, 0.1)',
+  textHigh: '#FFFFFF',
+  textLow: '#A0A0A0', // Added for contrast matching
 }
 
-// --- Components ---
+// ─────────────────────────────────────────────
+// MOTION HELPERS & PHYSICS
+// ─────────────────────────────────────────────
 
-const BotButton = ({ children, variant = 'primary', className = '' }: any) => (
-  <motion.button
-    whileHover={{ scale: 1.02, boxShadow: `0 0 30px ${variant === 'primary' ? tokens.colors.glow : 'rgba(255,255,255,0.05)'}` }}
-    whileTap={{ scale: 0.98 }}
-    className={`px-8 py-4 rounded-xl ${outfit.className} font-bold transition-all relative overflow-hidden group ${
-      variant === 'primary' 
-        ? `bg-gradient-to-r from-[#6366F1] to-[#10B981] text-white` 
-        : `bg-[#0A0D14] text-white border border-[${tokens.colors.border}]`
-    } ${className}`}
-  >
-    <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-widest text-xs">{children}</span>
-    <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-  </motion.button>
-)
+// Base physics for BotStream
+const orbPhysics = { type: 'spring' as const, stiffness: 50, damping: 10, mass: 2 }
+const waveformPhysics = { type: 'spring' as const, stiffness: 800, damping: 50 }
+const sentimentPhysics = { type: 'spring' as const, stiffness: 100, damping: 40 }
 
-const StreamCard = ({ children, className = '', title = '' }: any) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    className={`bg-[#0A0D14] border border-white/5 p-8 rounded-2xl relative group overflow-hidden ${className}`}
-  >
-    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#6366F1] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    {title && <div className={`${mono.className} text-[8px] font-bold text-[#6366F1] uppercase tracking-[0.4em] mb-6`}>{title}</div>}
-    {children}
-  </motion.div>
-)
+function FadeUp({ children, delay = 0, className }: { children: React.ReactNode; delay?: number, className?: string }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
+  const shouldReduce = useReducedMotion()
 
-// --- Sections ---
+  return (
+    <motion.div
+      ref={ref}
+      initial={shouldReduce ? false : { opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ type: 'spring', stiffness: 100, damping: 20, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
-const Navbar = () => (
-  <nav className="fixed top-0 w-full z-50 bg-[#020408]/80 backdrop-blur-xl px-8 py-6 border-b border-white/5">
-    <div className="max-w-7xl mx-auto flex items-center justify-between">
-      <div className={`flex items-center gap-2 ${outfit.className} text-xl font-black tracking-tight text-white uppercase`}>
-        <div className="w-8 h-8 bg-gradient-to-tr from-[#6366F1] to-[#10B981] rounded-lg flex items-center justify-center">
-          <Bot className="text-white" size={18} />
-        </div>
-        BOT<span className="text-[#6366F1]">STREAM</span>
-      </div>
-      <div className="hidden md:flex items-center gap-10 text-[#94A3B8] font-bold text-[10px] tracking-[0.4em] uppercase">
-        {['Streams', 'Logic', 'Nodes', 'Mainframe'].map(item => (
-          <a key={item} href="#" className="hover:text-white transition-colors">{item}</a>
+function StaggerContainer({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
+  const shouldReduce = useReducedMotion()
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={shouldReduce ? false : 'hidden'}
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.1 } },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: sentimentPhysics },
+}
+
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const PRODUCT_NAME = 'BotStream'
+const TAGLINE = 'The harmonious meeting assistant.'
+const DESCRIPTION = 'BotStream listens, analyzes, and orchestrates your meetings in real-time, providing unobtrusive insights and sentiment analysis.'
+
+const NAV_LINKS = ['Features', 'Pricing', 'Testimonials', 'FAQ']
+
+const STATS = [
+  { value: '1.2M+', label: 'Meetings Orchestrated' },
+  { value: '99.9%', label: 'Transcription Accuracy' },
+  { value: '<50ms', label: 'Sentiment Latency' },
+  { value: '4.9/5', label: 'User Satisfaction' },
+]
+
+const FEATURES = [
+  { icon: Waves, title: 'Sentiment Waveform', description: 'Real-time emotion tracking visualized as a fluid wave.' },
+  { icon: Activity, title: 'Voice Orbs', description: 'Dynamic avatars that pulse with speech frequency.' },
+  { icon: Mic, title: 'Silent Observer', description: 'Unobtrusive background processing with zero interference.' },
+  { icon: Volume2, title: 'Audio Proximity', description: 'Focus shifts visually to the dominant speaker.' },
+  { icon: MessageSquare, title: 'Action Item Pop', description: 'Auto-captures commitments and pins them instantly.' },
+  { icon: Shield, title: 'Enterprise Secure', description: 'End-to-end encrypted audio processing.' },
+]
+
+const PRICING = [
+  {
+    name: 'Observer',
+    price: '$0',
+    period: 'forever',
+    description: 'Basic transcription for individuals.',
+    features: ['10 hours/month', 'Standard transcription', 'Text export'],
+    cta: 'Get started',
+    highlighted: false,
+  },
+  {
+    name: 'Orchestrator',
+    price: '$49',
+    period: 'per month',
+    description: 'Full sentiment analysis and voice orbs.',
+    features: ['Unlimited hours', 'Real-time sentiment', 'Action item capture', 'Voice orb visualization'],
+    cta: 'Start free trial',
+    highlighted: true,
+  },
+  {
+    name: 'Enterprise',
+    price: 'Custom',
+    period: 'per year',
+    description: 'Dedicated infrastructure for large teams.',
+    features: ['Everything in Orchestrator', 'On-premise deployment', 'Custom AI models', 'SLA guarantee'],
+    cta: 'Contact sales',
+    highlighted: false,
+  },
+]
+
+const TESTIMONIALS = [
+  {
+    name: 'Elena Rostova',
+    role: 'VP of Product',
+    company: 'TechFlow',
+    text: 'BotStream feels less like a tool and more like an intuitive co-pilot. The sentiment analysis is eerily accurate.',
+    rating: 5,
+  },
+  {
+    name: 'David Chen',
+    role: 'Lead Designer',
+    company: 'Creative OS',
+    text: 'The visual feedback is stunning. It transforms a boring meeting into a living, breathing collaborative space.',
+    rating: 5,
+  },
+  {
+    name: 'Sarah Jenkins',
+    role: 'Operations Director',
+    company: 'GlobalCorp',
+    text: 'Action item capture has saved us countless hours. It just works, silently and efficiently in the background.',
+    rating: 5,
+  },
+]
+
+const FAQ_ITEMS = [
+  { q: 'How does the sentiment analysis work?', a: 'Our AI models analyze vocal tone, cadence, and word choice in real-time to generate a fluid sentiment score.' },
+  { q: 'Is my meeting data private?', a: 'Absolutely. We use end-to-end encryption and do not train our public models on your meeting audio.' },
+  { q: 'Does it work with Zoom/Teams/Meet?', a: 'Yes, BotStream seamlessly integrates as a silent participant in all major video conferencing platforms.' },
+  { q: 'What is the "Breathing Background"?', a: 'It is a visual metronome for your meeting, pulsing at 12-18 BPM to encourage a calm, focused environment.' },
+]
+
+// ─────────────────────────────────────────────
+// CUSTOM COMPONENTS (V3 Specific)
+// ─────────────────────────────────────────────
+
+// Breathing Orb (Hero)
+function BreathingOrb({ scrollYProgress }: { scrollYProgress: any }) {
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.5])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.2])
+  
+  // Create a continuous breathing effect
+  const [breath, setBreath] = useState(1)
+  
+  useEffect(() => {
+    let animationFrame: number;
+    let startTime: number | null = null;
+    
+    // 12-18 BPM roughly equals 1 cycle every 4 seconds
+    const cycleDuration = 4000; 
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      
+      // Sine wave from 0.95 to 1.05
+      const currentBreath = 1 + Math.sin((progress / cycleDuration) * Math.PI * 2) * 0.05;
+      setBreath(currentBreath);
+      
+      animationFrame = requestAnimationFrame(animate);
+    }
+    
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
+
+  return (
+    <motion.div
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full mix-blend-screen pointer-events-none"
+      style={{
+        scale,
+        opacity,
+        scaleX: breath,
+        scaleY: breath,
+        background: `radial-gradient(circle, ${tokens.accent1}40 0%, ${tokens.accent2}10 50%, transparent 70%)`,
+        filter: 'blur(30px)'
+      }}
+      transition={orbPhysics}
+    />
+  )
+}
+
+// Liquid SVG Blobs that split/merge on scroll
+function LiquidBlobs() {
+  const { scrollY } = useScroll()
+  const velocity = useVelocity(scrollY)
+  const smoothVelocity = useSpring(velocity, { damping: 50, stiffness: 400 })
+  const blobSpread = useTransform(smoothVelocity, [-1000, 0, 1000], [40, 0, 40])
+  
+  const [time, setTime] = useState(0)
+  
+  useAnimationFrame((t) => {
+    setTime(t / 1000)
+  })
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden opacity-30">
+      <svg width="100%" height="100%" className="absolute inset-0">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -10" result="goo" />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+        <g filter="url(#goo)">
+          <motion.circle 
+            cx="30%" 
+            cy="40%" 
+            r="150" 
+            fill={tokens.accent1} 
+            style={{ x: blobSpread, y: Math.sin(time * 0.5) * 50 }}
+            className="mix-blend-screen"
+          />
+          <motion.circle 
+            cx="70%" 
+            cy="60%" 
+            r="100" 
+            fill={tokens.accent2} 
+            style={{ x: useTransform(blobSpread, v => -v), y: Math.cos(time * 0.7) * 40 }}
+            className="mix-blend-screen"
+          />
+          <motion.circle 
+            cx="50%" 
+            cy="50%" 
+            r="200" 
+            fill={`${tokens.accent1}80`} 
+            style={{ y: Math.sin(time * 0.3) * 80 }}
+            className="mix-blend-screen"
+          />
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+// Velocity-driven ripples
+function VelocityRipples() {
+  const { scrollY } = useScroll()
+  const scrollVelocity = useVelocity(scrollY)
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 })
+  const yShift = useTransform(smoothVelocity, [-1000, 1000], [-50, 50])
+  const opacityShift = useTransform(smoothVelocity, [-1000, 0, 1000], [0.3, 0.05, 0.3])
+
+  return (
+    <motion.div 
+      className="fixed inset-0 pointer-events-none z-[-2]"
+      style={{ y: yShift, opacity: opacityShift }}
+    >
+      {/* Horizontal grid lines that warp */}
+      <div className="absolute inset-0 flex flex-col justify-between py-10">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i} className="w-full h-[1px]" style={{ background: tokens.border }} />
         ))}
       </div>
-      <BotButton className="hidden md:block py-2 text-[10px]" variant="secondary">AUTH_TERMINAL</BotButton>
-    </div>
-  </nav>
-)
+    </motion.div>
+  )
+}
 
-const Hero = () => {
+// Sentiment Waveform Line
+function WaveformLine() {
+  const [points, setPoints] = useState('')
+  
+  useAnimationFrame((t) => {
+    const time = t / 1000
+    let path = `M 0 50 `
+    for (let i = 0; i <= 100; i++) {
+      const x = i
+      // Create a complex wave using multiple sine functions
+      const y = 50 + Math.sin(time * 2 + i * 0.1) * 15 + Math.cos(time * 3 + i * 0.05) * 10
+      path += `L ${x} ${y} `
+    }
+    setPoints(path)
+  })
+
   return (
-    <section className="pt-40 pb-20 px-8 relative overflow-hidden min-h-screen flex items-center bg-[#020408]">
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[800px] bg-[#6366F1]/10 rounded-full blur-[150px]" 
-        />
-      </div>
-      
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={tokens.physics.stream}
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full stroke-current fill-none">
+      <motion.path 
+        d={points} 
+        strokeWidth="2" 
+        strokeLinecap="round"
+        style={{ filter: `drop-shadow(0 0 8px ${tokens.accent1})` }}
+      />
+    </svg>
+  )
+}
+
+
+// ─────────────────────────────────────────────
+// PAGE SECTIONS
+// ─────────────────────────────────────────────
+
+function Navbar() {
+  return (
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md"
+      style={{ borderColor: tokens.border, backgroundColor: `${tokens.background}80` }}
+    >
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        <span className={`${headingFont.className} font-bold text-xl tracking-tight`} style={{ color: tokens.textHigh }}>
+          {PRODUCT_NAME}
+        </span>
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map(link => (
+            <a
+              key={link}
+              href={`#${link.toLowerCase()}`}
+              className="text-sm transition-colors hover:text-white"
+              style={{ color: tokens.textLow }}
+            >
+              {link}
+            </a>
+          ))}
+        </div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-5 h-10 rounded-full text-sm font-medium relative overflow-hidden"
+          style={{ backgroundColor: tokens.accent1, color: tokens.textHigh }}
+          transition={sentimentPhysics}
         >
-          <div className="flex items-center gap-3 mb-10">
-            <div className="w-2 h-2 bg-[#6366F1] rounded-full animate-pulse shadow-[0_0_10px_#6366F1]" />
-            <span className={`text-[10px] font-black text-[#6366F1] tracking-[0.5em] uppercase ${mono.className}`}>AI_Stream_V3.0_Active</span>
-          </div>
-          <h1 className={`${outfit.className} text-7xl md:text-[9rem] font-black text-white leading-[0.8] mb-12 uppercase tracking-tighter`}>
-            STREAM <br/> <span className="text-[#6366F1] drop-shadow-[0_0_30px_#6366F1]">LOGIC.</span>
-          </h1>
-          <p className={`text-[#94A3B8] text-xl max-w-xl mb-16 leading-relaxed font-medium ${inter.className}`}>
-            BotStream is the high-fidelity match engine for AI agents. Orchestrate thousands of real-time message streams with precision-grade visual feedback.
-          </p>
-          <div className="flex flex-wrap gap-8">
-            <BotButton>INITIALIZE_BOT</BotButton>
-            <div className={`flex items-center gap-4 text-white font-black tracking-widest text-[10px] cursor-pointer group`}>
-              VIEW_STREAM_HUD <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform text-[#6366F1]" />
-            </div>
-          </div>
-        </motion.div>
-        
+          <span className="relative z-10">Start Syncing</span>
+        </motion.button>
+      </div>
+    </nav>
+  )
+}
+
+function Hero() {
+  const { scrollYProgress } = useScroll()
+  
+  return (
+    <section className="relative min-h-dvh flex items-center pt-16 overflow-hidden">
+      <BreathingOrb scrollYProgress={scrollYProgress} />
+      
+      <div className="max-w-6xl mx-auto px-6 py-24 w-full relative z-10 text-center flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ ...tokens.physics.stream, delay: 0.2 }}
-          className="relative"
+          transition={sentimentPhysics}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-8"
+          style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}
         >
-          <div className="bg-[#0A0D14] border border-white/5 p-10 rounded-[40px] shadow-[0_50px_100px_rgba(99,102,241,0.15)] relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#6366F1]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="flex items-center justify-between mb-16">
-              <div className={`${outfit.className} text-2xl font-black text-white`}>Active Stream HUD</div>
-              <div className="flex gap-2">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="w-2 h-2 rounded-full bg-[#6366F1] animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
-                ))}
-              </div>
-            </div>
-            <div className="space-y-8 relative z-10">
-              {[
-                { label: 'Token Velocity', val: '4.2K/s', color: '#6366F1' },
-                { label: 'Neural Latency', val: '12ms', color: '#10B981' },
-                { label: 'Sync Accuracy', val: '99.9%', color: '#00F3FF' }
-              ].map((item, i) => (
-                <div key={i}>
-                  <div className="flex justify-between mb-4">
-                    <span className="text-xs font-black text-[#94A3B8] uppercase tracking-[0.2em]">{item.label}</span>
-                    <span className="text-sm font-black text-white">{item.val}</span>
-                  </div>
-                  <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: '85%' }}
-                      transition={{ duration: 2, delay: 0.5 + i * 0.2 }}
-                      className="h-full"
-                      style={{ backgroundColor: item.color }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <motion.div 
-            animate={{ y: [0, -20, 0] }}
-            transition={{ repeat: Infinity, duration: 4 }}
-            className="absolute -top-10 -right-10 bg-[#6366F1] text-white p-8 rounded-[30px] shadow-2xl rotate-12"
-          >
-            <Sparkles size={32} />
-          </motion.div>
+          <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: tokens.accent2 }} />
+          <span className={`${monoFont.className} text-xs tracking-wider`} style={{ color: tokens.textLow }}>
+            LIVE SENTIMENT ACTIVE
+          </span>
         </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...sentimentPhysics, delay: 0.1 }}
+          className={`${headingFont.className} text-6xl md:text-8xl font-bold tracking-tighter mb-6 leading-tight`}
+          style={{ color: tokens.textHigh }}
+        >
+          Meetings that <br/>
+          <span className="italic font-light" style={{ color: tokens.accent1 }}>breathe</span> with you.
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...sentimentPhysics, delay: 0.2 }}
+          className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed mx-auto"
+          style={{ color: tokens.textLow }}
+        >
+          {DESCRIPTION}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...sentimentPhysics, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="h-14 px-8 rounded-full font-medium flex items-center gap-2"
+            style={{ backgroundColor: tokens.textHigh, color: tokens.background }}
+          >
+            Connect Assistant <ArrowRight className="h-4 w-4" />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="h-14 px-8 rounded-full font-medium border flex items-center gap-2 backdrop-blur-sm"
+            style={{ borderColor: tokens.border, color: tokens.textHigh, backgroundColor: tokens.surface }}
+          >
+            <Play className="h-4 w-4 fill-current" /> Watch Demo
+          </motion.button>
+        </motion.div>
+        
+        {/* Abstract Audio Visualizer Mockup */}
+        <FadeUp delay={0.5} className="w-full max-w-4xl mt-20 relative">
+           <div className="w-full h-48 md:h-64 rounded-2xl border flex items-center justify-center overflow-hidden relative"
+                style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
+             <div className="absolute inset-0" style={{ color: tokens.accent1 }}>
+                <WaveformLine />
+             </div>
+             
+             {/* Floating Voice Orbs */}
+             <motion.div 
+               animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }} 
+               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+               className="absolute top-1/4 left-1/4 w-12 h-12 rounded-full mix-blend-screen blur-md"
+               style={{ backgroundColor: tokens.accent2 }}
+             />
+             <motion.div 
+               animate={{ y: [0, 15, 0], scale: [1, 1.2, 1] }} 
+               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+               className="absolute bottom-1/3 right-1/4 w-16 h-16 rounded-full mix-blend-screen blur-md"
+               style={{ backgroundColor: tokens.accent1 }}
+             />
+           </div>
+        </FadeUp>
       </div>
     </section>
   )
 }
 
-const StatsBar = () => (
-  <section className="py-24 border-y border-white/5 bg-[#020408]">
-    <div className="max-w-7xl mx-auto px-8">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-16 text-center">
-        {[
-          { label: 'Bot Sessions', value: '1.2M+', icon: Users },
-          { label: 'Sync Uptime', value: '99.9%', icon: ShieldCheck },
-          { label: 'Token Throughput', value: '4.8B', icon: Zap },
-          { label: 'Global Nodes', value: '150+', icon: Globe }
-        ].map((stat, i) => (
-          <motion.div key={i} whileHover={{ y: -5 }}>
-            <div className={`${outfit.className} text-6xl font-black text-white mb-2`}>{stat.value}</div>
-            <div className="text-[#94A3B8] text-[10px] font-black uppercase tracking-[0.4em]">{stat.label}</div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  </section>
-)
-
-const Features = () => (
-  <section className="py-32 px-8 bg-[#020408]">
-    <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-24">
-        <h2 className={`${outfit.className} text-5xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter`}>STREAM_ARCHITECTURE</h2>
-        <p className={`text-[#94A3B8] max-w-2xl mx-auto text-lg leading-relaxed ${inter.className}`}>We use high-fidelity neural shunting to ensure every bot interaction is in phase with the mainframe.</p>
-      </div>
-      <div className="grid md:grid-cols-3 gap-8">
-        {[
-          { title: 'Neural Pulse HUD', desc: 'Interfaces that expand and contract based on real-time token velocity and neural load.', icon: Activity },
-          { title: 'Stream Relay', desc: 'Section transitions that use high-impact vertical scrolling and motion-blur reveals.', icon: Signal },
-          { title: 'Strobe Analytics', desc: 'Rhythmic, high-contrast data visualizations for bot performance and error rates.', icon: Zap },
-          { title: 'Mainframe Sync', desc: 'Sub-ms multi-device synchronization for high-stakes digital bot environments.', icon: Network },
-          { title: 'Private Vault', desc: 'Encrypted storage for proprietary bot-logic and historical interaction logs.', icon: ShieldCheck },
-          { title: 'History Ticker', desc: 'Vertical scrolling match-timeline with high-contrast strobe reveals for key events.', icon: Terminal }
-        ].map((feature, i) => (
-          <StreamCard key={i} title={`PROTOCOL_0${i + 1}`}>
-            <div className="w-16 h-16 bg-[#6366F1]/10 rounded-2xl flex items-center justify-center mb-10">
-              <feature.icon className="text-[#6366F1]" size={32} />
-            </div>
-            <h3 className={`${outfit.className} text-2xl font-black text-white mb-4 uppercase tracking-tighter`}>{feature.title}</h3>
-            <p className="text-[#94A3B8] text-sm leading-relaxed">{feature.desc}</p>
-          </StreamCard>
-        ))}
-      </div>
-    </div>
-  </section>
-)
-
-const ProductDetail = () => (
-  <section className="py-32 px-8 bg-[#0A0D14] relative overflow-hidden">
-    <div className="max-w-7xl mx-auto">
-      <div className="grid lg:grid-cols-2 gap-24 items-center">
-        <div className="relative p-10 border-4 border-dashed border-[#6366F1]/20 rounded-[80px]">
-          <div className="aspect-square bg-[#020408] rounded-[60px] shadow-2xl flex items-center justify-center overflow-hidden relative group">
-            <motion.div 
-              animate={{ scale: [1, 1.1, 1], rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#6366F111_0%,_transparent_70%)]" 
-            />
-            <Cpu className="text-[#6366F1]/20 animate-pulse" size={200} />
-            <div className="absolute bottom-10 left-10 right-10 bg-black/90 backdrop-blur-md p-10 rounded-[40px] border border-white/5 shadow-xl">
-              <div className={`${outfit.className} text-2xl font-black text-white mb-2`}>The Bot Lab</div>
-              <p className="text-[#94A3B8] text-sm font-medium">Testing stream frequency across 1,400+ active AI agents.</p>
-            </div>
-          </div>
-          <div className="absolute -top-10 -left-10 bg-[#10B981] text-black p-8 rounded-full shadow-2xl rotate-12">
-            <Sparkles size={32} />
-          </div>
-        </div>
-        <div>
-          <div className={`mb-10 ${inter.className} text-[#10B981] font-black tracking-[0.5em] uppercase text-[10px]`}>[ NEURAL_SHUNTER_ENGINEERING ]</div>
-          <h2 className={`${outfit.className} text-6xl font-black text-white mb-10 leading-[0.9] uppercase tracking-tighter`}>A STREAM THAT <br/> <span className="text-[#6366F1]">NEVER ENDS.</span></h2>
-          <div className={`space-y-8 text-[#94A3B8] text-xl leading-relaxed ${inter.className}`}>
-            <p>Traditional bot logs are static files. BotStream is immediate. We treat every message signal as a unit of value, carefully orchestrating its motion and light to ensure your bot ecosystem is always in phase.</p>
-            <p>Our implementation of neural physics and rhythmic transitions ensures that the bot legacy is as powerful as the logic.</p>
-          </div>
-          <BotButton className="mt-12">CONNECT_MAIN_STREAM</BotButton>
-        </div>
-      </div>
-    </div>
-  </section>
-)
-
-const Footer = () => (
-  <footer className="py-24 px-8 bg-black border-t border-white/5">
-    <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-16 mb-24">
-        <div className="col-span-2">
-          <div className={`flex items-center gap-2 ${outfit.className} text-2xl font-black tracking-tight text-white uppercase mb-8`}>
-            <Bot className="text-[#6366F1]" size={28} />
-            BOT<span className="text-[#6366F1]">STREAM</span>
-          </div>
-          <p className="text-[#94A3B8] text-sm leading-relaxed max-w-xs font-medium uppercase tracking-widest leading-loose">The global standard for professional AI bot management and high-energy message stream analytics. Technical since 2026.</p>
-        </div>
-        {[
-          { title: 'Engine', links: ['Streams', 'Logic', 'Nodes', 'Pricing'] },
-          { title: 'Foundry', links: ['The Lab', 'Mainframe', 'Careers', 'Brand'] },
-          { title: 'Connect', links: ['Instagram', 'LinkedIn', 'Discord', 'Terminal'] }
-        ].map(group => (
-          <div key={group.title}>
-            <div className="text-[10px] font-black text-white uppercase tracking-[0.4em] mb-10">{group.title}</div>
-            <ul className="space-y-6">
-              {group.links.map(link => (
-                <li key={link}><a href="#" className="text-sm font-bold text-[#94A3B8] hover:text-[#6366F1] transition-colors">{link}</a></li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
-        <div className="text-[#94A3B8] text-[10px] font-black uppercase tracking-[0.6em]">© 2026 BOTSTREAM NEURAL CORP. STREAM_ENCRYPTED.</div>
-        <div className="flex gap-10">
-          <Activity className="text-[#94A3B8] hover:text-[#6366F1] cursor-pointer transition-colors" size={20} />
-          <Radio className="text-[#94A3B8] hover:text-[#6366F1] cursor-pointer transition-colors" size={20} />
-        </div>
-      </div>
-    </div>
-  </footer>
-)
-
-export default function BotStream() {
+function Stats() {
   return (
-    <div className={`min-h-screen bg-[#020408] text-white overflow-x-hidden ${inter.className}`}>
-      <Navbar />
-      <Hero />
-      <StatsBar />
-      <Features />
-      <ProductDetail />
-      <Footer />
-      
-      {/* --- Global Effects --- */}
-      <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.05] contrast-150 mix-blend-overlay">
-        <svg viewBox="0 0 100 100" className="w-full h-full">
-          <filter id="bot-noise">
-            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
-          </filter>
-          <rect width="100" height="100" filter="url(#bot-noise)" />
-        </svg>
+    <section className="border-y py-16" style={{ borderColor: tokens.border, backgroundColor: `${tokens.background}80` }}>
+      <div className="max-w-6xl mx-auto px-6">
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/5">
+          {STATS.map((stat, i) => (
+            <motion.div key={stat.label} variants={staggerItem} className={`text-center ${i !== 0 ? 'pl-8' : ''}`}>
+              <p className={`${monoFont.className} text-4xl font-bold mb-2`} style={{ color: tokens.accent1 }}>{stat.value}</p>
+              <p className="text-sm tracking-wide" style={{ color: tokens.textLow }}>{stat.label}</p>
+            </motion.div>
+          ))}
+        </StaggerContainer>
       </div>
+    </section>
+  )
+}
+
+function Features() {
+  return (
+    <section id="features" className="py-32 relative">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <FadeUp>
+          <div className="mb-20">
+            <h2 className={`${headingFont.className} text-4xl md:text-5xl font-bold mb-6`} style={{ color: tokens.textHigh }}>
+              Silent orchestration.
+            </h2>
+            <p className="text-xl max-w-2xl" style={{ color: tokens.textLow }}>
+              Advanced machine learning models process audio streams on the edge, providing instant visual feedback without breaking the flow of conversation.
+            </p>
+          </div>
+        </FadeUp>
+        
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {FEATURES.map((feature, i) => (
+            <motion.div
+              key={feature.title}
+              variants={staggerItem}
+              whileHover={{ scale: 1.02, backgroundColor: `rgba(255,255,255,0.05)` }}
+              transition={sentimentPhysics}
+              className="p-8 rounded-2xl border backdrop-blur-sm group"
+              style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}
+            >
+              <div className="w-12 h-12 rounded-full mb-6 flex items-center justify-center transition-colors"
+                   style={{ backgroundColor: `${tokens.accent1}20` }}>
+                <feature.icon className="h-6 w-6" style={{ color: tokens.accent1 }} strokeWidth={1.5} />
+              </div>
+              <h3 className={`${headingFont.className} text-xl font-semibold mb-3`} style={{ color: tokens.textHigh }}>{feature.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: tokens.textLow }}>{feature.description}</p>
+            </motion.div>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+  )
+}
+
+function ProductDetail() {
+  return (
+    <section className="py-32 border-y relative overflow-hidden" style={{ borderColor: tokens.border, backgroundColor: `${tokens.background}80` }}>
+      <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #3B82F6 0%, transparent 50%)' }} />
+      <div className="max-w-5xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
+        <div className="flex-1">
+          <FadeUp>
+            <div className="inline-flex items-center gap-2 mb-6">
+              <Sparkles className="h-5 w-5" style={{ color: tokens.accent2 }} />
+              <span className={`${monoFont.className} text-sm uppercase tracking-widest`} style={{ color: tokens.accent2 }}>Live Capture</span>
+            </div>
+            <h2 className={`${headingFont.className} text-4xl md:text-5xl font-bold mb-6`} style={{ color: tokens.textHigh }}>
+              Action Item Pop
+            </h2>
+            <div className="space-y-6 text-lg leading-relaxed" style={{ color: tokens.textLow }}>
+              <p>
+                As your team discusses next steps, BotStream's NLP engine detects commitments and automatically generates action items.
+              </p>
+              <p>
+                These items "pop" into a side-panel, allowing participants to instantly review and assign them without ever switching tabs.
+              </p>
+            </div>
+          </FadeUp>
+        </div>
+        
+        {/* Interactive Mockup */}
+        <div className="flex-1 w-full">
+          <FadeUp delay={0.2}>
+            <div className="p-6 rounded-2xl border flex flex-col gap-4" style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
+              <div className="flex items-center justify-between pb-4 border-b" style={{ borderColor: tokens.border }}>
+                <span className={`${monoFont.className} text-sm text-white`}>Action Items (3)</span>
+                <Plus className="h-4 w-4" style={{ color: tokens.textLow }} />
+              </div>
+              
+              <StaggerContainer className="flex flex-col gap-3">
+                {[
+                  "Draft Q3 marketing copy",
+                  "Review server architecture",
+                  "Schedule follow-up with client"
+                ].map((item, idx) => (
+                   <motion.div 
+                     key={idx} 
+                     variants={staggerItem}
+                     className="p-4 rounded-xl border flex gap-3 items-start"
+                     style={{ borderColor: tokens.border, backgroundColor: `${tokens.background}` }}
+                   >
+                     <div className="w-5 h-5 rounded border mt-0.5 flex-shrink-0" style={{ borderColor: tokens.textLow }} />
+                     <p className="text-sm" style={{ color: tokens.textHigh }}>{item}</p>
+                   </motion.div>
+                ))}
+              </StaggerContainer>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Pricing() {
+  return (
+    <section id="pricing" className="py-32 relative">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <FadeUp>
+          <div className="text-center mb-20">
+            <h2 className={`${headingFont.className} text-4xl md:text-5xl font-bold mb-6`} style={{ color: tokens.textHigh }}>
+              Clear pricing. <br/> Zero friction.
+            </h2>
+          </div>
+        </FadeUp>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {PRICING.map((tier, i) => (
+            <motion.div
+              key={tier.name}
+              variants={staggerItem}
+              whileHover={{ y: -8 }}
+              transition={sentimentPhysics}
+              className="p-8 rounded-3xl border relative flex flex-col"
+              style={{
+                borderColor: tier.highlighted ? tokens.accent1 : tokens.border,
+                backgroundColor: tier.highlighted ? `${tokens.accent1}0a` : tokens.surface,
+              }}
+            >
+              {tier.highlighted && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1 rounded-full text-xs font-bold tracking-wider uppercase"
+                     style={{ backgroundColor: tokens.accent1, color: '#fff' }}>
+                  Recommended
+                </div>
+              )}
+              <h3 className={`${headingFont.className} text-2xl font-bold mb-2`} style={{ color: tokens.textHigh }}>{tier.name}</h3>
+              <p className="text-sm mb-6 h-10" style={{ color: tokens.textLow }}>{tier.description}</p>
+              
+              <div className="flex items-baseline gap-1 mb-8 pb-8 border-b" style={{ borderColor: tokens.border }}>
+                <span className={`${monoFont.className} text-5xl font-bold tracking-tight`} style={{ color: tokens.textHigh }}>{tier.price}</span>
+                <span className="text-sm" style={{ color: tokens.textLow }}>/ {tier.period}</span>
+              </div>
+              
+              <ul className="space-y-4 mb-8 flex-1">
+                {tier.features.map(f => (
+                  <li key={f} className="flex items-center gap-3 text-sm">
+                    <Check className="h-5 w-5 flex-shrink-0" style={{ color: tokens.accent1 }} />
+                    <span style={{ color: tokens.textHigh }}>{f}</span>
+                  </li>
+                ))}
+              </ul>
+              
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full h-14 rounded-full font-medium text-sm transition-colors"
+                style={tier.highlighted
+                  ? { backgroundColor: tokens.accent1, color: '#fff' }
+                  : { backgroundColor: 'transparent', color: tokens.textHigh, border: `1px solid ${tokens.border}` }
+                }
+              >
+                {tier.cta}
+              </motion.button>
+            </motion.div>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+  )
+}
+
+function Testimonials() {
+  return (
+    <section id="testimonials" className="py-32 border-y relative overflow-hidden" style={{ borderColor: tokens.border, backgroundColor: `${tokens.background}80` }}>
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <FadeUp>
+          <div className="mb-20">
+            <h2 className={`${headingFont.className} text-4xl md:text-5xl font-bold`} style={{ color: tokens.textHigh }}>
+              Trusted by<br/>visionary teams.
+            </h2>
+          </div>
+        </FadeUp>
+        
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {TESTIMONIALS.map(t => (
+            <motion.div
+              key={t.name}
+              variants={staggerItem}
+              className="p-8 rounded-2xl border flex flex-col justify-between"
+              style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}
+            >
+              <p className="text-lg leading-relaxed mb-8" style={{ color: tokens.textHigh }}>"{t.text}"</p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full border" style={{ borderColor: tokens.border, backgroundColor: tokens.background }} />
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: tokens.textHigh }}>{t.name}</p>
+                  <p className="text-xs mt-1" style={{ color: tokens.textLow }}>{t.role} at {t.company}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+  )
+}
+
+function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  return (
+    <section id="faq" className="py-32 relative">
+      <div className="max-w-3xl mx-auto px-6 relative z-10">
+        <FadeUp>
+          <div className="mb-16">
+            <h2 className={`${headingFont.className} text-4xl md:text-5xl font-bold mb-4`} style={{ color: tokens.textHigh }}>FAQ</h2>
+          </div>
+        </FadeUp>
+        
+        <div className="space-y-4">
+          {FAQ_ITEMS.map((item, i) => (
+            <FadeUp key={i} delay={i * 0.1}>
+              <div className="border rounded-2xl overflow-hidden backdrop-blur-sm" style={{ borderColor: tokens.border, backgroundColor: tokens.surface }}>
+                <button
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  aria-expanded={openIndex === i}
+                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                >
+                  <span className="font-medium text-lg" style={{ color: tokens.textHigh }}>{item.q}</span>
+                  <motion.div
+                    animate={{ rotate: openIndex === i ? 180 : 0 }}
+                    transition={sentimentPhysics}
+                    className="flex-shrink-0 ml-4 w-8 h-8 rounded-full flex items-center justify-center border"
+                    style={{ borderColor: tokens.border }}
+                  >
+                    <ChevronDown className="h-4 w-4" style={{ color: tokens.textHigh }} />
+                  </motion.div>
+                </button>
+                <motion.div
+                  initial={false}
+                  animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
+                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <p className="px-6 pb-6 text-base leading-relaxed" style={{ color: tokens.textLow }}>
+                    {item.a}
+                  </p>
+                </motion.div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Newsletter() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+    setTimeout(() => setStatus('success'), 1500)
+  }
+
+  return (
+    <section className="py-32 border-y relative overflow-hidden" style={{ borderColor: tokens.border, backgroundColor: tokens.background }}>
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 blur-[100px] opacity-20 pointer-events-none rounded-full" style={{ backgroundColor: tokens.accent1 }} />
+      
+      <div className="max-w-xl mx-auto px-6 text-center relative z-10">
+        <FadeUp>
+          <h2 className={`${headingFont.className} text-3xl md:text-4xl font-bold mb-4`} style={{ color: tokens.textHigh }}>
+            Join the beta ring.
+          </h2>
+          <p className="text-lg mb-10" style={{ color: tokens.textLow }}>
+            Get early access to new AI models and features.
+          </p>
           
+          {status === 'success' ? (
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }} 
+              animate={{ scale: 1, opacity: 1 }} 
+              className="p-4 rounded-full border inline-flex items-center gap-2 px-6"
+              style={{ borderColor: tokens.accent1, backgroundColor: `${tokens.accent1}10` }}
+            >
+              <Check className="w-5 h-5" style={{ color: tokens.accent1 }} />
+              <span className="font-medium" style={{ color: tokens.accent1 }}>Transmission confirmed.</span>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="relative max-w-md mx-auto flex items-center">
+              <input
+                type="email"
+                required
+                placeholder="Enter your email..."
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className="w-full h-14 pl-6 pr-32 rounded-full border text-base focus:outline-none transition-colors"
+                style={{ 
+                  borderColor: tokens.border, 
+                  backgroundColor: tokens.surface, 
+                  color: tokens.textHigh 
+                }}
+              />
+              <motion.button
+                type="submit"
+                disabled={status === 'loading'}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute right-1 top-1 bottom-1 px-6 rounded-full font-medium text-sm disabled:opacity-50"
+                style={{ backgroundColor: tokens.textHigh, color: tokens.background }}
+              >
+                {status === 'loading' ? 'Sending...' : 'Subscribe'}
+              </motion.button>
+            </form>
+          )}
+        </FadeUp>
+      </div>
+    </section>
+  )
+}
+
+function Footer() {
+  const links = {
+    Platform: ['Features', 'Integrations', 'Pricing', 'Changelog'],
+    Resources: ['Documentation', 'API Reference', 'Blog', 'Community'],
+    Company: ['About', 'Careers', 'Contact', 'Press'],
+    Legal: ['Privacy', 'Terms', 'Security', 'Cookies'],
+  }
+
+  return (
+    <footer className="py-20 relative z-10" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-12 mb-16">
+          <div className="col-span-2">
+            <p className={`${headingFont.className} font-bold text-2xl mb-4`} style={{ color: tokens.textHigh }}>{PRODUCT_NAME}</p>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: tokens.textLow }}>
+              Harmonizing human conversation with artificial intelligence.
+            </p>
+          </div>
+          {Object.entries(links).map(([group, items]) => (
+            <div key={group}>
+              <p className="font-semibold text-sm mb-6 uppercase tracking-wider" style={{ color: tokens.textHigh }}>{group}</p>
+              <ul className="space-y-4">
+                {items.map(item => (
+                  <li key={item}>
+                    <a href="#" className="text-sm hover:text-white transition-colors" style={{ color: tokens.textLow }}>
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t" style={{ borderColor: tokens.border }}>
+          <p className="text-sm" style={{ color: tokens.textLow }}>
+            © {new Date().getFullYear()} {PRODUCT_NAME}. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4 mt-4 md:mt-0">
+             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: tokens.accent1 }} />
+             <span className={`${monoFont.className} text-xs uppercase`} style={{ color: tokens.textLow }}>Systems Operational</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+// ─────────────────────────────────────────────
+// PAGE
+// ─────────────────────────────────────────────
+export default function BotStreamPage() {
+  return (
+    <div className={`${bodyFont.variable} ${headingFont.variable} ${monoFont.variable} font-sans min-h-screen relative`} style={{ backgroundColor: tokens.background }}>
+      <LiquidBlobs />
+      <VelocityRipples />
+      
+      <Navbar />
+      <main>
+        <Hero />
+        <Stats />
+        <Features />
+        <ProductDetail />
+        <Pricing />
+        <Testimonials />
+        <FAQ />
+        <Newsletter />
+      </main>
+      <Footer />
     </div>
   )
 }

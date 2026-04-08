@@ -1,511 +1,785 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Russo_One, Public_Sans } from 'next/font/google';
-import { Shield, ChevronRight, CheckCircle, Crosshair, Target, Activity, Menu, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring, useInView, useVelocity } from 'framer-motion'
+import { 
+  ArrowRight, Activity, Zap, Shield, BarChart3, 
+  ChevronDown, Check, Star, Menu, X, Crosshair, Map, Navigation,
+  Flag, Goal
+} from 'lucide-react'
+import { Teko, Public_Sans } from 'next/font/google'
 
-const bigShoulders = Russo_One({ subsets: ['latin'], weight: ['400'] });
-const publicSans = Public_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] });
+// ─────────────────────────────────────────────
+// FONTS
+// ─────────────────────────────────────────────
+const displayFont = Teko({ subsets: ['latin'], weight: ['400', '700'] })
+const bodyFont = Public_Sans({ subsets: ['latin'] })
 
-const TOKENS = {
-  background: '#121A12',
-  surface: '#1E291E',
-  accent1: '#F2F2F2',
-  accent2: '#8B4513',
-  border: 'rgba(255, 255, 255, 0.2)',
-  textHigh: '#FFFFFF',
-  textLow: '#A9B2A9',
-};
-
-// --- Physics ---
-const impactEntry = {
-  type: "spring" as const,
-  stiffness: 200,
-  damping: 25,
-  mass: 1.5
-};
-
-// --- Shared Components ---
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center gap-4 mb-12">
-      <div className="h-[2px] w-12 bg-white/30" />
-      <h2 className={`${bigShoulders.className} text-4xl md:text-6xl text-white uppercase tracking-wider font-black`}>
-        {children}
-      </h2>
-      <div className="h-[2px] flex-1 bg-white/10" />
-    </div>
-  );
+// ─────────────────────────────────────────────
+// TOKENS & SYSTEM
+// ─────────────────────────────────────────────
+const tokens = {
+  background: '#121A12', // Deep Turf Green
+  backgroundAlt: '#1E291E', // Endzone Grey
+  foreground: '#FFFFFF',
+  mutedForeground: '#A9B2A9',
+  accent: '#F2F2F2', // Yard-line White
+  accentForeground: '#121A12', 
+  accent2: '#8B4513', // Pigskin Brown
+  border: 'rgba(255, 255, 255, 0.2)', // Chalk lines
 }
 
-// --- Sections ---
+const PRODUCT_NAME = "GRIDIRON FLOW"
+
+// Impact Physics: Camera shake/jolt on element entry
+const impactSpring = {
+  type: 'spring',
+  stiffness: 400,
+  damping: 15,
+  mass: 1.5,
+} as const
+
+// ─────────────────────────────────────────────
+// ANIMATION WRAPPERS
+// ─────────────────────────────────────────────
+// ImpactUp: Elements enter from below with a slight rotation and bounce, 
+// mimicking the 'hit' of a football player or a heavy object dropping onto the field.
+function ImpactUp({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) {
+  return (
+    <motion.div
+      initial={{ y: 80, opacity: 0, rotate: -2 }}
+      whileInView={{ y: 0, opacity: 1, rotate: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ ...impactSpring, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function StaggerContainer({ children, className = "" }: { children: React.ReactNode, className?: string }) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={{
+        visible: { transition: { staggerChildren: 0.15 } }
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+const staggerItem = {
+  hidden: { y: 40, opacity: 0, scale: 0.95 },
+  visible: { 
+    y: 0, 
+    opacity: 1, 
+    scale: 1,
+    transition: impactSpring
+  }
+}
+
+// ─────────────────────────────────────────────
+// CONTENT DATA
+// ─────────────────────────────────────────────
+const STATS = [
+  { label: 'Plays Analyzed', value: '4.2M' },
+  { label: 'Teams Using GF', value: '120+' },
+  { label: 'Avg. Yard Gain', value: '+3.5y' },
+  { label: 'Win Probability Inc.', value: '18%' }
+]
+
+const FEATURES = [
+  { icon: Crosshair, title: 'Precision Route Mapping', text: 'Draw and analyze routes with millimeter precision on our virtual turf.' },
+  { icon: Activity, title: 'Kinetic Tracking', text: 'Measure player momentum, impact force, and acceleration in real-time.' },
+  { icon: Map, title: 'Tactical Playbook', text: 'Interactive chalk-talk interface that turns raw plays into executable strategy.' },
+  { icon: Shield, title: 'Defensive Formation AI', text: 'Predict opposing formations based on historical snap data.' }
+]
+
+const PRICING_TIERS = [
+  {
+    name: 'ROOKIE',
+    price: '$49',
+    period: 'mo',
+    description: 'Essential analytics for high school programs.',
+    features: ['Basic route mapping', 'Game day summaries', 'Up to 50 players'],
+    cta: 'Start Scouting',
+    highlighted: false
+  },
+  {
+    name: 'VETERAN',
+    price: '$199',
+    period: 'mo',
+    description: 'Advanced telemetry for competitive collegiate teams.',
+    features: ['Kinetic tracking integration', 'Unlimited players', 'Real-time sideline sync'],
+    cta: 'Upgrade Playbook',
+    highlighted: true
+  },
+  {
+    name: 'FRANCHISE',
+    price: 'Custom',
+    period: 'yr',
+    description: 'Full-spectrum War Room setup for pro organizations.',
+    features: ['Custom AI modeling', 'API Access', 'Dedicated strategists'],
+    cta: 'Contact Front Office',
+    highlighted: false
+  }
+]
+
+const TESTIMONIALS = [
+  { name: 'Coach Taylor', role: 'Head Coach', company: 'State U', text: 'Gridiron Flow turned our offense from predictable to unstoppable. The kinetic data is unmatched.', rating: 5 },
+  { name: 'Marcus Johnson', role: 'Offensive Coordinator', company: 'City Hawks', text: 'The chalk-talk interface is exactly what we needed to get the whole squad on the same page.', rating: 5 },
+  { name: 'Sarah Jenkins', role: 'Lead Analyst', company: 'Pro Scout Network', text: 'We evaluate thousands of plays. This platform handles the momentum of our data perfectly.', rating: 5 }
+]
+
+const FAQ_ITEMS = [
+  { q: 'How does the kinetic tracking work?', a: 'We integrate with standard wearable RFID tags in player pads to track XYZ coordinates 100 times per second.' },
+  { q: 'Can we import our existing playbook?', a: 'Yes. Gridiron Flow supports importing standard Visio and HUDL playbook formats directly into our tactical engine.' },
+  { q: 'Is there a limit to how many games we can analyze?', a: 'The Veteran and Franchise tiers offer unlimited game analysis. Rookie tier is capped at 15 games per season.' }
+]
+
+// ─────────────────────────────────────────────
+// COMPONENTS
+// ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+// COMPONENT: Yard-line Progress Indicator
+// Visualizes page scroll depth as "yards gained". Includes scroll-velocity
+// stretching physics to reinforce the "Gridiron Flow" momentum theme.
+// ─────────────────────────────────────────────
+function YardLineProgress() {
+  // Capture scroll progress globally
+  const { scrollYProgress } = useScroll();
+  
+  // Track the velocity of the scroll to create a dynamic stretching effect
+  const scrollVelocity = useVelocity(scrollYProgress);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400
+  });
+
+  // Calculate the scale stretch (height) of the marker based on velocity
+  // When velocity is 0, scale is 1. When high, scale increases, making it look like a stretched ball/marker.
+  const velocityScaleY = useTransform(smoothVelocity, [-1, 0, 1], [2, 1, 2]);
+
+  // Map 0-1 scroll progress to 0-100 yards for the label
+  const yards = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const displayYards = useTransform(yards, y => Math.round(y));
+
+  return (
+    <div className="fixed left-4 top-1/2 -translate-y-1/2 h-64 w-12 z-50 flex items-center justify-center hidden md:flex">
+      {/* Background Line Track */}
+      <div className="absolute inset-y-0 w-[2px] bg-white/20 left-1/2 -translate-x-1/2"></div>
+      
+      {/* The moving marker element. Notice we apply the scaleY driven by velocity here. */}
+      <motion.div 
+        className="absolute w-8 h-8 rounded-full border-2 bg-[#121A12] flex items-center justify-center shadow-lg"
+        style={{ 
+          borderColor: tokens.accent,
+          top: useTransform(scrollYProgress, [0, 1], ['0%', '100%']),
+          translateY: '-50%',
+          scaleY: velocityScaleY
+        }}
+      >
+        <motion.span 
+          className={`${displayFont.className} text-xs font-bold`}
+          style={{ color: tokens.accent }}
+        >
+          {displayYards}
+        </motion.span>
+      </motion.div>
+
+      {/* Static Yard markers indicating 25-yard intervals */}
+      {[0, 25, 50, 75, 100].map(y => (
+        <div 
+          key={y} 
+          className="absolute w-full h-[1px] bg-white/20 left-0"
+          style={{ top: `${y}%` }}
+        />
+      ))}
+    </div>
+  )
+}
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={impactEntry}
-      className="fixed top-0 w-full z-50 px-6 py-4 border-b-4 border-[#8B4513] bg-[#121A12]"
-    >
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div className={`text-3xl ${bigShoulders.className} font-black flex items-center gap-2 text-white uppercase tracking-widest`}>
-          <Shield className="text-[#8B4513]" size={32} /> WAR ROOM
-        </div>
-        <div className={`hidden md:flex gap-8 ${publicSans.className} text-[#A9B2A9] text-sm uppercase font-bold tracking-widest`}>
-          <a href="#" className="hover:text-white transition-colors">Playbook</a>
-          <a href="#" className="hover:text-white transition-colors">Roster</a>
-          <a href="#" className="hover:text-white transition-colors">Draft</a>
-          <a href="#" className="hover:text-white transition-colors">Intel</a>
-        </div>
-        <div className="hidden md:block">
-          <motion.button
+    <nav className="fixed top-0 w-full z-40 backdrop-blur-md border-b" style={{ borderColor: tokens.border, backgroundColor: `${tokens.background}E6` }}>
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-2"
+        >
+          <div className="w-8 h-8 rounded-sm rotate-45 border-2 flex items-center justify-center" style={{ borderColor: tokens.accent }}>
+            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: tokens.accent2 }} />
+          </div>
+          <span className={`${displayFont.className} font-bold text-2xl tracking-wide uppercase`} style={{ color: tokens.foreground }}>
+            {PRODUCT_NAME}
+          </span>
+        </motion.div>
+        
+        <div className="hidden md:flex items-center gap-8">
+          {['Playbook', 'Analytics', 'Recruiting', 'Pricing'].map(link => (
+            <a key={link} href="#" className={`${displayFont.className} text-lg uppercase tracking-wider hover:opacity-100 opacity-70 transition-opacity`} style={{ color: tokens.foreground }}>
+              {link}
+            </a>
+          ))}
+          <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`bg-white text-[#121A12] px-8 py-3 ${publicSans.className} uppercase font-bold tracking-widest text-sm border-b-4 border-gray-400 hover:mt-1 hover:border-b-0 hover:mb-1 transition-all`}
+            className={`${displayFont.className} px-6 py-2 rounded-sm font-bold text-xl uppercase tracking-wider`}
+            style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
           >
             Draft Now
           </motion.button>
         </div>
-        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={32} /> : <Menu size={32} />}
+
+        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <X color={tokens.foreground} /> : <Menu color={tokens.foreground} />}
         </button>
       </div>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden absolute top-full left-0 w-full bg-[#1E291E] border-b border-white/10 flex flex-col items-center py-6 gap-6"
-          >
-            <a href="#" className={`text-white/70 ${publicSans.className} uppercase font-bold`}>Playbook</a>
-            <a href="#" className={`text-white/70 ${publicSans.className} uppercase font-bold`}>Roster</a>
-            <a href="#" className={`text-white/70 ${publicSans.className} uppercase font-bold`}>Draft</a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
-  );
+
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:hidden p-6 border-b"
+          style={{ backgroundColor: tokens.backgroundAlt, borderColor: tokens.border }}
+        >
+          <div className="flex flex-col gap-4">
+             {['Playbook', 'Analytics', 'Recruiting', 'Pricing'].map(link => (
+              <a key={link} href="#" className={`${displayFont.className} text-xl uppercase tracking-wider`} style={{ color: tokens.foreground }}>
+                {link}
+              </a>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </nav>
+  )
 }
 
 function Hero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 200]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
   return (
-    <section className="relative min-h-screen pt-24 overflow-hidden flex items-center bg-[#121A12]">
-      {/* Field Background */}
-      <motion.div
-        style={{ y, opacity }}
-        className="absolute inset-0 z-0 flex flex-col justify-between py-20 opacity-20 pointer-events-none"
-      >
-        {[...Array(11)].map((_, i) => (
-          <div key={i} className="flex items-center w-full">
-            <div className={`text-[#F2F2F2] ${bigShoulders.className} text-4xl font-black w-16 text-right pr-4 opacity-50`}>
-              {i === 0 || i === 10 ? 'G' : `${i < 5 ? i * 10 : (10 - i) * 10}`}
-            </div>
-            <div className={`h-1 w-full ${i % 5 === 0 ? 'bg-white' : 'bg-white/30'}`} />
-            <div className={`text-[#F2F2F2] ${bigShoulders.className} text-4xl font-black w-16 text-left pl-4 opacity-50 rotate-180`}>
-              {i === 0 || i === 10 ? 'G' : `${i < 5 ? i * 10 : (10 - i) * 10}`}
-            </div>
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden" style={{ backgroundColor: tokens.background }}>
+      {/* Field Lines Background */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none flex flex-col justify-between py-20">
+        {Array.from({ length: 11 }).map((_, i) => (
+          <div key={i} className="w-full h-[2px] bg-white relative">
+            <span className={`${displayFont.className} absolute left-8 -top-6 text-2xl font-bold text-white`}>
+              {i < 5 ? i * 10 : (10 - i) * 10}
+            </span>
           </div>
         ))}
-      </motion.div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={impactEntry}
-          >
-            <div className={`inline-block px-4 py-1 bg-[#8B4513] text-white ${publicSans.className} uppercase font-bold tracking-widest text-xs mb-6`}>
-              First Down & Ten
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full py-20">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <ImpactUp>
+              <div className="inline-block px-3 py-1 border mb-6 rounded-sm" style={{ borderColor: tokens.accent2, color: tokens.accent2 }}>
+                <span className="text-xs font-bold tracking-widest uppercase">Version 3.0 Live</span>
+              </div>
+            </ImpactUp>
+            
+            <ImpactUp delay={0.1}>
+              <h1 className={`${displayFont.className} text-6xl md:text-[100px] font-black leading-[0.9] uppercase tracking-tighter mb-6`} style={{ color: tokens.foreground }}>
+                Control The <br/>
+                <span style={{ color: tokens.accent2 }}>Trenches.</span>
+              </h1>
+            </ImpactUp>
+
+            <ImpactUp delay={0.2}>
+              <p className="text-xl mb-10 max-w-lg" style={{ color: tokens.mutedForeground }}>
+                Tactical play-calling meets heavy-impact analytics. Outsmart the defense with kinetic telemetry and real-time chalk-talk strategies.
+              </p>
+            </ImpactUp>
+
+            <ImpactUp delay={0.3}>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <motion.button 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`${displayFont.className} h-14 px-8 flex items-center justify-center gap-3 font-bold text-2xl uppercase tracking-wider`}
+                  style={{ backgroundColor: tokens.accent, color: tokens.accentForeground }}
+                >
+                  Enter War Room
+                  <ArrowRight className="h-5 w-5" />
+                </motion.button>
+                <motion.button 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`${displayFont.className} h-14 px-8 flex items-center justify-center gap-3 font-bold text-2xl uppercase tracking-wider border-2`}
+                  style={{ borderColor: tokens.border, color: tokens.foreground }}
+                >
+                  View Playbook
+                </motion.button>
+              </div>
+            </ImpactUp>
+          </div>
+
+          <ImpactUp delay={0.4} className="relative aspect-square">
+            <div className="absolute inset-0 rounded-sm border-4 flex items-center justify-center overflow-hidden" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
+              {/* Tactical Diagram Animation */}
+              <svg viewBox="0 0 100 100" className="w-full h-full p-8 opacity-80">
+                <motion.circle cx="20" cy="80" r="4" fill={tokens.accent2} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1 }} />
+                <motion.circle cx="40" cy="80" r="4" fill={tokens.foreground} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.1 }} />
+                <motion.circle cx="60" cy="80" r="4" fill={tokens.foreground} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.2 }} />
+                <motion.circle cx="80" cy="80" r="4" fill={tokens.foreground} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.3 }} />
+                
+                {/* Routes */}
+                <motion.path 
+                  d="M20,80 C20,60 10,40 10,20" 
+                  fill="none" 
+                  stroke={tokens.accent2} 
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, delay: 1.5, ease: "easeOut" }}
+                />
+                <motion.path 
+                  d="M40,80 L40,50 L70,30" 
+                  fill="none" 
+                  stroke={tokens.accent} 
+                  strokeWidth="2"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, delay: 1.6, ease: "easeOut" }}
+                />
+                <motion.path 
+                  d="M80,80 L80,20" 
+                  fill="none" 
+                  stroke={tokens.accent} 
+                  strokeWidth="2"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, delay: 1.7, ease: "easeOut" }}
+                />
+              </svg>
             </div>
-            <h1 className={`text-6xl md:text-8xl lg:text-[100px] text-white leading-none font-black uppercase mb-6 ${bigShoulders.className}`}>
-              Dominate <br /> The <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#A9B2A9]">Gridiron</span>
-            </h1>
-            <p className={`text-xl text-[#A9B2A9] mb-10 max-w-lg leading-relaxed ${publicSans.className}`}>
-              Advanced analytics and tactical playcalling for the modern coach. Turn raw talent into an unstoppable franchise.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`bg-white text-[#121A12] px-10 py-4 ${publicSans.className} uppercase font-bold tracking-widest border-b-4 border-gray-400 hover:mt-1 hover:border-b-0 hover:mb-1 transition-all flex items-center justify-center gap-2`}
-              >
-                Start Free Trial <ChevronRight size={20} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`bg-[#1E291E] text-white px-10 py-4 ${publicSans.className} uppercase font-bold tracking-widest border-b-4 border-[#121A12] hover:mt-1 hover:border-b-0 hover:mb-1 transition-all`}
-              >
-                View Playbook
-              </motion.button>
-            </div>
-          </motion.div>
-
-          {/* Tactical Board Hero Image Replacement */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ ...impactEntry, delay: 0.2 }}
-            className="relative w-full aspect-square max-w-lg mx-auto bg-[#1E291E] border-4 border-white/20 p-8 transform-gpu"
-            style={{ backgroundImage: 'radial-gradient(#ffffff33 1px, transparent 1px)', backgroundSize: '20px 20px' }}
-          >
-            {/* Chalk lines drawn with SVG */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <motion.path
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 2, delay: 1, ease: [0.23, 1, 0.32, 1] }}
-                d="M 20 80 Q 40 40 80 20"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="4 4"
-              />
-              <motion.path
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5, delay: 1.5, ease: [0.23, 1, 0.32, 1] }}
-                d="M 50 80 L 50 40 L 70 40"
-                fill="none"
-                stroke="#8B4513"
-                strokeWidth="3"
-              />
-            </svg>
-
-            {/* Player Nodes */}
-            <div className="absolute bottom-[20%] left-[20%] w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs">QB</div>
-            <div className="absolute bottom-[20%] left-[50%] w-8 h-8 rounded-full border-2 border-white text-white flex items-center justify-center font-bold text-xs">C</div>
-            <div className="absolute bottom-[20%] left-[80%] w-8 h-8 rounded-full border-2 border-white text-white flex items-center justify-center font-bold text-xs">WR</div>
-
-            <div className="absolute top-[20%] right-[20%]">
-               <Crosshair size={32} className="text-[#8B4513]" />
-            </div>
-          </motion.div>
+          </ImpactUp>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Stats() {
-  const stats = [
-    { label: "Franchises", value: "32" },
-    { label: "Plays Analyzed", value: "1.4M" },
-    { label: "Predictive Acc.", value: "94%" },
-    { label: "Championships", value: "12" }
-  ];
-
   return (
-    <section className="py-20 px-6 bg-[#1E291E] border-y border-white/10 relative">
-      {/* Cut grass mask overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#000_10px,#000_20px)]" />
-
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-        {stats.map((stat, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 100, delay: i * 0.1 }}
-            className="flex flex-col items-center justify-center p-6 border-2 border-white/5 bg-[#121A12]"
-          >
-            <div className={`text-5xl md:text-7xl text-white mb-2 font-black ${bigShoulders.className}`}>{stat.value}</div>
-            <div className={`text-[#A9B2A9] uppercase font-bold tracking-widest text-xs text-center ${publicSans.className}`}>{stat.label}</div>
-          </motion.div>
-        ))}
+    <section className="py-20 border-y-2 relative" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
+      <div className="absolute top-0 bottom-0 left-1/2 w-0.5 -translate-x-1/2 opacity-20 hidden md:block" style={{ backgroundColor: tokens.foreground }}></div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          {STATS.map(stat => (
+            <motion.div key={stat.label} variants={staggerItem} className="text-center">
+              <p className={`${displayFont.className} text-5xl md:text-7xl font-black uppercase mb-2`} style={{ color: tokens.foreground }}>
+                {stat.value}
+              </p>
+              <p className="text-sm font-bold uppercase tracking-widest" style={{ color: tokens.accent2 }}>
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
+        </StaggerContainer>
       </div>
     </section>
-  );
+  )
 }
 
 function Features() {
-  const features = [
-    { icon: <Target />, title: "Precision Targeting", desc: "Analyze defensive weaknesses down to the yard line with our proprietary heatmaps." },
-    { icon: <Shield />, title: "Blitz Protection", desc: "Automated offensive line adjustments based on pre-snap defensive formations." },
-    { icon: <Activity />, title: "Fatigue Tracking", desc: "Real-time biometric data keeps your stars fresh for the fourth quarter." },
-    { icon: <Crosshair />, title: "Draft Optics", desc: "Uncover hidden collegiate gems with our deep-learning scouting algorithms." },
-    { icon: <CheckCircle />, title: "Chalk Talk AI", desc: "Instantly generate whiteboard diagrams from raw game footage." },
-    { icon: <Shield />, title: "Zone Defense", desc: "Perfect your coverage shells with simulated offensive routing." }
-  ];
-
   return (
-    <section className="py-32 px-6 bg-[#121A12]">
-      <div className="max-w-7xl mx-auto">
-        <SectionTitle>The Arsenal</SectionTitle>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feat, i) => (
-            <motion.div
+    <section id="features" className="py-32" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <ImpactUp>
+          <div className="mb-20">
+            <h2 className={`${displayFont.className} text-6xl md:text-[80px] font-black uppercase leading-none mb-6`} style={{ color: tokens.foreground }}>
+              Heavy Artillery <br/>
+              <span style={{ color: tokens.mutedForeground }}>For the Sideline.</span>
+            </h2>
+          </div>
+        </ImpactUp>
+        
+        <StaggerContainer className="grid md:grid-cols-2 gap-8">
+          {FEATURES.map((feat, i) => (
+            <motion.div 
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...impactEntry, delay: i * 0.1 }}
-              className="bg-[#1E291E] border border-white/10 p-8 hover:border-white/30 transition-colors group"
+              variants={staggerItem}
+              className="p-10 border-2 relative overflow-hidden group"
+              style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}
             >
-              <div className="w-14 h-14 bg-[#121A12] border border-white/20 flex items-center justify-center text-white mb-6 group-hover:text-[#8B4513] group-hover:border-[#8B4513] transition-colors">
-                {feat.icon}
+              <div className="absolute -right-10 -top-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                <feat.icon size={200} />
               </div>
-              <h3 className={`text-3xl text-white mb-4 uppercase font-bold ${bigShoulders.className}`}>{feat.title}</h3>
-              <p className={`text-[#A9B2A9] ${publicSans.className}`}>{feat.desc}</p>
+              <div className="w-16 h-16 border-2 flex items-center justify-center mb-8 bg-black/20" style={{ borderColor: tokens.accent2 }}>
+                <feat.icon className="h-8 w-8" style={{ color: tokens.accent2 }} />
+              </div>
+              <h3 className={`${displayFont.className} text-3xl font-bold uppercase mb-4 tracking-wide`} style={{ color: tokens.foreground }}>
+                {feat.title}
+              </h3>
+              <p className="text-lg" style={{ color: tokens.mutedForeground }}>
+                {feat.text}
+              </p>
             </motion.div>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
-  );
+  )
 }
 
 function ProductDetail() {
   return (
-    <section className="py-32 px-6 bg-[#1E291E] border-y-8 border-[#8B4513] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <SectionTitle>The War Room</SectionTitle>
-            <div className={`space-y-6 text-[#A9B2A9] text-lg leading-relaxed ${publicSans.className}`}>
-              <p>
-                Games aren't won on Sunday. They are won on Tuesday morning in the film room. WAR ROOM is the definitive platform for coaches who demand absolute control over their strategic preparation.
-              </p>
-              <p>
-                Our "Chalk-Talk" engine translates complex video data into actionable 2D vector plays. Every motion, every block, and every route is mapped against our historical database of defensive tendencies.
-              </p>
-              <ul className="space-y-4 mt-8">
-                {['Dynamic Play Call Sheets', 'Opponent Tendency Mapping', 'Real-time Sideline Sync'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-white font-bold uppercase tracking-wider text-sm">
-                    <div className="w-2 h-2 bg-[#8B4513]" /> {item}
-                  </li>
-                ))}
-              </ul>
+    <section className="py-32 overflow-hidden border-y-2" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <ImpactUp>
+            <h2 className={`${displayFont.className} text-5xl md:text-7xl font-black uppercase leading-[0.9] mb-8`} style={{ color: tokens.foreground }}>
+              Analyze Every <br/>
+              <span style={{ color: tokens.accent2 }}>Inch Of Turf.</span>
+            </h2>
+            <div className="space-y-6">
+              {[
+                "Measure closing speed on defensive backs.",
+                "Calculate offensive line push in the trenches.",
+                "Map exact catch radiuses for receivers."
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <div className="mt-1 w-6 h-6 border flex items-center justify-center shrink-0" style={{ borderColor: tokens.accent2, backgroundColor: `${tokens.accent2}33` }}>
+                    <Check className="h-4 w-4" style={{ color: tokens.accent }} />
+                  </div>
+                  <p className="text-lg" style={{ color: tokens.mutedForeground }}>{item}</p>
+                </div>
+              ))}
             </div>
-          </div>
-
-          <div className="relative">
-            {/* Play-by-Play Scroller Placeholder */}
-            <div className="bg-[#121A12] border-4 border-white/20 p-6 h-[500px] overflow-hidden relative">
-              <div className="absolute left-10 top-0 bottom-0 w-1 bg-white/10" />
-              <div className="space-y-12 pt-10">
-                {[
-                  { down: "1st & 10", play: "HB Dive", yards: "+4" },
-                  { down: "2nd & 6", play: "PA Crossers", yards: "+18" },
-                  { down: "1st & 10", play: "WR Screen", yards: "-2" },
-                  { down: "2nd & 12", play: "Four Verticals", yards: "INC" },
-                ].map((play, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ x: 50, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ margin: "-100px" }}
-                    transition={impactEntry}
-                    className="relative pl-20"
-                  >
-                    <div className="absolute left-[-16px] top-1 w-8 h-8 bg-[#8B4513] rounded-full border-4 border-[#121A12] flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full" />
-                    </div>
-                    <div className={`text-2xl text-white font-black uppercase ${bigShoulders.className}`}>{play.down}</div>
-                    <div className={`text-white/70 ${publicSans.className} font-bold`}>{play.play} <span className="text-[#A9B2A9] font-normal ml-2">({play.yards})</span></div>
-                  </motion.div>
-                ))}
-              </div>
+          </ImpactUp>
+          
+          <ImpactUp delay={0.2} className="relative">
+            <div className="aspect-[4/3] border-4 p-2 relative" style={{ borderColor: tokens.border }}>
+               {/* Decorative corner accents */}
+               <div className="absolute -top-2 -left-2 w-4 h-4 border-t-4 border-l-4" style={{ borderColor: tokens.accent2 }}></div>
+               <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-4 border-r-4" style={{ borderColor: tokens.accent2 }}></div>
+               
+               <div className="w-full h-full bg-[#121A12] relative overflow-hidden flex items-center justify-center">
+                 {/* Yard lines inside the detail box */}
+                 <div className="absolute inset-0 flex flex-col justify-between py-8 opacity-20 pointer-events-none">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <div key={i} className="w-full h-[1px] bg-white"></div>
+                    ))}
+                 </div>
+                 
+                 <motion.div 
+                    animate={{ 
+                      y: [0, -20, 0],
+                      rotate: [0, 5, 0]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-32 h-48 border-2 border-dashed flex items-center justify-center relative z-10"
+                    style={{ borderColor: tokens.accent2, backgroundColor: 'rgba(139, 69, 19, 0.1)' }}
+                 >
+                    <Goal className="w-12 h-12 opacity-50" style={{ color: tokens.accent }} />
+                 </motion.div>
+               </div>
             </div>
-          </div>
+          </ImpactUp>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Pricing() {
-  const plans = [
-    { name: "Coordinator", price: "$299", desc: "Essential film breakdown for high school programs.", features: ["Basic Chalk-Talk", "100GB Film Storage", "Standard Support"] },
-    { name: "Head Coach", price: "$899", desc: "Advanced analytics for collegiate competition.", features: ["Predictive AI Engine", "Unlimited Storage", "Real-time Sideline Sync", "Opponent Scouting"], highlight: true },
-    { name: "Franchise", price: "Custom", desc: "Enterprise deployment for professional organizations.", features: ["Custom Data Integration", "Dedicated Data Scientist", "On-premise Hosting"] }
-  ];
-
   return (
-    <section className="py-32 px-6 bg-[#121A12]">
-      <div className="max-w-7xl mx-auto">
-        <SectionTitle>Recruit Your Staff</SectionTitle>
-        <div className="grid md:grid-cols-3 gap-8">
-          {plans.map((plan, i) => (
+    <section id="pricing" className="py-32" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <ImpactUp>
+          <div className="text-center mb-20">
+            <h2 className={`${displayFont.className} text-6xl md:text-[80px] font-black uppercase leading-none mb-6`} style={{ color: tokens.foreground }}>
+              Draft Your <br/>
+              <span style={{ color: tokens.accent2 }}>Contract.</span>
+            </h2>
+          </div>
+        </ImpactUp>
+
+        <StaggerContainer className="grid md:grid-cols-3 gap-8">
+          {PRICING_TIERS.map((tier) => (
             <motion.div
-              key={i}
-              whileHover={{ y: -10 }}
-              className={`p-8 border-4 ${plan.highlight ? 'border-[#8B4513] bg-[#1E291E]' : 'border-white/10 bg-[#121A12]'} flex flex-col`}
+              key={tier.name}
+              variants={staggerItem}
+              className={`p-8 border-2 relative flex flex-col ${tier.highlighted ? 'scale-105 z-10' : ''}`}
+              style={{ 
+                borderColor: tier.highlighted ? tokens.accent2 : tokens.border,
+                backgroundColor: tokens.backgroundAlt 
+              }}
             >
-              {plan.highlight && <div className={`text-[#8B4513] font-bold uppercase tracking-widest text-xs mb-4 ${publicSans.className}`}>League Standard</div>}
-              <h3 className={`text-4xl text-white uppercase font-black mb-2 ${bigShoulders.className}`}>{plan.name}</h3>
-              <p className={`text-[#A9B2A9] mb-8 h-12 ${publicSans.className}`}>{plan.desc}</p>
-              <div className={`text-6xl text-white font-black mb-8 ${bigShoulders.className}`}>
-                {plan.price}<span className="text-xl text-[#A9B2A9] font-normal">/mo</span>
+              {tier.highlighted && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#8B4513] text-white text-xs font-bold uppercase tracking-widest">
+                  Starting Roster
+                </div>
+              )}
+              <h3 className={`${displayFont.className} text-3xl font-bold uppercase mb-2`} style={{ color: tokens.foreground }}>{tier.name}</h3>
+              <div className="flex items-baseline gap-2 mb-4 border-b-2 pb-6" style={{ borderColor: tokens.border }}>
+                <span className={`${displayFont.className} text-5xl font-black`} style={{ color: tokens.foreground }}>{tier.price}</span>
+                <span className="text-sm font-bold uppercase tracking-widest" style={{ color: tokens.mutedForeground }}>/ {tier.period}</span>
               </div>
-              <ul className={`space-y-4 mb-12 flex-1 ${publicSans.className}`}>
-                {plan.features.map((f, j) => (
-                  <li key={j} className="flex items-center gap-3 text-white">
-                    <CheckCircle size={16} className={plan.highlight ? "text-[#8B4513]" : "text-white/50"} /> {f}
+              <p className="text-sm mb-8 flex-grow" style={{ color: tokens.mutedForeground }}>{tier.description}</p>
+              
+              <ul className="space-y-4 mb-10">
+                {tier.features.map(f => (
+                  <li key={f} className="flex items-start gap-3 text-sm">
+                    <Flag className="h-5 w-5 shrink-0" style={{ color: tokens.accent2 }} />
+                    <span style={{ color: tokens.foreground }}>{f}</span>
                   </li>
                 ))}
               </ul>
-              <button className={`w-full py-4 uppercase font-bold tracking-widest text-sm border-b-4 transition-all ${plan.highlight ? 'bg-white text-[#121A12] border-gray-400 hover:border-b-0 hover:mt-1 hover:mb-1' : 'bg-[#1E291E] text-white border-[#121A12] hover:border-white/20'} ${publicSans.className}`}>
-                Draft Protocol
-              </button>
+
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className={`${displayFont.className} w-full h-14 font-bold text-xl uppercase tracking-wider border-2`}
+                style={tier.highlighted
+                  ? { backgroundColor: tokens.accent2, color: tokens.foreground, borderColor: tokens.accent2 }
+                  : { backgroundColor: 'transparent', color: tokens.foreground, borderColor: tokens.border }
+                }
+              >
+                {tier.cta}
+              </motion.button>
             </motion.div>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
-  );
+  )
 }
 
 function Testimonials() {
-  const reviews = [
-    { name: "Coach Taylor", role: "Head Coach", company: "Panthers", text: "WAR ROOM completely overhauled our offensive scheme. We're seeing defensive rotations before the snap." },
-    { name: "M. Johnson", role: "Defensive Coord.", company: "State Univ", text: "The Chalk-Talk AI saves my staff 20 hours a week in film breakdown. It's the most powerful tool we've ever used." },
-    { name: "D. Smith", role: "GM", company: "Pro Franchise", text: "The draft optics module identified three late-round picks that are now starting for us. Incredible ROI." }
-  ];
-
   return (
-    <section className="py-32 px-6 bg-[#1E291E]">
-      <div className="max-w-7xl mx-auto">
-        <SectionTitle>Locker Room Talk</SectionTitle>
-        <div className="grid md:grid-cols-3 gap-8">
-          {reviews.map((rev, i) => (
+    <section id="testimonials" className="py-32 border-y-2" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <ImpactUp>
+          <div className="mb-20">
+            <h2 className={`${displayFont.className} text-5xl md:text-7xl font-black uppercase leading-none mb-6`} style={{ color: tokens.foreground }}>
+              Post-Game <br/>
+              <span style={{ color: tokens.mutedForeground }}>Press Conference.</span>
+            </h2>
+          </div>
+        </ImpactUp>
+        
+        <StaggerContainer className="grid md:grid-cols-3 gap-8">
+          {TESTIMONIALS.map(t => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ ...impactEntry, delay: i * 0.1 }}
-              className="bg-[#121A12] p-8 border-l-4 border-white/20"
+              key={t.name}
+              variants={staggerItem}
+              className="p-8 border-2 relative"
+              style={{ borderColor: tokens.border, backgroundColor: tokens.background }}
             >
-              <p className={`text-white text-lg mb-8 ${publicSans.className}`}>"{rev.text}"</p>
-              <div className={`text-white font-black uppercase tracking-widest text-xl ${bigShoulders.className}`}>{rev.name}</div>
-              <div className={`text-[#A9B2A9] text-sm uppercase font-bold ${publicSans.className}`}>{rev.role} // {rev.company}</div>
+              {/* Quote Mark Decoration */}
+              <div className={`${displayFont.className} absolute top-4 right-6 text-6xl opacity-10`} style={{ color: tokens.foreground }}>"</div>
+              
+              <div className="flex mb-6">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-current" style={{ color: tokens.accent2 }} />
+                ))}
+              </div>
+              <p className="text-lg leading-relaxed mb-8 italic" style={{ color: tokens.foreground }}>"{t.text}"</p>
+              <div className="border-t-2 pt-4" style={{ borderColor: tokens.border }}>
+                <p className={`${displayFont.className} font-bold text-2xl uppercase tracking-wide`} style={{ color: tokens.foreground }}>{t.name}</p>
+                <p className="text-sm font-bold uppercase tracking-widest" style={{ color: tokens.accent2 }}>{t.role} · {t.company}</p>
+              </div>
             </motion.div>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
-  );
+  )
 }
 
 function FAQ() {
-  const faqs = [
-    { q: "Is WAR ROOM compatible with Hudl?", a: "Yes, we offer seamless two-way integration with major film exchange platforms including Hudl and XOS." },
-    { q: "Do players need their own accounts?", a: "Players can be granted 'Roster' access to view assigned plays and film clips via our mobile app." },
-    { q: "How secure is our playbook data?", a: "We utilize AES-256 encryption. Your proprietary schemes are locked down tighter than Fort Knox." },
-    { q: "Does the AI work for college rules?", a: "The analytics engine can be toggled between High School, NCAA, and NFL rule sets and field dimensions." },
-    { q: "What hardware is required for sideline sync?", a: "Any standard tablet works. Our local mesh network ensures sync even without stadium WiFi." },
-    { q: "Can we export diagrams to PDF?", a: "Yes, fully formatted play call sheets and wristband inserts can be generated and exported instantly." }
-  ];
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-32 px-6 bg-[#121A12]">
-      <div className="max-w-4xl mx-auto">
-        <SectionTitle>Post-Game Presser</SectionTitle>
-        <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
-          {faqs.map((faq, i) => (
-            <div key={i}>
-              <h3 className={`text-2xl text-white font-black uppercase mb-3 ${bigShoulders.className}`}>{faq.q}</h3>
-              <p className={`text-[#A9B2A9] ${publicSans.className} leading-relaxed`}>{faq.a}</p>
-            </div>
+    <section id="faq" className="py-32" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-4xl mx-auto px-6">
+        <ImpactUp>
+          <div className="text-center mb-20">
+            <h2 className={`${displayFont.className} text-6xl md:text-[80px] font-black uppercase leading-none mb-6`} style={{ color: tokens.foreground }}>
+              Coaches' <br/>
+              <span style={{ color: tokens.accent2 }}>Rulebook.</span>
+            </h2>
+          </div>
+        </ImpactUp>
+        
+        <div className="space-y-4">
+          {FAQ_ITEMS.map((item, i) => (
+            <ImpactUp key={i} delay={i * 0.1}>
+              <div className="border-2" style={{ borderColor: tokens.border }}>
+                <button
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  className="w-full flex items-center justify-between p-6 text-left"
+                  style={{ backgroundColor: tokens.backgroundAlt }}
+                >
+                  <span className={`${displayFont.className} text-2xl font-bold uppercase tracking-wide pr-8`} style={{ color: tokens.foreground }}>{item.q}</span>
+                  <motion.span
+                    animate={{ rotate: openIndex === i ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="shrink-0"
+                  >
+                    <ChevronDown className="h-6 w-6" style={{ color: tokens.accent2 }} />
+                  </motion.span>
+                </button>
+                <motion.div
+                  initial={false}
+                  animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div className="p-6 border-t-2" style={{ borderColor: tokens.border, backgroundColor: tokens.background }}>
+                    <p className="text-lg leading-relaxed" style={{ color: tokens.mutedForeground }}>
+                      {item.a}
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </ImpactUp>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Newsletter() {
-  return (
-    <section className="py-32 px-6 bg-[#8B4513] relative overflow-hidden">
-      {/* Texture overlay */}
-      <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
 
-      <div className="max-w-3xl mx-auto relative z-10 text-center">
-        <h2 className={`text-5xl md:text-7xl text-white font-black uppercase mb-6 ${bigShoulders.className}`}>Two-Minute Drill</h2>
-        <p className={`text-white/80 mb-10 text-lg ${publicSans.className} font-bold uppercase tracking-wider`}>
-          Sign up for weekly schematic breakdowns and analytics insights straight to your inbox.
-        </p>
-        <form className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
-          <input
-            type="email"
-            placeholder="COACH@TEAM.COM"
-            className={`bg-[#121A12] border-2 border-white/20 text-white px-6 py-4 w-full focus:outline-none focus:border-white ${publicSans.className} font-bold uppercase`}
-          />
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`bg-white text-[#121A12] px-8 py-4 uppercase font-black tracking-widest text-lg ${bigShoulders.className} border-b-4 border-gray-400`}
-          >
-            Hut Hut
-          </motion.button>
-        </form>
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+    setTimeout(() => setStatus('success'), 1200)
+  }
+
+  return (
+    <section className="py-32 border-y-2 relative overflow-hidden" style={{ borderColor: tokens.border, backgroundColor: tokens.accent2 }}>
+      {/* Decorative slant */}
+      <div className="absolute inset-0 opacity-10" style={{ 
+        backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 10px)'
+      }}></div>
+
+      <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
+        <ImpactUp>
+          <h2 className={`${displayFont.className} text-5xl md:text-7xl font-black uppercase mb-6`} style={{ color: tokens.foreground }}>
+            Join the Training Camp
+          </h2>
+          <p className="text-xl mb-10 font-bold" style={{ color: tokens.foreground }}>
+            Get weekly scouting reports and product updates.
+          </p>
+          
+          {status === 'success' ? (
+            <div className="inline-block px-8 py-4 border-4 bg-[#121A12]" style={{ borderColor: tokens.foreground }}>
+              <p className={`${displayFont.className} text-3xl font-black uppercase`} style={{ color: tokens.foreground }}>You're on the roster.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
+              <input
+                type="email"
+                required
+                placeholder="YOUR EMAIL"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                className={`${displayFont.className} flex-1 max-w-sm h-16 px-6 border-4 text-2xl uppercase tracking-wider bg-[#121A12] placeholder:text-gray-500 outline-none focus:border-white transition-colors`}
+                style={{ borderColor: tokens.foreground, color: tokens.foreground }}
+              />
+              <motion.button
+                type="submit"
+                disabled={status === 'loading'}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`${displayFont.className} h-16 px-10 font-black text-2xl uppercase tracking-widest bg-white disabled:opacity-60`}
+                style={{ color: tokens.accentForeground }}
+              >
+                {status === 'loading' ? 'SCOUTING...' : 'SUBSCRIBE'}
+              </motion.button>
+            </form>
+          )}
+        </ImpactUp>
       </div>
     </section>
-  );
+  )
 }
 
 function Footer() {
+  const links = {
+    Tactics: ['Playbook', 'Pricing', 'Changelog', 'Roadmap'],
+    Franchise: ['About Us', 'Coaches', 'Careers', 'Press'],
+    Resources: ['Docs', 'API', 'Scouting Reports', 'Status'],
+    Legal: ['Privacy', 'Terms', 'Security'],
+  }
+
   return (
-    <footer className="bg-[#121A12] pt-20 pb-10 px-6 border-t-8 border-[#1E291E]">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
-        <div className="col-span-2 md:col-span-1">
-          <div className={`text-3xl ${bigShoulders.className} font-black flex items-center gap-2 text-white uppercase tracking-widest mb-6`}>
-            <Shield className="text-[#8B4513]" size={32} /> WAR ROOM
+    <footer className="py-20" style={{ backgroundColor: tokens.background }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-12 mb-16">
+          <div className="col-span-2 md:col-span-2">
+            <div className="flex items-center gap-2 mb-6">
+               <div className="w-6 h-6 rounded-sm rotate-45 border-2 flex items-center justify-center" style={{ borderColor: tokens.accent }}>
+                 <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: tokens.accent2 }} />
+               </div>
+               <span className={`${displayFont.className} font-bold text-3xl tracking-wide uppercase`} style={{ color: tokens.foreground }}>
+                 {PRODUCT_NAME}
+               </span>
+            </div>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: tokens.mutedForeground }}>
+              Engineering the ultimate advantage on the gridiron. Precision data for the modern coaching staff.
+            </p>
           </div>
-          <p className={`text-[#A9B2A9] ${publicSans.className} font-bold uppercase text-sm`}>
-            Dominate the Gridiron.
+          
+          {Object.entries(links).map(([group, items]) => (
+            <div key={group} className="col-span-1">
+              <p className={`${displayFont.className} font-bold text-xl uppercase tracking-wider mb-6`} style={{ color: tokens.foreground }}>{group}</p>
+              <ul className="space-y-3">
+                {items.map(item => (
+                  <li key={item}>
+                    <a href="#" className="text-sm font-bold uppercase tracking-wider hover:opacity-100 opacity-60 transition-opacity" style={{ color: tokens.mutedForeground }}>
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t-2" style={{ borderColor: tokens.border }}>
+          <p className="text-sm font-bold uppercase tracking-widest" style={{ color: tokens.mutedForeground }}>
+            © {new Date().getFullYear()} {PRODUCT_NAME}. ALL RIGHTS RESERVED.
           </p>
+          <a
+            href="/"
+            className={`${displayFont.className} text-lg uppercase tracking-wider px-4 py-2 border-2 hover:bg-white/5 transition-colors`}
+            style={{ borderColor: tokens.border, color: tokens.foreground }}
+          >
+            ← BACK TO LOCKER ROOM
+          </a>
         </div>
-
-        <div>
-          <h4 className={`text-white mb-6 uppercase tracking-widest font-black text-xl ${bigShoulders.className}`}>Offense</h4>
-          <ul className={`space-y-3 text-[#A9B2A9] ${publicSans.className} font-bold uppercase text-sm`}>
-            <li><a href="#" className="hover:text-white transition-colors">Playbook</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Passing Charts</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Run Game</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className={`text-white mb-6 uppercase tracking-widest font-black text-xl ${bigShoulders.className}`}>Defense</h4>
-          <ul className={`space-y-3 text-[#A9B2A9] ${publicSans.className} font-bold uppercase text-sm`}>
-            <li><a href="#" className="hover:text-white transition-colors">Coverage</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Blitz Packages</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Tendencies</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className={`text-white mb-6 uppercase tracking-widest font-black text-xl ${bigShoulders.className}`}>Front Office</h4>
-          <ul className={`space-y-3 text-[#A9B2A9] ${publicSans.className} font-bold uppercase text-sm`}>
-            <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className={`text-center text-[#A9B2A9] text-sm font-bold uppercase ${publicSans.className} pt-8 border-t border-white/10`}>
-        © {new Date().getFullYear()} WAR ROOM ANALYTICS. ALL RIGHTS RESERVED.
       </div>
     </footer>
-  );
+  )
 }
 
+// ─────────────────────────────────────────────
+// PAGE
+// ─────────────────────────────────────────────
 export default function GridironFlowPage() {
   return (
-    <div className="min-h-screen bg-[#121A12] text-white selection:bg-[#8B4513]/50">
+    <div className={`${bodyFont.className} min-h-screen selection:bg-[#8B4513] selection:text-white`} style={{ backgroundColor: tokens.background }}>
+      <YardLineProgress />
       <Navbar />
       <main>
         <Hero />
@@ -518,7 +792,6 @@ export default function GridironFlowPage() {
         <Newsletter />
       </main>
       <Footer />
-      
-      </div>
-  );
+    </div>
+  )
 }

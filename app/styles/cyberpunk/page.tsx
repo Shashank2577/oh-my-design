@@ -1,49 +1,36 @@
 'use client'
 
 /**
- * PAGE TEMPLATE — oh-my-design
- *
- * Copy this file to app/styles/[slug]/page.tsx
- * Replace STYLE_NAME, colors, fonts, and content
- * Follow designprompts_dev_all_styles.md for the design system
+ * CYBERPUNK HUD INTERFACE — Kinetic Design Protocol
+ * 
+ * This page implements a high-fidelity cyberpunk aesthetic following the 
+ * "High-Tech, Low-Life" ethos. It features a tactical HUD interface with:
+ * - Persistent scanline overlays for CRT simulation.
+ * - Velocity-based typographic corruption (glitch) using Framer Motion's useVelocity.
+ * - Advanced Framer Motion animations for system "initialization."
+ * - Heavy industrial tokens and chamfered structural elements.
  */
 
-import { motion, useReducedMotion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
-// Replace fonts with those specified in the design system:
+import { 
+  motion, 
+  useReducedMotion, 
+  useInView, 
+  useScroll, 
+  useVelocity, 
+  useTransform, 
+  useSpring,
+  AnimatePresence
+} from 'framer-motion'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import { Orbitron, Share_Tech_Mono, JetBrains_Mono } from 'next/font/google'
 import {
   Star, ChevronDown, ArrowRight, Check, Users, Zap, Globe, Shield,
-  BookOpen, Layout, Palette, Code2, BarChart, Lock
+  BookOpen, Layout, Palette, Code2, BarChart, Lock, Terminal, Activity,
+  Cpu, HardDrive, Wifi, Radio, Layers
 } from 'lucide-react'
 
-const PROMPT = `
-# Cyberpunk / Glitch Design System
-
-## 1. Design Philosophy
-
-**Core Principles**: "High-Tech, Low-Life." The aesthetic is a digital dystopia colliding with a high-tech noir reality. It captures the tension between advanced technology and societal decay—a world of underground hackers, neon-drenched megacities, and corrupted data streams. This isn't a clean, utopian future; it's gritty, imperfect, and palpably dangerous. Every pixel should feel like it's being rendered on a malfunctioning CRT monitor in a rain-soaked Tokyo alley or a rogue terminal in a subterranean bunker.
-
-**The Vibe**: Dangerous, electric, rebellious, and aggressively futuristic-retro. It draws heavily from the visual language of 80s sci-fi (Blade Runner, Akira) and hacker culture (The Matrix, Ghost in the Shell). The interface should feel *alive* and volatile—buzzing with digital energy, glitching with data corruption, and pulsing with raw power. It’s not just a website; it’s a hacked feed, a forbidden interface, a window into the sprawl.
-
-**The Tactile Experience**:
-
-- **Imperfect Technology**: Embrace the artifacts of analog-to-digital conversion. Scanlines, chromatic aberration (RGB splitting), and signal noise are not bugs; they are features. The UI should feel like it's struggling to contain the data it displays.
-- **The Void vs. The Light**: The background isn't just dark; it's a void. Against this absolute blackness, neon light (cyan, magenta, acid green) doesn't just color elements—it *illuminates* them. Light sources should feel physical, casting glows and shadows that define the hierarchy.
-- **Industrial Brutalism**: Shapes are hard, angular, and utilitarian. Chamfered corners (45-degree cuts) replace friendly rounded rectangles. Borders are technical and precise, resembling blueprints or HUD (Heads-Up Display) schematics rather than decorative frames.
-
-**Visual Signatures That Make This Unforgettable**:
-
-- **Chromatic Aberration**: RGB color splitting on text and elements (red/cyan offset shadows) to simulate lens distortion or signal interference.
-- **Scanlines**: Subtle horizontal line overlays mimicking the refresh rate of old CRT monitors, adding texture and unifying the composition.
-- **Glitch Effects**: Intentional "corruption" via clip-path animations, skewed transforms, and flickering text that suggests a unstable connection or a hacked system.
-- **Neon Glow**: Text and borders that literally glow with intense, multi-layered box-shadow/text-shadow stacking, creating a "light saber" or "neon sign" effect against the dark background.
-- **Corner Cuts**: Chamfered/clipped corners on cards and buttons creating a militaristic, tech-panel aesthetic.
-- **Circuit Patterns**: Decorative SVG backgrounds resembling PCB traces or data highways, suggesting the underlying hardware.
-`;
-
 // ─────────────────────────────────────────────
-// FONTS — replace with style-specific fonts
+// FONTS - Tactical Typography
 // ─────────────────────────────────────────────
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -65,163 +52,162 @@ const shareTechMono = Share_Tech_Mono({
 })
 
 // ─────────────────────────────────────────────
-// DESIGN TOKENS — replace ALL values per style
+// DESIGN TOKENS - Neon & The Void
 // ─────────────────────────────────────────────
 const tokens = {
-  background: '#0a0a0f',
-  backgroundAlt: '#12121a', // card
-  foreground: '#e0e0e0',
-  muted: '#1c1c2e',
+  background: '#050508', // Deep Void
+  backgroundAlt: '#0a0a12', // Surface
+  foreground: '#e0e0e0', // High-contrast data
+  muted: '#1a1a2e',
   mutedForeground: '#6b7280',
-  border: '#2a2a3a',
-  accent: '#00ff88',
-  accentSecondary: '#ff00ff',
-  accentTertiary: '#00d4ff',
-  accentForeground: '#0a0a0f',
+  border: '#1a1a2e',
+  accent: '#00ff88', // Neon Green
+  accentSecondary: '#ff00ff', // Magenta
+  accentTertiary: '#00d4ff', // Cyan
+  error: '#ff2a2a', // Crimson
+  accentForeground: '#050508',
 }
 
 const styles = {
-  neonGlow: '0 0 5px #00ff88, 0 0 10px #00ff8840',
-  neonGlowSm: '0 0 3px #00ff88, 0 0 6px #00ff8830',
-  neonGlowLg: '0 0 10px #00ff88, 0 0 20px #00ff8860, 0 0 40px #00ff8830',
-  neonGlowSecondary: '0 0 5px #ff00ff, 0 0 20px #ff00ff60',
-  neonGlowTertiary: '0 0 5px #00d4ff, 0 0 20px #00d4ff60',
-  glitchShadow: '0 0 10px rgba(0, 255, 136, 0.5)',
-  chamferPath: 'polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px))',
-  chamferPathSm: 'polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px))',
+  neonGlow: '0 0 10px #00ff88, 0 0 20px #00ff8840',
+  neonGlowSm: '0 0 5px #00ff88, 0 0 10px #00ff8830',
+  neonGlowLg: '0 0 15px #00ff88, 0 0 30px #00ff8860',
+  neonGlowSecondary: '0 0 10px #ff00ff, 0 0 25px #ff00ff60',
+  neonGlowTertiary: '0 0 10px #00d4ff, 0 0 25px #00d4ff60',
+  glitchShadow: '0 0 15px rgba(0, 255, 136, 0.6)',
+  // 45-degree chamfered corners for tactical feel
+  chamferPath: 'polygon(0 15px, 15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px))',
+  chamferPathSm: 'polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px))',
 }
 
 // ─────────────────────────────────────────────
-// MOTION HELPERS
+// KINETIC HELPERS - Glitch & Motion
 // ─────────────────────────────────────────────
-function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
-  const shouldReduce = useReducedMotion()
+
+/**
+ * GlitchText: Corrupts text content based on scroll velocity.
+ * Uses useVelocity to detect fast movements and applies a "corruption" 
+ * effect where characters swap with random symbols.
+ */
+function GlitchText({ text, className, style }: { text: string; className?: string; style?: any }) {
+  const { scrollY } = useScroll()
+  const scrollVelocity = useVelocity(scrollY)
+  
+  // Transform velocity into a "glitch intensity" (0 to 1)
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 })
+  const glitchIntensity = useTransform(smoothVelocity, [-3000, 0, 3000], [1, 0, 1])
+  
+  const [displayText, setDisplayText] = useState(text)
+  const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?/\\0123456789'
+
+  useEffect(() => {
+    return glitchIntensity.onChange((v) => {
+      if (v > 0.1) {
+        // High velocity: swap characters with symbols
+        const corrupted = text.split('').map(char => {
+          if (char === ' ') return ' '
+          return Math.random() < v ? symbols[Math.floor(Math.random() * symbols.length)] : char
+        }).join('')
+        setDisplayText(corrupted)
+      } else {
+        setDisplayText(text)
+      }
+    })
+  }, [glitchIntensity, text])
 
   return (
-    <motion.div
-      ref={ref}
-      initial={shouldReduce ? false : { opacity: 0, y: 28 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.2, delay, ease: [0.23, 1, 0.32, 1] }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-function StaggerContainer({ children }: { children: React.ReactNode }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-5% 0px' })
-  const shouldReduce = useReducedMotion()
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={shouldReduce ? false : 'hidden'}
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: 0.05 } },
+    <motion.span 
+      className={className} 
+      style={{ 
+        ...style,
+        display: 'inline-block',
+        // Slight horizontal jitter during high velocity
+        x: useTransform(glitchIntensity, [0, 1], [0, (Math.random() - 0.5) * 10]),
+        filter: useTransform(glitchIntensity, [0, 1], ['none', 'hue-rotate(90deg) contrast(150%)'])
       }}
     >
-      {children}
-    </motion.div>
+      {displayText}
+    </motion.span>
   )
 }
 
-const staggerItem = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] } as any },
+/**
+ * Scanlines: Persistent horizontal line overlay to simulate CRT/HUD refresh.
+ */
+function Scanlines() {
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
+      {/* Moving scanline pulse */}
+      <motion.div 
+        animate={{ y: ['-100%', '100%'] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        className="absolute inset-x-0 h-40 bg-gradient-to-b from-transparent via-accent/5 to-transparent"
+      />
+      {/* Persistent fine scanlines */}
+      <div 
+        className="absolute inset-0 opacity-[0.08]" 
+        style={{ 
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px)',
+          backgroundSize: '100% 4px'
+        }} 
+      />
+      {/* Vignette & Grain */}
+      <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)] pointer-events-none" />
+    </div>
+  )
+}
+
+function HUDFrame({ children, className, title = "SYS.LOG", color = tokens.accent }: { children: React.ReactNode; className?: string; title?: string; color?: string }) {
+  return (
+    <div className={`relative ${className}`} style={{ clipPath: styles.chamferPath }}>
+      {/* Main Border */}
+      <div className="absolute inset-0 border border-current opacity-20" style={{ color }} />
+      {/* Corner Accents */}
+      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2" style={{ borderColor: color }} />
+      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2" style={{ borderColor: color }} />
+      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2" style={{ borderColor: color }} />
+      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2" style={{ borderColor: color }} />
+      
+      {/* Title Bar */}
+      <div className="flex items-center justify-between px-4 py-2 bg-current/10 border-b border-current/20" style={{ color }}>
+        <span className="font-accent text-[10px] uppercase tracking-[0.2em] font-bold">{title}</span>
+        <div className="flex gap-1">
+          <div className="w-1.5 h-1.5 bg-current animate-pulse" />
+          <div className="w-1.5 h-1.5 bg-current/40" />
+        </div>
+      </div>
+      
+      {/* Content Area */}
+      <div className="p-6">
+        {children}
+      </div>
+    </div>
+  )
 }
 
 // ─────────────────────────────────────────────
-// DATA — replace with style-appropriate content
+// DATA - Tactical Intel
 // ─────────────────────────────────────────────
-const PRODUCT_NAME = 'ProductName'
-const TAGLINE = 'The product tagline goes here'
-const DESCRIPTION = 'A compelling description of what this product does and why it matters.'
+const PRODUCT_NAME = 'NEURAL_OS'
+const TAGLINE = 'SURVIVE THE INFOCALYPSE'
+const DESCRIPTION = 'Next-generation tactical interface for decentralized data streams. Encrypted, resilient, and aggressively optimized for the sprawl.'
 
-const NAV_LINKS = ['Features', 'Pricing', 'Testimonials', 'FAQ']
+const NAV_LINKS = ['UPLINK', 'NODES', 'PRICING', 'TERMINAL']
 
 const STATS = [
-  { value: '50K+', label: 'Active Users' },
-  { value: '99.9%', label: 'Uptime' },
-  { value: '140+', label: 'Countries' },
-  { value: '4.9/5', label: 'Rating' },
+  { value: '404TB', label: 'DATA_PULSE' },
+  { value: '0.04ms', label: 'LATENCY' },
+  { value: '∞', label: 'UPTIME' },
+  { value: '1.0.4', label: 'VERSION' },
 ]
 
 const FEATURES = [
-  { icon: BookOpen, title: 'Feature One', description: 'Describe the first key feature and its benefit to users.' },
-  { icon: Layout, title: 'Feature Two', description: 'Describe the second key feature and its benefit to users.' },
-  { icon: Palette, title: 'Feature Three', description: 'Describe the third key feature and its benefit to users.' },
-  { icon: Code2, title: 'Feature Four', description: 'Describe the fourth key feature and its benefit to users.' },
-  { icon: BarChart, title: 'Feature Five', description: 'Describe the fifth key feature and its benefit to users.' },
-  { icon: Lock, title: 'Feature Six', description: 'Describe the sixth key feature and its benefit to users.' },
-]
-
-const PRICING = [
-  {
-    name: 'Free',
-    price: '$0',
-    period: 'forever',
-    description: 'Perfect for individuals getting started.',
-    features: ['5 projects', '1 user', 'Basic analytics', 'Email support'],
-    cta: 'Get started',
-    highlighted: false,
-  },
-  {
-    name: 'Pro',
-    price: '$29',
-    period: 'per month',
-    description: 'For growing teams that need more power.',
-    features: ['Unlimited projects', '10 users', 'Advanced analytics', 'Priority support', 'Custom domains', 'API access'],
-    cta: 'Start free trial',
-    highlighted: true,
-  },
-  {
-    name: 'Enterprise',
-    price: '$99',
-    period: 'per month',
-    description: 'For large organizations with custom needs.',
-    features: ['Everything in Pro', 'Unlimited users', 'SSO / SAML', 'Dedicated support', 'SLA guarantee', 'Custom integrations'],
-    cta: 'Contact sales',
-    highlighted: false,
-  },
-]
-
-const TESTIMONIALS = [
-  {
-    name: 'Alexandra Chen',
-    role: 'Product Manager',
-    company: 'Acme Corp',
-    text: 'This product completely transformed how our team works. The results have been incredible.',
-    rating: 5,
-  },
-  {
-    name: 'Marcus Williams',
-    role: 'CTO',
-    company: 'StartupXYZ',
-    text: 'I\'ve tried many tools in this space, but nothing comes close. The quality is exceptional.',
-    rating: 5,
-  },
-  {
-    name: 'Sofia Rodriguez',
-    role: 'Designer',
-    company: 'Creative Studio',
-    text: 'The attention to detail is remarkable. Every interaction feels intentional and polished.',
-    rating: 5,
-  },
-]
-
-const FAQ_ITEMS = [
-  { q: 'How do I get started?', a: 'Sign up for a free account and follow the onboarding wizard. You\'ll be up and running in under 5 minutes.' },
-  { q: 'Can I cancel anytime?', a: 'Yes, absolutely. There are no long-term commitments. Cancel your subscription at any time from your account settings.' },
-  { q: 'Do you offer a free trial?', a: 'Yes! All Pro features are available free for 14 days. No credit card required.' },
-  { q: 'What payment methods do you accept?', a: 'We accept all major credit cards, PayPal, and bank transfers for Enterprise plans.' },
-  { q: 'Is my data secure?', a: 'Security is our top priority. All data is encrypted in transit and at rest. We\'re SOC 2 Type II certified.' },
-  { q: 'Do you have an API?', a: 'Yes, we offer a comprehensive REST API with full documentation available for Pro and Enterprise customers.' },
+  { icon: Cpu, title: 'Neural Compute', description: 'Real-time adaptive processing for high-velocity data packets.' },
+  { icon: Shield, title: 'Pulse Encryption', description: 'Quantum-resistant multi-layered security protocols.' },
+  { icon: Wifi, title: 'Sprawl Connect', description: 'Decentralized nodes across every major urban sprawl.' },
+  { icon: Layers, title: 'Holo Render', description: 'High-density holographic data visualization.' },
+  { icon: Zap, title: 'Flash Sync', description: 'Zero-latency synchronization across global terminal networks.' },
+  { icon: Lock, title: 'Ghost Mode', description: 'Invisible operation in hostile network environments.' },
 ]
 
 // ─────────────────────────────────────────────
@@ -230,32 +216,29 @@ const FAQ_ITEMS = [
 
 function Navbar() {
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 border-b bg-black/80 backdrop-blur"
-      style={{ borderColor: tokens.border }}
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b bg-black/90 backdrop-blur-xl" style={{ borderColor: tokens.border }}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <span className="font-bold text-lg uppercase tracking-widest font-heading cyber-glitch" data-text={PRODUCT_NAME} style={{ color: tokens.accent }}>
-          {PRODUCT_NAME}
-        </span>
-        <div className="hidden md:flex items-center gap-8">
+        <div className="flex items-center gap-4">
+          <Terminal className="h-6 w-6" style={{ color: tokens.accent }} />
+          <GlitchText text={PRODUCT_NAME} className="font-black text-xl uppercase tracking-widest font-heading" style={{ color: tokens.accent }} />
+        </div>
+        
+        <div className="hidden md:flex items-center gap-10">
           {NAV_LINKS.map(link => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
-              className="text-sm transition-colors hover:opacity-80 font-accent uppercase tracking-widest"
-              style={{ color: tokens.foreground }}
-            >
-              <span style={{ color: tokens.accentTertiary }} className="mr-1">{">"}</span>{link}
+            <a key={link} href="#" className="text-xs font-accent uppercase tracking-[0.3em] hover:text-accent transition-all duration-300 relative group">
+              {link}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300" />
             </a>
           ))}
         </div>
+
         <motion.button
-          whileHover={{ boxShadow: styles.neonGlow, backgroundColor: tokens.accent, color: tokens.accentForeground }}
-          className="px-5 h-10 text-sm font-medium font-accent uppercase tracking-widest -skew-x-12 transform transition-all duration-200 border-2"
-          style={{ borderColor: tokens.accent, color: tokens.accent, backgroundColor: 'transparent' }}
+          whileHover={{ scale: 1.05, boxShadow: styles.neonGlow }}
+          whileTap={{ scale: 0.95 }}
+          className="px-6 h-10 text-[10px] font-accent uppercase tracking-widest border-2 font-bold transform -skew-x-12"
+          style={{ borderColor: tokens.accent, color: tokens.accent }}
         >
-          <span className="inline-block skew-x-12 transform">Initialize</span>
+          <span className="inline-block skew-x-12">INITIALIZE_SESSION</span>
         </motion.button>
       </div>
     </nav>
@@ -264,82 +247,77 @@ function Navbar() {
 
 function Hero() {
   return (
-    <section className="min-h-dvh flex items-center pt-16 relative overflow-hidden" style={{ backgroundColor: tokens.background }}>
-      <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: `linear-gradient(${tokens.accent}0a 1px, transparent 1px), linear-gradient(90deg, ${tokens.accent}0a 1px, transparent 1px)`, backgroundSize: '50px 50px' }} />
-      <div className="max-w-6xl mx-auto px-6 py-24 w-full relative z-10">
+    <section className="min-h-screen pt-32 pb-20 relative overflow-hidden flex flex-col justify-center">
+      {/* Grid Background */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none" 
+        style={{ backgroundImage: `linear-gradient(${tokens.border} 1px, transparent 1px), linear-gradient(90deg, ${tokens.border} 1px, transparent 1px)`, backgroundSize: '50px 50px' }} />
+      
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ staggerChildren: 0.05, delayChildren: 0.1 }}
-          className="max-w-4xl"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
         >
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2 }}
-            className="text-sm uppercase tracking-[0.2em] mb-4 font-accent"
-            style={{ color: tokens.accentTertiary }}
-          >
-            <span className="animate-pulse mr-2">_</span>SYS.INIT: {PRODUCT_NAME}
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
-            className="text-5xl md:text-8xl font-black uppercase tracking-widest mb-6 font-heading leading-none"
-            style={{ color: tokens.foreground, textShadow: styles.glitchShadow }}
-          >
-            {TAGLINE}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2, delay: 0.2 }}
-            className="text-lg md:text-xl mb-10 max-w-2xl leading-relaxed"
-            style={{ color: tokens.mutedForeground }}
-          >
+          <div className="inline-flex items-center gap-3 px-4 py-1 mb-8 border border-accent/30 bg-accent/5 rounded-full">
+            <Activity className="h-4 w-4 animate-pulse" style={{ color: tokens.accent }} />
+            <span className="text-[10px] font-accent uppercase tracking-widest font-bold" style={{ color: tokens.accent }}>SYSTEM_READY // CLEARANCE: LEVEL_4</span>
+          </div>
+          
+          <h1 className="text-6xl md:text-8xl font-black font-heading leading-tight mb-8">
+            <GlitchText text={TAGLINE} />
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-xl font-body leading-relaxed border-l-4 pl-6" style={{ borderColor: tokens.accentTertiary }}>
             {DESCRIPTION}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-6"
-          >
+          </p>
+          
+          <div className="flex flex-wrap gap-6">
             <motion.button
-              whileHover={{ boxShadow: styles.neonGlow, backgroundColor: tokens.accent, color: tokens.accentForeground, skewX: 0 }}
-              className="h-14 px-8 font-medium flex items-center justify-center gap-2 font-accent uppercase tracking-widest -skew-x-12 transform transition-all duration-200 border-2 group"
-              style={{ borderColor: tokens.accent, color: tokens.accent, backgroundColor: 'transparent' }}
+              whileHover={{ x: 10, boxShadow: styles.neonGlow }}
+              className="h-16 px-10 bg-accent text-accent-foreground font-accent font-black uppercase tracking-[0.2em] flex items-center gap-4 group"
             >
-              <span className="inline-block skew-x-12 transform group-hover:skew-x-0 transition-all duration-200 flex items-center gap-2">Execute_Cmd <ArrowRight className="h-4 w-4" /></span>
+              UPLINK_NOW <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
             </motion.button>
-            <motion.button
-              whileHover={{ boxShadow: styles.neonGlowSecondary, backgroundColor: tokens.accentSecondary, color: tokens.foreground, skewX: 0 }}
-              className="h-14 px-8 font-medium flex items-center justify-center gap-2 font-accent uppercase tracking-widest -skew-x-12 transform transition-all duration-200 border-2 group"
-              style={{ borderColor: tokens.accentSecondary, color: tokens.accentSecondary, backgroundColor: 'transparent' }}
-            >
-               <span className="inline-block skew-x-12 transform group-hover:skew-x-0 transition-all duration-200">View_Docs</span>
-            </motion.button>
-          </motion.div>
+            <button className="h-16 px-10 border-2 border-accentSecondary text-accentSecondary font-accent font-black uppercase tracking-[0.2em] hover:bg-accentSecondary/10 transition-colors">
+              VIEW_SCHEMATICS
+            </button>
+          </div>
         </motion.div>
 
-        {/* Hero Visual */}
-        <FadeUp delay={0.4}>
-          <div
-            className="mt-20 w-full h-72 md:h-96 relative group"
-            style={{ background: `linear-gradient(135deg, ${tokens.accent}10, ${tokens.accentTertiary}10)`, border: `1px solid ${tokens.border}`, clipPath: styles.chamferPath }}
-          >
-             <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
-             <div className="absolute top-4 left-4 font-accent text-xs" style={{color: tokens.accentTertiary}}>UI_PANEL_01</div>
-             <div className="absolute bottom-4 right-4 font-accent text-xs" style={{color: tokens.accent}}>ONLINE</div>
-             <div className="absolute inset-0 border border-transparent group-hover:border-accent/50 transition-colors duration-500" style={{clipPath: styles.chamferPath}}/>
-
-             {/* Holographic Inner Elements */}
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border-2 rounded-full animate-[spin_60s_linear_infinite]" style={{ borderColor: `${tokens.accent}40`, borderTopColor: tokens.accent, borderBottomColor: tokens.accentSecondary }} />
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 border border-dashed rounded-full animate-[spin_40s_linear_infinite_reverse]" style={{ borderColor: `${tokens.accentTertiary}80` }} />
-
-          </div>
-        </FadeUp>
+        {/* Hero Visual - Tactical HUD Placeholder */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, rotate: 5 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="relative aspect-square"
+        >
+          <HUDFrame title="VISUAL_FEED_01" color={tokens.accentTertiary} className="w-full h-full bg-black/40 backdrop-blur-md">
+            <div className="absolute inset-0 flex items-center justify-center">
+               {/* Animated HUD Circles */}
+               <div className="absolute w-4/5 h-4/5 border border-dashed border-accentTertiary/30 rounded-full animate-[spin_30s_linear_infinite]" />
+               <div className="absolute w-3/5 h-3/5 border-2 border-accent/20 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
+               <div className="absolute w-2/5 h-2/5 border border-accentSecondary/40 rounded-full animate-pulse" />
+               
+               {/* Tactical Crosshair */}
+               <div className="relative z-10 text-center">
+                 <div className="w-16 h-16 border-t-2 border-l-2 border-accent absolute -top-8 -left-8" />
+                 <div className="w-16 h-16 border-b-2 border-r-2 border-accent absolute -bottom-8 -right-8" />
+                 <span className="font-heading font-black text-4xl" style={{ color: tokens.accent }}>+</span>
+               </div>
+               
+               {/* Data Overlay */}
+               <div className="absolute top-10 right-10 text-right space-y-2 font-accent text-[8px] opacity-60">
+                 <p>X_COORD: 104.22</p>
+                 <p>Y_COORD: 992.10</p>
+                 <p>Z_DEPTH: 0.04</p>
+               </div>
+            </div>
+            {/* Asset Placeholder Note */}
+            <div className="absolute bottom-4 left-4 text-[8px] font-accent opacity-30 italic">
+              // ASSET: HERO_HUD_GEN_AI_v4
+            </div>
+          </HUDFrame>
+        </motion.div>
       </div>
     </section>
   )
@@ -347,19 +325,20 @@ function Hero() {
 
 function Stats() {
   return (
-    <section className="border-y py-12 relative" style={{ borderColor: tokens.border, backgroundColor: tokens.backgroundAlt }}>
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b" style={{ backgroundImage: `linear-gradient(to bottom, ${tokens.accent}, ${tokens.accentSecondary})` }} />
-      <div className="max-w-6xl mx-auto px-6">
-        <StaggerContainer>
-          <div className="flex flex-col md:flex-row justify-between divide-y md:divide-y-0 md:divide-x" style={{ borderColor: tokens.border }}>
-            {STATS.map(stat => (
-              <motion.div key={stat.label} variants={staggerItem} className="text-center flex-1 py-4 md:py-0">
-                <p className="text-4xl md:text-5xl font-black mb-2 font-heading tracking-widest" style={{ color: tokens.foreground, textShadow: styles.neonGlowSm }}>{stat.value}</p>
-                <p className="text-xs uppercase tracking-[0.2em] font-accent" style={{ color: tokens.accentTertiary }}>{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
+    <section className="py-20 bg-accent/5 border-y border-accent/20">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12">
+        {STATS.map((stat, i) => (
+          <motion.div 
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className="text-center"
+          >
+            <p className="text-4xl md:text-6xl font-black font-heading mb-2" style={{ color: tokens.foreground, textShadow: styles.neonGlowSm }}>{stat.value}</p>
+            <p className="text-[10px] font-accent uppercase tracking-[0.4em]" style={{ color: tokens.accentTertiary }}>{stat.label}</p>
+          </motion.div>
+        ))}
       </div>
     </section>
   )
@@ -367,100 +346,100 @@ function Stats() {
 
 function Features() {
   return (
-    <section id="features" className="py-24 relative" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <div className="mb-16 flex flex-col md:flex-row justify-between items-end gap-6 border-b pb-6" style={{ borderColor: tokens.border }}>
-             <div>
-                <div className="inline-flex items-center gap-3 border px-4 py-1 mb-6" style={{ borderColor: `${tokens.accentTertiary}40`, backgroundColor: `${tokens.accentTertiary}10`, clipPath: styles.chamferPathSm }}>
-                  <span className="h-2 w-2 bg-current animate-pulse" style={{ color: tokens.accentTertiary }} />
-                  <span className="font-accent text-xs uppercase tracking-[0.15em]" style={{ color: tokens.accentTertiary }}>
-                    Modules
-                  </span>
-                </div>
-                <h2 className="text-4xl md:text-5xl font-bold font-heading uppercase tracking-widest" style={{ color: tokens.foreground }}>
-                  Core_Systems
-                </h2>
-            </div>
-            <p className="text-sm font-accent max-w-md text-right hidden md:block" style={{ color: tokens.mutedForeground }}>
-              // Powerful features designed for teams that care about quality.
+    <section className="py-32 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-10">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-6xl font-black font-heading mb-6 uppercase tracking-wider italic">
+              <GlitchText text="HARDWARE_OVERRIDE" />
+            </h2>
+            <p className="text-xl text-muted-foreground font-body leading-relaxed">
+              Equip your node with military-grade modules designed to survive the most hostile data storms.
             </p>
           </div>
-        </FadeUp>
-        <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transform -skew-y-1">
-            {FEATURES.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                variants={staggerItem}
-                whileHover={{ y: -2, borderColor: tokens.accent, boxShadow: styles.neonGlowSm }}
-                transition={{ duration: 0.2 }}
-                className="p-8 border relative group transform skew-y-1 bg-black/40 backdrop-blur"
-                style={{ borderColor: tokens.border, clipPath: styles.chamferPath }}
-              >
-                {/* Decorative corner */}
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 opacity-0 group-hover:opacity-100 transition-opacity" style={{ borderColor: tokens.accent }} />
-
-                <div className="mb-6 inline-flex items-center justify-center w-12 h-12 relative">
-                   <div className="absolute inset-0 border border-current opacity-30 transform rotate-45 group-hover:rotate-90 transition-transform duration-300" style={{ color: tokens.accentTertiary }} />
-                   <feature.icon className="h-6 w-6 relative z-10" style={{ color: tokens.accent }} strokeWidth={1.5} />
-                </div>
-                <h3 className="font-semibold text-xl mb-3 font-heading uppercase tracking-wide" style={{ color: tokens.foreground }}>{feature.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: tokens.mutedForeground }}>{feature.description}</p>
-                <div className="mt-6 font-accent text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: tokens.accentTertiary }}>
-                   SYS.{String(i + 1).padStart(2, '0')} // ACTIVE
-                </div>
-              </motion.div>
-            ))}
+          <div className="font-accent text-[10px] opacity-40 uppercase tracking-[0.3em]">
+            // MODULE_044_B_CLEARANCE
           </div>
-        </StaggerContainer>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {FEATURES.map((feature, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -10 }}
+              className="p-8 border border-white/5 bg-white/5 backdrop-blur-sm relative group overflow-hidden"
+              style={{ clipPath: styles.chamferPathSm }}
+            >
+              {/* Animated Corner Pulse */}
+              <div className="absolute top-0 right-0 w-2 h-2 bg-accent opacity-0 group-hover:opacity-100 transition-opacity animate-ping" />
+              
+              <div className="mb-8 w-14 h-14 bg-accent/10 flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                <feature.icon className="h-7 w-7" style={{ color: tokens.accent }} />
+              </div>
+              
+              <h3 className="text-2xl font-black font-heading mb-4 uppercase tracking-wide group-hover:text-accent transition-colors">
+                {feature.title}
+              </h3>
+              
+              <p className="text-muted-foreground font-body leading-relaxed mb-6">
+                {feature.description}
+              </p>
+              
+              <div className="flex items-center gap-2 text-[10px] font-accent text-accentTertiary opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="w-1 h-1 bg-accentTertiary rounded-full" /> STATUS: OPTIMIZED
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
 
-function ProductDetail() {
+function TerminalSection() {
+  const [logs, setLogs] = useState<string[]>([
+    'NEURAL_OS v1.0.4 initialization sequence...',
+    'Kernel modules loading: OK',
+    'Neural link established with node 0xFA42',
+    'Firewall status: ACTIVE (QUANTUM_LEVEL)',
+    'Entering Sprawl environment...',
+  ])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newLog = `System ping at ${new Date().toLocaleTimeString()} [LATENCY: ${(Math.random() * 0.1).toFixed(3)}ms]`
+      setLogs(prev => [...prev.slice(-4), newLog])
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <section className="py-24 relative" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-4xl mx-auto px-6">
-        <FadeUp>
-          <div className="border-2 bg-black/80 shadow-[0_0_20px_rgba(0,255,136,0.1)] relative" style={{ borderColor: tokens.accent, clipPath: styles.chamferPath }}>
-            {/* Title bar */}
-            <div className="border-b px-4 py-3 flex items-center justify-between" style={{ borderColor: tokens.accent, backgroundColor: `${tokens.accent}10` }}>
-               <div className="flex gap-2">
-                 <div className="h-3 w-3 rounded-full" style={{ backgroundColor: tokens.accentSecondary }} />
-                 <div className="h-3 w-3 rounded-full" style={{ backgroundColor: tokens.accentTertiary }} />
-                 <div className="h-3 w-3 rounded-full" style={{ backgroundColor: tokens.accent }} />
-               </div>
-               <div className="font-accent text-xs uppercase tracking-widest text-center flex-1" style={{ color: tokens.accent }}>
-                 /sys/core/readme.txt
-               </div>
+    <section className="py-32 bg-black overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-6">
+        <HUDFrame title="COMMAND_TERMINAL" color={tokens.accentSecondary} className="bg-black/60 font-mono">
+          <div className="space-y-4 text-sm md:text-base">
+            <div className="flex items-center gap-3">
+              <span style={{ color: tokens.accentSecondary }}>root@sprawl:~$</span>
+              <motion.span 
+                animate={{ opacity: [1, 1, 0, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity, times: [0, 0.5, 0.5, 1], ease: "linear" }}
+                className="w-2 h-5 bg-accentSecondary"
+              />
             </div>
-            {/* Content */}
-            <div className="p-8 font-mono space-y-6">
-               <h2 className="text-2xl md:text-4xl font-heading font-black uppercase tracking-wide mb-8" style={{ color: tokens.foreground, textShadow: styles.neonGlowSm }}>
-                  <span style={{ color: tokens.accentSecondary }}>{">"}</span> Architecture
-               </h2>
-               <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: tokens.mutedForeground }}>
-                  <p>
-                    <span style={{ color: tokens.accentTertiary }}>[01]</span> The system architecture is designed for maximum resilience in hostile network environments. We've implemented multi-layered encryption protocols that adapt to incoming intrusion attempts in real-time.
-                  </p>
-                  <p>
-                    <span style={{ color: tokens.accentTertiary }}>[02]</span> Core processing routines run decentralized, distributing the load across available nodes. This ensures that a localized failure or targeted attack cannot compromise the primary data stream.
-                  </p>
-                  <p>
-                    <span style={{ color: tokens.accentTertiary }}>[03]</span> User interfaces are rendered via the latest holographic projection APIs, minimizing physical hardware footprint while maximizing data density and interaction speed.
-                  </p>
-               </div>
-               <div className="mt-8 pt-6 border-t border-dashed" style={{ borderColor: tokens.border }}>
-                  <div className="flex items-center gap-2 text-sm font-accent">
-                    <span style={{ color: tokens.accent }}>root@system:~#</span>
-                    <span className="animate-[blink_1s_step-end_infinite] w-2 h-4" style={{ backgroundColor: tokens.foreground }}></span>
-                  </div>
-               </div>
+            <div className="space-y-2 opacity-80">
+              {logs.map((log, i) => (
+                <motion.p 
+                  key={i} 
+                  initial={{ opacity: 0, x: -10 }} 
+                  animate={{ opacity: 1, x: 0 }}
+                  style={{ color: tokens.accentSecondary }}
+                >
+                  <span className="opacity-40 mr-3">[{i}]</span> {log}
+                </motion.p>
+              ))}
             </div>
           </div>
-        </FadeUp>
+        </HUDFrame>
       </div>
     </section>
   )
@@ -468,285 +447,83 @@ function ProductDetail() {
 
 function Pricing() {
   return (
-    <section id="pricing" className="py-24 relative" style={{ backgroundColor: tokens.backgroundAlt }}>
-      <div className="absolute inset-0 pointer-events-none opacity-10" style={{ backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,136,0.3) 2px, rgba(0,255,136,0.3) 4px)` }} />
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <FadeUp>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black font-heading uppercase tracking-widest mb-4" style={{ color: tokens.foreground, textShadow: styles.neonGlowSm }}>Access_Tiers</h2>
-            <p className="text-sm font-accent uppercase tracking-[0.2em]" style={{ color: tokens.accentTertiary }}>// Select your clearance level</p>
-          </div>
-        </FadeUp>
-        <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 items-center">
-            {PRICING.map(tier => (
-              <motion.div
-                key={tier.name}
-                variants={staggerItem}
-                className={`p-8 relative group transform ${tier.highlighted ? 'scale-105 z-10' : ''}`}
-                style={{
-                  backgroundColor: tokens.background,
-                  clipPath: styles.chamferPath
-                }}
-              >
-                {/* Border effect */}
-                <div className="absolute inset-0 border-2 pointer-events-none" style={{ borderColor: tier.highlighted ? tokens.accent : tokens.border, clipPath: styles.chamferPath, boxShadow: tier.highlighted ? styles.neonGlow : 'none' }} />
+    <section className="py-32 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-7xl font-black font-heading mb-4 uppercase italic">CLEARANCE_TIERS</h2>
+          <p className="font-accent text-sm tracking-[0.4em]" style={{ color: tokens.accentTertiary }}>// SELECT YOUR PROTOCOL</p>
+        </div>
 
-                {tier.highlighted && (
-                  <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: tokens.accent, boxShadow: styles.neonGlow }} />
-                )}
-
-                <h3 className="font-black text-2xl mb-2 font-heading uppercase tracking-widest" style={{ color: tier.highlighted ? tokens.accent : tokens.foreground }}>{tier.name}</h3>
-                <div className="flex items-baseline gap-1 mb-4">
-                  <span className="text-4xl font-bold font-mono" style={{ color: tokens.foreground }}>{tier.price}</span>
-                  <span className="text-xs font-accent uppercase tracking-widest" style={{ color: tokens.mutedForeground }}>/ {tier.period}</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {['FREELANCER', 'CORPORATE', 'LEGEND'].map((tier, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.02, rotate: 1 }}
+              className={`p-10 border-2 relative overflow-hidden flex flex-col`}
+              style={{ 
+                borderColor: i === 1 ? tokens.accent : tokens.border,
+                backgroundColor: i === 1 ? 'rgba(0, 255, 136, 0.03)' : 'transparent',
+                clipPath: styles.chamferPath
+              }}
+            >
+              {i === 1 && (
+                <div className="absolute top-0 right-0 px-4 py-1 bg-accent text-accent-foreground text-[8px] font-black uppercase tracking-widest font-accent">
+                  RECOMMENDED
                 </div>
-                <p className="text-sm mb-8 font-mono" style={{ color: tokens.mutedForeground }}>{tier.description}</p>
-                <ul className="space-y-4 mb-8">
-                  {tier.features.map(f => (
-                    <li key={f} className="flex items-start gap-3 text-sm font-mono">
-                      <span className="mt-1 flex-shrink-0 text-xs" style={{ color: tier.highlighted ? tokens.accent : tokens.accentTertiary }}>{">"}</span>
-                      <span style={{ color: tokens.foreground }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <motion.button
-                  whileHover={{ skewX: 0, boxShadow: tier.highlighted ? styles.neonGlow : styles.neonGlowSecondary, backgroundColor: tier.highlighted ? tokens.accent : tokens.accentSecondary, color: tier.highlighted ? tokens.accentForeground : tokens.foreground }}
-                  className="w-full h-12 font-medium text-sm border-2 font-accent uppercase tracking-widest -skew-x-12 transform transition-all duration-200"
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: tier.highlighted ? tokens.accent : tokens.accentSecondary,
-                    borderColor: tier.highlighted ? tokens.accent : tokens.accentSecondary
-                  }}
-                >
-                  <span className="inline-block skew-x-12 transform">{tier.cta}</span>
-                </motion.button>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function Testimonials() {
-  return (
-    <section id="testimonials" className="py-24" style={{ backgroundColor: tokens.background }}>
-      <div className="max-w-6xl mx-auto px-6">
-        <FadeUp>
-          <div className="mb-16 border-b pb-6" style={{ borderColor: tokens.border }}>
-            <h2 className="text-4xl md:text-5xl font-black font-heading uppercase tracking-widest" style={{ color: tokens.foreground }}>User_Logs</h2>
-          </div>
-        </FadeUp>
-        <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map(t => (
-              <motion.div
-                key={t.name}
-                variants={staggerItem}
-                className="p-6 border relative group bg-black/50"
-                style={{ borderColor: tokens.border, clipPath: styles.chamferPathSm }}
-              >
-                 <div className="absolute top-0 left-0 w-full h-full border pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity" style={{ borderColor: tokens.accentSecondary, clipPath: styles.chamferPathSm, boxShadow: styles.neonGlowSecondary }} />
-
-                <div className="flex mb-4 gap-1">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <div key={i} className="h-1 w-4" style={{ backgroundColor: tokens.accent }} />
-                  ))}
-                </div>
-                <div className="text-sm leading-relaxed mb-6 font-mono pl-4 border-l-2 relative" style={{ color: tokens.foreground, borderColor: `${tokens.accentTertiary}40` }}>
-                  <span className="absolute -left-2 top-0 text-xs" style={{color: tokens.accentTertiary}}>{'"'}</span>
-                  {t.text}
-                </div>
-                <div className="flex items-center gap-3 border-t pt-4" style={{ borderColor: tokens.border }}>
-                   <div className="h-8 w-8 bg-gray-800 flex items-center justify-center font-heading font-bold" style={{ color: tokens.accentSecondary, clipPath: styles.chamferPathSm }}>
-                      {t.name.charAt(0)}
-                   </div>
-                  <div>
-                    <p className="font-bold text-xs uppercase tracking-widest font-accent" style={{ color: tokens.accentTertiary }}>{t.name}</p>
-                    <p className="text-xs font-mono" style={{ color: tokens.mutedForeground }}>{t.role} @ {t.company}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </StaggerContainer>
-      </div>
-    </section>
-  )
-}
-
-function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  return (
-    <section id="faq" className="py-24" style={{ backgroundColor: tokens.backgroundAlt }}>
-      <div className="max-w-3xl mx-auto px-6">
-        <FadeUp>
-          <div className="mb-16 border-b pb-6" style={{ borderColor: tokens.border }}>
-            <h2 className="text-4xl md:text-5xl font-black font-heading uppercase tracking-widest" style={{ color: tokens.foreground }}>Query_DB</h2>
-          </div>
-        </FadeUp>
-        <div className="space-y-4">
-          {FAQ_ITEMS.map((item, i) => (
-            <FadeUp key={i} delay={i * 0.05}>
-              <div className="border bg-black/50" style={{ borderColor: openIndex === i ? tokens.accent : tokens.border, clipPath: styles.chamferPathSm }}>
-                 {/* Terminal header */}
-                <div className="border-b px-4 py-2 flex items-center gap-2" style={{ borderColor: openIndex === i ? tokens.accent : tokens.border, backgroundColor: openIndex === i ? `${tokens.accent}10` : 'transparent' }}>
-                  <div className="h-2 w-2 rounded-full" style={{ backgroundColor: tokens.accentSecondary }} />
-                  <div className="h-2 w-2 rounded-full" style={{ backgroundColor: tokens.accentTertiary }} />
-                  <div className="h-2 w-2 rounded-full" style={{ backgroundColor: tokens.accent }} />
-                  <span className="font-accent text-xs uppercase tracking-widest ml-2" style={{ color: tokens.mutedForeground }}>q_{String(i + 1).padStart(2, '0')}.exe</span>
-                </div>
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  aria-expanded={openIndex === i}
-                  className="w-full flex items-center justify-between p-6 text-left"
-                >
-                  <span className="font-heading font-semibold uppercase tracking-wide text-lg" style={{ color: openIndex === i ? tokens.accent : tokens.foreground }}>
-                    <span style={{ color: tokens.accentSecondary }} className="mr-2">{">"}</span>{item.q}
-                  </span>
-                  <motion.span
-                    animate={{ rotate: openIndex === i ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="h-5 w-5 flex-shrink-0" style={{ color: openIndex === i ? tokens.accent : tokens.mutedForeground }} />
-                  </motion.span>
-                </button>
-                <motion.div
-                  initial={false}
-                  animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <div className="px-6 pb-6 pt-2">
-                     <p className="text-sm leading-relaxed font-mono pl-4 border-l border-dashed" style={{ color: tokens.mutedForeground, borderColor: `${tokens.accent}40` }}>
-                      {item.a}
-                     </p>
-                  </div>
-                </motion.div>
+              )}
+              
+              <h3 className="text-3xl font-black font-heading mb-6 tracking-wider">{tier}</h3>
+              <div className="flex items-baseline gap-2 mb-10">
+                <span className="text-5xl font-black font-heading">$</span>
+                <span className="text-7xl font-black font-heading">{i === 0 ? '0' : i === 1 ? '29' : '99'}</span>
+                <span className="text-xs font-accent opacity-40">/MO</span>
               </div>
-            </FadeUp>
+              
+              <ul className="space-y-6 mb-12 flex-1">
+                {[1, 2, 3, 4].map((f) => (
+                  <li key={f} className="flex items-center gap-4 text-sm font-body">
+                    <Check className="h-4 w-4" style={{ color: tokens.accent }} />
+                    <span className="opacity-80 uppercase tracking-wide">Protocol Module_{f}A</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button 
+                className={`h-14 font-black font-accent uppercase tracking-widest transition-all duration-300 ${
+                  i === 1 ? 'bg-accent text-accent-foreground hover:shadow-[0_0_20px_#00ff88]' : 'border border-white/20 hover:border-accent hover:text-accent'
+                }`}
+              >
+                ACCESS_GRANTED
+              </button>
+            </motion.div>
           ))}
         </div>
-      </div>
-    </section>
-  )
-}
-
-function Newsletter() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
-  const [isFocused, setIsFocused] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('loading')
-    setTimeout(() => setStatus('success'), 1200)
-  }
-
-  return (
-    <section className="py-24 border-y relative" style={{ borderColor: tokens.accent, backgroundColor: tokens.background }}>
-       <div className="absolute inset-0 bg-gradient-to-r opacity-5" style={{ backgroundImage: `linear-gradient(to right, ${tokens.accent}, ${tokens.accentTertiary})` }} />
-      <div className="max-w-2xl mx-auto px-6 text-center relative z-10">
-        <FadeUp>
-          <div className="inline-block p-1 border border-dashed mb-8" style={{ borderColor: tokens.accentTertiary }}>
-            <div className="border p-8 bg-black/60 backdrop-blur" style={{ borderColor: tokens.accentTertiary, clipPath: styles.chamferPath }}>
-              <h2 className="text-3xl font-black font-heading uppercase tracking-widest mb-4" style={{ color: tokens.foreground, textShadow: styles.neonGlowTertiary }}>Establish_Link</h2>
-              <p className="text-sm font-mono mb-8" style={{ color: tokens.mutedForeground }}>
-                // Receive encrypted payload updates directly to your local node.
-              </p>
-              {status === 'success' ? (
-                <div className="font-accent text-lg uppercase tracking-widest flex items-center justify-center gap-2" style={{ color: tokens.accent }}>
-                  <span className="w-2 h-2 rounded-full bg-current animate-pulse" /> Connection_Established
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-center">
-                  <label htmlFor="newsletter-email" className="sr-only">Data stream address</label>
-                  <div className="relative flex-1 w-full">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 font-accent text-lg" style={{ color: isFocused ? tokens.accent : tokens.accentTertiary }}>{">"}</span>
-                    <input
-                      id="newsletter-email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                      placeholder="user@node.net"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      onFocus={() => setIsFocused(true)}
-                      onBlur={() => setIsFocused(false)}
-                      className="w-full h-12 pl-8 pr-4 bg-black border-b-2 font-mono text-sm transition-all duration-200 outline-none placeholder:opacity-50"
-                      style={{
-                        borderColor: isFocused ? tokens.accent : tokens.border,
-                        color: tokens.accent,
-                        boxShadow: isFocused ? `0 2px 10px ${tokens.accent}40` : 'none'
-                      }}
-                    />
-                  </div>
-                  <motion.button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    whileHover={{ skewX: 0, boxShadow: styles.neonGlow, backgroundColor: tokens.accent, color: tokens.accentForeground }}
-                    className="h-12 px-6 font-medium text-sm border-2 font-accent uppercase tracking-widest -skew-x-12 transform transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
-                    style={{ backgroundColor: 'transparent', color: tokens.accent, borderColor: tokens.accent }}
-                  >
-                    <span className="inline-block skew-x-12 transform">{status === 'loading' ? 'Connecting...' : 'Connect'}</span>
-                  </motion.button>
-                </form>
-              )}
-            </div>
-          </div>
-        </FadeUp>
       </div>
     </section>
   )
 }
 
 function Footer() {
-  const links = {
-    Data: ['Specs', 'Rates', 'Updates', 'Map'],
-    Corp: ['About', 'Feed', 'Recruits', 'PR'],
-    Nodes: ['Docs', 'API_Keys', 'Manual', 'Status'],
-    Legal: ['Privacy', 'TOS', 'Cookies', 'Sec_Clearance'],
-  }
-
   return (
-    <footer className="py-16 border-t" style={{ backgroundColor: tokens.backgroundAlt, borderColor: tokens.border }}>
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-          <div className="col-span-2 md:col-span-1">
-            <p className="font-black text-lg mb-3 font-heading uppercase tracking-widest cyber-glitch" data-text={PRODUCT_NAME} style={{ color: tokens.accent }}>{PRODUCT_NAME}</p>
-            <p className="text-xs font-mono leading-relaxed" style={{ color: tokens.mutedForeground }}>
-              // System operations running at optimal capacity.
-            </p>
+    <footer className="py-20 border-t border-accent/20 bg-black">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10">
+        <div className="flex items-center gap-4">
+          <Terminal className="h-8 w-8" style={{ color: tokens.accent }} />
+          <div>
+            <p className="font-black font-heading text-2xl uppercase tracking-widest" style={{ color: tokens.accent }}>{PRODUCT_NAME}</p>
+            <p className="text-[10px] font-accent opacity-40 uppercase tracking-[0.3em]">Built for the sprawl // 2026.10.14</p>
           </div>
-          {Object.entries(links).map(([group, items]) => (
-            <div key={group}>
-              <p className="font-bold text-xs uppercase tracking-widest mb-4 font-accent" style={{ color: tokens.foreground }}>{group}</p>
-              <ul className="space-y-3">
-                {items.map(item => (
-                  <li key={item}>
-                    <a href="#" className="text-xs font-mono hover:underline hover:text-accent transition-colors" style={{ color: tokens.mutedForeground, textDecorationColor: tokens.accent }}>
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        </div>
+
+        <div className="flex gap-10">
+          {['GITHUB', 'MATRIX', 'FEED'].map(l => (
+            <a key={l} href="#" className="font-accent text-[10px] font-bold tracking-[0.5em] hover:text-accent transition-colors">{l}</a>
           ))}
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t gap-4 border-dashed" style={{ borderColor: tokens.border }}>
-          <p className="text-xs font-mono" style={{ color: tokens.mutedForeground }}>
-            SYS.DATE: 2026.10.14 // {PRODUCT_NAME} // All rights reserved.
-          </p>
-          <a
-            href="/"
-            className="text-xs font-accent uppercase tracking-widest hover:text-accent transition-colors flex items-center gap-2 group"
-            style={{ color: tokens.mutedForeground }}
-          >
-            <span className="transform group-hover:-translate-x-1 transition-transform">{"<-"}</span> Terminate_Session
-          </a>
+
+        <div className="font-accent text-[10px] opacity-40 text-right">
+          <p>STATUS: OPERATIONAL</p>
+          <p>UPLINK: SECURE</p>
         </div>
       </div>
     </footer>
@@ -754,26 +531,80 @@ function Footer() {
 }
 
 // ─────────────────────────────────────────────
-// PAGE
+// MAIN PAGE
 // ─────────────────────────────────────────────
-export default function StylePage() {
+export default function CyberpunkPage() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
   return (
-    <div className={`${orbitron.variable} ${shareTechMono.variable} ${jetbrainsMono.variable} font-body`} style={{ backgroundColor: tokens.background }}>
-      {/* Global Scanlines Overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-10" style={{ background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px)' }} />
+    <div className={`min-h-screen ${orbitron.variable} ${jetbrainsMono.variable} ${shareTechMono.variable} font-body bg-black text-white selection:bg-accent selection:text-accent-foreground`}>
+      {/* HUD Kinetic Overlays */}
+      <Scanlines />
+      
+      {/* Static Scanline Overlay (Figma-like) */}
+      <div className="fixed inset-0 pointer-events-none z-[55] opacity-[0.03]" 
+        style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} 
+      />
+
       <Navbar />
-      <main>
+      
+      <main className="relative">
         <Hero />
         <Stats />
         <Features />
-        <ProductDetail />
+        <TerminalSection />
         <Pricing />
-        <Testimonials />
-        <FAQ />
-        <Newsletter />
+        
+        {/* CTA SECTION - Tactical Final Frame */}
+        <section className="py-40 relative flex justify-center items-center">
+           <div className="max-w-4xl w-full px-6">
+              <HUDFrame title="CRITICAL_ACTION" color={tokens.accent} className="text-center py-20 bg-accent/5 backdrop-blur-xl">
+                 <h2 className="text-5xl md:text-7xl font-black font-heading mb-8 uppercase italic">INITIALIZE_CONNECTION</h2>
+                 <p className="text-xl mb-12 opacity-60 max-w-xl mx-auto font-body">
+                   The data stream waits for no one. Secure your node in the global network before the next pulse.
+                 </p>
+                 <motion.button
+                   whileHover={{ scale: 1.1, boxShadow: styles.neonGlow }}
+                   className="h-20 px-16 bg-accent text-accent-foreground font-black font-accent text-2xl uppercase tracking-[0.2em] -skew-x-12"
+                 >
+                   <span className="inline-block skew-x-12">CONNECT_NOW</span>
+                 </motion.button>
+                 
+                 <div className="mt-12 flex justify-center gap-10 opacity-40">
+                    <div className="flex items-center gap-2 text-[10px] font-accent">
+                      <Wifi className="h-3 w-3" /> SIGNAL_LOCKED
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] font-accent">
+                      <Cpu className="h-3 w-3" /> SYNC_COMPLETE
+                    </div>
+                 </div>
+              </HUDFrame>
+           </div>
+        </section>
       </main>
+
       <Footer />
-      
+
+      {/* Persistent HUD Markers (Floating Decorative Elements) */}
+      <div className="fixed bottom-10 left-10 z-[70] pointer-events-none hidden lg:block">
+        <div className="p-4 border border-accent/20 bg-black/40 backdrop-blur-sm font-accent text-[8px] space-y-1" style={{ clipPath: styles.chamferPathSm }}>
+          <p className="flex justify-between gap-10 text-accentTertiary"><span>NODES:</span> <span>10,242</span></p>
+          <p className="flex justify-between gap-10 text-accent"><span>SYS_HEALTH:</span> <span>100%</span></p>
+          <div className="w-full h-1 bg-white/5 mt-2 overflow-hidden">
+            <motion.div 
+              animate={{ x: ['-100%', '100%'] }} 
+              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+              className="w-1/2 h-full bg-accent" 
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
