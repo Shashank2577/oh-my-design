@@ -30,7 +30,7 @@ async function capture(browser, slug) {
 
   try {
     console.log(`📸 ${slug}`);
-    await page.goto(`${BASE_URL}/styles/${slug}`, { waitUntil: 'networkidle', timeout: 30000 });
+    await page.goto(`${BASE_URL}/styles/${slug}`, { waitUntil: 'load', timeout: 30000 });
     await page.waitForTimeout(2000);
 
     await page.screenshot({

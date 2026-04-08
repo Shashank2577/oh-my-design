@@ -35,7 +35,7 @@ async function capture(browser, slug) {
 
   try {
     console.log(`📸 ${slug}`);
-    await page.goto(`${BASE_URL}/styles/${slug}`, { waitUntil: 'networkidle', timeout: 30000 });
+    await page.goto(`${BASE_URL}/styles/${slug}`, { waitUntil: 'load', timeout: 30000 });
     await page.waitForTimeout(1500);
 
     const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
